@@ -34,7 +34,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>GROUP_2</p>
+        <p>GROUP_2_DEV_ENV</p>
         <button type={"button"} onClick={authHandler}>
           {" "}
           СДЕЛАТЬ ЗАПРОС НА АТОРИЗАЦИЮ ПОЛЬЗОВАТЕЛЯ С ID=1
