@@ -8,6 +8,7 @@ import { addTodo } from 'store/slice';
 
 const App = () => {
   const [token, setToken] = useState('');
+
   const [data, setData] = useState([]);
   const { REACT_APP_TASK_AUTH_BACKEND_URL, REACT_APP_TASK_BACKEND_URL } = process.env;
   const dispatch = useDispatch();
