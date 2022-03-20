@@ -1,11 +1,13 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { mainReducer } from './slice';
+import { MainSlice } from './slice';
 
 const rootReducer = combineReducers({
-  main: mainReducer,
+  main: MainSlice.mainReducer,
 });
 
 export const store = configureStore({
   reducer: rootReducer,
   devTools: process.env.NODE_ENV === 'development',
 });
+
+export type TState = ReturnType<typeof store.getState>;
