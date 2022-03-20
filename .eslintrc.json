@@ -38,6 +38,7 @@
     "object-curly-newline": "off",
     "prefer-promise-reject-errors": "off",
     "no-shadow": "off",
-    "eslint-disable-next-line import/order":"off"
+    "import/order": "off",
+    "linebreak-style":"off"
   }
 }
