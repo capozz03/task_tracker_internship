@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './main.scss';
 import AppErrorBoundary from 'app/errorBoundary';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';

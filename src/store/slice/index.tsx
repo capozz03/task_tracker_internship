@@ -1,1 +1,1 @@
-export { mainReducer, addTodo } from './main';
+export * as MainSlice from './main';
