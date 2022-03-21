@@ -1,6 +1,6 @@
 /* eslint-disable no-unreachable */
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { mainService } from './cashboxSetvice';
+import { mainService } from './cashboxService';
 
 export const getPostsAsync = createAsyncThunk(
   'main/getPosts',
