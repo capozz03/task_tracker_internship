@@ -4,12 +4,12 @@ import { mainSliceActions } from './actions';
 import { getPostsAsync } from './asyncActions';
 import { TMainReducer, TPosts } from './entities';
 
-const initialState = {
+const initialState: TMainReducer = {
   todo: [{ id: 1, title: 'TODO 1' }],
   status: RequestStatuses.IDLE,
   posts: null,
   error: null,
-} as TMainReducer;
+};
 
 const mainSlice = createSlice({
   name: 'main',
