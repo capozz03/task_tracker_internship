@@ -1,4 +1,4 @@
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction, AsyncThunk } from '@reduxjs/toolkit';
 import { RequestStatuses } from 'shared';
 import { mainSliceActions } from './actions';
 import { getPostsAsync } from './asyncActions';
@@ -15,24 +15,36 @@ const mainSlice = createSlice({
   name: 'main',
   initialState,
   reducers: mainSliceActions,
-  extraReducers: {
-    [getPostsAsync.pending.type]: (state) => ({
-      ...state,
-      status: RequestStatuses.LOADING,
-    }),
-    [getPostsAsync.fulfilled.type]: (state, { payload: posts }: PayloadAction<TPosts[]>) => ({
-      ...state,
-      status: RequestStatuses.SUCCESS,
-      posts,
-    }),
-    [getPostsAsync.rejected.type]: (state, { payload: error }: PayloadAction<Error>) => ({
-      ...state,
-      status: RequestStatuses.FAILURE,
-      posts: null,
-      error,
-    }),
-  },
 });
+
+const createBaseAsyncSlice = (
+  sliceName: string,
+  initialValue: TMainReducer,
+  action: AsyncThunk<any, void, {}>,
+  resetAction: any) => createSlice(
+  {
+    name: sliceName,
+    initialState: initialValue,
+    reducers: resetAction,
+    extraReducers: {
+      [action.pending.type]: (state: TMainReducer) => {
+        state.status = RequestStatuses.LOADING;
+      },
+      [action.fulfilled.type]: (
+        state: TMainReducer,
+        { payload: posts }: PayloadAction<TPosts[]>) => {
+        state.status = RequestStatuses.SUCCESS;
+        state.posts = posts;
+      },
+      [action.rejected.type]: (state: TMainReducer, { payload: error }: PayloadAction<Error>) => {
+        state.status = RequestStatuses.FAILURE;
+        state.posts = null;
+        state.error = error;
+      },
+    },
+  });
+
+const getPostsSlice = createBaseAsyncSlice('getPosts', initialState, getPostsAsync, null);
 
 export const { addTodo } = mainSlice.actions;
 export const mainReducer = mainSlice.reducer;
