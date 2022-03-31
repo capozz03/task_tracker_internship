@@ -1,4 +1,3 @@
 import React from 'react';
-import { DropdownMenu } from './tasksComponents/DropdownMenu';
 
-export const TasksPageComponent = () => <DropdownMenu />;
+export const TasksPageComponent = () => <h1>Tasks Page</h1>;

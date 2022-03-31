@@ -5,10 +5,14 @@
   border: none;
   outline: none;
   box-shadow: none;
+  .dropdownIcon {
+    font-size: 24px;
+  }
 }
 
 .dropdownMenu {
   font: $p-regular;
+  border-radius: 8px !important;
   .delete {
     color: $colors-red;
     border-top: 1px solid $grey-400;
