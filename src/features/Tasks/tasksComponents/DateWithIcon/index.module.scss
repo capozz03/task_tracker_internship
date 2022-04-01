@@ -1,0 +1,21 @@
+@import '../../../../shared/assets/styles/vars';
+.schedule{
+  font: $p-regular;
+}
+.icon{
+  margin-right: 8px;
+}
+
+.clock{
+  color: $grey-600;
+  svg{
+    fill: $main-blue;
+  }
+}
+
+.calendar{
+  color: $grey-900;
+  svg{
+    fill: $grey-600;
+  }
+}
