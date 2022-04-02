@@ -5,3 +5,33 @@
 * {
   // font: $h1;
 }
+
+.ant-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 8px;
+  padding: 8px 16px;
+  border: 0;
+  box-sizing: border-box;
+}
+
+.ant-btn-primary {
+  background: $main-blue;
+  color: $grey-0;
+  font: $p-medium;
+  &:hover, &:active, &:focus {
+    background: $main-blue-hover;
+  }
+}
+
+.ant-btn-default{
+  border: 1px solid $grey-400;
+  color: $grey-700;
+  font: $p-regular;
+  &:hover, &:active, &:focus{
+    background: $grey-100;
+    border: 1px solid $grey-500;
+    color: $grey-800;
+  }
+}
