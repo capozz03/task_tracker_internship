@@ -1,5 +1,25 @@
+@import "src/shared/assets/styles/vars";
+
 .users{
   display: flex;
   align-items: center;
   gap: 10px;
+  overflow: hidden;
+}
+
+.users > *{
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.others{
+  border-radius: 50%;
+  border: 1px solid $grey-300;
+  color: $grey-700;
+  display: flex;
+  font: $p-regular;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
 }
