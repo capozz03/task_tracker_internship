@@ -1,34 +1,16 @@
 import React, { useState } from 'react';
 import { Select } from 'antd';
 import style from './index.module.scss';
+import { taskStatuses } from './constants';
 
 export const TaskStatus = () => {
   const [color, setColor] = useState<string>('#50B5FF');
   const { Option } = Select;
 
-  const tasks: { status: string; color: string }[] = [
-    {
-      status: 'Создана',
-      color: '#50B5FF',
-    },
-    {
-      status: 'В работе',
-      color: '#3DD598',
-    },
-    {
-      status: 'Выполнена',
-      color: '#A461D8',
-    },
-    {
-      status: 'Не выполнена',
-      color: '#FC5A5A',
-    },
-  ];
-
   const changeTaskStatus = (e: string) => {
-    Object.values(tasks).forEach((task) => {
-      if (e === task.status) {
-        setColor(task.color);
+    Object.values(taskStatuses).forEach(({ status, color }) => {
+      if (e === status) {
+        setColor(color);
       }
     });
   };
@@ -44,9 +26,13 @@ export const TaskStatus = () => {
       onSelect={changeTaskStatus}
       style={{ backgroundColor: `${color}` }}
     >
-      {tasks.map((task) => (
-        <Option key={task.status} value={task.status} className={style.taskStatusItem}>
-          {task.status}
+      {taskStatuses.map(({ status }) => (
+        <Option
+          key={status}
+          value={status}
+          className={style.taskStatusItem}
+        >
+          {status}
         </Option>
       ))}
     </Select>
