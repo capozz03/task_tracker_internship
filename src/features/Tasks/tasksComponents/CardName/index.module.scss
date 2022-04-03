@@ -1,12 +1,12 @@
 @import "src/shared/assets/styles";
 
-.Card {
+.card {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 0;
 
-  .Name {
+  .name {
     color: $grey-900;
     font: $h5;
     white-space: nowrap;
@@ -15,7 +15,7 @@
     max-width: 100%;
   }
 
-  .Indicators {
+  .indicators {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -26,7 +26,7 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 16px;
-    .Attachments {
+    .attachments {
       display: flex;
       align-items: center;
       margin-right: 24px;
@@ -36,7 +36,7 @@
       }
     }
 
-    .CheckList {
+    .checkList {
       display: flex;
       align-items: center;
       svg{

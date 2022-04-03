@@ -10,14 +10,14 @@ type CardNameProps = {
 };
 
 const CardName = ({ name, attachments, checkListTotal, checkListChecked }: CardNameProps) => (
-  <div className={styles.Card}>
-    <span className={styles.Name}>{name}</span>
-    <span className={styles.Indicators}>
-      <span className={styles.Attachments}>
+  <div className={styles.card}>
+    <span className={styles.name}>{name}</span>
+    <span className={styles.indicators}>
+      <span className={styles.attachments}>
         <PaperClipOutlined />
         {attachments}
       </span>
-      <span className={styles.CheckList}>
+      <span className={styles.checkList}>
         <CheckSquareOutlined />
         {`${checkListChecked}/${checkListTotal}`}
       </span>
