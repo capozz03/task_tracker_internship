@@ -1,0 +1,12 @@
+@import '../../../../shared/assets/styles/vars';
+
+.text{
+  font: $p-regular;
+  color: $grey-600;
+}
+.icon{
+  margin-right: 8px;
+  svg{
+    fill: $main-blue;
+  }
+}
