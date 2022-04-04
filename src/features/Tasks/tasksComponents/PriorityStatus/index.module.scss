@@ -1,0 +1,36 @@
+@import 'src/shared/assets/styles';
+
+.priorityStatus {
+  font: $p-regular;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .high {
+    background-color: $colors-red;
+  }
+
+  .normal {
+    background-color: $colors-yellow;
+  }
+
+  .low {
+    background-color: $colors-salad;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin: 0 8px;
+  }
+
+  .text {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: $grey-600;
+  }
+}
