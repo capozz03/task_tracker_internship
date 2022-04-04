@@ -19,21 +19,19 @@ const Other = ({ count }: OtherProps) => (
 );
 
 const UserAssignedToTask = ({ users }: UserAssignedToTaskProps) => {
-  const wrap = useRef<HTMLDivElement>(document.createElement('div'));
+  const wrap = useRef<HTMLDivElement | null>(null);
   const [countElement, setCountElement] = useState(0);
   const [width, setWidth] = useState(0);
   useEffect(() => {
-    const resizeFN = () => {
-      setWidth(() => wrap.current.clientWidth);
-    };
-    window.addEventListener('resize', resizeFN);
+    const trackingWidthWrapper = () => setWidth(() => wrap.current!.clientWidth);
+    window.addEventListener('resize', trackingWidthWrapper);
     return () => {
-      window.removeEventListener('resize', resizeFN);
+      window.removeEventListener('resize', trackingWidthWrapper);
     };
   }, []);
   useEffect(() => {
     setCountElement(() => {
-      const count = Math.floor(wrap.current.offsetWidth / 41) - 1;
+      const count = Math.floor(wrap.current!.offsetWidth / 41) - 1;
       return count + 1 < users.length ? count : users.length;
     });
   }, [wrap.current, width]);
@@ -42,11 +40,7 @@ const UserAssignedToTask = ({ users }: UserAssignedToTaskProps) => {
       {users.slice(0, countElement).map((user) => (
         <UserAvatar key={user.user_id} user={user} />
       ))}
-      {
-        users.length - countElement > 0
-          ? <Other count={users.length - countElement} />
-          : ''
-      }
+      { users.length - countElement > 0 && <Other count={users.length - countElement} /> }
     </div>);
 };
 
