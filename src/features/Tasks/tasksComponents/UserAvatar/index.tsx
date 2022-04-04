@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 import classes from './index.module.scss';
-
-type UserProps = {
-  name: string,
-  logo?: string
-}
+import { TUser } from 'store/slice/user/entities';
 
 type UserAvatarProps = {
-  user: UserProps
+  user: TUser,
 }
 
 const UserAvatar = ({ user }: UserAvatarProps) => {
