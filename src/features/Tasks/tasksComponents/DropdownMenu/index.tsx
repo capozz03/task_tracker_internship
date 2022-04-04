@@ -4,13 +4,15 @@ import { EllipsisOutlined } from '@ant-design/icons';
 import style from './index.module.scss';
 
 export const DropdownMenu = () => {
+  const { Item } = Menu;
+
   const menu = (
     <Menu className={style.dropdownMenu}>
-      <Menu.Item key="1">Дублировать задачу</Menu.Item>
-      <Menu.Item key="2">Переместить в архив</Menu.Item>
-      <Menu.Item key="3" className={style.delete}>
+      <Item key="1">Дублировать задачу</Item>
+      <Item key="2">Переместить в архив</Item>
+      <Item key="3" className={style.delete}>
         Удалить задачу
-      </Menu.Item>
+      </Item>
     </Menu>
   );
 

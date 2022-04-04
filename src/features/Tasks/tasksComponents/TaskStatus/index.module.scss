@@ -1,0 +1,24 @@
+@import 'shared/assets/styles';
+
+.taskStatus,
+.taskStatusItem {
+  font: $h6-bold;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.taskStatus {
+  color: $grey-0 !important;
+  border-radius: 16px !important;
+}
+
+.taskStatusItem {
+  color: $grey-800;
+  padding: 8px 24px !important;
+  &:last-child {
+    border-top: 1px solid $grey-400;
+  }
+  &:hover {
+    background-color: #0062ff0d;
+  }
+}
