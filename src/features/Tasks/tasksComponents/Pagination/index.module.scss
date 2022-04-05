@@ -1,0 +1,100 @@
+@import "src/shared/assets/styles";
+
+:global(.ant-pagination-total-text){
+  font: $p-regular !important;
+  color: $grey-700 !important;
+  line-height: 32px !important;
+  margin-right: 30px !important;
+}
+
+:global(.ant-pagination-item) {
+  border: none !important;
+  font: $p-regular !important;
+  color: $grey-600;
+  margin-right: 0 !important;
+  :global(a){
+    line-height: 32px;
+  }
+}
+
+:global(.ant-pagination-item-active){
+  color: $colors-blue !important;
+  font: $p-medium !important;
+}
+
+:global(.ant-pagination-prev){
+  border: 1px solid $grey-300 !important;
+  border-radius: 8px !important;
+  :global(.ant-pagination-item-link){
+    border: none !important;
+    border-radius: 8px !important;
+  }
+  :global(span){
+    color: $grey-600
+  }
+}
+
+:global(.ant-pagination-next){
+  border: 1px solid $grey-300 !important;
+  border-radius: 8px !important;
+  :global(.ant-pagination-item-link){
+    border: none !important;
+    border-radius: 8px !important;
+  }
+  :global(span){
+    color: $grey-600
+  }
+}
+
+:global(.ant-pagination-options){
+  border: 1px solid $grey-300 !important;
+  border-radius: 8px !important;
+  width: 61px;
+
+  :global(.ant-select-selector){
+    padding: 0 !important;
+  }
+
+  :global(.ant-select){
+    width: 100% !important;
+  }
+  :global(.ant-select-selector){
+    border-radius: 8px !important;
+    border: none !important;
+  }
+
+  :global(.ant-select-arrow){
+    right: 12px !important;
+    :global(span){
+      display: none;
+    }
+  }
+  :global(.ant-select-arrow::after){
+    content: '';
+    display: block;
+    height: 16px;
+    width: 8px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background-image: url(CaretUpDownOutline.svg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+  :global(.ant-select-selector::before){
+    content: '';
+    display: block;
+    position: absolute !important;
+    height: 100%;
+    width: 1px;
+    background-color: $grey-300;
+    right: 24px;
+  }
+  :global(.ant-select-selection-item){
+    font: $p-regular !important;
+    color: $grey-600 !important;
+    line-height: 32px !important;
+    text-align: center;
+    padding-right: 24px !important;
+  }
+}
