@@ -22,6 +22,7 @@ const UserAssignedToTask = ({ users }: UserAssignedToTaskProps) => {
   const wrap = useRef<HTMLDivElement | null>(null);
   const [countElement, setCountElement] = useState(0);
   const [width, setWidth] = useState(0);
+  const colors = ['#FFC542', '#A461D8', '#A4E3FE', '#FC5A5A', '#A461D8', '#FF9AD5', '#50B5FF'];
   useEffect(() => {
     const trackingWidthWrapper = () => setWidth(() => wrap.current!.clientWidth);
     window.addEventListener('resize', trackingWidthWrapper);
@@ -37,8 +38,8 @@ const UserAssignedToTask = ({ users }: UserAssignedToTaskProps) => {
   }, [wrap.current, width]);
   return (
     <div className={classes.users} ref={wrap}>
-      {users.slice(0, countElement).map((user) => (
-        <UserAvatar key={user.user_id} user={user} />
+      {users.slice(0, countElement).map((user, index) => (
+        <UserAvatar key={user.user_id} user={user} color={colors[index]} />
       ))}
       { users.length - countElement > 0 && <Other count={users.length - countElement} /> }
     </div>);
