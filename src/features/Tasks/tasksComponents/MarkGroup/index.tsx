@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import Mark from 'features/Tasks/tasksComponents/Mark';
 import { TMark } from 'store/slice/task/entities';
-import classes from './index.module.scss';
+import styles from './index.module.scss';
 
 type MarkGroupProps = {
   marks: TMark[]
@@ -12,7 +12,7 @@ type OtherProps = {
 }
 
 const Other = ({ count }: OtherProps) => (
-  <span className={classes.others}>
+  <span className={styles.others}>
     {`+${count}`}
   </span>
 );
@@ -37,7 +37,7 @@ const MarkGroup = ({ marks }:MarkGroupProps) => {
     setCountElement(wrap.current!.offsetHeight < 70 && wrap.current!.offsetWidth > 170 ? 3 : 2);
   }, [wrap.current, window]);
   return (
-    <div ref={wrap} className={classes.markGroup}>
+    <div ref={wrap} className={styles.markGroup}>
       {marks.slice(0, countElement).map((mark) => (
         <Mark mark={mark} key={mark.task_tag_id} />
       ))}
