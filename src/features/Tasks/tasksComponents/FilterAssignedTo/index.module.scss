@@ -1,0 +1,52 @@
+@import 'src/shared/assets/styles';
+
+.text{
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+:global(.ant-radio-group) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0;
+  height: 36px;
+}
+
+:global(.ant-radio-button-wrapper) {
+  height: 100% !important;
+  color: $grey-800 !important;
+  border: 0 !important;
+  text-align: center;
+
+  &:not(:first-child) {
+    margin: 0 16px !important;
+  }
+
+  &::before {
+    background-color: transparent !important;
+  }
+
+  &:focus-within {
+    box-shadow: 0 0 !important;
+  }
+
+  svg{
+    margin: auto 8px auto 0;
+  }
+  .wrapper{
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+}
+
+:global(.ant-radio-button-checked) {
+  filter: drop-shadow(0px 1px 4px rgba($grey-800, 0.1));
+  background: $grey-0;
+  border-radius: 8px;
+  border: 1px solid $grey-300;
+}
