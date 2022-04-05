@@ -1,0 +1,44 @@
+@import "src/shared/assets/styles";
+
+.button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+
+  border: 1px solid $grey-300;
+  box-sizing: border-box;
+  border-radius: 8px;
+  background: $grey-100;
+
+  &.active {
+    background: $grey-200;
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .text {
+    font: $p-medium;
+    color: $grey-600;
+    margin: 0 8px;
+  }
+
+  .counter{
+    display: none;
+    background: $main-blue;
+    border-radius: 30px;
+    font: $h6-bold;
+    color: $grey-0;
+    padding: 2px 4px;
+    width: 22px;
+    height: 20px;
+    &.active{
+      display: inline;
+    }
+  }
+
+}
