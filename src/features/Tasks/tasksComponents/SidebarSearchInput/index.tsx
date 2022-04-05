@@ -1,12 +1,12 @@
 import React from 'react';
 import styles from './index.module.scss';
-import { Input } from 'antd';
+import { Input, InputProps } from 'antd';
 import SearchIcon from './icon';
 
-const SearchInput = () => (
+const SearchInput = (props: InputProps) => (
   <div className={styles.input}>
     <SearchIcon />
-    <Input placeholder="Поиск" />
+    <Input {...props} />
   </div>
 );
 
