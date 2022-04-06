@@ -3,8 +3,13 @@ import { Select } from 'antd';
 import style from './index.module.scss';
 import { taskStatuses } from './constants';
 
-export const TaskStatus = () => {
-  const [color, setColor] = useState<string>('#50B5FF');
+type TaskStatusProps = {
+  defaultValue: string,
+  defaultColor: string,
+}
+
+export const TaskStatus = ({ defaultValue, defaultColor }: TaskStatusProps) => {
+  const [color, setColor] = useState<string>(`${defaultColor}`);
   const { Option } = Select;
 
   const changeTaskStatus = (e: string) => {
@@ -18,7 +23,7 @@ export const TaskStatus = () => {
   return (
     <Select
       className={style.taskStatus}
-      defaultValue="Создана"
+      defaultValue={defaultValue}
       bordered={false}
       showArrow={false}
       dropdownMatchSelectWidth={false}
