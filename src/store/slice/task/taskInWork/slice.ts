@@ -20,7 +20,6 @@ const taskInWorkSlice = createSlice({
   name: 'taskInWorkSlice',
   initialState,
   reducers: {},
-  // @ts-ignore
   extraReducers: {
     [getTasksAsync.pending.type]: (state) => ({
       ...state,

@@ -106,8 +106,7 @@ export type TTasksReducer = {
 };
 
 export type TTasksResponse = {
-  data: {
-    tasks: TTask[] | null;
-  };
+  data: TTask[] | null;
+
   pagination?: TPagination | null;
 };
