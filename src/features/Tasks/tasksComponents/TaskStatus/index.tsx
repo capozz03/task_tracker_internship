@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Select } from 'antd';
 import style from './index.module.scss';
 import { taskStatuses } from './constants';
 
-export const TaskStatus = () => {
+type TaskStatusProps = {
+  defaultValue: string
+}
+
+export const TaskStatus = ({ defaultValue }: TaskStatusProps) => {
   const [color, setColor] = useState<string>('#50B5FF');
   const { Option } = Select;
 
@@ -15,10 +19,14 @@ export const TaskStatus = () => {
     });
   };
 
+  useEffect(() => {
+    changeTaskStatus(defaultValue);
+  }, []);
+
   return (
     <Select
       className={style.taskStatus}
-      defaultValue="Создана"
+      defaultValue={defaultValue}
       bordered={false}
       showArrow={false}
       dropdownMatchSelectWidth={false}

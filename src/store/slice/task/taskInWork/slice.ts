@@ -1,38 +1,48 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatuses } from 'shared';
 import { getTasksAsync } from './asyncActions';
-import { TTask } from '../entities';
+import { TTasksReducer, TTasksResponse } from '../entities';
 
 const initialState = {
   tasks: null,
+  pagination: {
+    items_count: 1,
+    items_total: 1,
+    page_current: 1,
+    page_total: 1,
+    per_page: 3,
+  },
   status: RequestStatuses.IDLE,
   error: null,
-};
+} as TTasksReducer;
 
 const taskInWorkSlice = createSlice({
   name: 'taskInWorkSlice',
   initialState,
   reducers: {},
+  // @ts-ignore
   extraReducers: {
     [getTasksAsync.pending.type]: (state) => ({
       ...state,
       status: RequestStatuses.LOADING,
     }),
-    [getTasksAsync.fulfilled.type]: (state, { payload: posts }: PayloadAction<TTask[]>) => ({
+    [getTasksAsync.fulfilled.type]: (state, { payload: data }: PayloadAction<TTasksResponse>) => ({
       ...state,
       status: RequestStatuses.SUCCESS,
-      posts,
+      tasks: data.data,
+      pagination: data.pagination,
     }),
     [getTasksAsync.rejected.type]: (state, { payload: error }: PayloadAction<Error>) => ({
       ...state,
       status: RequestStatuses.FAILURE,
-      posts: null,
+      tasks: null,
+      pagination: null,
       error,
     }),
   },
 });
 
 // export const { addTodo } = taskInWorkSlice.actions;
-export const mainReducer = taskInWorkSlice.reducer;
+export const taskInWorkReducer = taskInWorkSlice.reducer;
 // const selectSelf = (state: any) => state;
 // export const testSelector = createSelector(selectSelf, (state: any) => state.main.todo);

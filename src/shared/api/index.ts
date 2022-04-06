@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { clientCookies } from 'shared';
 
 export function apiUrl() {
-  const apiHost = 'https://jsonplaceholder.typicode.com/';
+  const apiHost = 'https://swimlane-intership-group2.task.dev.tiny-services.ladcloud.ru/';
   return apiHost;
 }
 

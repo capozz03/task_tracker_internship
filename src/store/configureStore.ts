@@ -1,8 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { MainSlice } from './slice';
+import { MainSlice, TaskInWorkSlice } from './slice';
 
 const rootReducer = combineReducers({
   main: MainSlice.mainReducer,
+  taskInWork: TaskInWorkSlice.taskInWorkReducer,
 });
 
 export const store = configureStore({
