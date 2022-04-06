@@ -1,23 +1,30 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { userAuthAsync } from '../../../store/slice/user';
 import { Form, Input, Button } from 'antd';
 import styles from './index.module.scss';
 
+type TFormValues = {
+  login: string;
+};
+
 const AuthForm = () => {
-  const onFinish = () => console.log('finish');
-  const onFinishFailed = () => console.log('finish fail');
+  const dispatch = useDispatch();
+
+  const onFinish = (values: TFormValues) => {
+    dispatch(userAuthAsync(values.login));
+  };
 
   return (
     <div className={styles.formWrapper}>
       <h2 className={styles.formTitle}>Авторизация</h2>
       <Form
         name="auth"
-        initialValues={{ remember: true }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
       >
         <Form.Item
           label="Логин"
-          name="username"
+          name="login"
           rules={[{ required: true, message: 'Введите логин' }]}
         >
           <Input />
