@@ -1,3 +1,8 @@
 import React from 'react';
+import TasksLayout from './TasksLayout';
 
-export const TasksPageComponent = () => <h1>Tasks Page</h1>;
+export const TasksPageComponent = () => (
+  <TasksLayout>
+    Content
+  </TasksLayout>
+);

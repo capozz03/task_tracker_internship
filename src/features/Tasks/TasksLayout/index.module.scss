@@ -1,0 +1,43 @@
+@import "src/shared/assets/styles";
+
+.layout {
+  height: 100vh;
+  width: 100vw;
+  background: $grey-100;
+
+  .sider {
+    width: 250px;
+    background: $grey-0;
+
+    .wrapper {
+      margin: 40px 20px 0 16px;
+    }
+  }
+
+  .main {
+    position: relative;
+    background: inherit;
+    margin: 22px 0;
+
+    .profile{
+      position: absolute;
+      top: 5px;
+      right: 27px;
+    }
+
+    .header {
+      background: inherit;
+      margin: 6px 0;
+      height: auto;
+
+      .text {
+        font: $h1;
+        color: $grey-800;
+      }
+    }
+
+    .content {
+
+    }
+  }
+}
