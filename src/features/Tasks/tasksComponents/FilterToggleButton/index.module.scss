@@ -11,6 +11,9 @@
   box-sizing: border-box;
   border-radius: 8px;
   background: $grey-100;
+  @include media-breakpoint-down(sm){
+    background: transparent;
+  }
 
   &.active {
     background: $grey-200;
@@ -25,6 +28,9 @@
     font: $p-medium;
     color: $grey-600;
     margin: 0 8px;
+    @include media-breakpoint-down(sm){
+      display: none;
+    }
   }
 
   .counter{
