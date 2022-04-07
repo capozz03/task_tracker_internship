@@ -3,16 +3,16 @@ import styles from './index.module.scss';
 import { Layout } from 'antd';
 import FilterAssignedTo from '../tasksComponents/FilterAssignedTo';
 import SidebarSearchInput from '../tasksComponents/SidebarSearchInput';
-import Profile from '../tasksComponents/Profile';
 import NotificationsButton from '../tasksComponents/NotificationsButton';
 import FilterToggleButton from '../tasksComponents/FilterToggleButton';
 import { CloseOutlined } from '@ant-design/icons';
 import { CardsCompleted } from '../tasksComponents/CardsCompleted';
+import UserAvatarMenu from '../../Auth/UserAvatarMenu';
 
 const { Sider, Header, Content } = Layout;
 
 const TasksLayout = () => {
-  const [sidebarShow, setSidebarShow] = useState(false);
+  const [sidebarShow, setSidebarShow] = useState(true);
 
   return (
     <Layout className={styles.layout}>
@@ -28,7 +28,9 @@ const TasksLayout = () => {
       <Layout className={styles.main}>
         <Header className={styles.header}>
           <div className={styles.text}>Задачи</div>
-          <Profile className={styles.profile} />
+          <div className={styles.profile}>
+            <UserAvatarMenu />
+          </div>
           <div className={styles.tools}>
             <FilterToggleButton
               active={sidebarShow}
@@ -43,7 +45,6 @@ const TasksLayout = () => {
         </Header>
         <Content className={styles.content}>
           <span className={styles.headerText}>Задачи</span>
-
           <CardsCompleted />
         </Content>
       </Layout>
