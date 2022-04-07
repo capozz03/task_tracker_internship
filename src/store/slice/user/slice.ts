@@ -1,8 +1,9 @@
+import { TUser } from 'store/slice/user/entities';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatuses, clientCookies } from 'shared';
 import { TUserState, TAuthResponse } from './entities';
 import { userSliceActions } from './actions';
-import { userAuthAsync } from './asyncActions';
+import { userAuthAsync, getUserInfoAsync } from './asyncActions';
 
 const initialState = {
   token: clientCookies.getToken() || null,
@@ -33,6 +34,22 @@ const userSlice = createSlice({
       ...state,
       status: RequestStatuses.FAILURE,
       token: null,
+      error,
+    }),
+
+    [getUserInfoAsync.pending.type]: (state) => ({
+      ...state,
+      status: RequestStatuses.LOADING,
+      error: null,
+    }),
+    [getUserInfoAsync.fulfilled.type]: (state, { payload }: PayloadAction<TUser>) => ({
+      ...state,
+      status: RequestStatuses.SUCCESS,
+      userInfo: payload,
+    }),
+    [getUserInfoAsync.rejected.type]: (state, { payload: error }: PayloadAction<Error>) => ({
+      ...state,
+      status: RequestStatuses.FAILURE,
       error,
     }),
   },

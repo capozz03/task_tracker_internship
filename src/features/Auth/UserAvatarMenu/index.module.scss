@@ -1,0 +1,43 @@
+@import "src/shared/assets/styles";
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.icon {
+    font-size: 10px;
+    
+    & > svg {
+        fill: $grey-600;
+    }
+}
+
+.btn {
+    margin: 0;
+    padding: 0 10px;
+    font: $p-medium;
+    text-align: start;
+    color: $colors-red;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    min-width: 0 !important;
+
+    & ul {
+        padding: 5px;
+        border-radius: 8px;
+        border: 1px solid $grey-100;
+        box-shadow: 0px 8px 40px rgba($grey-900, 0.15);
+    }
+
+    & li {
+        border-radius: 5px;
+    }
+}

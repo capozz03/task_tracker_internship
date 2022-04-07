@@ -1,22 +1,10 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { TasksPageComponent } from 'features';
+import UserAvatarMenu from 'features/Auth/UserAvatarMenu';
 
-import { useDispatch } from 'react-redux';
-import { logoutUser } from 'store/slice/user';
-
-export const TasksPage = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const logoutAction = () => {
-    dispatch(logoutUser());
-    navigate('/auth');
-  };
-
-  return (
-    <div>
-      <TasksPageComponent />
-      <button type="button" onClick={logoutAction}>Выйти</button>
-    </div>);
-};
+export const TasksPage = () => (
+  <div style={{ width: '100%', padding: '20px 40px', display: 'flex', justifyContent: 'space-between' }}>
+    <TasksPageComponent />
+    <UserAvatarMenu />
+  </div>
+);
