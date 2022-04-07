@@ -19,8 +19,8 @@
   border: 0 !important;
   text-align: center;
 
-  &:not(:first-child) {
-    margin: 0 16px !important;
+  &:not(:last-child) {
+    margin-right: 16px !important;
   }
 
   &::before {
