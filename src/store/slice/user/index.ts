@@ -1,3 +1,3 @@
-export { getUserToken } from './selectors';
-export { userReducer } from './slice';
-export { userAuthAsync } from './asyncActions';
+export { userToken, userInfo } from './selectors';
+export { userReducer, logoutUser } from './slice';
+export { userAuthAsync, getUserInfoAsync } from './asyncActions';

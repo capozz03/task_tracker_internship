@@ -4,9 +4,11 @@ export type TUser = {
   user_id: number;
   name: string;
   logo?: string;
+  permissions?: any[];
 };
 
 export type TUserState = {
+  userInfo: TUser | null;
   token: string | null;
   status: RequestStatuses;
   error: Error | null;
