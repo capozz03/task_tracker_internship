@@ -1,2 +1,2 @@
 export { routes, clientCookies, RequestStatuses } from './helpers';
-export { $api } from './api';
+export { $api, $apiTask } from './api';
