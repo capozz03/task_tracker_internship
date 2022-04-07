@@ -1,6 +1,6 @@
 import { Progress } from 'antd';
 import React from 'react';
-import { TTag, TTagsTask } from 'store/slice/task/entities';
+import { TTagsTask } from 'store/slice/task/entities';
 import { TUser } from 'store/slice/user/entities';
 import CardName from '../../CardName';
 import { DropdownMenu } from '../../DropdownMenu';
