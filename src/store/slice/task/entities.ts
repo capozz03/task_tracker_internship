@@ -51,6 +51,23 @@ export type TRoles = {
   assign_user: TUser;
 };
 
+type TTaskFormFieldValue = {
+  label: string;
+  value: string;
+}
+
+type TTaskFormField = {
+  type: 'select';
+  values: TTaskFormFieldValue[];
+  field_name: string;
+  field_label: string;
+}
+
+export type TTaskForm = {
+  name: string;
+  fields: TTaskFormField[];
+}
+
 export type TTask = {
   task_id: string;
   title: string;
@@ -61,22 +78,7 @@ export type TTask = {
   updated: string;
   status: TStatus;
   priority: TPriority | null;
-  form?: {
-    name: string;
-    fields: [
-      {
-        type: 'select';
-        values: [
-          {
-            label: string;
-            value: string;
-          },
-        ];
-        field_name: string;
-        field_label: string;
-      },
-    ];
-  };
+  form?: TTaskForm;
   form_available?: boolean;
   form_result?: any | null;
   roles: TRoles[];

@@ -3,12 +3,18 @@ import TaskInWork from './TaskInWork';
 import styles from './index.module.scss';
 import Pagination from '../Pagination';
 import { useDispatch, useSelector } from 'react-redux';
-import { TState } from '../../../../store/configureStore';
 import { TaskInWorkSlice } from 'store/slice';
 
 const TasksInWork = (props: ComponentProps<any>) => {
   const dispatch = useDispatch();
-  const { pagination, tasks } = useSelector((state: TState) => state.taskInWork);
+  const pagination = useSelector(TaskInWorkSlice.getPagination);
+  const tasks = useSelector(TaskInWorkSlice.getTasks);
+  const paginationHandler = (page: number, pageSize: number) => {
+    dispatch(TaskInWorkSlice.getTasksAsync({
+      page,
+      per_page: pageSize,
+    }));
+  };
 
   useEffect(() => {
     dispatch(TaskInWorkSlice.getTasksAsync({
@@ -16,13 +22,6 @@ const TasksInWork = (props: ComponentProps<any>) => {
       per_page: 3,
     }));
   }, []);
-
-  const paginationHandler = (page: number, pageSize: number) => {
-    dispatch(TaskInWorkSlice.getTasksAsync({
-      page,
-      per_page: pageSize,
-    }));
-  };
 
   return (
     <div className={styles.tasks_group} {...props}>

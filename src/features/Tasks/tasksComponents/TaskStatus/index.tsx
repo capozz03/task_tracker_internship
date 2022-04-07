@@ -14,15 +14,15 @@ export const TaskStatus = ({ ...props }: SelectProps) => {
       }
     });
   };
-
+  const currentStatus = taskStatuses.find((el) => el.status === props.defaultValue)!.taskStatusId;
   useEffect(() => {
-    changeTaskStatus(taskStatuses.find((el) => el.status === props.defaultValue)!.taskStatusId);
+    changeTaskStatus(currentStatus);
   }, []);
 
   return (
     <Select
       className={style.taskStatus}
-      defaultValue={taskStatuses.find((el) => el.status === props.defaultValue)!.taskStatusId}
+      defaultValue={currentStatus}
       bordered={false}
       showArrow={false}
       dropdownMatchSelectWidth={false}

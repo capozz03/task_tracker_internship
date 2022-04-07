@@ -7,9 +7,6 @@
   border-radius: 20px;
   margin-bottom: 8px;
   padding: 15px 25px;
-  & > * {
-
-  }
 }
 
 .cardName{
@@ -54,30 +51,4 @@
       display: none !important;
     }
   }
-}
-
-@include media-breakpoint-down(xxl){
-  .cardName{
-    width: 400px;
-  }
-}
-
-@include media-breakpoint-down(xl){
-
-}
-
-@include media-breakpoint-down(lg){
-
-}
-
-@include media-breakpoint-down(md){
-
-}
-
-@include media-breakpoint-down(sm){
-
-}
-
-@include media-breakpoint-down(xs){
-
 }
