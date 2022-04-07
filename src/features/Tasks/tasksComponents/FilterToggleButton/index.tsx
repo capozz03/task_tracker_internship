@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import classNames from 'classnames';
 import styles from './index.module.scss';
@@ -7,29 +8,19 @@ type FilterToggleButtonProps = {
   active?: boolean;
   filtersCount?: number;
   hideText?: boolean;
-  onClick?: () => any;
-};
-
-const defaultProps = {
-  active: false,
-  filtersCount: 0,
-  hideText: false,
-  onClick: () => {},
+  onClick?: () => void;
 };
 
 const FilterToggleButton = ({
-  active,
-  filtersCount,
-  onClick,
-  hideText,
+  active = false,
+  filtersCount = 0,
+  onClick = () => null,
+  hideText = false,
 }: FilterToggleButtonProps) => (
   <button
     type="button"
     className={classNames(styles.button, active ? styles.active : '')}
-    onClick={(e) => {
-      e.currentTarget.classList.toggle(styles.active);
-      if (onClick) onClick();
-    }}
+    onClick={onClick}
   >
     <IconFilter />
     <span hidden={hideText} className={styles.text}>
@@ -40,6 +31,5 @@ const FilterToggleButton = ({
     </span>
   </button>
 );
-FilterToggleButton.defaultProps = defaultProps;
 
 export default FilterToggleButton;
