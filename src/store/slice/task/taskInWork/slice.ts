@@ -28,8 +28,8 @@ const taskInWorkSlice = createSlice({
     [getTasksAsync.fulfilled.type]: (state, { payload: data }: PayloadAction<TTasksResponse>) => ({
       ...state,
       status: RequestStatuses.SUCCESS,
-      tasks: data.data,
-      pagination: data.pagination,
+      tasks: data?.data,
+      pagination: data?.pagination,
     }),
     [getTasksAsync.rejected.type]: (state, { payload: error }: PayloadAction<Error>) => ({
       ...state,
@@ -41,7 +41,4 @@ const taskInWorkSlice = createSlice({
   },
 });
 
-// export const { addTodo } = taskInWorkSlice.actions;
 export const taskInWorkReducer = taskInWorkSlice.reducer;
-// const selectSelf = (state: any) => state;
-// export const testSelector = createSelector(selectSelf, (state: any) => state.main.todo);

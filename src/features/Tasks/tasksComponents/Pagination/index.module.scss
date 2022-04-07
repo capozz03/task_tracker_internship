@@ -12,6 +12,7 @@
   font: $p-regular !important;
   color: $grey-600;
   margin-right: 0 !important;
+  background-color: transparent !important;
   :global(a){
     line-height: 32px;
   }

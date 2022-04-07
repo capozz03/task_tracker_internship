@@ -110,3 +110,26 @@ export type TTasksResponse = {
 
   pagination?: TPagination | null;
 };
+
+export type TTaskSearch = {
+  sort?: 'date~DESC' | 'title~ASC',
+  search? : string,
+  assign_user_id?: string[],
+  assigned_to_me?: true,
+  storage_files_gte?: number,
+  tag_id?: string[],
+  role_id? :string[],
+  role_id_for_me?: string[],
+  priority_id?: string[],
+  status_id?:string[],
+  progress_gte?:string,
+  relation_type?: string,
+  relation_id?: string,
+  page?: number,
+  per_page?: number,
+}
+
+export type TTaskStatusChange = {
+  task_id: string,
+  task_status_id: string,
+}
