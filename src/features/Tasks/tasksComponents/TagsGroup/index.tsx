@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 import Tag from 'features/Tasks/tasksComponents/Tag';
-import { TTag } from 'store/slice/task/entities';
+import { TTagsTask } from 'store/slice/task/entities';
 import styles from './index.module.scss';
 
 type TagsGroupProps = {
-  tags: TTag[]
+  tags: TTagsTask[]
 }
 
 type OtherProps = {
@@ -39,7 +39,7 @@ const TagsGroup = ({ tags }:TagsGroupProps) => {
   return (
     <div ref={wrap} className={styles.markGroup}>
       {tags.slice(0, countElement).map((tag) => (
-        <Tag tag={tag} key={tag.task_tag_id} />
+        <Tag tag={tag.task_tag} key={tag.task_tag.task_tag_id} />
       ))}
       { tags.length - countElement > 0 && <Other count={tags.length - countElement} /> }
     </div>);

@@ -1,40 +1,40 @@
-import React, { useState } from 'react';
-import { Select } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Select, SelectProps } from 'antd';
 import style from './index.module.scss';
 import { taskStatuses } from './constants';
 
-type TaskStatusProps = {
-  defaultValue: string,
-  defaultColor: string,
-}
-
-export const TaskStatus = ({ defaultValue, defaultColor }: TaskStatusProps) => {
-  const [color, setColor] = useState<string>(`${defaultColor}`);
+export const TaskStatus = ({ ...props }: SelectProps) => {
+  const [color, setColor] = useState<string>('#50B5FF');
   const { Option } = Select;
 
   const changeTaskStatus = (e: string) => {
-    Object.values(taskStatuses).forEach(({ status, color }) => {
-      if (e === status) {
+    Object.values(taskStatuses).forEach(({ color, taskStatusId }) => {
+      if (e === taskStatusId) {
         setColor(color);
       }
     });
   };
+  const currentStatus = taskStatuses.find((el) => el.status === props.defaultValue)!.taskStatusId;
+  useEffect(() => {
+    changeTaskStatus(currentStatus);
+  }, []);
 
   return (
     <Select
       className={style.taskStatus}
-      defaultValue={defaultValue}
+      defaultValue={currentStatus}
       bordered={false}
       showArrow={false}
       dropdownMatchSelectWidth={false}
       dropdownStyle={{ borderRadius: '8px' }}
       onSelect={changeTaskStatus}
       style={{ backgroundColor: `${color}` }}
+      onChange={props.onChange}
     >
-      {taskStatuses.map(({ status }) => (
+      {taskStatuses.map(({ status, taskStatusId }) => (
         <Option
-          key={status}
-          value={status}
+          key={taskStatusId}
+          value={taskStatusId}
           className={style.taskStatusItem}
         >
           {status}

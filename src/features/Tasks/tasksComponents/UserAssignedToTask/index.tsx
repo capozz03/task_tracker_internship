@@ -1,10 +1,10 @@
 import React, { useRef, useEffect, useState } from 'react';
 import UserAvatar from 'features/Tasks/tasksComponents/UserAvatar';
 import classes from './index.module.scss';
-import { TUser } from 'store/slice/user/entities';
+import { TRoles } from 'store/slice/task/entities';
 
 type UserAssignedToTaskProps = {
-  users: TUser[]
+  users: TRoles[]
 }
 
 type OtherProps = {
@@ -39,7 +39,7 @@ const UserAssignedToTask = ({ users }: UserAssignedToTaskProps) => {
   return (
     <div className={classes.users} ref={wrap}>
       {users.slice(0, countElement).map((user, index) => (
-        <UserAvatar key={user.user_id} user={user} color={colors[index]} />
+        <UserAvatar key={user.assign_user.user_id} user={user.assign_user} color={colors[index]} />
       ))}
       { users.length - countElement > 0 && <Other count={users.length - countElement} /> }
     </div>);

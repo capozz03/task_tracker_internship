@@ -9,11 +9,11 @@ type UserAvatarProps = {
 
 const UserAvatar = ({ user, color }: UserAvatarProps) => {
   const [loaded, setLoaded] = useState(false);
-  const abbr = user.name.split(' ').map((word) => word.charAt(0).toUpperCase()).join('');
+  const firstLetterFirstAndLastName = user.name.split(' ').map((word) => word.charAt(0).toUpperCase()).slice(0, 2).join('');
   return (
     <div
       className={loaded ? classes.avatar : classes.no_avatar}
-      data-attr={abbr}
+      data-attr={firstLetterFirstAndLastName}
       title={user.name}
       style={{
         backgroundColor: `${color}`,

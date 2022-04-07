@@ -9,8 +9,8 @@ type PriorityProps = {
 
 const PriorityStatus = ({ type }: PriorityProps) => (
   <span className={styles.priorityStatus}>
-    <span className={classNames(styles[type], styles.dot)} />
-    <span className={styles.text}>{Priority[type]}</span>
+    <span className={classNames(styles[Priority[type]], styles.dot)} />
+    <span className={styles.text}>{type}</span>
   </span>
 );
 

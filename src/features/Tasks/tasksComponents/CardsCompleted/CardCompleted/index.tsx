@@ -1,6 +1,6 @@
 import { Progress } from 'antd';
 import React from 'react';
-import { TTag } from 'store/slice/task/entities';
+import { TTag, TTagsTask } from 'store/slice/task/entities';
 import { TUser } from 'store/slice/user/entities';
 import CardName from '../../CardName';
 import { DropdownMenu } from '../../DropdownMenu';
@@ -11,7 +11,7 @@ import style from './index.module.scss';
 
 type CardCompletedProps = {
   user: TUser;
-  tags: TTag[];
+  tags: TTagsTask[];
 };
 
 export const CardCompleted = ({ user, tags }: CardCompletedProps) => (
@@ -23,7 +23,7 @@ export const CardCompleted = ({ user, tags }: CardCompletedProps) => (
         checkListChecked={4}
         checkListTotal={5}
       />
-      <TaskStatus defaultValue="Выполнена" defaultColor="#A461D8" />
+      <TaskStatus defaultValue="Выполнена" />
       <TagsGroup tags={tags} />
       <div style={{ width: 170 }}>
         <Progress percent={30} size="small" strokeColor="#3DD598" />
