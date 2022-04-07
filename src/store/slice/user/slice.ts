@@ -6,6 +6,7 @@ import { userSliceActions } from './actions';
 import { userAuthAsync, getUserInfoAsync } from './asyncActions';
 
 const initialState = {
+  userId: clientCookies.getUserId() || null,
   token: clientCookies.getToken() || null,
   status: RequestStatuses.IDLE,
   error: null,
@@ -22,19 +23,22 @@ const userSlice = createSlice({
       error: null,
     }),
     [userAuthAsync.fulfilled.type]: (state, { payload }: PayloadAction<TAuthResponse>) => {
-      clientCookies.setToken(payload.token);
+      clientCookies.setToken(payload.data.token);
+      clientCookies.setUserId(payload.userId);
       return {
         ...state,
         status: RequestStatuses.SUCCESS,
-        token: payload.token,
         error: null,
+        userId: payload.userId,
+        token: payload.data.token,
       };
     },
     [userAuthAsync.rejected.type]: (state, { payload: error }: PayloadAction<Error>) => ({
       ...state,
       status: RequestStatuses.FAILURE,
-      token: null,
       error,
+      token: null,
+      userId: null,
     }),
 
     [getUserInfoAsync.pending.type]: (state) => ({
