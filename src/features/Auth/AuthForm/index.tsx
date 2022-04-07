@@ -27,16 +27,13 @@ const AuthForm = () => {
   return (
     <div className={styles.formWrapper}>
       <h2 className={styles.formTitle}>Авторизация</h2>
-      <Form
-        name="auth"
-        onFinish={onFinish}
-      >
+      <Form name="auth" onFinish={onFinish}>
         <Form.Item
           label="Логин"
           name="login"
           rules={[{ required: true, message: 'Введите логин' }]}
         >
-          <Input />
+          <Input className={styles.input} />
         </Form.Item>
 
         <Form.Item>

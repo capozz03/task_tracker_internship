@@ -1,7 +1,4 @@
 @import 'antd/dist/antd.css';
 @import './fonts.scss';
 @import './vars.scss';
-
-* {
-  // font: $h1;
-}
+@import './mixins.scss';

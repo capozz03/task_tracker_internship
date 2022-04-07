@@ -1,7 +1,8 @@
-@import 'shared/assets/styles';
+@import 'src/shared/assets/styles';
 
 .dropdownButton > button {
   color: $grey-500;
+  background: transparent;
   border: none;
   outline: none;
   box-shadow: none;

@@ -1,11 +1,10 @@
-@import 'shared/assets/styles';
+@import 'src/shared/assets/styles';
 
 .container {
   padding: 16px;
 }
 
 .cardCompleted {
-  margin: 36px;
   border-radius: 16px;
   border: 1px solid #dcdce0;
   .cardCompletedTitle {

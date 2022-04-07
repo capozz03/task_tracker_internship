@@ -1,11 +1,7 @@
 @import 'src/shared/assets/styles';
 
 .text{
-  font-family: 'Inter', sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 24px;
+  font: $p-medium;
 }
 
 :global(.ant-radio-group) {
@@ -17,13 +13,14 @@
 }
 
 :global(.ant-radio-button-wrapper) {
+  background: transparent !important;
   height: 100% !important;
   color: $grey-800 !important;
   border: 0 !important;
   text-align: center;
 
-  &:not(:first-child) {
-    margin: 0 16px !important;
+  &:not(:last-child) {
+    margin-right: 16px !important;
   }
 
   &::before {
