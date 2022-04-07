@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { message } from 'antd';
 import { userService } from './cashboxService';
 
 export const userAuthAsync = createAsyncThunk(
@@ -8,6 +9,7 @@ export const userAuthAsync = createAsyncThunk(
       const { data } = await userService.generateToken(id);
       return data;
     } catch (error) {
+      message.error('Пользователя с таким логином не существует');
       return rejectWithValue(error);
     }
   },
