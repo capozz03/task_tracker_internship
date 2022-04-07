@@ -1,3 +1,9 @@
 import React from 'react';
+import AuthForm from './AuthForm';
+import styles from './index.module.scss';
 
-export const AuthPageComponent = () => <h1>Auth Page</h1>;
+export const AuthPageComponent = () => (
+  <div className={styles.layout}>
+    <AuthForm />
+  </div>
+);
