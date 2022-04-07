@@ -9,13 +9,17 @@ export type TUser = {
 
 export type TUserState = {
   userInfo: TUser | null;
+  userId: string | null;
   token: string | null;
   status: RequestStatuses;
   error: Error | null;
 };
 
 export type TAuthResponse = {
-  token: string;
+  userId: string;
+  data: {
+    token: string;
+  }
 };
 
 export type TAuthResponseError = {

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { userAuthAsync, getUserInfoAsync, userToken } from 'store/slice/user';
+import { userAuthAsync, userToken } from 'store/slice/user';
 import { Form, Input, Button } from 'antd';
 import styles from './index.module.scss';
 
@@ -16,7 +16,6 @@ const AuthForm = () => {
 
   const onFinish = (values: TFormValues) => {
     dispatch(userAuthAsync(values.login));
-    dispatch(getUserInfoAsync(values.login));
   };
 
   useEffect(() => {

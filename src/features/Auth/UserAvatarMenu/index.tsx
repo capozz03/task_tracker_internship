@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { logoutUser, userInfo } from 'store/slice/user';
+import { logoutUser, userInfo, getUserInfoAsync, userId } from 'store/slice/user';
 import { Dropdown, Menu } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
 import UserAvatar from 'features/Tasks/tasksComponents/UserAvatar';
@@ -10,7 +10,15 @@ import styles from './index.module.scss';
 const UserAvatarMenu = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const info = useSelector(userInfo) || { user_id: 0, name: 'Unknown User' };
+
+  const info = useSelector(userInfo);
+  const id = useSelector(userId);
+
+  useEffect(() => {
+    if (!info && id) {
+      dispatch(getUserInfoAsync(id));
+    }
+  }, []);
 
   const logoutAction = () => {
     dispatch(logoutUser());
@@ -28,7 +36,11 @@ const UserAvatarMenu = () => {
   return (
     <Dropdown overlay={menu} trigger={['click']} overlayClassName={styles.dropdown}>
       <div className={styles.wrapper}>
-        <UserAvatar user={info} color="#FFC542" />
+        {
+          info
+            ? <UserAvatar user={info} color="#FFC542" />
+            : <UserAvatar user={{ user_id: 0, name: 'Unknown User' }} color="#FFC542" />
+        }
         <CaretDownOutlined className={styles.icon} />
       </div>
     </Dropdown>
