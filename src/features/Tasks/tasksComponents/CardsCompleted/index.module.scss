@@ -1,0 +1,19 @@
+@import 'shared/assets/styles';
+
+.container {
+  padding: 16px;
+}
+
+.cardCompleted {
+  margin: 36px;
+  border-radius: 16px;
+  border: 1px solid #dcdce0;
+  .cardCompletedTitle {
+    display: flex;
+    justify-content: space-between;
+    .title {
+      font: $h4-medium;
+      color: $grey-600;
+    }
+  }
+}

@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
-import Mark from 'features/Tasks/tasksComponents/Mark';
-import { TMark } from 'store/slice/task/entities';
+import Tag from 'features/Tasks/tasksComponents/Tag';
+import { TTag } from 'store/slice/task/entities';
 import styles from './index.module.scss';
 
-type MarkGroupProps = {
-  marks: TMark[]
+type TagsGroupProps = {
+  tags: TTag[]
 }
 
 type OtherProps = {
@@ -17,7 +17,7 @@ const Other = ({ count }: OtherProps) => (
   </span>
 );
 
-const MarkGroup = ({ marks }:MarkGroupProps) => {
+const TagsGroup = ({ tags }:TagsGroupProps) => {
   const wrap = useRef<HTMLDivElement | null>(null);
   const [countElement, setCountElement] = useState(0);
 
@@ -38,11 +38,11 @@ const MarkGroup = ({ marks }:MarkGroupProps) => {
   }, [wrap.current, window]);
   return (
     <div ref={wrap} className={styles.markGroup}>
-      {marks.slice(0, countElement).map((mark) => (
-        <Mark mark={mark} key={mark.task_tag_id} />
+      {tags.slice(0, countElement).map((tag) => (
+        <Tag tag={tag} key={tag.task_tag_id} />
       ))}
-      { marks.length - countElement > 0 && <Other count={marks.length - countElement} /> }
+      { tags.length - countElement > 0 && <Other count={tags.length - countElement} /> }
     </div>);
 };
 
-export default MarkGroup;
+export default TagsGroup;
