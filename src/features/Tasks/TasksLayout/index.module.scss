@@ -1,6 +1,11 @@
 @import "src/shared/assets/styles";
 
+$middle-screen-size: 'lg';
+$small-screen-size: 'sm';
+
 .layout {
+  display: flex;
+
   height: 100vh;
   width: 100vw;
   background: $grey-100;
@@ -8,6 +13,14 @@
   .sider {
     width: 250px;
     background: $grey-0;
+
+    @include media-breakpoint-down($middle-screen-size) {
+      order: 9;
+    }
+
+    @include media-breakpoint-down($small-screen-size){
+
+    }
 
     .wrapper {
       margin: 40px 20px 0 16px;
@@ -19,16 +32,38 @@
     background: inherit;
     margin: 22px 0;
 
-    .profile{
-      position: absolute;
-      top: 5px;
-      right: 27px;
-    }
-
     .header {
       background: inherit;
       margin: 6px 0;
       height: auto;
+
+      .tools {
+        display: none;
+
+        @include media-breakpoint-down($middle-screen-size) {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          position: absolute;
+          right: 37px;
+          top: 10px;
+          &>button{
+            margin-right: 24px;
+          }
+          *{
+            flex-shrink: 0;
+          }
+        }
+      }
+
+      .profile {
+        position: absolute;
+        top: 5px;
+        right: 27px;
+        @include media-breakpoint-down($middle-screen-size) {
+          display: none;
+        }
+      }
 
       .text {
         font: $h1;
@@ -37,6 +72,8 @@
     }
 
     .content {
+      display: flex;
+      padding: 0 38px;
 
     }
   }
