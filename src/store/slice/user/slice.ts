@@ -1,7 +1,9 @@
+import { TUser } from 'store/slice/user/entities';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatuses, clientCookies } from 'shared';
 import { TUserState, TAuthResponse } from './entities';
-import { userAuthAsync } from './asyncActions';
+import { userSliceActions } from './actions';
+import { userAuthAsync, getUserInfoAsync } from './asyncActions';
 
 const initialState = {
   token: clientCookies.getToken() || null,
@@ -12,7 +14,7 @@ const initialState = {
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: userSliceActions,
   extraReducers: {
     [userAuthAsync.pending.type]: (state) => ({
       ...state,
@@ -34,7 +36,24 @@ const userSlice = createSlice({
       token: null,
       error,
     }),
+
+    [getUserInfoAsync.pending.type]: (state) => ({
+      ...state,
+      status: RequestStatuses.LOADING,
+      error: null,
+    }),
+    [getUserInfoAsync.fulfilled.type]: (state, { payload }: PayloadAction<TUser>) => ({
+      ...state,
+      status: RequestStatuses.SUCCESS,
+      userInfo: payload,
+    }),
+    [getUserInfoAsync.rejected.type]: (state, { payload: error }: PayloadAction<Error>) => ({
+      ...state,
+      status: RequestStatuses.FAILURE,
+      error,
+    }),
   },
 });
 
 export const userReducer = userSlice.reducer;
+export const { logoutUser } = userSlice.actions;

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { userAuthAsync, getUserToken } from 'store/slice/user';
+import { userAuthAsync, getUserInfoAsync, userToken } from 'store/slice/user';
 import { Form, Input, Button } from 'antd';
 import styles from './index.module.scss';
 
@@ -12,14 +12,17 @@ type TFormValues = {
 const AuthForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const token = useSelector(getUserToken);
+  const token = useSelector(userToken);
 
   const onFinish = (values: TFormValues) => {
     dispatch(userAuthAsync(values.login));
+    dispatch(getUserInfoAsync(values.login));
   };
 
   useEffect(() => {
-    if (token) navigate('/tasks');
+    if (token) {
+      navigate('/tasks');
+    }
   }, [token]);
 
   return (

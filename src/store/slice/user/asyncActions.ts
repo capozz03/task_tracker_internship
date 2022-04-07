@@ -14,3 +14,15 @@ export const userAuthAsync = createAsyncThunk(
     }
   },
 );
+
+export const getUserInfoAsync = createAsyncThunk(
+  'user/getUserInfo',
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const { data } = await userService.getUserInfo(id);
+      return data.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);
