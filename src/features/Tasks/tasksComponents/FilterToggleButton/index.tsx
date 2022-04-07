@@ -6,16 +6,23 @@ import { IconFilter } from './icons';
 type FilterToggleButtonProps = {
   active?: boolean;
   filtersCount?: number;
+  hideText?: boolean;
   onClick?: () => any;
 };
 
 const defaultProps = {
   active: false,
   filtersCount: 0,
+  hideText: false,
   onClick: () => {},
 };
 
-const FilterToggleButton = ({ active, filtersCount, onClick }: FilterToggleButtonProps) => (
+const FilterToggleButton = ({
+  active,
+  filtersCount,
+  onClick,
+  hideText,
+}: FilterToggleButtonProps) => (
   <button
     type="button"
     className={classNames(styles.button, active ? styles.active : '')}
@@ -25,7 +32,9 @@ const FilterToggleButton = ({ active, filtersCount, onClick }: FilterToggleButto
     }}
   >
     <IconFilter />
-    <span className={styles.text}>Фильтры</span>
+    <span hidden={hideText} className={styles.text}>
+      Фильтры
+    </span>
     <span className={classNames(styles.counter, filtersCount ? styles.active : '')}>
       {filtersCount}
     </span>
