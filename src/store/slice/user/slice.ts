@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatuses, clientCookies } from 'shared';
 import { TUserState, TAuthResponse } from './entities';
+import { userSliceActions } from './actions';
 import { userAuthAsync } from './asyncActions';
 
 const initialState = {
@@ -12,7 +13,7 @@ const initialState = {
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: userSliceActions,
   extraReducers: {
     [userAuthAsync.pending.type]: (state) => ({
       ...state,
@@ -38,3 +39,4 @@ const userSlice = createSlice({
 });
 
 export const userReducer = userSlice.reducer;
+export const { logoutUser } = userSlice.actions;
