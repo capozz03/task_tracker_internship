@@ -87,7 +87,7 @@ $small-screen-size: 'sm';
 
       .profile {
         position: absolute;
-        top: 5px;
+        top: 23px;
         right: 27px;
         @include media-breakpoint-down($middle-screen-size) {
           display: none;
