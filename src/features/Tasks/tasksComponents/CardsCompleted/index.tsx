@@ -1,14 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
+import { CompletedTaskSlice } from 'store/slice';
 import { SortByMobileScreen, SortByPCScreen } from '../SortBy';
 import { CardCompleted } from './CardCompleted';
-import { tags, user } from './data';
 import style from './index.module.scss';
 
 export const CardsCompleted = () => {
-  const [windowWidth, setWindowWidth] = useState<number>(0);
+  const isMobile = useBreakPoint(768);
+  const dispatch = useDispatch();
+  const tasks = useSelector(CompletedTaskSlice.getTasks);
 
   useEffect(() => {
-    setWindowWidth(window.innerWidth);
+    dispatch(
+      CompletedTaskSlice.getTasksAsync({
+        page: 1,
+        per_page: 3,
+      }),
+    );
   }, []);
 
   return (
@@ -16,9 +25,11 @@ export const CardsCompleted = () => {
       <div className={style.container}>
         <div className={style.cardCompletedTitle}>
           <div className={style.title}>Завершено</div>
-          {windowWidth >= 768 ? <SortByPCScreen /> : <SortByMobileScreen />}
+          {isMobile ? <SortByMobileScreen /> : <SortByPCScreen />}
         </div>
-        <CardCompleted user={user} tags={tags} />
+        {tasks && tasks.map((task) => (
+          <CardCompleted key={task.task_id} task={task} />
+        ))}
       </div>
     </div>
   );
