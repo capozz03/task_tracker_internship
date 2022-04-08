@@ -6,8 +6,8 @@ import PriorityStatus from 'features/Tasks/tasksComponents/PriorityStatus';
 import TagsGroup from 'features/Tasks/tasksComponents/TagsGroup';
 import UserAssignedToTask from 'features/Tasks/tasksComponents/UserAssignedToTask';
 import styles from './index.module.scss';
-import { DropdownMenu } from 'features/Tasks/tasksComponents/DropdownMenu';
-import { TaskStatus } from '../../TaskStatus';
+import DropdownMenu from 'features/Tasks/tasksComponents/DropdownMenu';
+import TaskStatus from '../../TaskStatus';
 import { useDispatch } from 'react-redux';
 import { changeStatusTaskAsync } from '../../../../../store/slice/task/taskInWork/asyncActions';
 

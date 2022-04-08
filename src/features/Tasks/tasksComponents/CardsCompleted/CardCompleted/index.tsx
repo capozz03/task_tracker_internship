@@ -3,9 +3,9 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { CompletedTaskSlice } from 'store/slice';
 import CardName from '../../CardName';
-import { DropdownMenu } from '../../DropdownMenu';
+import DropdownMenu from '../../DropdownMenu';
 import TagsGroup from '../../TagsGroup';
-import { TaskStatus } from '../../TaskStatus';
+import TaskStatus from '../../TaskStatus';
 import UserAssignedToTask from '../../UserAssignedToTask';
 import style from './index.module.scss';
 import { progress, progressBarPercent } from './progressBar';
@@ -14,7 +14,7 @@ type CardCompletedProps = {
   task: CompletedTaskSlice.TTask;
 };
 
-export const CardCompleted = ({ task }: CardCompletedProps) => {
+const CardCompleted = ({ task }: CardCompletedProps) => {
   const dispatch = useDispatch();
   const { total, checked } = progress;
   const progressPercent = progressBarPercent(progress);
@@ -48,3 +48,5 @@ export const CardCompleted = ({ task }: CardCompletedProps) => {
     </div>
   );
 };
+
+export default CardCompleted;

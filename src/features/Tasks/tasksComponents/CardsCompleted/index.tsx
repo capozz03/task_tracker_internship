@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
 import { CompletedTaskSlice } from 'store/slice';
 import { SortByMobileScreen, SortByPCScreen } from '../SortBy';
-import { CardCompleted } from './CardCompleted';
+import CardCompleted from './CardCompleted';
 import style from './index.module.scss';
 
-export const CardsCompleted = () => {
+const CardsCompleted = () => {
   const isMobile = useBreakPoint(768);
   const dispatch = useDispatch();
   const tasks = useSelector(CompletedTaskSlice.getTasks);
@@ -34,3 +34,5 @@ export const CardsCompleted = () => {
     </div>
   );
 };
+
+export default CardsCompleted;

@@ -10,7 +10,7 @@ type DropdownMenuProps = {
   taskId?: string
 }
 
-export const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
+const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
   const { Item } = Menu;
   const dispatch = useDispatch();
 
@@ -48,3 +48,5 @@ export const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
     </div>
   );
 };
+
+export default DropdownMenu;
