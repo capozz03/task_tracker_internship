@@ -6,13 +6,14 @@ import SidebarSearchInput from '../tasksComponents/SidebarSearchInput';
 import NotificationsButton from '../tasksComponents/NotificationsButton';
 import FilterToggleButton from '../tasksComponents/FilterToggleButton';
 import { CloseOutlined } from '@ant-design/icons';
-// import { CardsCompleted } from '../tasksComponents/CardsCompleted';
+import { CardsCompleted } from '../tasksComponents/CardsCompleted';
 import UserAvatarMenu from '../../Auth/UserAvatarMenu';
+import TasksInWork from '../tasksComponents/TasksInWork';
 
 const { Sider, Header, Content } = Layout;
 
 const TasksLayout = () => {
-  const [isSidebarShow, setIsSidebarShow] = useState(true);
+  const [isSidebarShow, setIsSidebarShow] = useState(false);
   const changeSidebarVisibility = () => setIsSidebarShow(!isSidebarShow);
   const hideSidebar = () => setIsSidebarShow(false);
 
@@ -47,7 +48,8 @@ const TasksLayout = () => {
         </Header>
         <Content className={styles.content}>
           <span className={styles.headerText}>Задачи</span>
-          {/* <CardsCompleted /> */}
+          <CardsCompleted />
+          <TasksInWork />
         </Content>
       </Layout>
     </Layout>

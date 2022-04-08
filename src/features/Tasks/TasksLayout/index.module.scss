@@ -3,12 +3,15 @@
 $middle-screen-size: 'lg';
 $small-screen-size: 'sm';
 
+html, body{
+  min-height: 100vh;
+}
+
 .layout {
   position: relative;
   display: flex;
-
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
+  min-width: 100vw;
   background: $grey-100;
 
   .sider {
@@ -70,7 +73,7 @@ $small-screen-size: 'sm';
   }
 
   .main {
-
+    min-height: 100vh;
     background: inherit;
 
     .header {
@@ -122,6 +125,10 @@ $small-screen-size: 'sm';
       flex-direction: column;
       align-items: stretch;
       padding: 0 38px;
+
+      &>*{
+        margin-bottom: 24px;
+      }
 
       .headerText {
         display: none;
