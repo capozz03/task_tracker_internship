@@ -5,7 +5,7 @@ import styles from './index.module.scss';
 import { IconFilter } from './icons';
 
 type FilterToggleButtonProps = {
-  active?: boolean;
+  active: boolean;
   filtersCount?: number;
   hideText?: boolean;
   onClick?: () => void;
@@ -19,7 +19,7 @@ const FilterToggleButton = ({
 }: FilterToggleButtonProps) => (
   <button
     type="button"
-    className={classNames(styles.button, active ? styles.active : '')}
+    className={classNames(styles.button, { [styles.active]: active })}
     onClick={onClick}
   >
     <IconFilter />
