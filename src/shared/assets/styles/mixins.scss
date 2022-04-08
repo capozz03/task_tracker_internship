@@ -19,6 +19,11 @@
     @media (max-width: 576px) {
       @content;
     }
+  }
+    @else if $size == xsplus {
+      @media (max-width: 400px) {
+        @content;
+      }
   } @else if $size == xs {
     @media (max-width: 360px) {
       @content;

@@ -1,37 +1,50 @@
 import { Progress } from 'antd';
 import React from 'react';
-import { TTagsTask } from 'store/slice/task/entities';
-import { TUser } from 'store/slice/user/entities';
+import { useDispatch } from 'react-redux';
+import { CompletedTaskSlice } from 'store/slice';
 import CardName from '../../CardName';
 import { DropdownMenu } from '../../DropdownMenu';
 import TagsGroup from '../../TagsGroup';
 import { TaskStatus } from '../../TaskStatus';
-import UserAvatar from '../../UserAvatar';
+import UserAssignedToTask from '../../UserAssignedToTask';
 import style from './index.module.scss';
+import { progress, progressBarPercent } from './progressBar';
 
 type CardCompletedProps = {
-  user: TUser;
-  tags: TTagsTask[];
+  task: CompletedTaskSlice.TTask;
 };
 
-export const CardCompleted = ({ user, tags }: CardCompletedProps) => (
-  <div className={style.cardCompletedTask}>
-    <div className={style.main}>
-      <CardName
-        name="Презентация новой системы взаимодействия"
-        attachments={4}
-        checkListChecked={4}
-        checkListTotal={5}
-      />
-      <TaskStatus defaultValue="Выполнена" />
-      <TagsGroup tags={tags} />
-      <div style={{ width: 170 }}>
-        <Progress percent={30} size="small" strokeColor="#3DD598" />
+export const CardCompleted = ({ task }: CardCompletedProps) => {
+  const dispatch = useDispatch();
+  const { total, checked } = progress;
+  const progressPercent = progressBarPercent(progress);
+  const statusHandler = (value: string) => {
+    dispatch(
+      CompletedTaskSlice.changeStatusTaskAsync({
+        task_id: task.task_id,
+        task_status_id: value,
+      }),
+    );
+  };
+  return (
+    <div className={style.cardCompletedTask}>
+      <div className={style.main}>
+        <CardName
+          name={task.title}
+          attachments={task.storage_files_meta.total}
+          checkListChecked={checked}
+          checkListTotal={total}
+        />
+        <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
+        <TagsGroup tags={task.tags} />
+        <div style={{ width: 170 }}>
+          <Progress percent={progressPercent} size="small" strokeColor="#3DD598" />
+        </div>
+        <UserAssignedToTask users={task.roles} />
       </div>
-      <UserAvatar user={user} color="#000" />
+      <div className={style.dropdown}>
+        <DropdownMenu />
+      </div>
     </div>
-    <div className={style.dropdown}>
-      <DropdownMenu />
-    </div>
-  </div>
-);
+  );
+};
