@@ -1,4 +1,3 @@
-import { } from 'store/slice';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { MainSlice, TaskInWorkSlice, UserSlice, CompletedTaskSlice } from './slice';
 

@@ -37,7 +37,7 @@ export const CardCompleted = ({ task }: CardCompletedProps) => {
         />
         <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
         <TagsGroup tags={task.tags} />
-        <div style={{ width: 170 }}>
+        <div className={style.progress}>
           <Progress percent={progressPercent} size="small" strokeColor="#3DD598" />
         </div>
         <UserAssignedToTask users={task.roles} />
