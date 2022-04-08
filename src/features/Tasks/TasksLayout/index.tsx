@@ -9,6 +9,7 @@ import { CloseOutlined } from '@ant-design/icons';
 import { CardsCompleted } from '../tasksComponents/CardsCompleted';
 import UserAvatarMenu from '../../Auth/UserAvatarMenu';
 import TasksInWork from '../tasksComponents/TasksInWork';
+import TasksInbox from '../tasksComponents/TasksInbox';
 
 const { Sider, Header, Content } = Layout;
 
@@ -48,8 +49,9 @@ const TasksLayout = () => {
         </Header>
         <Content className={styles.content}>
           <span className={styles.headerText}>Задачи</span>
-          <CardsCompleted />
+          <TasksInbox />
           <TasksInWork />
+          <CardsCompleted />
         </Content>
       </Layout>
     </Layout>
