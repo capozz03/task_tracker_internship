@@ -8,19 +8,22 @@ import FilterToggleButton from '../tasksComponents/FilterToggleButton';
 import { CloseOutlined } from '@ant-design/icons';
 import { CardsCompleted } from '../tasksComponents/CardsCompleted';
 import UserAvatarMenu from '../../Auth/UserAvatarMenu';
+import TasksInWork from '../tasksComponents/TasksInWork';
 
 const { Sider, Header, Content } = Layout;
 
 const TasksLayout = () => {
-  const [sidebarShow, setSidebarShow] = useState(true);
+  const [isSidebarShow, setIsSidebarShow] = useState(false);
+  const changeSidebarVisibility = () => setIsSidebarShow(!isSidebarShow);
+  const hideSidebar = () => setIsSidebarShow(false);
 
   return (
     <Layout className={styles.layout}>
-      <Sider className={styles.sider} width={250} collapsed={!sidebarShow} collapsedWidth={0}>
+      <Sider className={styles.sider} width={250} collapsed={!isSidebarShow} collapsedWidth={0}>
         <div className={styles.wrapper}>
           <div className={styles.header}>
             <span className={styles.text}>фильтры и поиск</span>
-            <CloseOutlined className={styles.close} onClick={() => setSidebarShow(false)} />
+            <CloseOutlined className={styles.close} onClick={hideSidebar} />
           </div>
           <SidebarSearchInput placeholder="Поиск" />
         </div>
@@ -33,9 +36,9 @@ const TasksLayout = () => {
           </div>
           <div className={styles.tools}>
             <FilterToggleButton
-              active={sidebarShow}
+              active={isSidebarShow}
               filtersCount={1}
-              onClick={() => setSidebarShow(!sidebarShow)}
+              onClick={changeSidebarVisibility}
             />
             <NotificationsButton active={false} />
           </div>
@@ -46,6 +49,7 @@ const TasksLayout = () => {
         <Content className={styles.content}>
           <span className={styles.headerText}>Задачи</span>
           <CardsCompleted />
+          <TasksInWork />
         </Content>
       </Layout>
     </Layout>

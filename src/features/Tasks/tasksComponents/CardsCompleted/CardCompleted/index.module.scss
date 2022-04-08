@@ -1,4 +1,4 @@
-@import 'shared/assets/styles/mixins';
+@import 'src/shared/assets/styles/mixins';
 
 .cardCompletedTask {
   display: flex;
@@ -23,4 +23,8 @@
   @include media-breakpoint-down(xl) {
     display: block;
   }
+}
+
+.progress {
+  width: 170px;
 }

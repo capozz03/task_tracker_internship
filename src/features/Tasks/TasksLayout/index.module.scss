@@ -3,15 +3,20 @@
 $middle-screen-size: 'lg';
 $small-screen-size: 'sm';
 
-.layout {
-  display: flex;
+html, body{
+  min-height: 100vh;
+}
 
-  height: 100vh;
-  width: 100vw;
+.layout {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  min-width: 100vw;
   background: $grey-100;
 
   .sider {
     background: $grey-0;
+    z-index: 999;
 
     .wrapper {
       margin: 21px 20px 0 16px;
@@ -52,19 +57,30 @@ $small-screen-size: 'sm';
     }
 
     @include media-breakpoint-down($small-screen-size) {
-
+      &:not(:global(.ant-layout-sider-zero-width)) {
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+      }
     }
-
+    @media (min-width: 993px) {
+      width: 250px !important;
+      flex: 0 0 250px !important;
+      min-width: 250px !important;
+      max-width: 250px !important;
+    }
   }
 
   .main {
-    position: relative;
+    min-height: 100vh;
     background: inherit;
 
     .header {
       background: inherit;
       margin: 28px 0 6px;
       height: auto;
+
 
       .tools {
         display: none;
@@ -74,8 +90,8 @@ $small-screen-size: 'sm';
           flex-direction: row;
           align-items: center;
           position: absolute;
-          right: 37px;
-          top: 10px;
+          left: 200px;
+          top: 30px;
           & > button {
             margin-right: 24px;
           }
@@ -89,9 +105,11 @@ $small-screen-size: 'sm';
         position: absolute;
         top: 23px;
         right: 27px;
-        @include media-breakpoint-down($middle-screen-size) {
-          display: none;
-        }
+
+      }
+
+      .filterAssignedTo{
+        flex-wrap: nowrap;
       }
 
       .text {
@@ -107,6 +125,10 @@ $small-screen-size: 'sm';
       flex-direction: column;
       align-items: stretch;
       padding: 0 38px;
+
+      &>*{
+        margin-bottom: 24px;
+      }
 
       .headerText {
         display: none;
