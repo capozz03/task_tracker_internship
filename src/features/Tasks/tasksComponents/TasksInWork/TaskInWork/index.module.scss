@@ -7,12 +7,35 @@
   border-radius: 20px;
   margin-bottom: 8px;
   padding: 15px 25px;
+  width: 100%;
+  @include media-breakpoint-down(xxl){
+    width: 960px;
+  }
+  @include media-breakpoint-down(lg){
+    width: 665px;
+  }
+  @include media-breakpoint-down(md){
+    width: 560px;
+  }
+  @include media-breakpoint-down(sm){
+    width: 420px;
+  }
+  @include media-breakpoint-down(xs){
+    width: 320px;
+  }
+
+  & > *{
+    flex-shrink: 0;
+  }
 }
 
 .cardName{
-  width: 400px;
+  width: 320px;
   padding: 0 12px;
   flex-shrink: 0;
+  @include media-breakpoint-down(xxl){
+    width: 300px;
+  }
 }
 
 .cardStatus{
@@ -31,24 +54,26 @@
   flex-shrink: 0;
 }
 
-.cardTagsGroupt{
-  width: 200px;
+.cardPriority{
+  width: 100px;
   display: flex;
   align-items: center;
+}
+
+.cardTagsGroupt{
   flex-grow: 1;
+  display: flex;
+  align-items: center;
   padding: 0 12px;
+  flex-shrink: 1;
 }
 
 .cardUsers{
   width: 125px;
+  flex-shrink: 1;
 }
 
 .cardMenu{
   display: flex;
   align-items:center;
-  :global(.ant-btn-group){
-    :global(.ant-btn:first-child){
-      display: none !important;
-    }
-  }
 }

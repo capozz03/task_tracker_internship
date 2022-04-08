@@ -38,7 +38,9 @@ const TaskInWokr = ({ task }: TaskInWokrProps) => {
       <div className={styles.cardDate}>
         <DateWithIconClock date={task.created} />
       </div>
-      {task.priority && <PriorityStatus type={task.priority.name} />}
+      <div className={styles.cardPriority}>
+        {task.priority && <PriorityStatus type={task.priority.name} />}
+      </div>
       <div className={styles.cardTagsGroupt}>
         <TagsGroup tags={task.tags} />
       </div>
@@ -46,7 +48,7 @@ const TaskInWokr = ({ task }: TaskInWokrProps) => {
         <UserAssignedToTask users={task.roles} />
       </div>
       <div className={styles.cardMenu}>
-        <DropdownMenu />
+        <DropdownMenu taskId={task.task_id} />
       </div>
 
     </div>);
