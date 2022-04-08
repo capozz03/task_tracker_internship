@@ -21,4 +21,34 @@ export const taskService = {
         },
       },
     ),
+  createNewTask: async ({
+    task_status_id: taskStatusId,
+    title,
+  }: {
+    task_status_id: string,
+    title: string,
+  }) =>
+    $apiTask.post<TTask[]>('/api/v1.0/task/tasks',
+      {
+        task_status_id: taskStatusId,
+        title,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    ),
+  duplicateTask: async (taskId: string) =>
+    $apiTask.post<TTask[]>(`/api/v1.0/task/tasks/${taskId}/clone`, {}, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
+  deleteTask: async (taskId: string) =>
+    $apiTask.delete<TTask[]>(`/api/v1.0/task/tasks/${taskId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
 };
