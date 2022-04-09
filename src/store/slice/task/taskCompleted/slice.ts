@@ -16,8 +16,8 @@ const initialState = {
   error: null,
 } as TTasksReducer;
 
-const completedTaskSlice = createSlice({
-  name: 'completedTaskSlice',
+const taskCompletedSlice = createSlice({
+  name: 'taskCompletedSlice',
   initialState,
   reducers: {},
   extraReducers: {
@@ -41,4 +41,4 @@ const completedTaskSlice = createSlice({
   },
 });
 
-export const completedTaskReducer = completedTaskSlice.reducer;
+export const taskCompletedReducer = taskCompletedSlice.reducer;

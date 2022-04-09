@@ -6,7 +6,7 @@ import SidebarSearchInput from '../tasksComponents/SidebarSearchInput';
 import NotificationsButton from '../tasksComponents/NotificationsButton';
 import FilterToggleButton from '../tasksComponents/FilterToggleButton';
 import { CloseOutlined } from '@ant-design/icons';
-import CardsCompleted from '../tasksComponents/CardsCompleted';
+import TasksCompleted from '../tasksComponents/TasksCompleted';
 import UserAvatarMenu from '../../Auth/UserAvatarMenu';
 import TasksInWork from '../tasksComponents/TasksInWork';
 import TasksInbox from '../tasksComponents/TasksInbox';
@@ -51,7 +51,7 @@ const TasksLayout = () => {
           <span className={styles.headerText}>Задачи</span>
           <TasksInbox />
           <TasksInWork />
-          <CardsCompleted />
+          <TasksCompleted />
         </Content>
       </Layout>
     </Layout>

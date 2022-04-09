@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
-import { CompletedTaskSlice } from 'store/slice';
+import { TaskCompletedSlice } from 'store/slice';
 import { SortByMobileScreen, SortByPCScreen } from '../SortBy';
-import CardCompleted from './CardCompleted';
+import TaskCompleted from './TaskCompleted';
 import style from './index.module.scss';
 
-const CardsCompleted = () => {
+const TasksCompleted = () => {
   const isMobile = useBreakPoint(768);
   const dispatch = useDispatch();
-  const tasks = useSelector(CompletedTaskSlice.getTasks);
+  const tasks = useSelector(TaskCompletedSlice.getTasks);
 
   useEffect(() => {
     dispatch(
-      CompletedTaskSlice.getTasksAsync({
+      TaskCompletedSlice.getTasksAsync({
         page: 1,
         per_page: 3,
       }),
@@ -28,11 +28,11 @@ const CardsCompleted = () => {
           {isMobile ? <SortByMobileScreen /> : <SortByPCScreen />}
         </div>
         {tasks && tasks.map((task) => (
-          <CardCompleted key={task.task_id} task={task} />
+          <TaskCompleted key={task.task_id} task={task} />
         ))}
       </div>
     </div>
   );
 };
 
-export default CardsCompleted;
+export default TasksCompleted;

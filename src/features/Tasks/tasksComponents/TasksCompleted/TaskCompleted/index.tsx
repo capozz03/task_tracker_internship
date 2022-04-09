@@ -1,7 +1,7 @@
 import { Progress } from 'antd';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { CompletedTaskSlice } from 'store/slice';
+import { TaskCompletedSlice } from 'store/slice';
 import CardName from '../../CardName';
 import DropdownMenu from '../../DropdownMenu';
 import TagsGroup from '../../TagsGroup';
@@ -10,17 +10,17 @@ import UserAssignedToTask from '../../UserAssignedToTask';
 import style from './index.module.scss';
 import { progress, progressBarPercent } from './progressBar';
 
-type CardCompletedProps = {
-  task: CompletedTaskSlice.TTask;
+type TaskCompletedProps = {
+  task: TaskCompletedSlice.TTask;
 };
 
-const CardCompleted = ({ task }: CardCompletedProps) => {
+const TaskCompleted = ({ task }: TaskCompletedProps) => {
   const dispatch = useDispatch();
   const { total, checked } = progress;
   const progressPercent = progressBarPercent(progress);
   const statusHandler = (value: string) => {
     dispatch(
-      CompletedTaskSlice.changeStatusTaskAsync({
+      TaskCompletedSlice.changeStatusTaskAsync({
         task_id: task.task_id,
         task_status_id: value,
       }),
@@ -49,4 +49,4 @@ const CardCompleted = ({ task }: CardCompletedProps) => {
   );
 };
 
-export default CardCompleted;
+export default TaskCompleted;
