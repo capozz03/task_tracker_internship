@@ -1,18 +1,33 @@
-// import Tag from './Tag';
-// import CardName from './CardName';
-// import Button from './Button';
-// import DateWithIconClock from './DateWithIconClock';
-// import FilterAssignedTo from './FilterAssignedTo';
-// import Pagination from './Pagination';
-// import PriorityStatus from './PriorityStatus';
-// import TagsGroup from './TagsGroup';
-// import TasksInWork from './TasksInWork';
-// import UserAssignedToTask from './UserAssignedToTask';
-// import UserAvatar from './UserAvatar';
+import Button from './Button';
+import CardName from './CardName';
+import DateWithIconClock from './DateWithIconClock';
+import DropdownMenu from './DropdownMenu';
+import FilterAssignedTo from './FilterAssignedTo';
+import NewTask from './NewTask';
+import FilterToggleButton from './FilterToggleButton';
+import NotificationsButton from './NotificationsButton';
+import PriorityStatus from './PriorityStatus';
+import SidebarSearchInput from './SidebarSearchInput';
+import Pagination from './Pagination';
+import { SortByMobileScreen, SortByPCScreen } from './SortBy';
+import TagsGroup from './TagsGroup';
+import TasksInbox from './TasksInbox';
+import TasksInWork from './TasksInWork';
+import Tag from './Tag';
+import UserAssignedToTask from './UserAssignedToTask';
+import UserAvatar from './UserAvatar';
+import TaskStatus from './TaskStatus';
+import CardAttachmentsCount from './CardAttachmentsCount';
+import CardChecklistCount from './CardChecklistCount';
+import CardNameText from './CardNameText';
+import TasksCompleted from './TasksCompleted';
 
 export {
   Button,
   CardName,
+  CardAttachmentsCount,
+  CardChecklistCount,
+  CardNameText,
   DateWithIconClock,
   DropdownMenu,
   FilterAssignedTo,
@@ -26,6 +41,7 @@ export {
   SortByMobileScreen,
   Tag,
   TagsGroup,
+  TasksCompleted,
   TasksInbox,
   TasksInWork,
   TaskStatus,
