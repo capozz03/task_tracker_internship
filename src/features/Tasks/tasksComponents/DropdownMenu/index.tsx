@@ -19,10 +19,6 @@ const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
       dispatch(duplicateTaskAsync(taskId));
     }
   };
-  const moveToArchiveHandle = () => {
-    // eslint-disable-next-line no-console
-    console.log(taskId);
-  };
   const deleteTaskHandle = () => {
     if (taskId) {
       dispatch(deleteTaskAsync(taskId));
@@ -32,7 +28,6 @@ const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
   const menu = (
     <Menu className={style.dropdownMenu}>
       <Item key="1" onClick={duplicateHandle}>Дублировать задачу</Item>
-      <Item key="2" onClick={moveToArchiveHandle}>Переместить в архив</Item>
       <Item key="3" onClick={deleteTaskHandle} className={style.delete}>
         Удалить задачу
       </Item>

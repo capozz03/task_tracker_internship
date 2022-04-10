@@ -1,11 +1,11 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { MainSlice, TaskInWorkSlice, UserSlice, CompletedTaskSlice, TaskInboxSlice } from './slice';
+import { MainSlice, TaskInWorkSlice, UserSlice, TaskCompletedSlice, TaskInboxSlice } from './slice';
 
 const rootReducer = combineReducers({
   main: MainSlice.mainReducer,
   user: UserSlice.userReducer,
   taskInWork: TaskInWorkSlice.taskInWorkReducer,
-  completedTask: CompletedTaskSlice.completedTaskReducer,
+  taskCompleted: TaskCompletedSlice.taskCompletedReducer,
   taskInbox: TaskInboxSlice.taskInboxReducer,
 });
 
