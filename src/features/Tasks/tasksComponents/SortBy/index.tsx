@@ -4,10 +4,14 @@ import style from './index.module.scss';
 import Icon, { CaretDownOutlined } from '@ant-design/icons';
 import { IconShape } from './icons';
 
-export const SortByPCScreen = ({ setSortType }: any) => {
+type SetSortTypeProps = {
+  setSortType: React.Dispatch<React.SetStateAction<'date~DESC' | 'title~ASC'>>;
+};
+
+export const SortByPCScreen = ({ setSortType }: SetSortTypeProps) => {
   const { Option } = Select;
 
-  const sortHandler = (value: 'date~DESC' | 'title~ASC') => {
+  const sortHandler = (value: 'date~DESC' | 'title~ASC'): void => {
     setSortType(value);
   };
 
@@ -32,10 +36,10 @@ export const SortByPCScreen = ({ setSortType }: any) => {
   );
 };
 
-export const SortByMobileScreen = ({ setSortType }: any) => {
+export const SortByMobileScreen = ({ setSortType }: SetSortTypeProps) => {
   const { Item } = Menu;
-  const sortHandler = (value: any) => {
-    setSortType(value.key);
+  const sortHandler = ({ key }: any): void => {
+    setSortType(key);
   };
 
   const menu = (
