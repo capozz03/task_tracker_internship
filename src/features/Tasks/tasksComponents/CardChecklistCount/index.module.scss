@@ -1,0 +1,17 @@
+@import "src/shared/assets/styles";
+
+.checkList {
+  display: flex;
+  align-items: center;
+
+  color: $grey-600;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+
+  svg {
+    margin: 5px;
+  }
+}
