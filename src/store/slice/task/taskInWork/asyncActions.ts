@@ -2,13 +2,17 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { taskService } from './taskInWorkService';
 import { TTaskSearch, TTasksReducer, TTaskStatusChange } from '../entities';
 
-const statusId = '372d63ff-3ae3-4be2-a606-38940d7f8c8f';
+export const created = 'cbb7199e-cb25-4dce-bf4e-24a8a5e07ef2';
+export const inWork = '372d63ff-3ae3-4be2-a606-38940d7f8c8f';
+export const completed = '8536592a-7340-4e10-ac4b-a280652c9310';
+export const notImplemented = '599f5d03-1ef0-4a5b-a18c-33a4f44c4610';
+export const rejectedId = '4658859a-32a6-4206-838a-c0064f147299';
 
 export const getTasksAsync = createAsyncThunk(
   'taskInWork/getTask',
   async (params: TTaskSearch, { rejectWithValue }) => {
     try {
-      const { data } = await taskService.getTasks({ ...params, status_id: statusId });
+      const { data } = await taskService.getTasks({ ...params, status_id: inWork });
       return data;
     } catch (error) {
       return rejectWithValue(error);

@@ -35,11 +35,13 @@ const TaskInWokr = ({ task }: TaskInWokrProps) => {
       <div className={styles.cardStatus}>
         <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
       </div>
-      <div className={styles.cardDate}>
-        <DateWithIconClock date={task.created} />
-      </div>
-      <div className={styles.cardPriority}>
-        {task.priority && <PriorityStatus type={task.priority.name} />}
+      <div className={styles.cardDateAndPriority}>
+        <div className={styles.cardDate}>
+          <DateWithIconClock date={task.created} />
+        </div>
+        <div className={styles.cardPriority}>
+          {task.priority && <PriorityStatus type={task.priority.name} />}
+        </div>
       </div>
       <div className={styles.cardTagsGroupt}>
         <TagsGroup tags={task.tags} />
