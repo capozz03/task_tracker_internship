@@ -10,7 +10,7 @@ type DropdownMenuProps = {
   taskId?: string
 }
 
-export const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
+const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
   const { Item } = Menu;
   const dispatch = useDispatch();
 
@@ -20,6 +20,7 @@ export const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
     }
   };
   const moveToArchiveHandle = () => {
+    // eslint-disable-next-line no-console
     console.log(taskId);
   };
   const deleteTaskHandle = () => {
@@ -48,3 +49,5 @@ export const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
     </div>
   );
 };
+
+export default DropdownMenu;

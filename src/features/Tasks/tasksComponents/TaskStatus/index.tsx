@@ -3,7 +3,7 @@ import { Select, SelectProps } from 'antd';
 import style from './index.module.scss';
 import { taskStatuses } from './constants';
 
-export const TaskStatus = ({ ...props }: SelectProps) => {
+const TaskStatus = ({ ...props }: SelectProps) => {
   const [color, setColor] = useState<string>('#50B5FF');
   const { Option } = Select;
 
@@ -43,3 +43,5 @@ export const TaskStatus = ({ ...props }: SelectProps) => {
     </Select>
   );
 };
+
+export default TaskStatus;

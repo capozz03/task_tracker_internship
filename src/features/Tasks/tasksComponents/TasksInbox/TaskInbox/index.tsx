@@ -4,12 +4,12 @@ import { useDispatch } from 'react-redux';
 import { TTask } from 'store/slice/task/entities';
 import { changeStatusTaskAsync } from 'store/slice/task/taskInbox/asyncActions';
 import CardName from '../../CardName';
-import { TaskStatus } from '../../TaskStatus';
+import TaskStatus from '../../TaskStatus';
 import DateWithIconClock from '../../DateWithIconClock';
 import TagsGroup from '../../TagsGroup';
 import PriorityStatus from '../../PriorityStatus';
 import UserAssignedToTask from '../../UserAssignedToTask';
-import { DropdownMenu } from 'features/Tasks/tasksComponents/DropdownMenu';
+import DropdownMenu from 'features/Tasks/tasksComponents/DropdownMenu';
 
 type TaskInboxProps = {
   task: TTask;
