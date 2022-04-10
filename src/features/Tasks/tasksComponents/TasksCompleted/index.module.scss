@@ -1,0 +1,24 @@
+@import 'src/shared/assets/styles/vars';
+
+.tasks_group {
+  border: 1px solid #dcdce0;
+  border-radius: 16px;
+  padding: 16px 8px;
+  background-color: $grey-100;
+}
+
+.wrapTitle {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  margin-left: 16px;
+  font: $h4;
+  color: $grey-600;
+}
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+}
