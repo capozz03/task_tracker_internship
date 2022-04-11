@@ -1,9 +1,9 @@
-@import "src/shared/assets/styles/mixins";
 @import "src/shared/assets/styles";
 
 .wrap {
   display: grid;
   grid-template-areas: "title status datepriority tags users menu";
+  grid-template-columns: 400px 114px 203px auto 120px 70px;
   flex-wrap: nowrap;
   background: #FFFFFF;
   border-radius: 20px;
@@ -11,7 +11,24 @@
   padding: 15px 25px;
   width: 100%;
   gap: 10px;
-  @include media-breakpoint-down(lg){
+
+  @media (max-width: 1500px) {
+    grid-template-columns: 350px 114px 203px auto 120px 70px;
+  }
+
+  @media (max-width: 1400px){
+    grid-template-columns: 300px 114px 120px auto 120px 70px;
+  }
+
+  @media (max-width: 1250px) {
+    grid-template-columns: 250px 114px 120px auto 120px 70px;
+  }
+
+  @media (max-width: 1200px){
+    grid-template-columns: 250px 114px 120px auto 80px 70px;
+  }
+
+  @media (max-width: 1180px){
     gap: 15px;
     grid-template-columns: auto 60px;
     grid-template-areas:  "title menu"
@@ -20,18 +37,11 @@
                           "tags tags"
                           "users users";
   }
-  
-  & > *{
-    flex-shrink: 0;
-  }
 }
 
 .cardName{
   grid-area: title;
   flex-shrink: 0;
-  @include media-breakpoint-down(xxl){
-    width: 300px;
-  }
 }
 
 .cardStatus{
@@ -44,18 +54,16 @@
 .cardDateAndPriority{
   grid-area: datepriority;
   display: flex;
+  flex-wrap: wrap;
 }
 
 .cardDate{
-  width: 150px;
   display: flex;
   align-items: center;
-  padding: 0 10px;
   flex-shrink: 0;
 }
 
 .cardPriority{
-  width: 100px;
   display: flex;
   align-items: center;
 }
@@ -71,7 +79,6 @@
 
 .cardUsers{
   grid-area: users;
-  width: 116px;
   flex-shrink: 0;
 }
 
