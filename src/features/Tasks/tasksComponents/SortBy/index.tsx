@@ -13,6 +13,7 @@ export const SortByPCScreen = ({ setSortType }: SetSortTypeProps) => {
 
   const sortHandler = (value: 'date~DESC' | 'title~ASC'): void => {
     setSortType(value);
+    console.log(value);
   };
 
   return (
