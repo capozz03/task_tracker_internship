@@ -6,7 +6,7 @@
   align-items: center;
   padding: 17px 0;
   @include media-breakpoint-down(xl) {
-    align-items: flex-start;
+    // align-items: flex-start;
   }
 }
 
