@@ -6,19 +6,19 @@ import PriorityStatus from 'features/Tasks/tasksComponents/PriorityStatus';
 import TagsGroup from 'features/Tasks/tasksComponents/TagsGroup';
 import UserAssignedToTask from 'features/Tasks/tasksComponents/UserAssignedToTask';
 import styles from './index.module.scss';
-import { DropdownMenu } from 'features/Tasks/tasksComponents/DropdownMenu';
-import { TaskStatus } from '../../TaskStatus';
+import { DropdownMenu } from 'features/Tasks/tasksComponents';
+import { TaskStatus } from 'features/Tasks/tasksComponents/TaskStatus';
 import { useDispatch } from 'react-redux';
-import { changeStatusTaskAsync } from '../../../../../store/slice/task/taskInWork/asyncActions';
+import { TaskInWorkSlice } from 'store/slice';
 
-type TaskInWokrProps = {
+type TaskInWorkProps = {
   task: TTask
 }
 
-const TaskInWokr = ({ task }: TaskInWokrProps) => {
+const TaskInWork = ({ task }: TaskInWorkProps) => {
   const dispatch = useDispatch();
   const statusHandler = (value: string) => {
-    dispatch(changeStatusTaskAsync({
+    dispatch(TaskInWorkSlice.changeStatusTaskAsync({
       task_id: task.task_id,
       task_status_id: value }));
   };
@@ -56,4 +56,4 @@ const TaskInWokr = ({ task }: TaskInWokrProps) => {
     </div>);
 };
 
-export default TaskInWokr;
+export default TaskInWork;
