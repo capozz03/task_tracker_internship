@@ -4,16 +4,17 @@ import style from './index.module.scss';
 import Icon, { CaretDownOutlined } from '@ant-design/icons';
 import { IconShape } from './icons';
 
+type TSortType = 'date~DESC' | 'title~ASC';
+
 type SetSortTypeProps = {
-  setSortType: React.Dispatch<React.SetStateAction<'date~DESC' | 'title~ASC'>>;
+  setSortType: React.Dispatch<React.SetStateAction<TSortType>>;
 };
 
 export const SortByPCScreen = ({ setSortType }: SetSortTypeProps) => {
   const { Option } = Select;
 
-  const sortHandler = (value: 'date~DESC' | 'title~ASC'): void => {
+  const sortHandler = (value: TSortType): void => {
     setSortType(value);
-    console.log(value);
   };
 
   return (
