@@ -56,6 +56,12 @@ type TTaskFormFieldValue = {
   value: string;
 }
 
+export type TTaskProgress = {
+  completed: number,
+  percent: number,
+  total: number,
+}
+
 type TTaskFormField = {
   type: 'select';
   values: TTaskFormFieldValue[];
@@ -83,7 +89,7 @@ export type TTask = {
   form_result?: any | null;
   roles: TRoles[];
   tags: TTagsTask[];
-  progress: string | null;
+  progress: TTaskProgress | null;
   check_lists?: any[];
   storage_files?: any[];
   storage_files_meta: {

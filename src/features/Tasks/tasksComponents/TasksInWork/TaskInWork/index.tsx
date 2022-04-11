@@ -28,8 +28,8 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
         <CardName
           name={task.title}
           attachments={task.storage_files_meta.total}
-          checkListTotal={2}
-          checkListChecked={2}
+          checkListTotal={(task.progress && task.progress?.total) || 0}
+          checkListChecked={(task.progress && task.progress?.completed) || 0}
         />
       </div>
       <div className={styles.cardStatus}>
@@ -43,7 +43,7 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
           {task.priority && <PriorityStatus type={task.priority.name} />}
         </div>
       </div>
-      <div className={styles.cardTagsGroupt}>
+      <div className={styles.cardTagsGroup}>
         <TagsGroup tags={task.tags} />
       </div>
       <div className={styles.cardUsers}>
