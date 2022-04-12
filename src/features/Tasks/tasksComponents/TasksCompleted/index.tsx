@@ -7,14 +7,16 @@ import TaskCompleted from './TaskCompleted';
 import style from './index.module.scss';
 import Pagination from '../Pagination';
 
+type TSortType = 'date~DESC' | 'title~ASC';
+
 const TasksCompleted = (props: ComponentProps<any>) => {
   const isMobile = useBreakPoint(768);
   const dispatch = useDispatch();
   const tasks = useSelector(TaskCompletedSlice.getTasks);
   const pagination = useSelector(TaskCompletedSlice.getPagination);
-  const [sortType, setSortType] = useState<'date~DESC' | 'title~ASC'>('date~DESC');
+  const [sortType, setSortType] = useState<TSortType>('date~DESC');
 
-  const paginationHandler = (page: number, pageSize: number) => {
+  const paginationHandler = (page: number, pageSize: number): void => {
     dispatch(
       TaskCompletedSlice.getTasksAsync({
         sort: sortType,
