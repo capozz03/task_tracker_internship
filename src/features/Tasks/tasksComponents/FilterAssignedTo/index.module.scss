@@ -1,6 +1,6 @@
 @import 'src/shared/assets/styles';
 
-.text{
+.text {
   font: $p-medium;
 }
 
@@ -18,6 +18,7 @@
   color: $grey-800 !important;
   border: 0 !important;
   text-align: center;
+  transition: background 1s, border 1s, filter 1s;
 
   &:not(:last-child) {
     margin-right: 16px !important;
@@ -31,14 +32,19 @@
     box-shadow: 0 0 !important;
   }
 
-  svg{
+  svg {
     margin: auto 8px auto 0;
   }
-  .wrapper{
+
+  .wrapper {
     height: 100%;
     display: flex;
     align-items: center;
   }
+}
+
+:global(.ant-radio-button){
+  border: 0 solid $grey-0;
 }
 
 :global(.ant-radio-button-checked) {
@@ -46,4 +52,5 @@
   background: $grey-0;
   border-radius: 8px;
   border: 1px solid $grey-300;
+  transition: 300ms ;
 }

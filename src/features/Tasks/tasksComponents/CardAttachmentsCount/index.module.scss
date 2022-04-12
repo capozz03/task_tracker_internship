@@ -1,0 +1,16 @@
+@import "src/shared/assets/styles";
+
+
+.attachments {
+  display: flex;
+  align-items: center;
+  margin-right: 24px;
+
+  color: $grey-600;
+  font: $p-roboto-regular;
+
+  svg {
+    transform: rotate(180deg);
+    margin: 5px;
+  }
+}

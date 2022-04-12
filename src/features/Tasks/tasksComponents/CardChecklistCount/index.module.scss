@@ -1,0 +1,13 @@
+@import "src/shared/assets/styles";
+
+.checkList {
+  display: flex;
+  align-items: center;
+
+  color: $grey-600;
+  font: $p-roboto-regular;
+
+  svg {
+    margin: 5px;
+  }
+}

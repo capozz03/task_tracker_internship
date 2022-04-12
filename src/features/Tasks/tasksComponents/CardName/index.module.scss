@@ -1,5 +1,4 @@
 @import "src/shared/assets/styles";
-@import "shared/assets/styles/mixins";
 
 .card {
   display: flex;
@@ -10,7 +9,7 @@
   .name {
     -webkit-line-clamp: 2;
     display: -webkit-box;
-    -webkit-box-orient: vertical; 
+    -webkit-box-orient: vertical;
     overflow: hidden;
     color: $grey-900;
     font: $h5;
