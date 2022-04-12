@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import UserAvatar from 'features/Tasks/tasksComponents/UserAvatar';
 import classes from './index.module.scss';
 import { TRoles } from 'store/slice/task/entities';
@@ -23,18 +23,22 @@ const UserAssignedToTask = ({ users }: UserAssignedToTaskProps) => {
   const [countElement, setCountElement] = useState(0);
   const [width, setWidth] = useState(0);
   const colors = ['#FFC542', '#A461D8', '#A4E3FE', '#FC5A5A', '#A461D8', '#FF9AD5', '#50B5FF'];
+  const calculationCountElement = () => {
+    const count = Math.floor(wrap.current!.offsetWidth / 40) - 1;
+    return count + 1 < users.length ? count : users.length;
+  };
+
   useEffect(() => {
     const trackingWidthWrapper = () => setWidth(() => wrap.current!.clientWidth);
     window.addEventListener('resize', trackingWidthWrapper);
+    calculationCountElement();
     return () => {
       window.removeEventListener('resize', trackingWidthWrapper);
     };
   }, []);
+
   useEffect(() => {
-    setCountElement(() => {
-      const count = Math.floor(wrap.current!.offsetWidth / 41) - 1;
-      return count + 1 < users.length ? count : users.length;
-    });
+    setCountElement(() => calculationCountElement());
   }, [wrap.current, width]);
   return (
     <div className={classes.users} ref={wrap}>
