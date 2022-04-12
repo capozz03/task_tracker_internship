@@ -38,10 +38,15 @@ const TagsGroup = ({ tags }:TagsGroupProps) => {
   }, [wrap.current, window]);
   return (
     <div ref={wrap} className={styles.markGroup}>
-      {tags.slice(0, countElement).map((tag) => (
+      {tags.slice(0, countElement - 1).map((tag) => (
         <Tag tag={tag.task_tag} key={tag.task_tag.task_tag_id} />
       ))}
-      { tags.length - countElement > 0 && <Other count={tags.length - countElement} /> }
+      <div>
+        {tags.slice(countElement, countElement + 1).map((tag) => (
+          <Tag tag={tag.task_tag} key={tag.task_tag.task_tag_id} />
+        ))}
+        { tags.length - countElement > 0 && <Other count={tags.length - countElement} /> }
+      </div>
     </div>);
 };
 
