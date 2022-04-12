@@ -4,8 +4,18 @@ import style from './index.module.scss';
 import Icon, { CaretDownOutlined } from '@ant-design/icons';
 import { IconShape } from './icons';
 
-export const SortByPCScreen = () => {
+type TSortType = 'date~DESC' | 'title~ASC';
+
+type SetSortTypeProps = {
+  setSortType: React.Dispatch<React.SetStateAction<TSortType>>;
+};
+
+export const SortByPCScreen = ({ setSortType }: SetSortTypeProps) => {
   const { Option } = Select;
+
+  const sortHandler = (value: TSortType): void => {
+    setSortType(value);
+  };
 
   return (
     <div className={style.sortByWrapper}>
@@ -15,28 +25,32 @@ export const SortByPCScreen = () => {
         suffixIcon={
           <CaretDownOutlined className="ant-select-suffix" style={{ color: '#92929D' }} />
         }
-        defaultValue="дате создания"
+        defaultValue="date~DESC"
         bordered={false}
         dropdownMatchSelectWidth={false}
         dropdownStyle={{ borderRadius: '8px' }}
+        onChange={sortHandler}
       >
-        <Option value="дате создания">дате создания</Option>
-        <Option value="дате завершения">дате завершения</Option>
+        <Option value="date~DESC">дате создания</Option>
+        <Option value="title~ASC">наименованию</Option>
       </Select>
     </div>
   );
 };
 
-export const SortByMobileScreen = () => {
+export const SortByMobileScreen = ({ setSortType }: SetSortTypeProps) => {
   const { Item } = Menu;
+  const sortHandler = ({ key }: any): void => {
+    setSortType(key);
+  };
 
   const menu = (
-    <Menu className={style.dropdown}>
-      <Item key="0" className={style.dropdownItem}>
+    <Menu className={style.dropdown} onClick={sortHandler}>
+      <Item key="date~DESC" className={style.dropdownItem}>
         <div>Упорядочить по дате создания</div>
       </Item>
-      <Item key="1" className={style.dropdownItem}>
-        <div>Упорядочить по дате завершения</div>
+      <Item key="title~ASC" className={style.dropdownItem}>
+        <div>Упорядочить по наименованию</div>
       </Item>
     </Menu>
   );
