@@ -26,7 +26,14 @@ const TasksInWork = (props: ComponentProps<any>) => {
 
   return (
     <div className={styles.tasks_group} {...props}>
-      <h4 className={styles.title}>В работе</h4>
+      <h4 className={styles.title}>
+        В работе
+        <span className={styles.totalCount}>
+          { pagination
+          && pagination.page_total * pagination.per_page }
+        </span>
+        шт.
+      </h4>
       {tasks && tasks.map((task) => (
         <TaskInWork key={task.task_id} task={task} />
       ))}
