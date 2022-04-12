@@ -32,12 +32,6 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
       <div className={styles.wrap}>
         <div className={styles.cardName}>
           <CardNameText text={task.title} />
-          {/* <CardName */}
-          {/*  name={task.title} */}
-          {/*  attachments={task.storage_files_meta.total} */}
-          {/*  checkListTotal={2} */}
-          {/*  checkListChecked={2} */}
-          {/* /> */}
         </div>
         <div className={styles.indicators}>
           <CardAttachmentsCount count={task.storage_files_meta.total} />
