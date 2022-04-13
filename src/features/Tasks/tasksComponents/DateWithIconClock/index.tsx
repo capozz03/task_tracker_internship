@@ -19,11 +19,12 @@ const DateWithIconClock = ({ date }: DateWithIconClockProps) => {
     if (dateExec > yesterday) return 'вчера';
     return dateExec.format('DD MMM YYYY').replace('.', '');
   };
+  const dateString = dateFormat();
 
   return (
     <span className={classes.text}>
       <ClockCircleOutlined className={classes.icon} />
-      { dateFormat() }
+      { dateString }
     </span>
   );
 };
