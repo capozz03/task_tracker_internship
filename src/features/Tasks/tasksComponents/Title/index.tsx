@@ -1,5 +1,5 @@
 import React, {
-  ChangeEventHandler, FocusEventHandler,
+  ChangeEventHandler,
   FormEventHandler,
   KeyboardEventHandler,
   MouseEventHandler,
@@ -11,6 +11,10 @@ import styles from './index.module.scss';
 import PencilIcon from 'shared/ui/icons/PencilIcon';
 import { useDispatch } from 'react-redux';
 import { setTitleAsync } from 'store/slice/task/currentTask';
+import { Tooltip } from 'antd';
+import PlusIcons from 'shared/ui/icons/PlusIcons';
+import CancelIcons from 'shared/ui/icons/CancelIcons';
+import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
 
 type titleProps = {
   title: string,
@@ -19,45 +23,71 @@ type titleProps = {
 
 const Title = ({ title, taskId }: titleProps) => {
   const [isEdit, setIsEdit] = useState(false);
+  const [isVisibleTooltip, setIsVisibleTooltip] = useState(false);
   const [titleTask, setTitleTask] = useState(title);
+  const [isVisibleFullText, setIsVisibleFullText] = useState(true);
+  const [oldTitle, setOldTitle] = useState(title);
   const dispatch = useDispatch();
-  const oldTitle = useRef(title);
   const textArea = useRef<HTMLTextAreaElement>(null);
   const titleTaskRef = useRef<HTMLDivElement>(null);
+
   const calculationHeight = () => {
-    textArea.current!.style.height = `${textArea.current!.scrollHeight}px`;
+    if (textArea.current!.scrollHeight > textArea.current!.offsetHeight) {
+      textArea.current!.style.height = `${textArea.current!.scrollHeight + 5}px`;
+    }
   };
   const handleEditor: MouseEventHandler<HTMLButtonElement> = () => {
     setIsEdit(true);
-    oldTitle.current = title;
-    const element = textArea.current;
-    element?.focus();
-    element?.setSelectionRange(element?.value.length, element?.value.length);
-    textArea.current!.style.height = `${titleTaskRef.current!.offsetHeight + 10}px`;
+    setOldTitle(titleTask);
+    textArea.current!.style.height = `${titleTaskRef.current!.offsetHeight + 5}px`;
   };
   const handleChangeTitle: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
-    setTitleTask(e.target.value);
+    setTitleTask(() => e.target.value);
+    if (e.target.value.length === 0 || e.target.value === '0') {
+      setIsVisibleTooltip(true);
+    } else {
+      setIsVisibleTooltip(false);
+    }
   };
-  const handleBlur: FocusEventHandler<HTMLTextAreaElement> = () => {
-    setTitleTask(oldTitle.current);
-    setIsEdit(false);
-  };
+
   const saveTask = () => {
-    setTitleTask(titleTask.trim());
-    if (titleTask.length > 0 && !!titleTask) {
+    setIsVisibleTooltip(false);
+    setTitleTask(() => titleTask.trim());
+    if (titleTask.length > 0 && titleTask !== '0') {
       dispatch(setTitleAsync({ title: titleTask, taskId }));
+      setOldTitle(titleTask);
       setIsEdit(false);
+    } else {
+      setIsVisibleTooltip(true);
     }
   };
   const handleSubmitForm: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     saveTask();
   };
+
+  const handlePlusClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
+    saveTask();
+  };
+
+  const handleCancelClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
+    setTitleTask(() => oldTitle);
+    setIsEdit(false);
+    setIsVisibleTooltip(false);
+  };
+
   const handleKeyDownEnter: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       saveTask();
     }
+  };
+
+  const handleClickEllipsis: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
+    setIsVisibleFullText(false);
   };
 
   useEffect(() => {
@@ -68,23 +98,37 @@ const Title = ({ title, taskId }: titleProps) => {
     <div>
       <div className={isEdit ? styles.hidden : styles.visible}>
         <div className={styles.title} ref={titleTaskRef}>
-          {titleTask}
+          {
+            useBreakPoint(1000) && titleTask.length > 70 && isVisibleFullText
+              ? titleTask.slice(0, 70)
+              : titleTask
+          }
+          { useBreakPoint(1000) && titleTask.length > 70 && isVisibleFullText && <button type="button" className={styles.ellipsis} onClick={handleClickEllipsis}>...</button> }
           <button type="button" id="changeBtn" className={styles.btnEdit} onClick={handleEditor}>
             <PencilIcon color="#B5B5BE" />
           </button>
         </div>
       </div>
       <div className={isEdit ? styles.visible : styles.hidden}>
-        <form onSubmit={handleSubmitForm}>
-          <textarea
-            maxLength={150}
-            className={styles.textarea}
-            ref={textArea}
-            onChange={handleChangeTitle}
-            value={titleTask}
-            onKeyDown={handleKeyDownEnter}
-            onBlur={handleBlur}
-          />
+        <form onSubmit={handleSubmitForm} className={styles.formEdit}>
+          <Tooltip title="Название обязательно" visible={isVisibleTooltip} placement="bottom">
+            <textarea
+              maxLength={150}
+              className={styles.textarea}
+              ref={textArea}
+              onChange={handleChangeTitle}
+              value={titleTask}
+              onKeyDown={handleKeyDownEnter}
+            />
+          </Tooltip>
+          <div className={styles.btnGroup}>
+            <button type="button" onClick={handlePlusClick}>
+              <PlusIcons />
+            </button>
+            <button type="button" onClick={handleCancelClick}>
+              <CancelIcons />
+            </button>
+          </div>
         </form>
       </div>
     </div>

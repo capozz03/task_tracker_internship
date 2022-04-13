@@ -8,11 +8,22 @@ type DateWithIconClockProps = {
 }
 
 const DateWithIconClock = ({ date }: DateWithIconClockProps) => {
-  const dates = moment(date).format('DD MMM YYYY').replace('.', '');
+  const dateExec = moment(date);
+  const today = moment().startOf('day');
+  const tomorrow = moment().add(1, 'day').startOf('day');
+  const tomorrowEnd = moment().add(1, 'day').endOf('day');
+  const yesterday = moment().add(-1, 'day').startOf('day');
+  const dateFormat = () => {
+    if (dateExec > today && dateExec < tomorrow) return 'сегодня';
+    if (dateExec > tomorrow && dateExec < tomorrowEnd) return 'завтра';
+    if (dateExec > yesterday) return 'вчера';
+    return dateExec.format('DD MMM YYYY').replace('.', '');
+  };
+
   return (
     <span className={classes.text}>
       <ClockCircleOutlined className={classes.icon} />
-      { dates }
+      { dateFormat() }
     </span>
   );
 };

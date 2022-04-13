@@ -4,7 +4,8 @@ import styles from './index.module.scss';
 import { useDispatch } from 'react-redux';
 import { TaskInWorkSlice } from 'store/slice';
 import {
-  CardName,
+  CardAttachmentsCount, CardChecklistCount,
+  CardNameText,
   DateWithIconClock,
   DropdownMenu,
   PriorityStatus,
@@ -27,9 +28,11 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
   return (
     <div className={styles.wrap}>
       <div className={styles.cardName}>
-        <CardName
-          name={task.title}
-          attachments={task.storage_files_meta.total}
+        <CardNameText text={task.title} />
+      </div>
+      <div className={styles.cardFilesAndCheckbox}>
+        <CardAttachmentsCount count={task.storage_files_meta.total} />
+        <CardChecklistCount
           checkListTotal={(task.progress && task.progress?.total) || 0}
           checkListChecked={(task.progress && task.progress?.completed) || 0}
         />
@@ -38,9 +41,8 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
         <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
       </div>
       <div className={styles.cardDateAndPriority}>
-        <div className={styles.cardDate}>
-          <DateWithIconClock date={task.created} />
-        </div>
+        { task.exec_stop
+          && <div className={styles.cardDate}><DateWithIconClock date={task.exec_stop} /></div> }
         <div className={styles.cardPriority}>
           {task.priority && <PriorityStatus type={task.priority.name} />}
         </div>

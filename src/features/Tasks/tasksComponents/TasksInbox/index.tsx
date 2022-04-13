@@ -29,13 +29,20 @@ const TasksInbox = (props: ComponentProps<any>) => {
 
   return (
     <div className={styles.tasks_group} {...props}>
-      <h4 className={styles.title}>Входящие</h4>
+      <h4 className={styles.title}>
+        Входящие
+        <span className={styles.totalCount}>
+          { pagination
+            && pagination.items_total }
+        </span>
+        шт.
+      </h4>
       {tasks && tasks.map((task) => <TaskInbox key={task.task_id} task={task} />)}
       <div className={styles.pagination}>
         {pagination && (
           <Pagination
             onChange={paginationHandler}
-            total={pagination.page_total * pagination.per_page}
+            total={pagination.items_total}
           />
         )}
       </div>

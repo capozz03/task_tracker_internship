@@ -7,6 +7,7 @@ import TaskCompleted from './TaskCompleted';
 import style from './index.module.scss';
 import Pagination from '../Pagination';
 import { TSortType } from 'store/slice/task/entities';
+import styles from 'features/Tasks/tasksComponents/TasksInbox/index.module.scss';
 
 const TasksCompleted = (props: ComponentProps<any>) => {
   const isMobile = useBreakPoint(768);
@@ -38,7 +39,14 @@ const TasksCompleted = (props: ComponentProps<any>) => {
   return (
     <div className={style.tasks_group} {...props}>
       <div className={style.wrapTitle}>
-        <h4 className={style.title}>Завершено</h4>
+        <h4 className={style.title}>
+          Завершено
+          <span className={styles.totalCount}>
+            { pagination
+            && pagination.items_total }
+          </span>
+          шт.
+        </h4>
         {isMobile ? (
           <SortByMobileScreen setSortType={setSortType} />
         ) : (
@@ -50,7 +58,7 @@ const TasksCompleted = (props: ComponentProps<any>) => {
         {pagination && (
           <Pagination
             onChange={paginationHandler}
-            total={pagination.page_total * pagination.per_page}
+            total={pagination.items_total}
           />
         )}
       </div>

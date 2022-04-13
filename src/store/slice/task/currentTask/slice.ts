@@ -1,7 +1,7 @@
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { TTask } from '../entities';
 import { RequestStatuses } from 'shared';
-import { getFullInformationTaskAsync } from './asyncAction';
+import { fullInfoExtraReducers, setTitleAsyncExtraReducer } from './extraReducers';
 
 export type TCurrentTaskReducer = {
   task: TTask | null;
@@ -71,24 +71,8 @@ const currentTaskSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [getFullInformationTaskAsync.pending.type]:
-      (state) => ({
-        ...state,
-        status: RequestStatuses.LOADING,
-      }),
-    [getFullInformationTaskAsync.fulfilled.type]:
-      (state, { payload: task }: PayloadAction<TTask>) => ({
-        ...state,
-        status: RequestStatuses.SUCCESS,
-        task,
-      }),
-    [getFullInformationTaskAsync.rejected.type]:
-      (state, { payload: error }: PayloadAction<Error>) => ({
-        ...state,
-        status: RequestStatuses.FAILURE,
-        task: null,
-        error,
-      }),
+    ...fullInfoExtraReducers,
+    ...setTitleAsyncExtraReducer,
   },
 });
 

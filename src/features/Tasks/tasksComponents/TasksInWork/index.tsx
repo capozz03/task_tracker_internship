@@ -30,7 +30,7 @@ const TasksInWork = (props: ComponentProps<any>) => {
         В работе
         <span className={styles.totalCount}>
           { pagination
-          && pagination.page_total * pagination.per_page }
+          && pagination.items_total }
         </span>
         шт.
       </h4>
@@ -45,7 +45,7 @@ const TasksInWork = (props: ComponentProps<any>) => {
           pagination
           && <Pagination
             onChange={paginationHandler}
-            total={pagination.page_total * pagination.per_page}
+            total={pagination.items_total}
           />
         }
       </div>
