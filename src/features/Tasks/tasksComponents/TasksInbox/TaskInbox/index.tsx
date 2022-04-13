@@ -55,7 +55,7 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
         </div>
       </div>
       <div className={styles.cardMenu}>
-        <DropdownMenu />
+        <DropdownMenu taskId={task.task_id} />
       </div>
     </div>
   );
