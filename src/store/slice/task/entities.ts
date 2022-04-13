@@ -141,3 +141,5 @@ export type TTaskStatusChange = {
   task_id: string,
   task_status_id: string,
 }
+
+export type TSortType = 'date~DESC' | 'title~ASC';
