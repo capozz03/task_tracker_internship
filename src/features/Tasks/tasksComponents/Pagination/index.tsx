@@ -3,6 +3,7 @@ import { Pagination as AntPagination, PaginationProps } from 'antd';
 import './index.module.scss';
 
 const Pagination = ({ ...props }:PaginationProps) => (<AntPagination
+  current={props.current}
   defaultPageSize={3}
   showSizeChanger
   onChange={props.onChange}
