@@ -43,4 +43,5 @@ const taskInWorkSlice = createSlice({
 
 export const taskInWorkReducer = taskInWorkSlice.reducer;
 const selectSelf = (state: any) => state;
-export const testSelector = createSelector(selectSelf, (state: any) => state.taskInWork.tasks);
+export const taskInWorkSelector = createSelector(selectSelf,
+  (state: any) => state.taskInWork.tasks);
