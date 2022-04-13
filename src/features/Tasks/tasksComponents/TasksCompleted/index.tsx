@@ -6,8 +6,7 @@ import { SortByMobileScreen, SortByPCScreen } from '../SortBy';
 import TaskCompleted from './TaskCompleted';
 import style from './index.module.scss';
 import Pagination from '../Pagination';
-
-type TSortType = 'date~DESC' | 'title~ASC';
+import { TSortType } from 'store/slice/task/entities';
 
 const TasksCompleted = (props: ComponentProps<any>) => {
   const isMobile = useBreakPoint(768);
