@@ -1,19 +1,21 @@
 import React from 'react';
 import { TTask } from 'store/slice/task/entities';
-import CardName from 'features/Tasks/tasksComponents/CardName';
-import DateWithIconClock from 'features/Tasks/tasksComponents/DateWithIconClock';
-import PriorityStatus from 'features/Tasks/tasksComponents/PriorityStatus';
-import TagsGroup from 'features/Tasks/tasksComponents/TagsGroup';
-import UserAssignedToTask from 'features/Tasks/tasksComponents/UserAssignedToTask';
 import styles from './index.module.scss';
-import { DropdownMenu } from 'features/Tasks/tasksComponents';
-import { TaskStatus } from 'features/Tasks/tasksComponents/TaskStatus';
 import { useDispatch } from 'react-redux';
 import { TaskInWorkSlice } from 'store/slice';
+import {
+  CardName,
+  DateWithIconClock,
+  DropdownMenu,
+  PriorityStatus,
+  TagsGroup,
+  TaskStatus,
+  UserAssignedToTask,
+} from 'features/Tasks/tasksComponents';
 
 type TaskInWorkProps = {
-  task: TTask
-}
+  task: TTask;
+};
 
 const TaskInWork = ({ task }: TaskInWorkProps) => {
   const dispatch = useDispatch();
@@ -28,8 +30,8 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
         <CardName
           name={task.title}
           attachments={task.storage_files_meta.total}
-          checkListTotal={2}
-          checkListChecked={2}
+          checkListTotal={(task.progress && task.progress?.total) || 0}
+          checkListChecked={(task.progress && task.progress?.completed) || 0}
         />
       </div>
       <div className={styles.cardStatus}>
@@ -43,7 +45,7 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
           {task.priority && <PriorityStatus type={task.priority.name} />}
         </div>
       </div>
-      <div className={styles.cardTagsGroupt}>
+      <div className={styles.cardTagsGroup}>
         <TagsGroup tags={task.tags} />
       </div>
       <div className={styles.cardUsers}>

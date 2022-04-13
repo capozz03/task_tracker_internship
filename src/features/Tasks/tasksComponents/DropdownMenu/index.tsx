@@ -10,7 +10,7 @@ type DropdownMenuProps = {
   taskId?: string
 }
 
-export const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
+const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
   const { Item } = Menu;
   const dispatch = useDispatch();
 
@@ -18,9 +18,6 @@ export const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
     if (taskId) {
       dispatch(duplicateTaskAsync(taskId));
     }
-  };
-  const moveToArchiveHandle = () => {
-    console.log(taskId);
   };
   const deleteTaskHandle = () => {
     if (taskId) {
@@ -31,7 +28,6 @@ export const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
   const menu = (
     <Menu className={style.dropdownMenu}>
       <Item key="1" onClick={duplicateHandle}>Дублировать задачу</Item>
-      <Item key="2" onClick={moveToArchiveHandle}>Переместить в архив</Item>
       <Item key="3" onClick={deleteTaskHandle} className={style.delete}>
         Удалить задачу
       </Item>
@@ -48,3 +44,5 @@ export const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
     </div>
   );
 };
+
+export default DropdownMenu;

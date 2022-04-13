@@ -12,7 +12,7 @@ html, body{
   display: flex;
   min-height: 100vh;
   min-width: 100%;
-  background: $grey-100;
+  background: $grey-100 !important;
 
   .sider {
     background: $grey-0;

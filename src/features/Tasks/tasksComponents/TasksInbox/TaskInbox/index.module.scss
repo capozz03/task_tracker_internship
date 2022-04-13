@@ -1,54 +1,94 @@
 @import "src/shared/assets/styles";
 
-.wrap {
+.innerContent {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  flex-wrap: nowrap;
   background: #FFFFFF;
   border-radius: 20px;
   margin-bottom: 8px;
   padding: 15px 25px;
 }
 
-.cardName{
-  width: 400px;
+.wrap {
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  @include media-breakpoint-down(lg) {
+    flex-direction: column;
+  }
+}
+
+.cardName {
+  max-width: 400px;
+  width: 100%;
   padding: 0 12px;
+  margin-bottom: 4px;
   flex-shrink: 0;
 }
 
-.cardStatus{
+.indicators {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  padding: 0 10px;
+  @include media-breakpoint-down(xxl) {
+    flex-grow: 1;
+    justify-content: flex-end;
+    align-self: flex-end;
+    order: 99;
+  }
+}
+
+.dateAndStatus {
+  display: flex;
+  padding: 0 12px;
+}
+
+.cardStatus {
   min-width: 100px;
   flex-shrink: 0;
-  padding: 0 12px;
+  margin: 8px 8px;
   display: flex;
   align-items: center;
 }
 
-.cardDate{
-  width: 150px;
+.cardDate {
   display: flex;
+  margin: 8px 8px;
   align-items: center;
-  padding: 0 12px;
   flex-shrink: 0;
 }
 
-.cardTagsGroupt{
-  width: 200px;
+.cardTagsGroupt {
+
   display: flex;
   align-items: center;
   flex-grow: 1;
   padding: 0 12px;
+  margin: 8px 0;
 }
 
-.cardUsers{
+.cardUsers {
+  margin: 8px 12px;
   width: 125px;
 }
 
-.cardMenu{
+.cardMenu {
   display: flex;
-  align-items:center;
-  :global(.ant-btn-group){
-    :global(.ant-btn:first-child){
+  align-items: center;
+  margin-left: 15px;
+
+  :global(.ant-btn-group) {
+    :global(.ant-btn:first-child) {
       display: none !important;
     }
+  }
+
+  * {
+    padding: 0;
   }
 }

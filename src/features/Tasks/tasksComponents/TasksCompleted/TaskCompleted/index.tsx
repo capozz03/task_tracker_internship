@@ -1,50 +1,58 @@
 import { Progress } from 'antd';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { CompletedTaskSlice } from 'store/slice';
+import { TaskCompletedSlice } from 'store/slice';
 import CardName from '../../CardName';
-import { DropdownMenu } from '../../DropdownMenu';
+import DropdownMenu from '../../DropdownMenu';
 import TagsGroup from '../../TagsGroup';
-import { TaskStatus } from '../../TaskStatus';
+import TaskStatus from '../../TaskStatus';
 import UserAssignedToTask from '../../UserAssignedToTask';
 import style from './index.module.scss';
 import { progress, progressBarPercent } from './progressBar';
 
-type CardCompletedProps = {
-  task: CompletedTaskSlice.TTask;
+type TaskCompletedProps = {
+  task: TaskCompletedSlice.TTask;
 };
 
-export const CardCompleted = ({ task }: CardCompletedProps) => {
+const TaskCompleted = ({ task }: TaskCompletedProps) => {
   const dispatch = useDispatch();
   const { total, checked } = progress;
   const progressPercent = progressBarPercent(progress);
   const statusHandler = (value: string) => {
     dispatch(
-      CompletedTaskSlice.changeStatusTaskAsync({
+      TaskCompletedSlice.changeStatusTaskAsync({
         task_id: task.task_id,
         task_status_id: value,
       }),
     );
   };
   return (
-    <div className={style.cardCompletedTask}>
-      <div className={style.main}>
+    <div className={style.wrap}>
+      <div className={style.cardName}>
         <CardName
           name={task.title}
           attachments={task.storage_files_meta.total}
-          checkListChecked={checked}
           checkListTotal={total}
+          checkListChecked={checked}
         />
+      </div>
+      <div className={style.cardStatus}>
         <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
+      </div>
+      <div className={style.cardTagsGroupt}>
         <TagsGroup tags={task.tags} />
-        <div className={style.progress}>
-          <Progress percent={progressPercent} size="small" strokeColor="#3DD598" />
-        </div>
+      </div>
+      <div className={style.cardProgress}>
+        <Progress percent={progressPercent} size="small" strokeColor="#3DD598" />
+      </div>
+      <div className={style.cardUsers}>
         <UserAssignedToTask users={task.roles} />
       </div>
-      <div className={style.dropdown}>
-        <DropdownMenu />
+      <div className={style.cardMenu}>
+        <DropdownMenu taskId={task.task_id} />
       </div>
     </div>
   );
 };
+
+export default TaskCompleted;
