@@ -1,20 +1,20 @@
 import React, { ComponentProps, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { TaskInboxSlice } from 'store/slice';
-import styles from './index.module.scss';
-import TaskInbox from './TaskInbox';
-import Pagination from '../Pagination';
 import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
+import { TaskInboxSlice } from 'store/slice';
 import { NewTask, SortByMobileScreen, SortByPCScreen } from '..';
+import TaskInbox from './TaskInbox';
 import { TaskStatuses } from 'shared/helpers/enums';
+import styles from './index.module.scss';
+import Pagination from '../Pagination';
 
 type TSortType = 'date~DESC' | 'title~ASC';
 
 const TasksInbox = (props: ComponentProps<any>) => {
   const isMobile = useBreakPoint(768);
   const dispatch = useDispatch();
-  const pagination = useSelector(TaskInboxSlice.getPagination);
   const tasks = useSelector(TaskInboxSlice.getTasks);
+  const pagination = useSelector(TaskInboxSlice.getPagination);
   const [sortType, setSortType] = useState<TSortType>('date~DESC');
 
   const paginationHandler = (page: number, pageSize: number) => {
@@ -35,7 +35,7 @@ const TasksInbox = (props: ComponentProps<any>) => {
         per_page: 3,
       }),
     );
-  }, []);
+  }, [sortType]);
 
   return (
     <div className={styles.tasks_group} {...props}>
