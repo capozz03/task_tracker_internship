@@ -1,5 +1,10 @@
 @import "src/shared/assets/styles";
 
+:global(.Toastify__toast-container.Toastify__toast-container--top-right) {
+    width: auto;
+    padding-left: 10px;
+}
+
 .container {
     min-height: 80px;
     padding: 16px;
