@@ -2,8 +2,8 @@ import React from 'react';
 import { Select, Menu, Dropdown } from 'antd';
 import style from './index.module.scss';
 import Icon, { CaretDownOutlined } from '@ant-design/icons';
-import { IconShape } from './icons';
 import { TSortType } from 'store/slice/task/entities';
+import { IconShape } from 'shared/ui/icons/ReactIcons';
 
 type SetSortTypeProps = {
   setSortType: React.Dispatch<React.SetStateAction<TSortType>>;

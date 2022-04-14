@@ -3,7 +3,7 @@ import { Dropdown, Menu } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
 import style from './index.module.scss';
 import { useDispatch } from 'react-redux';
-import { duplicateTaskAsync, deleteTaskAsync } from '../../../../store/slice/task/taskInWork';
+import { CommonActions } from 'store/slice';
 import ModalTask from 'features/Task/currentTaskComponents/ModalTask';
 
 type DropdownMenuProps = {
@@ -23,12 +23,12 @@ const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
 
   const duplicateHandle = () => {
     if (taskId) {
-      dispatch(duplicateTaskAsync(taskId));
+      dispatch(CommonActions.duplicateTaskAsync(taskId));
     }
   };
   const deleteTaskHandle = () => {
     if (taskId) {
-      dispatch(deleteTaskAsync(taskId));
+      dispatch(CommonActions.deleteTaskAsync(taskId));
     }
   };
 
