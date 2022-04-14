@@ -115,9 +115,12 @@ export type TTasksReducer = {
 
 export type TTasksResponse = {
   data: TTask[] | null;
-
   pagination?: TPagination | null;
 };
+
+export type TTaskItemResponse = {
+  data: TTask;
+}
 
 export type TTaskSearch = {
   sort?: 'date~DESC' | 'title~ASC',

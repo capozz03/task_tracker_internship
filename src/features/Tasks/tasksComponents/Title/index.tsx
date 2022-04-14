@@ -10,7 +10,7 @@ import React, {
 import styles from './index.module.scss';
 import PencilIcon from 'shared/ui/icons/PencilIcon';
 import { useDispatch } from 'react-redux';
-import { setTitleAsync } from 'store/slice/task/currentTask';
+import { setTitleAsync } from 'store/slice/task/taskForm';
 import { Tooltip } from 'antd';
 import PlusIcons from 'shared/ui/icons/PlusIcons';
 import CancelIcons from 'shared/ui/icons/CancelIcons';
@@ -50,13 +50,27 @@ const Title = ({ title, taskId }: titleProps) => {
     }
   };
 
+  const saveSuccess = () => {
+    setOldTitle(titleTask);
+    setIsEdit(false);
+  };
+
+  const saveError = () => {
+    // alert('Ошибка');
+  };
+
   const saveTask = () => {
     setIsVisibleTooltip(false);
     setTitleTask(() => titleTask.trim());
     if (titleTask.length > 0 && titleTask !== '0') {
-      dispatch(setTitleAsync({ title: titleTask, taskId }));
-      setOldTitle(titleTask);
-      setIsEdit(false);
+      dispatch(setTitleAsync({
+        data: {
+          title: titleTask,
+          taskId,
+        },
+        successHandle: saveSuccess,
+        errorHandle: saveError,
+      }));
     } else {
       setIsVisibleTooltip(true);
     }

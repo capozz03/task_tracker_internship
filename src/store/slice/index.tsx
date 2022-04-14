@@ -3,4 +3,4 @@ export * as TaskInWorkSlice from './task/taskInWork';
 export * as TaskCompletedSlice from './task/taskCompleted';
 export * as TaskInboxSlice from './task/taskInbox';
 export * as UserSlice from './user';
-export * as CurrentTaskSlice from './task/currentTask';
+export * as TaskFormSlice from './task/taskForm';

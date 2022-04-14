@@ -1,15 +1,14 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { TTask } from '../entities';
-import { RequestStatuses } from 'shared';
-import { fullInfoExtraReducers, setTitleAsyncExtraReducer } from './extraReducers';
+import { RequestStatuses } from '../../../../shared';
 
-export type TCurrentTaskReducer = {
+export type TTaskFormReducer = {
   task: TTask | null;
   status: RequestStatuses;
   error: null | Error;
+  isVisibleForm: boolean
 };
 
-const initialState = {
+export const initialState = {
   task: {
     task_id: '',
     title: '',
@@ -64,19 +63,5 @@ const initialState = {
   },
   status: RequestStatuses.IDLE,
   error: null,
-} as TCurrentTaskReducer;
-
-const currentTaskSlice = createSlice({
-  name: 'currentSlice',
-  initialState,
-  reducers: {},
-  extraReducers: {
-    ...fullInfoExtraReducers,
-    ...setTitleAsyncExtraReducer,
-  },
-});
-
-export const currentTaskReducer = currentTaskSlice.reducer;
-const selectSelf = (state: any) => state;
-export const currentTaskSelector = createSelector(selectSelf,
-  (state: any) => state.currentTaskSlice);
+  isVisibleForm: false,
+} as TTaskFormReducer;
