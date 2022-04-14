@@ -5,13 +5,38 @@
   color: $grey-700 !important;
   line-height: 32px !important;
   margin-right: 30px !important;
+  @media screen and (max-width: 400px) {
+    display: none !important;
+  }
+}
+
+:global(.ant-pagination.mini){
+  :global(.ant-pagination-total-text){
+    line-height: 24px !important;
+  }
+  :global(.ant-pagination-item){
+    font: $p-regular !important;
+    color: $grey-600 !important;
+    :global(a){
+      line-height: 24px !important;
+    }
+  }
+  :global(.ant-pagination-options){
+    :global(.ant-select-selection-item){
+      line-height: 20px !important;
+    }
+  }
+  :global(.ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector){
+    height: 20px !important;
+  }
 }
 
 :global(.ant-pagination-item) {
   border: none !important;
   font: $p-regular !important;
-  color: $grey-600;
+  color: $grey-600 !important;
   margin-right: 0 !important;
+  margin-left: 0 !important;
   background-color: transparent !important;
   :global(a){
     line-height: 32px;
@@ -51,6 +76,9 @@
   border: 1px solid $grey-300 !important;
   border-radius: 8px !important;
   width: 61px;
+  @media screen and (max-width: 576px){
+    display: inline-block !important;
+  }
 
   :global(.ant-select-selector){
     padding: 0 !important;

@@ -44,6 +44,7 @@ const TasksInWork = (props: ComponentProps<any>) => {
         {
           pagination
           && <Pagination
+            current={pagination.page_current}
             onChange={paginationHandler}
             total={pagination.items_total}
           />

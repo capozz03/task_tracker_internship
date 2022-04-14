@@ -4,7 +4,9 @@ import './index.module.scss';
 
 const Pagination = ({ ...props }:PaginationProps) => (<AntPagination
   current={props.current}
+  defaultCurrent={1}
   defaultPageSize={3}
+  responsive
   showSizeChanger
   onChange={props.onChange}
   pageSizeOptions={[3, 6, 9, 12]}
