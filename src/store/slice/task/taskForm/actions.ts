@@ -1,19 +1,17 @@
 import { TTaskFormReducer } from './initialState';
+import { PayloadAction } from '@reduxjs/toolkit';
 
 export const taskFormActions = {
-  setTitleFromTaskForm(state: TTaskFormReducer, payload: string) {
-    return {
-      ...state,
-      task: {
-        ...state.task,
-        title: payload,
-      },
-    };
-  },
-  toggleVisibleTaskForm(state: TTaskFormReducer) {
-    return {
-      ...state,
-      isVisibleForm: !state.isVisibleForm,
-    };
+  showTaskForm: (state: TTaskFormReducer) => ({
+    ...state,
+    isVisibleForm: true,
+  }),
+  hiddenTaskForm: (state: TTaskFormReducer) => ({
+    ...state,
+    isVisibleForm: false,
+  }),
+  setTitleFromTaskForm: (state: TTaskFormReducer, { payload: title }: PayloadAction<string>) => {
+    state.task!.title = title;
+    return state;
   },
 };

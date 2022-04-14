@@ -3,20 +3,12 @@ import { initialState, TTaskFormReducer } from './initialState';
 import { RequestStatuses } from '../../../../shared';
 import { TTask } from '../entities';
 import { getTaskByIdAsync } from './getTaskById';
+import { taskFormActions } from './actions';
 
 const taskFormSlice = createSlice({
   name: 'taskForm',
   initialState,
-  reducers: {
-    toggleVisibleTaskForm: (state: TTaskFormReducer) => ({
-      ...state,
-      isVisibleForm: !state.isVisibleForm,
-    }),
-    setTitleFromTaskForm: (state: TTaskFormReducer, { payload: title }: PayloadAction<string>) => {
-      state.task!.title = title;
-      return state;
-    },
-  },
+  reducers: taskFormActions,
   extraReducers: {
     [getTaskByIdAsync.pending.type]:
       (state: TTaskFormReducer) => ({
@@ -39,7 +31,7 @@ const taskFormSlice = createSlice({
   },
 });
 
-export const { setTitleFromTaskForm, toggleVisibleTaskForm } = taskFormSlice.actions;
+export const { setTitleFromTaskForm, showTaskForm, hiddenTaskForm } = taskFormSlice.actions;
 export const taskFormReducer = taskFormSlice.reducer;
 const selectSelf = (state: any) => state;
 export const taskFormSelector = createSelector(selectSelf,
