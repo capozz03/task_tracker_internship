@@ -1,11 +1,12 @@
 import Button from 'features/Tasks/tasksComponents/Button';
 import React, { useState } from 'react';
-import { IconDescription } from 'shared/ui/icons/ReactIcons';
+import { IconDescription } from 'shared/ui/icons/TasksIcons';
 import DescriptionEditor from '../DescriptionEditor';
 import style from './index.module.scss';
 
 const DescriptionTask = () => {
   const [isVisibleEditor, setIsVisibleEditor] = useState<boolean>(false);
+  const [content, setContent] = useState<string>('Введите описание чтобы сделать задачу понятнее');
   const descriptionEditor = (): void => {
     setIsVisibleEditor(true);
   };
@@ -22,9 +23,13 @@ const DescriptionTask = () => {
       </div>
       <div className={style.placeholderDecription}>
         {isVisibleEditor ? (
-          <DescriptionEditor setIsVisibleEditor={setIsVisibleEditor} />
+          <DescriptionEditor
+            setIsVisibleEditor={setIsVisibleEditor}
+            setContent={setContent}
+            content={content}
+          />
         ) : (
-          <p>Введите описание чтобы сделать задачу понятнее</p>
+          <div className={style.content} dangerouslySetInnerHTML={{ __html: content }} />
         )}
       </div>
     </div>

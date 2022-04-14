@@ -36,7 +36,7 @@
 
 .placeholderDecription {
   margin-top: 16px;
-  & > p {
+  & > .content {
     font: $p-regular;
     color: $grey-600;
   }

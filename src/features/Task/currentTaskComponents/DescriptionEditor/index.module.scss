@@ -2,7 +2,8 @@
 
 .wrapBtn {
   display: flex;
-  .saveButton, .cancelButton {
+  .saveButton,
+  .cancelButton {
     margin-top: 16px;
     border-radius: 8px;
   }
@@ -14,5 +15,12 @@
     &:hover {
       background: $main-blue-hover;
     }
+  }
+}
+
+:global {
+  .jodit-wysiwyg {
+    font: $p-regular;
+    color: $grey-600;
   }
 }
