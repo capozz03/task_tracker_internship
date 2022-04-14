@@ -1,0 +1,53 @@
+@import "src/shared/assets/styles";
+
+.container {
+    min-height: 80px;
+    padding: 16px;
+    background: $grey-0;
+    border-radius: 8px;
+    box-shadow: 0px 8px 40px rgba(23, 31, 70, 0.08);
+}
+
+.container > svg {
+    min-width: 24px;
+}
+
+.body {
+    padding: 8px;
+    font: $alert-title;
+    color: $grey-700;
+}
+
+.body.bodyRemoveAlert {
+    color: $grey-900;
+}
+
+.body > div:last-child {
+    margin-left: 8px;
+}
+
+.body > div:last-child > span {
+    margin-right: 25px;
+}
+
+.progress {
+    top: 0;
+}
+
+.progressSuccess { background: $success-default; }
+.progressWarning { background: $warning-default; }
+.progressError { background: $error-default; }
+.progressInfo { background: $main-blue; }
+.progressRemove { background: $main-blue; }
+
+.button {
+    margin-right: 20px;
+    padding: 5px;
+    padding-left: 0;
+    font: $alert-button;
+    text-transform: uppercase;
+    color: $main-blue;
+    background: inherit;
+    border: none;
+    cursor: pointer;
+}
