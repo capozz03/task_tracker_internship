@@ -14,7 +14,7 @@ const AuthForm = () => {
   const dispatch = useDispatch();
   const token = useSelector(userToken);
 
-  const normalizeValue = (value: string) => value.trim();
+  const normalizeValue = (value: string) => value.split(' ').join('');
 
   const onFinish = (values: TFormValues) => {
     dispatch(userAuthAsync(values.login));
