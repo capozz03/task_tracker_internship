@@ -23,43 +23,45 @@ const TasksLayout = () => {
   const isVisibleForm = useSelector(TaskFormSlice.getTaskFormIsVisibleForm);
 
   return (
-    <Layout className={styles.layout}>
-      <Sider className={styles.sider} width={250} collapsed={!isSidebarShow} collapsedWidth={0}>
-        <div className={styles.wrapper}>
-          <div className={styles.header}>
-            <span className={styles.text}>фильтры и поиск</span>
-            <CloseOutlined className={styles.close} onClick={hideSidebar} />
+    <>
+      <Layout className={styles.layout}>
+        <Sider className={styles.sider} width={250} collapsed={!isSidebarShow} collapsedWidth={0}>
+          <div className={styles.wrapper}>
+            <div className={styles.header}>
+              <span className={styles.text}>фильтры и поиск</span>
+              <CloseOutlined className={styles.close} onClick={hideSidebar} />
+            </div>
+            <SidebarSearchInput placeholder="Поиск" />
           </div>
-          <SidebarSearchInput placeholder="Поиск" />
-        </div>
-      </Sider>
-      <Layout className={styles.main}>
-        <Header className={styles.header}>
-          <div className={styles.text}>Задачи</div>
-          <div className={styles.profile}>
-            <UserAvatarMenu />
-          </div>
-          <div className={styles.tools}>
-            <FilterToggleButton
-              active={isSidebarShow}
-              filtersCount={1}
-              onClick={changeSidebarVisibility}
-            />
-            <NotificationsButton active={false} />
-          </div>
-          <span className={styles.filterAssignedTo}>
-            <FilterAssignedTo currentValue="all" />
-          </span>
-        </Header>
-        <Content className={styles.content}>
-          <span className={styles.headerText}>Задачи</span>
-          <TasksInbox />
-          <TasksInWork />
-          <TasksCompleted />
-          <TaskModal visible={isVisibleForm} />
-        </Content>
+        </Sider>
+        <Layout className={styles.main}>
+          <Header className={styles.header}>
+            <div className={styles.text}>Задачи</div>
+            <div className={styles.profile}>
+              <UserAvatarMenu />
+            </div>
+            <div className={styles.tools}>
+              <FilterToggleButton
+                active={isSidebarShow}
+                filtersCount={1}
+                onClick={changeSidebarVisibility}
+              />
+              <NotificationsButton active={false} />
+            </div>
+            <span className={styles.filterAssignedTo}>
+              <FilterAssignedTo currentValue="all" />
+            </span>
+          </Header>
+          <Content className={styles.content}>
+            <span className={styles.headerText}>Задачи</span>
+            <TasksInbox />
+            <TasksInWork />
+            <TasksCompleted />
+          </Content>
+        </Layout>
       </Layout>
-    </Layout>
+      <TaskModal visible={isVisibleForm} />
+    </>
   );
 };
 

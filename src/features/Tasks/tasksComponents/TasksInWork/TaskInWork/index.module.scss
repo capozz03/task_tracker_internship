@@ -11,11 +11,18 @@
   padding: 15px 25px;
   width: 100%;
   gap: 10px;
+
+  transition: all 0.3s;
+
+  &:hover {
+    background: $grey-200 !important;
+  }
+
   @media (max-width: 1500px) {
     grid-template-columns: 350px 114px 203px auto 120px 70px;
   }
 
-  @media (max-width: 1400px){
+  @media (max-width: 1400px) {
     grid-template-columns: 300px 114px 120px auto 120px 70px;
   }
 

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import { TTask } from 'store/slice/task/entities';
 import styles from './index.module.scss';
 import { useDispatch } from 'react-redux';
 import { TaskInWorkSlice } from 'store/slice';
 import {
-  CardAttachmentsCount, CardChecklistCount,
+  CardAttachmentsCount,
+  CardChecklistCount,
   CardNameText,
   DateWithIconClock,
   DropdownMenu,
@@ -13,6 +14,7 @@ import {
   TaskStatus,
   UserAssignedToTask,
 } from 'features/Tasks/tasksComponents';
+import { getTaskByIdAsync } from '../../../../../store/slice/task/taskForm';
 
 type TaskInWorkProps = {
   task: TTask;
@@ -21,12 +23,24 @@ type TaskInWorkProps = {
 const TaskInWork = ({ task }: TaskInWorkProps) => {
   const dispatch = useDispatch();
   const statusHandler = (value: string) => {
-    dispatch(TaskInWorkSlice.changeStatusTaskAsync({
-      task_id: task.task_id,
-      task_status_id: value }));
+    dispatch(
+      TaskInWorkSlice.changeStatusTaskAsync({
+        task_id: task.task_id,
+        task_status_id: value,
+      }),
+    );
+  };
+  const openTask: MouseEventHandler<HTMLElement> = () => {
+    dispatch(getTaskByIdAsync(task.task_id));
   };
   return (
-    <div className={styles.wrap}>
+    <div
+      className={styles.wrap}
+      role="button"
+      onClick={openTask}
+      onKeyDown={() => {}}
+      tabIndex={-1}
+    >
       <div className={styles.cardName}>
         <CardNameText text={task.title} />
       </div>
@@ -41,8 +55,11 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
         <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
       </div>
       <div className={styles.cardDateAndPriority}>
-        { task.exec_stop
-          && <div className={styles.cardDate}><DateWithIconClock date={task.exec_stop} /></div> }
+        {task.exec_stop && (
+          <div className={styles.cardDate}>
+            <DateWithIconClock date={task.exec_stop} />
+          </div>
+        )}
         <div className={styles.cardPriority}>
           {task.priority && <PriorityStatus type={task.priority.name} />}
         </div>
@@ -56,8 +73,8 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
       <div className={styles.cardMenu}>
         <DropdownMenu taskId={task.task_id} />
       </div>
-
-    </div>);
+    </div>
+  );
 };
 
 export default TaskInWork;

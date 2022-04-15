@@ -12,7 +12,6 @@ import DropdownMenu from 'features/Tasks/tasksComponents/DropdownMenu';
 import CardNameText from '../../CardNameText';
 import CardChecklistCount from '../../CardChecklistCount';
 import CardAttachmentsCount from '../../CardAttachmentsCount';
-import { Button } from 'antd';
 import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 
 type TaskInboxProps = {
@@ -33,7 +32,13 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
     dispatch(getTaskByIdAsync(task.task_id));
   };
   return (
-    <Button type="text" block className={styles.innerContent} onClick={openTask}>
+    <div
+      className={styles.innerContent}
+      role="button"
+      onClick={openTask}
+      onKeyDown={() => {}}
+      tabIndex={-1}
+    >
       <div className={styles.wrap}>
         <div className={styles.cardName}>
           <CardNameText text={task.title} />
@@ -62,7 +67,7 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
       <div className={styles.cardMenu}>
         <DropdownMenu taskId={task.task_id} />
       </div>
-    </Button>
+    </div>
   );
 };
 
