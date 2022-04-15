@@ -3,7 +3,7 @@ import { Dropdown, Menu } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
 import style from './index.module.scss';
 import { useDispatch } from 'react-redux';
-import { duplicateTaskAsync, deleteTaskAsync } from '../../../../store/slice/task/taskInWork';
+import { duplicateTaskAsync, deleteTaskAsync } from 'store/slice/task/taskInWork';
 
 type DropdownMenuProps = {
   // eslint-disable-next-line react/require-default-props
