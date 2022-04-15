@@ -1,12 +1,13 @@
 import React, { ComponentProps, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
-import { TaskInboxSlice } from 'store/slice';
+import { TaskInboxSlice, TaskInWorkSlice } from 'store/slice';
 import { NewTask, SortByMobileScreen, SortByPCScreen } from '..';
 import TaskInbox from './TaskInbox';
-import { TaskStatuses } from 'shared/helpers/enums';
+import { RequestStatuses, TaskStatuses } from 'shared/helpers/enums';
 import styles from './index.module.scss';
 import Pagination from '../Pagination';
+import { Spin } from 'antd';
 
 type TSortType = 'date~DESC' | 'title~ASC';
 
@@ -15,6 +16,7 @@ const TasksInbox = (props: ComponentProps<any>) => {
   const dispatch = useDispatch();
   const tasks = useSelector(TaskInboxSlice.getTasks);
   const pagination = useSelector(TaskInboxSlice.getPagination);
+  const statusRequest = useSelector(TaskInWorkSlice.getStatus);
   const [sortType, setSortType] = useState<TSortType>('date~DESC');
 
   const paginationHandler = (page: number, pageSize: number) => {
@@ -49,20 +51,28 @@ const TasksInbox = (props: ComponentProps<any>) => {
           )}
         </div>
       </div>
-      {tasks && tasks.map((task) => <TaskInbox key={task.task_id} task={task} />)}
-      <div className={styles.footer}>
-        <div className={styles.createTask}>
-          <NewTask taskStatusId={TaskStatuses.CREATED} />
+      {statusRequest === RequestStatuses.LOADING ? (
+        <div className={styles.spin}>
+          <Spin size="large" />
         </div>
-        <div className={styles.pagination}>
-          {pagination && (
-            <Pagination
-              onChange={paginationHandler}
-              total={pagination.page_total * pagination.per_page}
-            />
-          )}
-        </div>
-      </div>
+      ) : (
+        <>
+          {tasks && tasks.map((task) => <TaskInbox key={task.task_id} task={task} />)}
+          <div className={styles.footer}>
+            <div className={styles.createTask}>
+              <NewTask taskStatusId={TaskStatuses.CREATED} />
+            </div>
+            <div className={styles.pagination}>
+              {pagination && (
+                <Pagination
+                  onChange={paginationHandler}
+                  total={pagination.page_total * pagination.per_page}
+                />
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

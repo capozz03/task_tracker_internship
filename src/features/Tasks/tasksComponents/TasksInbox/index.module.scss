@@ -35,7 +35,14 @@
   }
 }
 
-.totalCount{
+.totalCount {
   margin-left: 5px;
   margin-right: 5px;
+}
+
+.spin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
 }
