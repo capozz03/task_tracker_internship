@@ -1,8 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { userAuthAsync, userToken } from 'store/slice/user';
-import { Form, Input, Button, InputRef } from 'antd';
+import { normalizeTrimWhitespaces } from 'shared/helpers';
+import { toast } from 'react-toastify';
+import { Form, Input, Button } from 'antd';
 import styles from './index.module.scss';
 
 type TFormValues = {
@@ -14,20 +16,15 @@ const AuthForm = () => {
   const dispatch = useDispatch();
   const token = useSelector(userToken);
 
-  const normalizeValue = (value: string) => value.split(' ').join('');
-
   const onFinish = (values: TFormValues) => {
     dispatch(userAuthAsync(values.login));
   };
 
-  const loginInputRef = useRef<InputRef>(null);
-
   useEffect(() => {
-    loginInputRef.current?.focus();
-  }, []);
-
-  useEffect(() => {
-    if (token) navigate('/tasks');
+    if (token) {
+      navigate('/tasks');
+      toast.dismiss();
+    }
   }, [token]);
 
   return (
@@ -38,9 +35,9 @@ const AuthForm = () => {
           label="Логин"
           name="login"
           rules={[{ required: true, message: 'Введите логин' }]}
-          normalize={normalizeValue}
+          normalize={normalizeTrimWhitespaces}
         >
-          <Input className={styles.input} ref={loginInputRef} />
+          <Input className={styles.input} autoFocus />
         </Form.Item>
 
         <Form.Item>
