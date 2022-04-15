@@ -20,6 +20,7 @@ export const RoutingConfig: RoutingConfigType = [
   {
     path: routes.main,
     element: MainPage,
+    private: true,
     children: [],
   },
   {

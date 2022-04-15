@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { userAuthAsync, userToken } from 'store/slice/user';
+import { normalizeTrimWhitespaces } from 'shared/helpers';
+import { toast } from 'react-toastify';
 import { Form, Input, Button } from 'antd';
 import styles from './index.module.scss';
 
@@ -21,6 +23,7 @@ const AuthForm = () => {
   useEffect(() => {
     if (token) {
       navigate('/tasks');
+      toast.dismiss();
     }
   }, [token]);
 
@@ -32,8 +35,9 @@ const AuthForm = () => {
           label="Логин"
           name="login"
           rules={[{ required: true, message: 'Введите логин' }]}
+          normalize={normalizeTrimWhitespaces}
         >
-          <Input className={styles.input} />
+          <Input className={styles.input} autoFocus />
         </Form.Item>
 
         <Form.Item>
