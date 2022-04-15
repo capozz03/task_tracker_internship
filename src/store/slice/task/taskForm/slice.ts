@@ -1,7 +1,7 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { initialState, TTaskFormReducer } from './initialState';
-import { RequestStatuses } from '../../../../shared';
-import { TTask } from '../entities';
+import { RequestStatuses } from 'shared';
+import { TTaskItemResponse } from '../entities';
 import { getTaskByIdAsync } from './getTaskById';
 import { taskFormActions } from './actions';
 
@@ -16,10 +16,10 @@ const taskFormSlice = createSlice({
         status: RequestStatuses.LOADING,
       }),
     [getTaskByIdAsync.fulfilled.type]:
-      (state : TTaskFormReducer, { payload: task }: PayloadAction<TTask>) => ({
+      (state : TTaskFormReducer, { payload: task }: PayloadAction<TTaskItemResponse>) => ({
         ...state,
         status: RequestStatuses.SUCCESS,
-        task,
+        task: task.data,
       }),
     [getTaskByIdAsync.rejected.type]:
       (state : TTaskFormReducer, { payload: error }: PayloadAction<Error>) => ({

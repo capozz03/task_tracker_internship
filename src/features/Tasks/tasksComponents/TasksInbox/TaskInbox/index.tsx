@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useState } from 'react';
+import React, { MouseEventHandler } from 'react';
 import styles from './index.module.scss';
 import { useDispatch } from 'react-redux';
 import { TTask } from 'store/slice/task/entities';
@@ -13,7 +13,7 @@ import CardNameText from '../../CardNameText';
 import CardChecklistCount from '../../CardChecklistCount';
 import CardAttachmentsCount from '../../CardAttachmentsCount';
 import { Button } from 'antd';
-import { TaskModal } from '../../../currentTaskComponents';
+import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 
 type TaskInboxProps = {
   task: TTask;
@@ -29,49 +29,40 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
       }),
     );
   };
-  const [modalIsVisible, setModalIsVisible] = useState(false);
   const openTask: MouseEventHandler<HTMLElement> = () => {
-    console.log('sos'); // FIXME
-    setModalIsVisible(true);
+    dispatch(getTaskByIdAsync(task.task_id));
   };
-  const handleModalCancel = () => {
-    setModalIsVisible(false);
-  };
-
   return (
-    <>
-      <Button type="text" block className={styles.innerContent} onClick={openTask}>
-        <div className={styles.wrap}>
-          <div className={styles.cardName}>
-            <CardNameText text={task.title} />
-          </div>
-          <div className={styles.indicators}>
-            <CardAttachmentsCount count={task.storage_files_meta.total} />
-            <CardChecklistCount checkListTotal={2} checkListChecked={2} />
-          </div>
+    <Button type="text" block className={styles.innerContent} onClick={openTask}>
+      <div className={styles.wrap}>
+        <div className={styles.cardName}>
+          <CardNameText text={task.title} />
+        </div>
+        <div className={styles.indicators}>
+          <CardAttachmentsCount count={task.storage_files_meta.total} />
+          <CardChecklistCount checkListTotal={2} checkListChecked={2} />
+        </div>
 
-          <div className={styles.cardStatus}>
-            <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
-          </div>
-          <div className={styles.dateAndStatus}>
-            <div className={styles.cardDate}>
-              <DateWithIconClock date={task.created} />
-            </div>
-            {task.priority && <PriorityStatus type={task.priority.name} />}
-          </div>
-          <div className={styles.cardTagsGroupt}>
-            <TagsGroup tags={task.tags} />
-          </div>
-          <div className={styles.cardUsers}>
-            <UserAssignedToTask users={task.roles} />
-          </div>
+        <div className={styles.cardStatus}>
+          <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
         </div>
-        <div className={styles.cardMenu}>
-          <DropdownMenu taskId={task.task_id} />
+        <div className={styles.dateAndStatus}>
+          <div className={styles.cardDate}>
+            <DateWithIconClock date={task.created} />
+          </div>
+          {task.priority && <PriorityStatus type={task.priority.name} />}
         </div>
-      </Button>
-      <TaskModal visible={modalIsVisible} onCancel={handleModalCancel} />
-    </>
+        <div className={styles.cardTagsGroupt}>
+          <TagsGroup tags={task.tags} />
+        </div>
+        <div className={styles.cardUsers}>
+          <UserAssignedToTask users={task.roles} />
+        </div>
+      </div>
+      <div className={styles.cardMenu}>
+        <DropdownMenu taskId={task.task_id} />
+      </div>
+    </Button>
   );
 };
 

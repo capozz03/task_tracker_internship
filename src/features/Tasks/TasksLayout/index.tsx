@@ -10,6 +10,9 @@ import TasksCompleted from '../tasksComponents/TasksCompleted';
 import UserAvatarMenu from '../../Auth/UserAvatarMenu';
 import TasksInWork from '../tasksComponents/TasksInWork';
 import TasksInbox from '../tasksComponents/TasksInbox';
+import { TaskModal } from 'features/Tasks/currentTaskComponents';
+import { useSelector } from 'react-redux';
+import { TaskFormSlice } from 'store/slice';
 
 const { Sider, Header, Content } = Layout;
 
@@ -17,6 +20,7 @@ const TasksLayout = () => {
   const [isSidebarShow, setIsSidebarShow] = useState(false);
   const changeSidebarVisibility = () => setIsSidebarShow(!isSidebarShow);
   const hideSidebar = () => setIsSidebarShow(false);
+  const isVisibleForm = useSelector(TaskFormSlice.getTaskFormIsVisibleForm);
 
   return (
     <Layout className={styles.layout}>
@@ -52,6 +56,7 @@ const TasksLayout = () => {
           <TasksInbox />
           <TasksInWork />
           <TasksCompleted />
+          <TaskModal visible={isVisibleForm} />
         </Content>
       </Layout>
     </Layout>
