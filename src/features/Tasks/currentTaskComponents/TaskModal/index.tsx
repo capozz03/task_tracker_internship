@@ -4,6 +4,7 @@ import styles from './index.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
 import { RequestStatuses } from 'shared';
+import Title from 'features/Tasks/tasksComponents/Title';
 
 const TaskModal = (props: ModalProps) => {
   const dispatch = useDispatch();
@@ -20,7 +21,11 @@ const TaskModal = (props: ModalProps) => {
           : (
             <div className={styles.wrap}>
               <div className={styles.title}>
-                <div className={styles.name}>{ task && task.title }</div>
+                <div className={styles.name}>
+                  {
+                    task && <Title title={task.title} taskId={task.task_id} />
+                  }
+                </div>
                 <div className={styles.menu}>menu</div>
               </div>
               <div className={styles.columnA}>
