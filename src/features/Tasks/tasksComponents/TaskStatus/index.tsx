@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { MouseEventHandler, useEffect, useState } from 'react';
 import { Select, SelectProps } from 'antd';
 import style from './index.module.scss';
 import { taskStatuses } from './constants';
@@ -19,6 +19,10 @@ const TaskStatus = ({ ...props }: SelectProps) => {
     changeTaskStatus(currentStatus);
   }, []);
 
+  const onClick: MouseEventHandler<HTMLElement> = (e) => {
+    e.stopPropagation();
+  };
+
   return (
     <Select
       className={style.taskStatus}
@@ -30,13 +34,10 @@ const TaskStatus = ({ ...props }: SelectProps) => {
       onSelect={changeTaskStatus}
       style={{ backgroundColor: `${color}` }}
       onChange={props.onChange}
+      onClick={onClick}
     >
       {taskStatuses.map(({ status, taskStatusId }) => (
-        <Option
-          key={taskStatusId}
-          value={taskStatusId}
-          className={style.taskStatusItem}
-        >
+        <Option key={taskStatusId} value={taskStatusId} className={style.taskStatusItem}>
           {status}
         </Option>
       ))}
