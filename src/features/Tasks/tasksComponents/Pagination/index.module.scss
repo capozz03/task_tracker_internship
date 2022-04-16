@@ -22,6 +22,8 @@
     }
   }
   :global(.ant-pagination-options){
+    position: relative;
+    z-index: 9999999;
     :global(.ant-select-selection-item){
       line-height: 20px !important;
     }

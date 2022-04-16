@@ -15,6 +15,7 @@ import { Tooltip } from 'antd';
 import PlusIcons from 'shared/ui/icons/PlusIcons';
 import CancelIcons from 'shared/ui/icons/CancelIcons';
 import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
+import { alert } from '../../../../shared/ui';
 
 type titleProps = {
   title: string,
@@ -22,11 +23,11 @@ type titleProps = {
 }
 
 const Title = ({ title, taskId }: titleProps) => {
+  const [titleTask, setTitleTask] = useState(title);
+  const [oldTitle, setOldTitle] = useState(title);
   const [isEdit, setIsEdit] = useState(false);
   const [isVisibleTooltip, setIsVisibleTooltip] = useState(false);
-  const [titleTask, setTitleTask] = useState(title);
   const [isVisibleFullText, setIsVisibleFullText] = useState(true);
-  const [oldTitle, setOldTitle] = useState(title);
   const dispatch = useDispatch();
   const textArea = useRef<HTMLTextAreaElement>(null);
   const titleTaskRef = useRef<HTMLDivElement>(null);
@@ -53,10 +54,11 @@ const Title = ({ title, taskId }: titleProps) => {
   const saveSuccess = () => {
     setOldTitle(titleTask);
     setIsEdit(false);
+    alert('Название успешно сохранено', 'success');
   };
 
   const saveError = () => {
-    // alert('Ошибка');
+    alert('Не удалось изменить название задачи', 'error');
   };
 
   const saveTask = () => {
@@ -80,13 +82,7 @@ const Title = ({ title, taskId }: titleProps) => {
     saveTask();
   };
 
-  const handlePlusClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.preventDefault();
-    saveTask();
-  };
-
-  const handleCancelClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.preventDefault();
+  const handleCancelClick = () => {
     setTitleTask(() => oldTitle);
     setIsEdit(false);
     setIsVisibleTooltip(false);
@@ -98,18 +94,11 @@ const Title = ({ title, taskId }: titleProps) => {
       saveTask();
     }
   };
-
-  const handleClickEllipsis: MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.preventDefault();
-    setIsVisibleFullText(false);
-  };
-
-  useEffect(() => {
-    calculationHeight();
-  }, [titleTask]);
+  const handleClickEllipsis = () => { setIsVisibleFullText(false); };
+  useEffect(() => { calculationHeight(); }, [titleTask]);
 
   return (
-    <div>
+    <>
       <div className={isEdit ? styles.hidden : styles.visible}>
         <div className={styles.title} ref={titleTaskRef}>
           {
@@ -136,7 +125,7 @@ const Title = ({ title, taskId }: titleProps) => {
             />
           </Tooltip>
           <div className={styles.btnGroup}>
-            <button type="button" onClick={handlePlusClick}>
+            <button type="submit">
               <PlusIcons />
             </button>
             <button type="button" onClick={handleCancelClick}>
@@ -145,7 +134,7 @@ const Title = ({ title, taskId }: titleProps) => {
           </div>
         </form>
       </div>
-    </div>
+    </>
   );
 };
 
