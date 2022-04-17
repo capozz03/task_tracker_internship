@@ -44,8 +44,15 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
           <CardNameText text={task.title} />
         </div>
         <div className={styles.indicators}>
-          <CardAttachmentsCount count={task.storage_files_meta.total} />
-          <CardChecklistCount checkListTotal={2} checkListChecked={2} />
+          { task.storage_files && <CardAttachmentsCount count={task.storage_files.length} /> }
+          {
+            task.progress && task.progress.total !== 0 && (
+              <CardChecklistCount
+                checkListTotal={task.progress.total}
+                checkListChecked={task.progress.completed}
+              />
+            )
+          }
         </div>
 
         <div className={styles.cardStatus}>

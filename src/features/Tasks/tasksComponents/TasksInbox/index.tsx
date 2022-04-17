@@ -65,8 +65,9 @@ const TasksInbox = (props: ComponentProps<any>) => {
             <div className={styles.pagination}>
               {pagination && (
                 <Pagination
+                  current={pagination.page_current}
                   onChange={paginationHandler}
-                  total={pagination.page_total * pagination.per_page}
+                  total={pagination.items_total}
                 />
               )}
             </div>

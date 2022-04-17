@@ -74,6 +74,22 @@ export type TTaskForm = {
   fields: TTaskFormField[];
 }
 
+export type TTaskCheckListItem = {
+  'check_list_item_id': string,
+  'message': string,
+  'complete': boolean,
+  'created': string,
+  'updated': string
+};
+
+export type TTaskCheckList = {
+  check_list_id: string,
+  title: string,
+  created: string,
+  updated: string,
+  items?: TTaskCheckListItem[]
+};
+
 export type TTask = {
   task_id: string;
   title: string;
@@ -90,7 +106,7 @@ export type TTask = {
   roles: TRoles[];
   tags: TTagsTask[];
   progress: TTaskProgress | null;
-  check_lists?: any[];
+  check_lists?: TTaskCheckList[];
   storage_files?: any[];
   storage_files_meta: {
     total: number;

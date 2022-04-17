@@ -45,11 +45,16 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
         <CardNameText text={task.title} />
       </div>
       <div className={styles.cardFilesAndCheckbox}>
-        <CardAttachmentsCount count={task.storage_files_meta.total} />
-        <CardChecklistCount
-          checkListTotal={(task.progress && task.progress?.total) || 0}
-          checkListChecked={(task.progress && task.progress?.completed) || 0}
-        />
+        { task.storage_files && <CardAttachmentsCount count={task.storage_files.length} /> }
+        {
+          task.progress && task.progress.total !== 0 && (
+            <CardChecklistCount
+              checkListTotal={task.progress.total}
+              checkListChecked={task.progress.completed}
+            />
+          )
+        }
+
       </div>
       <div className={styles.cardStatus}>
         <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
@@ -70,7 +75,13 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
       <div className={styles.cardUsers}>
         <UserAssignedToTask users={task.roles} />
       </div>
-      <div className={styles.cardMenu}>
+      <div
+        role="button"
+        tabIndex={-1}
+        onKeyPress={(e) => { e.stopPropagation(); }}
+        className={styles.cardMenu}
+        onClick={(e) => e.stopPropagation()}
+      >
         <DropdownMenu taskId={task.task_id} />
       </div>
     </div>

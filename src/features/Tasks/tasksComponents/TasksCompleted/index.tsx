@@ -62,7 +62,11 @@ const TasksCompleted = (props: ComponentProps<any>) => {
           {tasks && tasks.map((task) => <TaskCompleted key={task.task_id} task={task} />)}
           <div className={style.pagination}>
             {pagination && (
-              <Pagination onChange={paginationHandler} total={pagination.items_total} />
+              <Pagination
+                current={pagination.page_current}
+                onChange={paginationHandler}
+                total={pagination.items_total}
+              />
             )}
           </div>
         </>

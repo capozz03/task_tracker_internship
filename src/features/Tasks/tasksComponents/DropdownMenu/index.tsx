@@ -37,13 +37,11 @@ const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
   );
 
   return (
-    <div>
-      <Dropdown.Button
-        className={style.dropdownButton}
-        overlay={menu}
-        icon={<EllipsisOutlined className={style.dropdownIcon} />}
-      />
-    </div>
+    <Dropdown.Button
+      className={style.dropdownButton}
+      overlay={menu}
+      icon={<EllipsisOutlined className={style.dropdownIcon} />}
+    />
   );
 };
 
