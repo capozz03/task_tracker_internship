@@ -7,7 +7,6 @@ import TaskCompleted from './TaskCompleted';
 import style from './index.module.scss';
 import Pagination from '../Pagination';
 import { TSortType } from 'store/slice/task/entities';
-import { RequestStatuses } from '../../../../shared';
 import styles from '../TasksInbox/index.module.scss';
 import { Spin } from 'antd';
 
@@ -16,7 +15,7 @@ const TasksCompleted = (props: ComponentProps<any>) => {
   const dispatch = useDispatch();
   const tasks = useSelector(TaskCompletedSlice.getTasks);
   const pagination = useSelector(TaskCompletedSlice.getPagination);
-  const statusRequest = useSelector(TaskInWorkSlice.getStatus);
+  const isLoading = useSelector(TaskInWorkSlice.isLoadingStatus);
   const [sortType, setSortType] = useState<TSortType>('date~DESC');
 
   const paginationHandler = (page: number, pageSize: number): void => {
@@ -53,7 +52,7 @@ const TasksCompleted = (props: ComponentProps<any>) => {
           <SortByPCScreen setSortType={setSortType} />
         )}
       </div>
-      {statusRequest === RequestStatuses.LOADING ? (
+      {isLoading ? (
         <div className={styles.spin}>
           <Spin size="large" />
         </div>
