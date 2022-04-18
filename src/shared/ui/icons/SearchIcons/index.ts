@@ -1,0 +1,1 @@
+export { SearchInputIcon } from './SearchInputIcon';

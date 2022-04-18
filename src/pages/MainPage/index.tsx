@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { MainSlice } from 'store/slice';
 
 // test
+import MemberChanger from 'features/Task/taskModalComponents/MembersChanger';
 import { alert } from 'shared/ui';
 
 export const MainPage = () => {
@@ -24,9 +25,12 @@ export const MainPage = () => {
   };
 
   return (
-    <div>
+    <div style={{ margin: '30px' }}>
       <h1>MainPage</h1>
       <button type="button" onClick={notify}>ALERT TEST</button>
+      <div style={{ width: '700px', height: '500px', margin: '20px', padding: '20px', backgroundColor: 'gold' }}>
+        <MemberChanger />
+      </div>
     </div>
   );
 };
