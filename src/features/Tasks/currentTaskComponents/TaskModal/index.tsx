@@ -15,32 +15,28 @@ const TaskModal = (props: ModalProps) => {
   };
   return (
     <Modal {...props} onCancel={cancelHandle} width="75%" footer={null}>
-      {
-        status === RequestStatuses.LOADING
-          ? <Spin />
-          : (
-            <div className={styles.wrap}>
-              <div className={styles.title}>
-                <div className={styles.name}>
-                  {
-                    task && <Title title={task.title} taskId={task.task_id} />
-                  }
-                </div>
-                <div className={styles.menu}>menu</div>
-              </div>
-              <div className={styles.columnA}>
-                <div className={styles.description}>description</div>
-                <div className={styles.checklists}>checklists</div>
-                <div className={styles.attachments}>attachments</div>
-                <div className={styles.actions}>actions</div>
-              </div>
-              <div className={styles.columnB}>
-                <div className={styles.details}>details</div>
-                <div className={styles.contributors}>contributors</div>
-              </div>
+      {status === RequestStatuses.LOADING ? (
+        <Spin />
+      ) : (
+        <div className={styles.wrap}>
+          <div className={styles.title}>
+            <div className={styles.name}>
+              {task && <Title title={task.title} taskId={task.task_id} />}
             </div>
-          )
-      }
+            <div className={styles.menu}>menu</div>
+          </div>
+          <div className={styles.leftColumn}>
+            <div>description</div>
+            <div>checklists</div>
+            <div>attachments</div>
+            <div>actions</div>
+          </div>
+          <div className={styles.rightColumn}>
+            <div>details</div>
+            <div>contributors</div>
+          </div>
+        </div>
+      )}
     </Modal>
   );
 };
