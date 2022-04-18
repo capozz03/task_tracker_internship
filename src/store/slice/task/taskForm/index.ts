@@ -1,8 +1,19 @@
-export { setDescriptionAsync } from './setDescriptionFromTask/asyncAction';
 export { getTaskByIdAsync } from './getTaskById';
 export {} from './setTitleFromTask';
-export { descriptionReducer } from './setDescriptionFromTask';
 export type { TTasksReducer, TTask } from '../entities';
-export { taskFormReducer } from './slice';
 export { setTitleAsync } from './setTitleFromTask';
-export { getTaskFormIsVisibleForm, getTaskFormError, getTaskFormStatus, getTaskFormTitle } from './taskSelector';
+export {
+  getTaskFormIsVisibleForm,
+  getTask,
+  getTaskFormError,
+  getTaskFormStatus,
+  getTaskFormTitle,
+  isLoadingStatus,
+} from './taskSelector';
+export {
+  showTaskForm,
+  hiddenTaskForm,
+  taskFormReducer,
+  taskFormSelector,
+  setTitleFromTaskForm,
+} from './slice';

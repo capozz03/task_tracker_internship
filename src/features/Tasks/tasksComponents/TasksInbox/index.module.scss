@@ -10,7 +10,7 @@
   }
 
   .sort {
-
+      height: auto;
   }
 }
 
@@ -33,4 +33,16 @@
     flex-grow: 1;
     justify-content: flex-end;
   }
+}
+
+.totalCount {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.spin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
 }

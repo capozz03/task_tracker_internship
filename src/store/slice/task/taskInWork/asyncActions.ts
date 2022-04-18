@@ -1,6 +1,7 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, miniSerializeError } from '@reduxjs/toolkit';
 import { taskService } from './taskInWorkService';
 import { TTaskSearch, TTasksReducer, TTaskStatusChange } from '../entities';
+import { alert } from 'shared/ui';
 
 export const created = 'cbb7199e-cb25-4dce-bf4e-24a8a5e07ef2';
 export const inWork = '372d63ff-3ae3-4be2-a606-38940d7f8c8f';
@@ -30,7 +31,10 @@ export const changeStatusTaskAsync = createAsyncThunk(
         per_page: taskInWork.pagination?.per_page,
         page: taskInWork.pagination?.page_current,
       }));
-    } catch (error) {
+      alert('Статус задачи изменен', 'success');
+    } catch (rejectedValueOrSerializedError) {
+      const error = miniSerializeError(rejectedValueOrSerializedError);
+      alert(`Статус не изминен. Ошибка: "${error.message}"`, 'error');
       return rejectWithValue(error);
     }
   },
@@ -48,7 +52,10 @@ export const createNewTaskAsync = createAsyncThunk(
         per_page: taskInWork.pagination?.per_page,
         page: taskInWork.pagination?.page_current,
       }));
-    } catch (error) {
+      alert('Задача успешно создана', 'success');
+    } catch (rejectedValueOrSerializedError) {
+      const error = miniSerializeError(rejectedValueOrSerializedError);
+      alert(`Ошибка во создания задачи "${error.message}"`, 'error');
       return rejectWithValue(error);
     }
   },
@@ -65,7 +72,10 @@ export const duplicateTaskAsync = createAsyncThunk(
         per_page: taskInWork.pagination?.per_page,
         page: taskInWork.pagination?.page_current,
       }));
-    } catch (error) {
+      alert('Задача успешно скопирована', 'success');
+    } catch (rejectedValueOrSerializedError) {
+      const error = miniSerializeError(rejectedValueOrSerializedError);
+      alert(`Ошибка во время создание копии задачи "${error.message}"`, 'error');
       return rejectWithValue(error);
     }
   },
@@ -81,7 +91,10 @@ export const deleteTaskAsync = createAsyncThunk(
         per_page: taskInWork.pagination?.per_page,
         page: taskInWork.pagination?.page_current,
       }));
-    } catch (error) {
+      alert('Задача успешно удалена', 'success');
+    } catch (rejectedValueOrSerializedError) {
+      const error = miniSerializeError(rejectedValueOrSerializedError);
+      alert(`Ошибка во время удалена задачи "${error.message}"`, 'error');
       return rejectWithValue(error);
     }
   },

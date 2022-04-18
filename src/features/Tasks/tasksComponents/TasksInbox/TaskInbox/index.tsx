@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import styles from './index.module.scss';
 import { useDispatch } from 'react-redux';
 import { TTask } from 'store/slice/task/entities';
@@ -12,6 +12,7 @@ import DropdownMenu from 'features/Tasks/tasksComponents/DropdownMenu';
 import CardNameText from '../../CardNameText';
 import CardChecklistCount from '../../CardChecklistCount';
 import CardAttachmentsCount from '../../CardAttachmentsCount';
+import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 
 type TaskInboxProps = {
   task: TTask;
@@ -27,8 +28,17 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
       }),
     );
   };
+  const openTask: MouseEventHandler<HTMLElement> = () => {
+    dispatch(getTaskByIdAsync(task.task_id));
+  };
   return (
-    <div className={styles.innerContent}>
+    <div
+      className={styles.innerContent}
+      role="button"
+      onClick={openTask}
+      onKeyDown={() => {}}
+      tabIndex={-1}
+    >
       <div className={styles.wrap}>
         <div className={styles.cardName}>
           <CardNameText text={task.title} />
