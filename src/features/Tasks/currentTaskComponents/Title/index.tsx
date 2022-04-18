@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import styles from './index.module.scss';
+import styles from 'features/Tasks/currentTaskComponents/Title/index.module.scss';
 import PencilIcon from 'shared/ui/icons/PencilIcon';
 import { useDispatch } from 'react-redux';
 import { setTitleAsync } from 'store/slice/task/taskForm';
@@ -15,7 +15,7 @@ import { Tooltip } from 'antd';
 import PlusIcons from 'shared/ui/icons/PlusIcons';
 import CancelIcons from 'shared/ui/icons/CancelIcons';
 import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
-import { alert } from '../../../../shared/ui';
+import { alert } from 'shared/ui';
 
 type titleProps = {
   title: string,

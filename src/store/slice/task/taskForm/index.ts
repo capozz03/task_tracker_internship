@@ -1,5 +1,4 @@
 export { getTaskByIdAsync } from './getTaskById';
-export {} from './setTitleFromTask';
 export type { TTasksReducer, TTask } from '../entities';
 export { setTitleAsync } from './setTitleFromTask';
 export {

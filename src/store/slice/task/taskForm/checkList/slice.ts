@@ -19,3 +19,5 @@ export const checkListSlice = createSlice({
   initialState,
   reducers: {},
 });
+
+export const checklistDataReducer = checkListSlice.reducer;
