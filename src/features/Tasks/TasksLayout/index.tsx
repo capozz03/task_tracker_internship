@@ -10,7 +10,7 @@ import TasksCompleted from '../tasksComponents/TasksCompleted';
 import UserAvatarMenu from '../../Auth/UserAvatarMenu';
 import TasksInWork from '../tasksComponents/TasksInWork';
 import TasksInbox from '../tasksComponents/TasksInbox';
-import { TaskModal } from 'features/Tasks/currentTaskComponents';
+import TaskModal from '../currentTaskComponents/TaskModal';
 import { useSelector } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
 

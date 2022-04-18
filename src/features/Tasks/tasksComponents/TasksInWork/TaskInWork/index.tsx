@@ -71,7 +71,7 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
         <UserAssignedToTask users={task.roles} />
       </div>
       <div className={styles.cardMenu}>
-        <DropdownMenu taskId={task.task_id} />
+        <DropdownMenu taskId={task.task_id} taskStatusId={task.status.task_status_id} />
       </div>
     </div>
   );

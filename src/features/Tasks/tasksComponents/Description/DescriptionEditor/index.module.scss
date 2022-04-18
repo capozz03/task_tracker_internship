@@ -1,0 +1,26 @@
+@import 'src/shared/assets/styles';
+
+.wrapBtn {
+  display: flex;
+  .saveButton,
+  .cancelButton {
+    margin-top: 16px;
+    border-radius: 8px;
+  }
+  .saveButton {
+    background: $main-blue;
+    color: $grey-0;
+    border: none;
+    margin-right: 8px;
+    &:hover {
+      background: $main-blue-hover;
+    }
+  }
+}
+
+:global {
+  .jodit-wysiwyg {
+    font: $p-regular;
+    color: $grey-600;
+  }
+}

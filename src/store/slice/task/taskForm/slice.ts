@@ -10,29 +10,36 @@ const taskFormSlice = createSlice({
   initialState,
   reducers: taskFormActions,
   extraReducers: {
-    [getTaskByIdAsync.pending.type]:
-      (state: TTaskFormReducer) => ({
-        ...state,
-        status: RequestStatuses.LOADING,
-      }),
-    [getTaskByIdAsync.fulfilled.type]:
-      (state : TTaskFormReducer, { payload: task }: PayloadAction<TTaskItemResponse>) => ({
-        ...state,
-        status: RequestStatuses.SUCCESS,
-        task: task.data,
-      }),
-    [getTaskByIdAsync.rejected.type]:
-      (state : TTaskFormReducer, { payload: error }: PayloadAction<Error>) => ({
-        ...state,
-        status: RequestStatuses.FAILURE,
-        task: null,
-        error,
-      }),
+    [getTaskByIdAsync.pending.type]: (state: TTaskFormReducer) => ({
+      ...state,
+      status: RequestStatuses.LOADING,
+    }),
+    [getTaskByIdAsync.fulfilled.type]: (
+      state: TTaskFormReducer,
+      { payload: task }: PayloadAction<TTaskItemResponse>,
+    ) => ({
+      ...state,
+      status: RequestStatuses.SUCCESS,
+      task: task.data,
+    }),
+    [getTaskByIdAsync.rejected.type]: (
+      state: TTaskFormReducer,
+      { payload: error }: PayloadAction<Error>,
+    ) => ({
+      ...state,
+      status: RequestStatuses.FAILURE,
+      task: null,
+      error,
+    }),
   },
 });
 
-export const { setTitleFromTaskForm, showTaskForm, hiddenTaskForm } = taskFormSlice.actions;
+export const {
+  setTitleFromTaskForm,
+  setDescriptionFromTaskForm,
+  showTaskForm,
+  hiddenTaskForm,
+} = taskFormSlice.actions;
 export const taskFormReducer = taskFormSlice.reducer;
 const selectSelf = (state: any) => state;
-export const taskFormSelector = createSelector(selectSelf,
-  (state: any) => state.taskForm);
+export const taskFormSelector = createSelector(selectSelf, (state: any) => state.taskForm);

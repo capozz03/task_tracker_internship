@@ -16,4 +16,5 @@ export {
   taskFormReducer,
   taskFormSelector,
   setTitleFromTaskForm,
+  setDescriptionFromTaskForm,
 } from './slice';
