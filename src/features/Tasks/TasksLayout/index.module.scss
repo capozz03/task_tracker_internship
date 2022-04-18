@@ -3,8 +3,9 @@
 $middle-screen-size: 'lg';
 $small-screen-size: 'sm';
 
-html, body{
+html, body {
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .layout {
@@ -108,7 +109,7 @@ html, body{
 
       }
 
-      .filterAssignedTo{
+      .filterAssignedTo {
         flex-wrap: nowrap;
       }
 
@@ -126,7 +127,7 @@ html, body{
       align-items: stretch;
       padding: 0 38px;
 
-      &>*{
+      & > * {
         margin-bottom: 24px;
       }
 
