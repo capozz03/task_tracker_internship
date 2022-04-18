@@ -3,19 +3,18 @@ import { Modal, ModalProps, Spin } from 'antd';
 import styles from './index.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
-import { RequestStatuses } from 'shared';
 import Title from 'features/Tasks/tasksComponents/Title';
 
 const TaskModal = (props: ModalProps) => {
   const dispatch = useDispatch();
   const task = useSelector(TaskFormSlice.getTask);
-  const status = useSelector(TaskFormSlice.getTaskFormStatus);
+  const isLoading = useSelector(TaskFormSlice.isLoadingStatus);
   const cancelHandle = () => {
     dispatch(TaskFormSlice.hiddenTaskForm());
   };
   return (
     <Modal {...props} onCancel={cancelHandle} width="75%" footer={null}>
-      {status === RequestStatuses.LOADING ? (
+      {isLoading ? (
         <Spin />
       ) : (
         <div className={styles.wrap}>
