@@ -4,7 +4,7 @@ import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
 import { TaskInboxSlice, TaskInWorkSlice } from 'store/slice';
 import { NewTask, SortByMobileScreen, SortByPCScreen } from '..';
 import TaskInbox from './TaskInbox';
-import { RequestStatuses, TaskStatuses } from 'shared/helpers/enums';
+import { TaskStatuses } from 'shared/helpers/enums';
 import styles from './index.module.scss';
 import Pagination from '../Pagination';
 import { Spin } from 'antd';
@@ -16,7 +16,7 @@ const TasksInbox = (props: ComponentProps<any>) => {
   const dispatch = useDispatch();
   const tasks = useSelector(TaskInboxSlice.getTasks);
   const pagination = useSelector(TaskInboxSlice.getPagination);
-  const statusRequest = useSelector(TaskInWorkSlice.getStatus);
+  const isLoading = useSelector(TaskInWorkSlice.isLoadingStatus);
   const [sortType, setSortType] = useState<TSortType>('date~DESC');
 
   const paginationHandler = (page: number, pageSize: number) => {
@@ -51,7 +51,7 @@ const TasksInbox = (props: ComponentProps<any>) => {
           )}
         </div>
       </div>
-      {statusRequest === RequestStatuses.LOADING ? (
+      {isLoading ? (
         <div className={styles.spin}>
           <Spin size="large" />
         </div>
