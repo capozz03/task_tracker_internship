@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from 'react';
+import React from 'react';
 import { Dropdown, Menu } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
 import style from './index.module.scss';
@@ -31,11 +31,6 @@ const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
     }
   };
 
-  const onClick: MouseEventHandler<HTMLElement> = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-  };
-
   const menu = (
     <Menu className={style.dropdownMenu}>
       <Item key="1" onClick={openTask}>
@@ -57,7 +52,6 @@ const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
         overlay={menu}
         icon={<EllipsisOutlined className={style.dropdownIcon} />}
         destroyPopupOnHide
-        onClick={onClick}
       />
     </div>
   );
