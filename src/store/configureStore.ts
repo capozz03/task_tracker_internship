@@ -8,7 +8,6 @@ const rootReducer = combineReducers({
   taskCompleted: TaskCompletedSlice.taskCompletedReducer,
   taskInbox: TaskInboxSlice.taskInboxReducer,
   taskForm: TaskFormSlice.taskFormReducer,
-  taskDescription: TaskFormSlice.descriptionReducer,
 });
 
 export const store = configureStore({

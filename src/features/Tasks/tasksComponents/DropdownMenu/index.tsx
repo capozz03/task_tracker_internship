@@ -1,42 +1,47 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Dropdown, Menu } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
 import style from './index.module.scss';
 import { useDispatch } from 'react-redux';
 import { CommonActions } from 'store/slice';
-import ModalTask from 'features/Task/currentTaskComponents/ModalTask';
 
 type DropdownMenuProps = {
   // eslint-disable-next-line react/require-default-props
   taskId?: string;
+  taskStatusId: string;
 };
 
-const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
+const DropdownMenu = ({ taskId, taskStatusId }: DropdownMenuProps) => {
   const { Item } = Menu;
   const dispatch = useDispatch();
 
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
   const duplicateHandle = () => {
     if (taskId) {
-      dispatch(CommonActions.duplicateTaskAsync(taskId));
+      dispatch(
+        CommonActions.duplicateTaskAsync({
+          data: {
+            taskId,
+            taskStatusId,
+          },
+        }),
+      );
     }
   };
   const deleteTaskHandle = () => {
     if (taskId) {
-      dispatch(CommonActions.deleteTaskAsync(taskId));
+      dispatch(
+        CommonActions.deleteTaskAsync({
+          data: {
+            taskId,
+            taskStatusId,
+          },
+        }),
+      );
     }
   };
 
   const menu = (
     <Menu className={style.dropdownMenu}>
-      <Item key="1" onClick={showModal}>
-        Открыть задачу
-      </Item>
       <Item key="2" onClick={duplicateHandle}>
         Дублировать задачу
       </Item>
@@ -52,11 +57,6 @@ const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
         className={style.dropdownButton}
         overlay={menu}
         icon={<EllipsisOutlined className={style.dropdownIcon} />}
-      />
-      <ModalTask
-        isModalVisible={isModalVisible}
-        setIsModalVisible={setIsModalVisible}
-        taskId={taskId}
       />
     </div>
   );
