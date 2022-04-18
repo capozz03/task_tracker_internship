@@ -3,15 +3,16 @@ import { Dropdown, Menu } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
 import style from './index.module.scss';
 import { useDispatch } from 'react-redux';
-import { deleteTaskAsync, duplicateTaskAsync } from '../../../../store/slice/task/taskInWork';
+import { CommonActions } from 'store/slice';
 import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 
 type DropdownMenuProps = {
   // eslint-disable-next-line react/require-default-props
   taskId?: string;
+  taskStatusId: string;
 };
 
-const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
+const DropdownMenu = ({ taskId, taskStatusId }: DropdownMenuProps) => {
   const { Item } = Menu;
   const dispatch = useDispatch();
 
@@ -22,12 +23,26 @@ const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
   };
   const duplicateHandle = () => {
     if (taskId) {
-      dispatch(duplicateTaskAsync(taskId));
+      dispatch(
+        CommonActions.duplicateTaskAsync({
+          data: {
+            taskId,
+            taskStatusId,
+          },
+        }),
+      );
     }
   };
   const deleteTaskHandle = () => {
     if (taskId) {
-      dispatch(deleteTaskAsync(taskId));
+      dispatch(
+        CommonActions.deleteTaskAsync({
+          data: {
+            taskId,
+            taskStatusId,
+          },
+        }),
+      );
     }
   };
 
