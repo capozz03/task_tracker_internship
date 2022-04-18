@@ -3,7 +3,8 @@ import { Dropdown, Menu } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
 import style from './index.module.scss';
 import { useDispatch } from 'react-redux';
-import { duplicateTaskAsync, deleteTaskAsync } from '../../../../store/slice/task/taskInWork';
+import { deleteTaskAsync, duplicateTaskAsync } from '../../../../store/slice/task/taskInWork';
+import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 
 type DropdownMenuProps = {
   // eslint-disable-next-line react/require-default-props
@@ -14,6 +15,11 @@ const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
   const { Item } = Menu;
   const dispatch = useDispatch();
 
+  const openTask = () => {
+    if (taskId) {
+      dispatch(getTaskByIdAsync(taskId));
+    }
+  };
   const duplicateHandle = () => {
     if (taskId) {
       dispatch(duplicateTaskAsync(taskId));
@@ -27,7 +33,10 @@ const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
 
   const menu = (
     <Menu className={style.dropdownMenu}>
-      <Item key="1" onClick={duplicateHandle}>
+      <Item key="1" onClick={openTask}>
+        Открыть задачу
+      </Item>
+      <Item key="2" onClick={duplicateHandle}>
         Дублировать задачу
       </Item>
       <Item key="3" onClick={deleteTaskHandle} className={style.delete}>
@@ -42,6 +51,7 @@ const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
         className={style.dropdownButton}
         overlay={menu}
         icon={<EllipsisOutlined className={style.dropdownIcon} />}
+        destroyPopupOnHide
       />
     </div>
   );
