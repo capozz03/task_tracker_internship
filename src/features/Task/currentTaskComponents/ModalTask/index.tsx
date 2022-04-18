@@ -2,7 +2,7 @@ import { Modal } from 'antd';
 import React from 'react';
 import DescriptionTask from '../DescriptionTask';
 
-const ModalTask = ({ isModalVisible, setIsModalVisible }: any) => {
+const ModalTask = ({ isModalVisible, setIsModalVisible, taskId }: any) => {
   const handleOk = () => {
     setIsModalVisible(false);
   };
@@ -12,7 +12,7 @@ const ModalTask = ({ isModalVisible, setIsModalVisible }: any) => {
   };
   return (
     <Modal visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} footer={null}>
-      <DescriptionTask />
+      <DescriptionTask taskId={taskId} />
     </Modal>
   );
 };

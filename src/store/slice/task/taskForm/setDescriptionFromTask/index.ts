@@ -1,0 +1,1 @@
+export { descriptionReducer } from './slice';

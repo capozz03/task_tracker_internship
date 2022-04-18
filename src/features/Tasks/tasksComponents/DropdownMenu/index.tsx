@@ -8,8 +8,8 @@ import ModalTask from 'features/Task/currentTaskComponents/ModalTask';
 
 type DropdownMenuProps = {
   // eslint-disable-next-line react/require-default-props
-  taskId?: string
-}
+  taskId?: string;
+};
 
 const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
   const { Item } = Menu;
@@ -34,8 +34,12 @@ const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
 
   const menu = (
     <Menu className={style.dropdownMenu}>
-      <Item key="1" onClick={showModal}>Открыть задачу</Item>
-      <Item key="2" onClick={duplicateHandle}>Дублировать задачу</Item>
+      <Item key="1" onClick={showModal}>
+        Открыть задачу
+      </Item>
+      <Item key="2" onClick={duplicateHandle}>
+        Дублировать задачу
+      </Item>
       <Item key="3" onClick={deleteTaskHandle} className={style.delete}>
         Удалить задачу
       </Item>
@@ -49,7 +53,11 @@ const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
         overlay={menu}
         icon={<EllipsisOutlined className={style.dropdownIcon} />}
       />
-      <ModalTask isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} />
+      <ModalTask
+        isModalVisible={isModalVisible}
+        setIsModalVisible={setIsModalVisible}
+        taskId={taskId}
+      />
     </div>
   );
 };
