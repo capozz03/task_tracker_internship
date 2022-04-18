@@ -52,9 +52,11 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
           <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
         </div>
         <div className={styles.dateAndStatus}>
-          <div className={styles.cardDate}>
-            <DateWithIconClock date={task.created} />
-          </div>
+          {task.exec_stop && (
+            <div className={styles.cardDate}>
+              <DateWithIconClock date={task.exec_stop} />
+            </div>
+          )}
           {task.priority && <PriorityStatus type={task.priority.name} />}
         </div>
         <div className={styles.cardTagsGroupt}>
