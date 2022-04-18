@@ -7,8 +7,8 @@ import { duplicateTaskAsync, deleteTaskAsync } from '../../../../store/slice/tas
 
 type DropdownMenuProps = {
   // eslint-disable-next-line react/require-default-props
-  taskId?: string
-}
+  taskId?: string;
+};
 
 const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
   const { Item } = Menu;
@@ -27,7 +27,9 @@ const DropdownMenu = ({ taskId }: DropdownMenuProps) => {
 
   const menu = (
     <Menu className={style.dropdownMenu}>
-      <Item key="1" onClick={duplicateHandle}>Дублировать задачу</Item>
+      <Item key="1" onClick={duplicateHandle}>
+        Дублировать задачу
+      </Item>
       <Item key="3" onClick={deleteTaskHandle} className={style.delete}>
         Удалить задачу
       </Item>
