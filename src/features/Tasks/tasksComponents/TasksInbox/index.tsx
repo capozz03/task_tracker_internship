@@ -42,7 +42,11 @@ const TasksInbox = (props: ComponentProps<any>) => {
   return (
     <div className={styles.tasks_group} {...props}>
       <div className={styles.header}>
-        <h4 className={styles.title}>Входящие</h4>
+        <h4 className={styles.title}>
+          Входящие
+          <span className={styles.totalCount}>{pagination && pagination.items_total}</span>
+          шт.
+        </h4>
         <div className={styles.sort}>
           {isMobile ? (
             <SortByMobileScreen setSortType={setSortType} />

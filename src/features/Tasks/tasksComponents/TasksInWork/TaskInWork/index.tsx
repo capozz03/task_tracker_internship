@@ -60,11 +60,9 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
         <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
       </div>
       <div className={styles.cardDateAndPriority}>
-        {task.exec_stop && (
-          <div className={styles.cardDate}>
-            <DateWithIconClock date={task.exec_stop} />
-          </div>
-        )}
+        <div className={styles.cardDate}>
+          <DateWithIconClock date={task.exec_stop} />
+        </div>
         <div className={styles.cardPriority}>
           {task.priority && <PriorityStatus type={task.priority.name} />}
         </div>
@@ -75,13 +73,7 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
       <div className={styles.cardUsers}>
         <UserAssignedToTask users={task.roles} />
       </div>
-      <div
-        role="button"
-        tabIndex={-1}
-        onKeyPress={(e) => { e.stopPropagation(); }}
-        className={styles.cardMenu}
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className={styles.cardMenu}>
         <DropdownMenu taskId={task.task_id} />
       </div>
     </div>
