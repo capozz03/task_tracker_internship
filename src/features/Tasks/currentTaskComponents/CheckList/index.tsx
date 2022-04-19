@@ -19,7 +19,12 @@ const Checklist = ({ checklist }: ChecklistProps) => {
       <ChecklistProgress percent={percent} />
       <ul className={styles.list}>
         {
-          checklist.items?.map((item) => (<CheckItem key={item.check_list_item_id} item={item} />))
+          checklist.items?.map((item) => (
+            <CheckItem
+              checklistId={checklist.check_list_id}
+              key={item.check_list_item_id}
+              item={item}
+            />))
         }
       </ul>
     </div>

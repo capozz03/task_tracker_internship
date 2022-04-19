@@ -23,4 +23,5 @@
 .progress{
   height: 8px;
   background-color: $success-default;
+  transition: all .5s;
 }

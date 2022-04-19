@@ -1,9 +1,9 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { initialState, TTaskFormReducer } from 'store/slice/task/taskForm/data/initialState';
+import { initialState, TTaskFormReducer } from 'store/slice/task/taskForm/fullTaskInfo/initialState';
 import { RequestStatuses } from 'shared';
 import { TTaskItemResponse } from 'store/slice/task/entities';
 import { getTaskByIdAsync } from 'store/slice/task/taskForm/getTaskById';
-import { taskFormActions } from 'store/slice/task/taskForm/data/actions';
+import { taskFormActions } from 'store/slice/task/taskForm/fullTaskInfo/actions';
 
 const taskFormSlice = createSlice({
   name: 'taskForm',
@@ -31,7 +31,10 @@ const taskFormSlice = createSlice({
   },
 });
 
-export const { setTitleFromTaskForm, showTaskForm, hiddenTaskForm } = taskFormSlice.actions;
+export const { setTitleFromTaskForm,
+  showTaskForm,
+  hiddenTaskForm,
+  changeStatusItemForChecklistTaskForm } = taskFormSlice.actions;
 export const taskFormDataReducer = taskFormSlice.reducer;
 const selectSelf = (state: any) => state;
 export const taskFormSelector = createSelector(selectSelf,

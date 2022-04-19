@@ -1,6 +1,7 @@
 import { createAsyncThunk, miniSerializeError } from '@reduxjs/toolkit';
 import { checkListService } from './services';
 import { alert } from 'shared/ui';
+import { TaskFormSlice } from 'store/slice';
 import {
   changeCheckListTitleProps,
   changeItemForChecklistProps,
@@ -75,9 +76,10 @@ export const changeItemForChecklist = createAsyncThunk(
 // Изменить статус элемент чеклиска
 export const changeStatusItemForChecklist = createAsyncThunk(
   'checkList/changeStatusItemForChecklist',
-  async (props: changeStatusItemForChecklistProps, { rejectWithValue }) => {
+  async (props: changeStatusItemForChecklistProps, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await checkListService.changeStatusItemForChecklist(props);
+      dispatch(TaskFormSlice.changeStatusItemForChecklistTaskForm(props));
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
