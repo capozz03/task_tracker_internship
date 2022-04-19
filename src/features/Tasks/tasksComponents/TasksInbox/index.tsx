@@ -1,7 +1,7 @@
 import React, { ComponentProps, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
-import { TaskInboxSlice, TaskInWorkSlice } from 'store/slice';
+import { TaskInboxSlice } from 'store/slice';
 import { NewTask, SortByMobileScreen, SortByPCScreen } from '..';
 import TaskInbox from './TaskInbox';
 import { TaskStatuses } from 'shared/helpers/enums';
@@ -16,7 +16,7 @@ const TasksInbox = (props: ComponentProps<any>) => {
   const dispatch = useDispatch();
   const tasks = useSelector(TaskInboxSlice.getTasks);
   const pagination = useSelector(TaskInboxSlice.getPagination);
-  const isLoading = useSelector(TaskInWorkSlice.isLoadingStatus);
+  const isLoading = useSelector(TaskInboxSlice.isLoadingStatus);
   const [sortType, setSortType] = useState<TSortType>('date~DESC');
 
   const paginationHandler = (page: number, pageSize: number) => {
@@ -42,7 +42,11 @@ const TasksInbox = (props: ComponentProps<any>) => {
   return (
     <div className={styles.tasks_group} {...props}>
       <div className={styles.header}>
-        <h4 className={styles.title}>Входящие</h4>
+        <h4 className={styles.title}>
+          Входящие
+          <span className={styles.totalCount}>{pagination && pagination.items_total}</span>
+          шт.
+        </h4>
         <div className={styles.sort}>
           {isMobile ? (
             <SortByMobileScreen setSortType={setSortType} />
@@ -65,8 +69,9 @@ const TasksInbox = (props: ComponentProps<any>) => {
             <div className={styles.pagination}>
               {pagination && (
                 <Pagination
+                  current={pagination.page_current}
                   onChange={paginationHandler}
-                  total={pagination.page_total * pagination.per_page}
+                  total={pagination.items_total}
                 />
               )}
             </div>
