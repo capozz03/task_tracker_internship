@@ -14,7 +14,7 @@ import {
   TaskStatus,
   UserAssignedToTask,
 } from 'features/Tasks/tasksComponents';
-import { getTaskByIdAsync } from '../../../../../store/slice/task/taskForm';
+import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 
 type TaskInWorkProps = {
   task: TTask;

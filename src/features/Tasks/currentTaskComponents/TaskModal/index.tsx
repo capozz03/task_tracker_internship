@@ -4,8 +4,8 @@ import styles from './index.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
 import { Title } from 'features/Tasks/currentTaskComponents';
-import CheckList from 'features/Tasks/currentTaskComponents/CheckList';
 import MenuHeader from 'features/Tasks/currentTaskComponents/MenuHeader';
+import CheckListArea from 'features/Tasks/currentTaskComponents/CheckListArea';
 
 const TaskModal = (props: ModalProps) => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const TaskModal = (props: ModalProps) => {
           </div>
           <div className={styles.leftColumn}>
             <div>description</div>
-            <div><CheckList /></div>
+            <div className={styles.checklist}><CheckListArea /></div>
             <div>attachments</div>
             <div>actions</div>
           </div>

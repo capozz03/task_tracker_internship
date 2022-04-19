@@ -9,7 +9,7 @@ import TaskStatus from '../../TaskStatus';
 import UserAssignedToTask from '../../UserAssignedToTask';
 import style from './index.module.scss';
 import { progress, progressBarPercent } from './progressBar';
-import { getTaskByIdAsync } from '../../../../../store/slice/task/taskForm';
+import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 
 type TaskCompletedProps = {
   task: TaskCompletedSlice.TTask;

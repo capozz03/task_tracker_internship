@@ -1,4 +1,4 @@
-import { TTaskFormReducer } from './initialState';
+import { TTaskFormReducer } from 'store/slice/task/taskForm/data/initialState';
 import { PayloadAction } from '@reduxjs/toolkit';
 
 export const taskFormActions = {
