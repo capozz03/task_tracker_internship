@@ -7,12 +7,15 @@ import TaskCompleted from './TaskCompleted';
 import style from './index.module.scss';
 import Pagination from '../Pagination';
 import { TSortType } from 'store/slice/task/entities';
+import styles from '../TasksInbox/index.module.scss';
+import { Spin } from 'antd';
 
 const TasksCompleted = (props: ComponentProps<any>) => {
   const isMobile = useBreakPoint(768);
   const dispatch = useDispatch();
   const tasks = useSelector(TaskCompletedSlice.getTasks);
   const pagination = useSelector(TaskCompletedSlice.getPagination);
+  const isLoading = useSelector(TaskCompletedSlice.isLoadingStatus);
   const [sortType, setSortType] = useState<TSortType>('date~DESC');
 
   const paginationHandler = (page: number, pageSize: number): void => {
@@ -38,22 +41,35 @@ const TasksCompleted = (props: ComponentProps<any>) => {
   return (
     <div className={style.tasks_group} {...props}>
       <div className={style.wrapTitle}>
-        <h4 className={style.title}>Завершено</h4>
+        <h4 className={style.title}>
+          Завершено
+          <span className={style.totalCount}>{pagination && pagination.items_total}</span>
+          шт.
+        </h4>
         {isMobile ? (
           <SortByMobileScreen setSortType={setSortType} />
         ) : (
           <SortByPCScreen setSortType={setSortType} />
         )}
       </div>
-      {tasks && tasks.map((task) => <TaskCompleted key={task.task_id} task={task} />)}
-      <div className={style.pagination}>
-        {pagination && (
-          <Pagination
-            onChange={paginationHandler}
-            total={pagination.page_total * pagination.per_page}
-          />
-        )}
-      </div>
+      {isLoading ? (
+        <div className={styles.spin}>
+          <Spin size="large" />
+        </div>
+      ) : (
+        <>
+          {tasks && tasks.map((task) => <TaskCompleted key={task.task_id} task={task} />)}
+          <div className={style.pagination}>
+            {pagination && (
+              <Pagination
+                current={pagination.page_current}
+                onChange={paginationHandler}
+                total={pagination.items_total}
+              />
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };

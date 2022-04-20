@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import { TTask } from 'store/slice/task/entities';
 import styles from './index.module.scss';
 import { useDispatch } from 'react-redux';
 import { TaskInWorkSlice } from 'store/slice';
 import {
-  CardName,
+  CardAttachmentsCount,
+  CardChecklistCount,
+  CardNameText,
   DateWithIconClock,
   DropdownMenu,
   PriorityStatus,
@@ -12,6 +14,7 @@ import {
   TaskStatus,
   UserAssignedToTask,
 } from 'features/Tasks/tasksComponents';
+import { getTaskByIdAsync } from '../../../../../store/slice/task/taskForm';
 
 type TaskInWorkProps = {
   task: TTask;
@@ -20,16 +23,30 @@ type TaskInWorkProps = {
 const TaskInWork = ({ task }: TaskInWorkProps) => {
   const dispatch = useDispatch();
   const statusHandler = (value: string) => {
-    dispatch(TaskInWorkSlice.changeStatusTaskAsync({
-      task_id: task.task_id,
-      task_status_id: value }));
+    dispatch(
+      TaskInWorkSlice.changeStatusTaskAsync({
+        task_id: task.task_id,
+        task_status_id: value,
+      }),
+    );
+  };
+  const openTask: MouseEventHandler<HTMLElement> = () => {
+    dispatch(getTaskByIdAsync(task.task_id));
   };
   return (
-    <div className={styles.wrap}>
+    <div
+      className={styles.wrap}
+      role="button"
+      onClick={openTask}
+      onKeyDown={() => {}}
+      tabIndex={-1}
+    >
       <div className={styles.cardName}>
-        <CardName
-          name={task.title}
-          attachments={task.storage_files_meta.total}
+        <CardNameText text={task.title} />
+      </div>
+      <div className={styles.cardFilesAndCheckbox}>
+        <CardAttachmentsCount count={task.storage_files_meta.total} />
+        <CardChecklistCount
           checkListTotal={(task.progress && task.progress?.total) || 0}
           checkListChecked={(task.progress && task.progress?.completed) || 0}
         />
@@ -38,9 +55,11 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
         <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
       </div>
       <div className={styles.cardDateAndPriority}>
-        <div className={styles.cardDate}>
-          <DateWithIconClock date={task.created} />
-        </div>
+        {task.exec_stop && (
+          <div className={styles.cardDate}>
+            <DateWithIconClock date={task.exec_stop} />
+          </div>
+        )}
         <div className={styles.cardPriority}>
           {task.priority && <PriorityStatus type={task.priority.name} />}
         </div>
@@ -52,10 +71,10 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
         <UserAssignedToTask users={task.roles} />
       </div>
       <div className={styles.cardMenu}>
-        <DropdownMenu taskId={task.task_id} />
+        <DropdownMenu taskId={task.task_id} taskStatusId={task.status.task_status_id} />
       </div>
-
-    </div>);
+    </div>
+  );
 };
 
 export default TaskInWork;

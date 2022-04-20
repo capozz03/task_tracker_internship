@@ -1,5 +1,5 @@
 import { Progress } from 'antd';
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import { useDispatch } from 'react-redux';
 import { TaskCompletedSlice } from 'store/slice';
 import CardName from '../../CardName';
@@ -9,6 +9,7 @@ import TaskStatus from '../../TaskStatus';
 import UserAssignedToTask from '../../UserAssignedToTask';
 import style from './index.module.scss';
 import { progress, progressBarPercent } from './progressBar';
+import { getTaskByIdAsync } from '../../../../../store/slice/task/taskForm';
 
 type TaskCompletedProps = {
   task: TaskCompletedSlice.TTask;
@@ -26,8 +27,11 @@ const TaskCompleted = ({ task }: TaskCompletedProps) => {
       }),
     );
   };
+  const openTask: MouseEventHandler<HTMLElement> = () => {
+    dispatch(getTaskByIdAsync(task.task_id));
+  };
   return (
-    <div className={style.wrap}>
+    <div className={style.wrap} role="button" onClick={openTask} onKeyDown={() => {}} tabIndex={-1}>
       <div className={style.cardName}>
         <CardName
           name={task.title}
@@ -49,7 +53,7 @@ const TaskCompleted = ({ task }: TaskCompletedProps) => {
         <UserAssignedToTask users={task.roles} />
       </div>
       <div className={style.cardMenu}>
-        <DropdownMenu taskId={task.task_id} />
+        <DropdownMenu taskId={task.task_id} taskStatusId={task.status.task_status_id} />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatuses } from 'shared';
 import { getTasksAsync } from './asyncActions';
-import { TTasksReducer, TTasksResponse } from '../entities';
+import { TTask, TTasksReducer, TTasksResponse } from '../entities';
 
 const initialState = {
   tasks: null,
@@ -19,7 +19,13 @@ const initialState = {
 const taskInWorkSlice = createSlice({
   name: 'taskInWorkSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    taskUpdate(state, { payload }: PayloadAction<TTask>) {
+      state.tasks = state.tasks!.map((task) =>
+        (task.task_id === payload.task_id ? payload : task));
+      return state;
+    },
+  },
   extraReducers: {
     [getTasksAsync.pending.type]: (state) => ({
       ...state,
@@ -41,6 +47,8 @@ const taskInWorkSlice = createSlice({
   },
 });
 
+export const { taskUpdate } = taskInWorkSlice.actions;
 export const taskInWorkReducer = taskInWorkSlice.reducer;
 const selectSelf = (state: any) => state;
-export const testSelector = createSelector(selectSelf, (state: any) => state.taskInWork.tasks);
+export const taskInWorkSelector = createSelector(selectSelf,
+  (state: any) => state.taskInWork.tasks);

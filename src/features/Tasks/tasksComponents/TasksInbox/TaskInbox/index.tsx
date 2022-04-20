@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import styles from './index.module.scss';
 import { useDispatch } from 'react-redux';
 import { TTask } from 'store/slice/task/entities';
@@ -12,6 +12,7 @@ import DropdownMenu from 'features/Tasks/tasksComponents/DropdownMenu';
 import CardNameText from '../../CardNameText';
 import CardChecklistCount from '../../CardChecklistCount';
 import CardAttachmentsCount from '../../CardAttachmentsCount';
+import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 
 type TaskInboxProps = {
   task: TTask;
@@ -27,8 +28,17 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
       }),
     );
   };
+  const openTask: MouseEventHandler<HTMLElement> = () => {
+    dispatch(getTaskByIdAsync(task.task_id));
+  };
   return (
-    <div className={styles.innerContent}>
+    <div
+      className={styles.innerContent}
+      role="button"
+      onClick={openTask}
+      onKeyDown={() => {}}
+      tabIndex={-1}
+    >
       <div className={styles.wrap}>
         <div className={styles.cardName}>
           <CardNameText text={task.title} />
@@ -42,9 +52,11 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
           <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
         </div>
         <div className={styles.dateAndStatus}>
-          <div className={styles.cardDate}>
-            <DateWithIconClock date={task.created} />
-          </div>
+          {task.exec_stop && (
+            <div className={styles.cardDate}>
+              <DateWithIconClock date={task.exec_stop} />
+            </div>
+          )}
           {task.priority && <PriorityStatus type={task.priority.name} />}
         </div>
         <div className={styles.cardTagsGroupt}>
@@ -55,7 +67,7 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
         </div>
       </div>
       <div className={styles.cardMenu}>
-        <DropdownMenu taskId={task.task_id} />
+        <DropdownMenu taskId={task.task_id} taskStatusId={task.status.task_status_id} />
       </div>
     </div>
   );
