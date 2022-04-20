@@ -1,6 +1,12 @@
 import { TTaskFormReducer } from 'store/slice/task/taskForm/fullTaskInfo/initialState';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { changeStatusItemForChecklistProps } from '../checkList/entities';
+import { TTaskCheckListItem } from 'store/slice/task/entities';
+
+type pushItemForChecklistProps = {
+  checkListId: string,
+  checklistItem: TTaskCheckListItem,
+}
 
 export const taskFormActions = {
   showTaskForm: (state: TTaskFormReducer) => {
@@ -26,6 +32,16 @@ export const taskFormActions = {
       if (item) {
         item.complete = data.complete;
       }
+    }
+    return state;
+  },
+  pushItemForCheckList: (state: TTaskFormReducer,
+    { payload: data }: PayloadAction<pushItemForChecklistProps>) => {
+    const checklist = state.task?.check_lists?.find((checklist) =>
+      checklist.check_list_id === data.checkListId);
+    if (checklist && checklist.items) {
+      const newItem = data.checklistItem;
+      checklist.items.push(newItem);
     }
     return state;
   },

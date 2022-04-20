@@ -66,7 +66,6 @@ const Title = ({ title, taskId }: titleProps) => {
     setIsVisibleTooltip(false);
     const title = titleTask.replaceAll(' ', '');
     dispatch(TaskFormSlice.setTitleFromTaskForm(title));
-    console.log(title, title.length);
     if (title.length > 0) {
       dispatch(setTitleAsync({
         data: {
@@ -119,6 +118,7 @@ const Title = ({ title, taskId }: titleProps) => {
         <form onSubmit={handleSubmitForm} className={styles.formEdit}>
           <Tooltip title="Название обязательно" visible={isVisibleTooltip} placement="bottom">
             <textarea
+              placeholder="Введите название задачи"
               maxLength={150}
               className={styles.textarea}
               ref={textArea}

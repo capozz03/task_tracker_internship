@@ -31,6 +31,7 @@ export {
   taskFormSelector,
   setTitleFromTaskForm,
   changeStatusItemForChecklistTaskForm,
+  pushItemForCheckList,
 } from './fullTaskInfo/slice';
 
 export const taskFormReducer = combineReducers({

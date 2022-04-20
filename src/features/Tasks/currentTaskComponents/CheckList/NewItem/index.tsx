@@ -1,19 +1,23 @@
 import React, { ChangeEvent, useState } from 'react';
 import styles from './index.module.scss';
-import Button from '../Button';
+import Button from 'features/Tasks/tasksComponents/Button';
 import InputNameTask from './InputNameTask';
 import { useDispatch } from 'react-redux';
-import { createNewTaskAsync } from 'store/slice/task/taskInWork';
+import { TaskFormSlice } from 'store/slice';
 import { Tooltip } from 'antd';
 
-const NewTask = ({ taskStatusId }: {taskStatusId: string}) => {
+type createItemForChecklistProps = {
+  checkListId: string,
+}
+
+const createItemForChecklist = ({ checkListId }: createItemForChecklistProps) => {
   const dispatch = useDispatch();
-  const [nameTask, setNameTask] = useState('');
+  const [title, setTitle] = useState('');
   const [isActive, setIsActive] = useState(false);
   const [isVisibleTooltip, setIsVisibleTooltip] = useState(false);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setNameTask(e.target.value);
+    setTitle(e.target.value);
     if (e.target.value.length === 0) {
       setIsVisibleTooltip(true);
     } else {
@@ -22,12 +26,14 @@ const NewTask = ({ taskStatusId }: {taskStatusId: string}) => {
   };
 
   const newTaskHandler = () => {
-    if (isVisibleTooltip) {
-      dispatch(createNewTaskAsync({
-        task_status_id: taskStatusId,
-        title: nameTask,
+    const titleText = title.replaceAll(' ', '');
+    setTitle(titleText);
+    if (titleText.length !== 0) {
+      dispatch(TaskFormSlice.createItemForChecklist({
+        title,
+        checkListId,
       }));
-      setNameTask('');
+      setTitle('');
     } else {
       setIsVisibleTooltip(true);
     }
@@ -41,16 +47,16 @@ const NewTask = ({ taskStatusId }: {taskStatusId: string}) => {
   return (
     <form className={styles.wrap}>
       <div style={isActive ? { display: 'none' } : { display: 'block' }}>
-        <button type="button" className={styles.newTaskLabel} onClick={toggleVisibleForm}>+ новая задача</button>
+        <button type="button" className={styles.newTaskLabel} onClick={toggleVisibleForm}>+ Добавить новый пункт</button>
       </div>
       <div className={styles.formNewTaskWrap} style={!isActive ? { display: 'none' } : { display: 'flex' }}>
         <Tooltip title="Название обязательно" visible={isVisibleTooltip} placement="bottom" />
         <InputNameTask
           type="text"
           name="inputNewTask"
-          value={nameTask}
+          value={title}
           onChange={onChange}
-          placeholder="Введите название задачи"
+          placeholder="Создание пункта списка"
         />
         <Button type="primary" onClick={newTaskHandler}>Сохранить</Button>
         <Button type="default" onClick={toggleVisibleForm}>Отменить</Button>
@@ -59,4 +65,4 @@ const NewTask = ({ taskStatusId }: {taskStatusId: string}) => {
   );
 };
 
-export default NewTask;
+export default createItemForChecklist;

@@ -4,6 +4,7 @@ import CheckItem from 'features/Tasks/currentTaskComponents/CheckList/CheckItem'
 import ChecklistTitle from 'features/Tasks/currentTaskComponents/CheckList/ChecklistTitle';
 import ChecklistProgress from 'features/Tasks/currentTaskComponents/CheckList/ChecklistProgress';
 import styles from './index.module.scss';
+import NewItem from 'features/Tasks/currentTaskComponents/CheckList/NewItem';
 
 type ChecklistProps = {
   checklist: TTaskCheckList;
@@ -27,6 +28,7 @@ const Checklist = ({ checklist }: ChecklistProps) => {
             />))
         }
       </ul>
+      <NewItem checkListId={checklist.check_list_id} />
     </div>
   );
 };

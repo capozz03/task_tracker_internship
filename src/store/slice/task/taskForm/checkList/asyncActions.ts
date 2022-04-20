@@ -46,9 +46,13 @@ export const changeCheckListTitle = createAsyncThunk(
 // Создание элемента для чеклиста
 export const createItemForChecklist = createAsyncThunk(
   'checkList/createItemForChecklist',
-  async (props: changeCheckListTitleProps, { rejectWithValue }) => {
+  async (props: changeCheckListTitleProps, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await checkListService.createItemForChecklist(props);
+      dispatch(TaskFormSlice.pushItemForCheckList({
+        checkListId: props.checkListId,
+        checklistItem: data.data,
+      }));
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);

@@ -34,7 +34,8 @@ const taskFormSlice = createSlice({
 export const { setTitleFromTaskForm,
   showTaskForm,
   hiddenTaskForm,
-  changeStatusItemForChecklistTaskForm } = taskFormSlice.actions;
+  changeStatusItemForChecklistTaskForm,
+  pushItemForCheckList } = taskFormSlice.actions;
 export const taskFormDataReducer = taskFormSlice.reducer;
 const selectSelf = (state: any) => state;
 export const taskFormSelector = createSelector(selectSelf,

@@ -8,7 +8,7 @@ type ChecklistProgressProps = {
 const ChecklistProgress = ({ percent }: ChecklistProgressProps) => (
   <div className={styles.wrap}>
     <span className={styles.text}>
-      {percent}
+      {percent ? percent.toFixed(2) : percent}
       %
     </span>
     <div className={styles.progressBar}>
