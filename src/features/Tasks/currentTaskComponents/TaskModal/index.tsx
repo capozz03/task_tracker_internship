@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, ModalProps, Spin } from 'antd';
+import { Collapse, Modal, ModalProps, Spin } from 'antd';
 import styles from './index.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
@@ -32,8 +32,14 @@ const TaskModal = (props: ModalProps) => {
             <div>actions</div>
           </div>
           <div className={styles.rightColumn}>
-            <div>details</div>
-            <div>contributors</div>
+            <Collapse className={styles.collapse} activeKey={[1, 2]} bordered={false}>
+              <Collapse.Panel className={styles.collapseItem} key="1" header="Детали">
+                <div>details</div>
+              </Collapse.Panel>
+              <Collapse.Panel className={styles.collapseItem} key="2" header="Участники">
+                <div>contributors</div>
+              </Collapse.Panel>
+            </Collapse>
           </div>
         </div>
       )}
