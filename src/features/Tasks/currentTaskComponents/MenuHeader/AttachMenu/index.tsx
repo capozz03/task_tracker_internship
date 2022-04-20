@@ -31,6 +31,7 @@ const AttachMenu = () => {
       <Dropdown.Button
         className={styles.dropdownButton}
         overlay={menu}
+        trigger={['click']}
         icon={<PlusIcons />}
       />
     );

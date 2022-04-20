@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, FormEventHandler, useState } from 'react';
 import styles from './index.module.scss';
 import Button from '../Button';
 import InputNameTask from './InputNameTask';
@@ -21,8 +21,11 @@ const NewTask = ({ taskStatusId }: {taskStatusId: string}) => {
     }
   };
 
-  const newTaskHandler = () => {
-    if (isVisibleTooltip) {
+  const newTaskHandler: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    const titleText = nameTask.replaceAll(' ', '');
+    setNameTask(titleText);
+    if (titleText.length !== 0) {
       dispatch(createNewTaskAsync({
         task_status_id: taskStatusId,
         title: nameTask,
@@ -39,7 +42,7 @@ const NewTask = ({ taskStatusId }: {taskStatusId: string}) => {
   };
 
   return (
-    <form className={styles.wrap}>
+    <form className={styles.wrap} onSubmit={newTaskHandler}>
       <div style={isActive ? { display: 'none' } : { display: 'block' }}>
         <button type="button" className={styles.newTaskLabel} onClick={toggleVisibleForm}>+ новая задача</button>
       </div>
@@ -52,7 +55,7 @@ const NewTask = ({ taskStatusId }: {taskStatusId: string}) => {
           onChange={onChange}
           placeholder="Введите название задачи"
         />
-        <Button type="primary" onClick={newTaskHandler}>Сохранить</Button>
+        <Button type="primary" htmlType="submit">Сохранить</Button>
         <Button type="default" onClick={toggleVisibleForm}>Отменить</Button>
       </div>
     </form>

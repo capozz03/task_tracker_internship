@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, FormEventHandler, useState } from 'react';
 import styles from './index.module.scss';
 import Button from 'features/Tasks/tasksComponents/Button';
 import InputNameTask from './InputNameTask';
@@ -25,7 +25,8 @@ const createItemForChecklist = ({ checkListId }: createItemForChecklistProps) =>
     }
   };
 
-  const newTaskHandler = () => {
+  const newTaskHandler:FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
     const titleText = title.replaceAll(' ', '');
     setTitle(titleText);
     if (titleText.length !== 0) {
@@ -45,7 +46,7 @@ const createItemForChecklist = ({ checkListId }: createItemForChecklistProps) =>
   };
 
   return (
-    <form className={styles.wrap}>
+    <form className={styles.wrap} onSubmit={newTaskHandler}>
       <div style={isActive ? { display: 'none' } : { display: 'block' }}>
         <button type="button" className={styles.newTaskLabel} onClick={toggleVisibleForm}>+ Добавить новый пункт</button>
       </div>
@@ -58,7 +59,7 @@ const createItemForChecklist = ({ checkListId }: createItemForChecklistProps) =>
           onChange={onChange}
           placeholder="Создание пункта списка"
         />
-        <Button type="primary" onClick={newTaskHandler}>Сохранить</Button>
+        <Button type="primary" htmlType="submit">Сохранить</Button>
         <Button type="default" onClick={toggleVisibleForm}>Отменить</Button>
       </div>
     </form>
