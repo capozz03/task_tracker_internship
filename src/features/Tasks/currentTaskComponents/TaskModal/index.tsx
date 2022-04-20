@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
 import Title from 'features/Tasks/tasksComponents/Title';
 import Description from 'features/Tasks/tasksComponents/Description';
+import Details from 'features/Tasks/currentTaskComponents/Details';
 
 const TaskModal = (props: ModalProps) => {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const TaskModal = (props: ModalProps) => {
           <div className={styles.rightColumn}>
             <Collapse className={styles.collapse} activeKey={[1, 2]} bordered={false}>
               <Collapse.Panel className={styles.collapseItem} key="1" header="Детали">
-                <div>details</div>
+                <Details />
               </Collapse.Panel>
               <Collapse.Panel className={styles.collapseItem} key="2" header="Участники">
                 <div>contributors</div>
