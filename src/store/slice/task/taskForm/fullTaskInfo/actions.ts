@@ -45,4 +45,14 @@ export const taskFormActions = {
     }
     return state;
   },
+  removeItemFromCheckList: (state: TTaskFormReducer,
+    { payload: data }: PayloadAction<pushItemForChecklistProps>) => {
+    const checklist = state.task?.check_lists?.find((checklist) =>
+      checklist.check_list_id === data.checkListId);
+    if (checklist && checklist.items) {
+      checklist.items = checklist.items.filter((item) =>
+        item.check_list_item_id !== data.checklistItem.check_list_item_id);
+    }
+    return state;
+  },
 };

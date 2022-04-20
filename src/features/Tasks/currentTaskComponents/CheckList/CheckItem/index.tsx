@@ -4,6 +4,8 @@ import { Checkbox } from 'antd';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { useDispatch } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
+import CheckboxMenu from './CheckboxMenu';
+import styles from './index.module.scss';
 
 type CheckItemProps = {
   item: TTaskCheckListItem,
@@ -20,7 +22,7 @@ const CheckItem = ({ item, checklistId }: CheckItemProps) => {
     }));
   };
   return (
-    <li>
+    <li className={styles.checklistItem}>
       <Checkbox
         onChange={onChange}
         value={item.check_list_item_id}
@@ -28,6 +30,7 @@ const CheckItem = ({ item, checklistId }: CheckItemProps) => {
       >
         {item.message}
       </Checkbox>
+      <CheckboxMenu checkListItemId={item.check_list_item_id} checkListId={checklistId} />
     </li>);
 };
 

@@ -16,6 +16,7 @@ export type changeCheckListTitleProps = {
   checkListId: string,
   title: string,
   checkListItemId?: string,
+  complete?: boolean,
 }
 
 export type changeItemForChecklistProps = {

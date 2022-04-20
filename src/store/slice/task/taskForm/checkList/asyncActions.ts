@@ -105,9 +105,14 @@ export const deleteItemForChecklist = createAsyncThunk(
             checkListId: props.checkListId,
             checkListItemId: props.checkListItemId,
             title: data.data.message,
+            complete: data.data.complete,
           }));
         },
       }]);
+      dispatch(TaskFormSlice.removeItemFromCheckList({
+        checkListId: props.checkListId,
+        checklistItem: data.data,
+      }));
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
