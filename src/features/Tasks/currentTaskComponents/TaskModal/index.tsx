@@ -19,19 +19,28 @@ const TaskModal = (props: ModalProps) => {
 
   const cancelHandle = () => {
     if (task?.status.name === 'Создана') {
-      dispatch(TaskInboxSlice.getTasksAsync({
-        per_page: paginationInbox!.per_page,
-        page: paginationInbox!.page_current }));
+      dispatch(
+        TaskInboxSlice.getTasksAsync({
+          per_page: paginationInbox!.per_page,
+          page: paginationInbox!.page_current,
+        }),
+      );
     }
     if (task?.status.name === 'В работе') {
-      dispatch(TaskInWorkSlice.getTasksAsync({
-        per_page: paginationInWork!.per_page,
-        page: paginationInWork!.page_current }));
+      dispatch(
+        TaskInWorkSlice.getTasksAsync({
+          per_page: paginationInWork!.per_page,
+          page: paginationInWork!.page_current,
+        }),
+      );
     }
     if (task?.status.name === 'Выполнена' || task!.status.name === 'Не выполнена') {
-      dispatch(TaskCompletedSlice.getTasksAsync({
-        per_page: paginationInCompleted!.per_page,
-        page: paginationInCompleted!.page_current }));
+      dispatch(
+        TaskCompletedSlice.getTasksAsync({
+          per_page: paginationInCompleted!.per_page,
+          page: paginationInCompleted!.page_current,
+        }),
+      );
     }
     dispatch(TaskFormSlice.hiddenTaskForm());
   };
@@ -45,7 +54,9 @@ const TaskModal = (props: ModalProps) => {
             <div className={styles.name}>
               {task && <Title title={task.title} taskId={task.task_id} />}
             </div>
-            <div className={styles.menu}><MenuHeader /></div>
+            <div className={styles.menu}>
+              <MenuHeader />
+            </div>
           </div>
           <div className={styles.leftColumn}>
             {task && <Description description={task.description} taskId={task.task_id} />}
@@ -59,7 +70,7 @@ const TaskModal = (props: ModalProps) => {
           <div className={styles.rightColumn}>
             <Collapse className={styles.collapse} activeKey={[1, 2]} bordered={false}>
               <Collapse.Panel className={styles.collapseItem} key="1" header="Детали">
-                {task && <Details taskId={task.task_id} />}
+                {task && <Details />}
               </Collapse.Panel>
               <Collapse.Panel className={styles.collapseItem} key="2" header="Участники">
                 <div>contributors</div>

@@ -1,23 +1,21 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import styles from './index.module.scss';
-import { TagsGroup, TaskStatus } from 'features/Tasks/tasksComponents';
+import TaskStatus from 'features/Tasks/tasksComponents/TaskStatus';
+import TagsGroup from 'features/Tasks/tasksComponents/TagsGroup';
 import { useSelector } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
 import PrioritySelect from './PrioritySelect';
 import { Button, DatePicker } from 'antd';
 import { DatePickerPrevIcon, EndDateIcon, PriorityIcon, StartDateIcon, TagsIcon } from './icons';
 
-type DetailsProps = {
-  taskId: string;
-};
-
-const Details = ({ taskId }: DetailsProps) => {
+const Details = () => {
   const task = useSelector(TaskFormSlice.getTask);
-  const taskEndDate = useSelector(TaskFormSlice.getTaskFormEndDate);
-  const taskStartDate = useSelector(TaskFormSlice.getTaskFormStartDate);
-  const taskPriority = useSelector(TaskFormSlice.getTaskFormPriorityName);
-  const taskTags = useSelector(TaskFormSlice.getTaskFormTags);
+  console.log(task);
+  // const taskEndDate = useSelector(TaskFormSlice.getTaskFormEndDate);
+  // const taskStartDate = useSelector(TaskFormSlice.getTaskFormStartDate);
+  // const taskPriority = useSelector(TaskFormSlice.getTaskFormPriorityName);
+  // const taskTags = useSelector(TaskFormSlice.getTaskFormTags);
 
   const [endDate, setEndDate] = useState(task!.exec_start);
   const [startDate, setStartDate] = useState(task!.exec_stop);
