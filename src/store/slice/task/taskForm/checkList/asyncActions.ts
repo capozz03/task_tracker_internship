@@ -25,6 +25,7 @@ export const createCheckList = createAsyncThunk(
         taskId: taskForm.task.task.task_id,
       });
       dispatch(TaskFormSlice.updateTask(task.data));
+      dispatch(TaskFormSlice.hiddenFormCreateChecklist());
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
