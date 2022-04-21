@@ -1,5 +1,5 @@
 import { TUser } from '../user/entities';
-import { RequestStatuses } from '../../../shared';
+import { RequestStatuses } from 'shared';
 import { Priority } from 'features/Tasks/tasksComponents/PriorityStatus/constants';
 
 export type TTag = {
@@ -162,3 +162,14 @@ export type TTaskStatusChange = {
 }
 
 export type TSortType = 'date~DESC' | 'title~ASC';
+
+export type TTaskWithRelation = {
+  data: TTask,
+  relation: {
+    check_list_id: string,
+    created: string,
+    task_id: string,
+    task_to_check_list_id: string,
+    updated: string,
+  }
+}

@@ -37,6 +37,7 @@ export const { setTitleFromTaskForm,
   changeStatusItemForChecklistTaskForm,
   pushItemForCheckList,
   removeItemFromCheckList,
+  updateTask,
 } = taskFormSlice.actions;
 export const taskFormDataReducer = taskFormSlice.reducer;
 const selectSelf = (state: any) => state;

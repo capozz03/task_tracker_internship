@@ -11,7 +11,9 @@ export { changeCheckListTitle,
   changeStatusItemForChecklist,
   createItemForChecklist,
   deleteItemForChecklist,
-  createCheckList } from './checkList/asyncActions';
+  createCheckList,
+  detachChecklist,
+} from './checkList/asyncActions';
 
 export {
   getTaskFormIsVisibleForm,
@@ -20,10 +22,15 @@ export {
   getTaskFormStatus,
   getTaskFormTitle,
   isLoadingStatus,
+} from './fullTaskInfo/selector';
+
+export {
   isCreatedChecklist,
   isCreatedChecklistItem,
+  isCreateNewCheckList,
   getCheckLists,
-} from './fullTaskInfo/selector';
+} from './checkList/selector';
+
 export {
   showTaskForm,
   hiddenTaskForm,
@@ -33,7 +40,10 @@ export {
   changeStatusItemForChecklistTaskForm,
   pushItemForCheckList,
   removeItemFromCheckList,
+  updateTask,
 } from './fullTaskInfo/slice';
+
+export { showFormCreateChecklist, hiddenFormCreateChecklist } from './checkList/uiSlice';
 
 export const taskFormReducer = combineReducers({
   checkList: ChecklistReducer,

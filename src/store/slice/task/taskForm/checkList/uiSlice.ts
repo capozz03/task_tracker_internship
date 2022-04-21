@@ -17,22 +17,14 @@ const UiSlice = createSlice({
     showFormCreateChecklist: (state) => {
       state.isVisibleCreateChecklist = true;
     },
-    showFormCreateItemChecklist: (state) => {
-      state.isVisibleCreateItemChecklist = true;
-    },
     hiddenFormCreateChecklist: (state) => {
       state.isVisibleCreateChecklist = false;
-    },
-    hiddenFormCreateItemChecklist: (state) => {
-      state.isVisibleCreateItemChecklist = false;
     },
   },
 });
 
 export const {
   hiddenFormCreateChecklist,
-  hiddenFormCreateItemChecklist,
-  showFormCreateChecklist,
-  showFormCreateItemChecklist } = UiSlice.actions;
+  showFormCreateChecklist } = UiSlice.actions;
 
 export const checklistUIReducer = UiSlice.reducer;

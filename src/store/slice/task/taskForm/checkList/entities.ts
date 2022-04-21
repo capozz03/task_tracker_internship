@@ -41,3 +41,9 @@ export type changePositionItemForChecklistProps ={
   checkListItemId: string,
   afterId: string
 }
+
+export type attachCheckListProps = {
+  taskId: string;
+  checkListId: string;
+  message?: string;
+}

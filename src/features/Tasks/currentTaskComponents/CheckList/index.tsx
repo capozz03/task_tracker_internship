@@ -11,12 +11,12 @@ type ChecklistProps = {
 }
 
 const Checklist = ({ checklist }: ChecklistProps) => {
-  const complited = checklist.items?.filter((item) => item.complete).length;
+  const completed = checklist.items?.filter((item) => item.complete).length;
   const countElement: number = checklist.items ? checklist.items?.length : 0;
-  const percent = complited ? ((complited / countElement) * 100) : 0;
+  const percent = completed ? ((completed / countElement) * 100) : 0;
   return (
     <div className={styles.checklist}>
-      <ChecklistTitle title={checklist.title} />
+      <ChecklistTitle checkList={checklist} />
       <ChecklistProgress percent={percent} />
       <ul className={styles.list}>
         {

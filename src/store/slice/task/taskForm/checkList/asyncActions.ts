@@ -3,6 +3,7 @@ import { checkListService } from './services';
 import { alert } from 'shared/ui';
 import { TaskFormSlice } from 'store/slice';
 import {
+  attachCheckListProps,
   changeCheckListTitleProps,
   changeItemForChecklistProps,
   changePositionItemForChecklistProps,
@@ -14,10 +15,16 @@ import {
 // Создаём чеклист
 export const createCheckList = createAsyncThunk(
   'checkList/createCheckList',
-  async (props: createCheckListProps, { rejectWithValue }) => {
+  async (props: createCheckListProps, { rejectWithValue, getState, dispatch }) => {
     try {
       const { data } = await checkListService.createChecklist(props);
+      const { taskForm } = await getState() as any;
       alert(`Чек-лист "${data.data.title.slice(0, 25)}${data.data.title.length > 25 ? '...' : ''}" успешно создан`, 'success');
+      const { data: task } = await checkListService.attachCheckList({
+        checkListId: data.data.check_list_id,
+        taskId: taskForm.task.task.task_id,
+      });
+      dispatch(TaskFormSlice.updateTask(task.data));
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
@@ -28,14 +35,26 @@ export const createCheckList = createAsyncThunk(
 );
 
 // Изменить название чеклиста
+type changeCheckListTitleAsyncProps = {
+  data: {
+    title: string,
+    checkListId: string,
+  },
+  successHandle: ()=>void,
+  errorHandle: ()=>void,
+}
+
 export const changeCheckListTitle = createAsyncThunk(
   'checkList/changeCheckListTitle',
-  async (props: changeCheckListTitleProps, { rejectWithValue }) => {
+  async ({ data, successHandle, errorHandle }: changeCheckListTitleAsyncProps,
+    { rejectWithValue }) => {
     try {
-      const { data } = await checkListService.changeChecklistTitle(props);
+      const { data: task } = await checkListService.changeChecklistTitle(data);
       alert('Название чеклиста успешно изменено', 'success');
-      return data;
+      successHandle();
+      return task;
     } catch (rejectedValueOrSerializedError) {
+      errorHandle();
       const error = miniSerializeError(rejectedValueOrSerializedError);
       alert(`Не удалось изменить название чек-листа. Ошибка: "${error.message}"`, 'error');
       return rejectWithValue(error);
@@ -138,6 +157,35 @@ export const changePositionItemForChecklist = createAsyncThunk(
   async (props: changePositionItemForChecklistProps, { rejectWithValue }) => {
     try {
       const { data } = await checkListService.changePositionItemForChecklist(props);
+      return data;
+    } catch (rejectedValueOrSerializedError) {
+      const error = miniSerializeError(rejectedValueOrSerializedError);
+      alert(`Не удалось удалить элемент чек-листа. Ошибка: "${error.message}"`, 'error');
+      return rejectWithValue(error);
+    }
+  },
+);
+
+export const detachChecklist = createAsyncThunk(
+  'checkList/detachChecklist',
+  async ({ checkListId, taskId, message }: attachCheckListProps,
+    { rejectWithValue, getState, dispatch }) => {
+    try {
+      const { data } = await checkListService.detachChecklist({
+        taskId,
+        checkListId,
+      });
+      const { taskForm } = await getState() as any;
+      alert(`Чек-лист "${message?.slice(0, 25)}${message!.length > 25 ? '...' : ''}" успешно удален`, 'remove', [{
+        text: 'отменить',
+        action: async () => {
+          const { data } = await checkListService.attachCheckList({
+            checkListId,
+            taskId: taskForm.task.task.task_id,
+          });
+          dispatch(TaskFormSlice.updateTask(data.data));
+        },
+      }]);
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);

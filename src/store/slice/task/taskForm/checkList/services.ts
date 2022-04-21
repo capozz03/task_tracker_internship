@@ -1,6 +1,7 @@
 import { $apiTask, clientCookies } from 'shared';
-import { TTaskCheckList } from '../../entities';
+import { TTaskCheckList, TTaskItemResponse, TTaskWithRelation } from '../../entities';
 import {
+  attachCheckListProps,
   changeCheckListTitleProps,
   changeItemForChecklistProps, changePositionItemForChecklistProps,
   changeStatusItemForChecklistProps,
@@ -17,8 +18,10 @@ export const checkListService = {
       title,
     }),
   changeChecklistTitle: async ({ checkListId, title }: changeCheckListTitleProps) =>
-    $apiTask.post<TCheckListResponse>(`/api/v1.0/check-list/check-lists/${checkListId}/title-change`, {
-      title,
+    $apiTask.post<TCheckListResponse>(`/api/v1.0/check-list/check-lists/${checkListId}/title-change`, {}, {
+      params: {
+        title,
+      },
     }),
   createItemForChecklist: async ({ checkListId, title: message }:changeCheckListTitleProps) =>
     $apiTask.post<TCreateItemForCheckListResponse>(`/api/v1.0/check-list/check-lists/${checkListId}/items`, {
@@ -52,4 +55,17 @@ export const checkListService = {
       checkListItemId,
       afterId,
     }),
+  attachCheckList: async ({
+    taskId,
+    checkListId,
+  }: attachCheckListProps) =>
+    $apiTask.post<TTaskWithRelation>(`/api/v1.0/task/tasks/${taskId}/check-list-assign`, {
+      check_list_id: checkListId,
+    }),
+  detachChecklist: async ({
+    taskId,
+    checkListId,
+  }: attachCheckListProps) => $apiTask.post<TTaskItemResponse>(`/api/v1.0/task/tasks/${taskId}/check-list-un-assign`, {
+    check_list_id: checkListId,
+  }),
 };

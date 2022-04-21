@@ -1,16 +1,17 @@
 import React from 'react';
 import { Dropdown, Menu } from 'antd';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './index.module.scss';
 import { TaskFormSlice } from 'store/slice';
 import PlusIcons from 'shared/ui/icons/PlusIcons';
 
 const AttachMenu = () => {
+  const dispatch = useDispatch();
   const { Item } = Menu;
   const task = useSelector(TaskFormSlice.getTask);
   if (task) {
     const checklistHandle = () => {
-
+      dispatch(TaskFormSlice.showFormCreateChecklist());
     };
     const attachFileHandle = () => {
 
