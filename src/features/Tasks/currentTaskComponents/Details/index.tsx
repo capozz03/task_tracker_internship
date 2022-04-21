@@ -17,10 +17,10 @@ const Details = () => {
   // const taskPriority = useSelector(TaskFormSlice.getTaskFormPriorityName);
   // const taskTags = useSelector(TaskFormSlice.getTaskFormTags);
 
-  const [endDate, setEndDate] = useState(task!.exec_start);
-  const [startDate, setStartDate] = useState(task!.exec_stop);
-  const [priority, setPriority] = useState(task!.priority?.name);
-  const [tags, setTags] = useState(task!.tags);
+  const [endDate, setEndDate] = useState(task?.exec_start);
+  const [startDate, setStartDate] = useState(task?.exec_stop);
+  const [priority, setPriority] = useState(task?.priority?.name);
+  const [tags, setTags] = useState(task?.tags);
   console.log(endDate, startDate, priority, tags);
 
   const [isStartDateShow, setIsStartDateShow] = useState(!!startDate);
@@ -45,7 +45,14 @@ const Details = () => {
         <div className={styles.item}>
           <span className={styles.itemTitleText}>Статус</span>
           <span>
-            <TaskStatus defaultValue={task!.status.name} onChange={statusHandler} />
+            { task
+              && (
+                <TaskStatus
+                  defaultValue={task.status.name}
+                  onChange={statusHandler}
+                />
+              )}
+
           </span>
         </div>
         <div className={styles.item}>
@@ -67,7 +74,7 @@ const Details = () => {
         {isTagsShow && (
           <div className={styles.item}>
             <span className={styles.itemTitleText}>Метки</span>
-            <TagsGroup tags={task!.tags} />
+            <TagsGroup tags={task!?.tags} />
             {/* TODO */}
             <Button type="link" icon="+ ">
               Добавить метку
