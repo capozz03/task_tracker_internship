@@ -4,11 +4,9 @@ import styles from './index.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
 import Title from 'features/Tasks/tasksComponents/Title';
-<<<<<<< HEAD
 import Attachments from 'features/Tasks/tasksComponents/Attachments';
-=======
 import Description from 'features/Tasks/tasksComponents/Description';
->>>>>>> d1d8ce2b13866193ae8303d3c7a7f3a1e6c38787
+import MenuButton from './MenuButton';
 
 const TaskModal = (props: ModalProps) => {
   const dispatch = useDispatch();
@@ -27,12 +25,14 @@ const TaskModal = (props: ModalProps) => {
             <div className={styles.name}>
               {task && <Title title={task.title} taskId={task.task_id} />}
             </div>
-            <div className={styles.menu}>menu</div>
+            <div className={styles.menu}>
+              <MenuButton />
+            </div>
           </div>
           <div className={styles.leftColumn}>
             {task && <Description description={task.description} taskId={task.task_id} />}
             <div>checklists</div>
-            <Attachments />
+            {task && <Attachments title={task.title} taskStatusId={task.status.task_status_id} />}
             <div>actions</div>
           </div>
           <div className={styles.rightColumn}>

@@ -1,6 +1,10 @@
 @import 'src/shared/assets/styles';
 
-.headerDescription {
+.taskAttachments {
+  margin-bottom: 16px;
+}
+
+.headerAttachments {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -9,11 +13,11 @@
   height: 24px;
 }
 
-.iconDescription {
+.iconAttachments {
   margin-right: 16px;
 }
 
-.description {
+.attachments {
   font: $h5;
   margin-right: 16px;
 }
@@ -33,11 +37,7 @@
     }
   }
 }
-
-.placeholderDecription {
-  margin-top: 16px;
-  & > .content {
-    font: $p-regular;
-    color: $grey-600;
-  }
+:global(.ant-upload-list-picture .ant-upload-list-item) {
+  border-radius: 8px !important;
+  background-color: rgb(255, 77, 79, 0.05) !important;
 }
