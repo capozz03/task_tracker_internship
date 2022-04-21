@@ -8,16 +8,14 @@ import { EllipsisOutlined } from '@ant-design/icons';
 type CheckboxMenuProps = {
   checkListItemId: string,
   checkListId: string,
+  editItem: () => void,
 }
 
-const CheckboxMenu = ({ checkListItemId, checkListId }: CheckboxMenuProps) => {
+const CheckboxMenu = ({ checkListItemId, checkListId, editItem }: CheckboxMenuProps) => {
   const { Item } = Menu;
   const task = useSelector(TaskFormSlice.getTask);
   const dispatch = useDispatch();
   if (task) {
-    const editItem = () => {
-
-    };
     const deleteItem = () => {
       dispatch(TaskFormSlice.deleteItemForChecklist({
         checkListItemId,

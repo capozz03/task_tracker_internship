@@ -10,6 +10,12 @@
   }
 }
 
+:global(.ant-pagination){
+  :global(.ant-select-dropdown){
+    position: relative !important;
+  }
+}
+
 :global(.ant-pagination.mini){
   :global(.ant-pagination-total-text){
     line-height: 24px !important;
@@ -31,9 +37,6 @@
   :global(.ant-select-single.ant-select-sm:not(.ant-select-customize-input) .ant-select-selector){
     height: 20px !important;
   }
-}
-:global(.ant-select-dropdown){
-  position: relative !important;
 }
 :global(.ant-pagination-item) {
   border: none !important;

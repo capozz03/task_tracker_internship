@@ -63,15 +63,25 @@ export const createItemForChecklist = createAsyncThunk(
 );
 
 // Изменить название элемент чеклиска
+type changeItemForChecklistAsyncProps = {
+  data: changeItemForChecklistProps,
+  successHandle: ()=>void,
+  errorHandle: ()=>void,
+}
+
 export const changeItemForChecklist = createAsyncThunk(
   'checkList/changeItemForChecklist',
-  async (props: changeItemForChecklistProps, { rejectWithValue }) => {
+  async (
+    { data, successHandle, errorHandle }: changeItemForChecklistAsyncProps,
+    { rejectWithValue }) => {
     try {
-      const { data } = await checkListService.changeItemForChecklist(props);
-      return data;
+      const { data: item } = await checkListService.changeItemForChecklist(data);
+      successHandle();
+      return item;
     } catch (rejectedValueOrSerializedError) {
+      errorHandle();
       const error = miniSerializeError(rejectedValueOrSerializedError);
-      alert(`Не удалось создать элемент для чек-листа. Ошибка: "${error.message}"`, 'error');
+      alert(`Не удалось обновить элемент для чек-листа. Ошибка: "${error.message}"`, 'error');
       return rejectWithValue(error);
     }
   },
