@@ -59,4 +59,11 @@ export const taskFormActions = {
     state.task = data;
     return state;
   },
+  setDescriptionFromTaskForm: (
+    state: TTaskFormReducer,
+    { payload: description }: PayloadAction<string>,
+  ) => {
+    state.task!.description = description;
+    return state;
+  },
 };

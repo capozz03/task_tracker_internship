@@ -5,6 +5,7 @@
   text-transform: uppercase;
   letter-spacing: 0.01em;
   color: $main-blue;
+  margin-left: 23px;
   border: none;
   background-color: transparent;
   outline: none;
@@ -27,6 +28,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  margin-left: 16px;
   :global(.ant-btn-primary){
     height: 32px !important;
     line-height: 32px !important;
@@ -55,6 +57,11 @@
   background-position: left center;
   position: relative;
   border-bottom: 1px solid $grey-500;
+  &:global(.ant-input-status-error){
+    background-image: url("/shared/assets/images/icons/check.svg") !important;
+    background-repeat: no-repeat !important;
+    background-position: left center !important;
+  }
   &::placeholder{
     color: $grey-500;
   }

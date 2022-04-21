@@ -3,7 +3,6 @@ import styles from './index.module.scss';
 import Button from '../Button';
 import InputNameTask from './InputNameTask';
 import { useDispatch } from 'react-redux';
-import { createNewTaskAsync } from 'store/slice/task/taskInWork';
 import { Tooltip } from 'antd';
 import { createNewTaskAsync as createNewTaskInWorkAsync } from 'store/slice/task/taskInWork';
 import { createNewTaskAsync as createNewTaskInboxAsync } from 'store/slice/task/taskInbox';
@@ -63,10 +62,6 @@ const NewTask = ({ taskStatusId }: { taskStatusId: string }) => {
           + новая задача
         </button>
       </div>
-      <div
-        className={styles.formNewTaskWrap}
-        style={!isActive ? { display: 'none' } : { display: 'flex' }}
-      >
       <div className={styles.formNewTaskWrap} style={!isActive ? { display: 'none' } : { display: 'flex' }}>
         <Tooltip title="Название обязательно" visible={isVisibleTooltip} placement="bottom" />
         <InputNameTask

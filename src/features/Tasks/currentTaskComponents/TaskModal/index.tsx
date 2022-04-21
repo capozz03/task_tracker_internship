@@ -3,11 +3,9 @@ import { Modal, ModalProps, Spin } from 'antd';
 import styles from './index.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { TaskFormSlice, TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice } from 'store/slice';
-import { Title } from 'features/Tasks/currentTaskComponents';
+import Title from '../Title';
 import MenuHeader from 'features/Tasks/currentTaskComponents/MenuHeader';
 import CheckListArea from 'features/Tasks/currentTaskComponents/CheckListArea';
-import { TaskFormSlice } from 'store/slice';
-import Title from 'features/Tasks/tasksComponents/Title';
 import Description from 'features/Tasks/tasksComponents/Description';
 
 const TaskModal = (props: ModalProps) => {
@@ -50,7 +48,9 @@ const TaskModal = (props: ModalProps) => {
           </div>
           <div className={styles.leftColumn}>
             {task && <Description description={task.description} taskId={task.task_id} />}
-            <div className={styles.checklist}><CheckListArea /></div>
+            <div className={styles.checklist}>
+              <CheckListArea />
+            </div>
             <div>checklists</div>
             <div>attachments</div>
             <div>actions</div>

@@ -41,10 +41,7 @@ export const { setTitleFromTaskForm,
   pushItemForCheckList,
   removeItemFromCheckList,
   updateTask,
-  setTitleFromTaskForm,
   setDescriptionFromTaskForm,
-  showTaskForm,
-  hiddenTaskForm,
 } = taskFormSlice.actions;
 export const taskFormDataReducer = taskFormSlice.reducer;
 export const taskFormReducer = taskFormSlice.reducer;

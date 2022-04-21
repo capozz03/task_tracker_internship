@@ -3,7 +3,6 @@ import { Dropdown, Menu } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
 import style from './index.module.scss';
 import { useDispatch } from 'react-redux';
-import { duplicateTaskAsync, deleteTaskAsync } from 'store/slice/task/taskInWork';
 import { CommonActions } from 'store/slice';
 import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 
@@ -62,13 +61,13 @@ const DropdownMenu = ({ taskId, taskStatusId }: DropdownMenuProps) => {
   );
 
   return (
-      <Dropdown.Button
-        className={style.dropdownButton}
-        overlay={menu}
-        icon={<EllipsisOutlined className={style.dropdownIcon} />}
-        destroyPopupOnHide
-        trigger={['click']}
-      />
+    <Dropdown.Button
+      className={style.dropdownButton}
+      overlay={menu}
+      icon={<EllipsisOutlined className={style.dropdownIcon} />}
+      destroyPopupOnHide
+      trigger={['click']}
+    />
   );
 };
 
