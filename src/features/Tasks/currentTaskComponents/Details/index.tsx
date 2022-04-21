@@ -14,6 +14,10 @@ type DetailsProps = {
 
 const Details = ({ taskId }: DetailsProps) => {
   const task = useSelector(TaskFormSlice.getTask);
+  const taskEndDate = useSelector(TaskFormSlice.getTaskFormEndDate);
+  const taskStartDate = useSelector(TaskFormSlice.getTaskFormStartDate);
+  const taskPriority = useSelector(TaskFormSlice.getTaskFormPriorityName);
+  const taskTags = useSelector(TaskFormSlice.getTaskFormTags);
 
   const [endDate, setEndDate] = useState(task!.exec_start);
   const [startDate, setStartDate] = useState(task!.exec_stop);

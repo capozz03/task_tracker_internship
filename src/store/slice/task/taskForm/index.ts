@@ -5,6 +5,10 @@ export { setTitleAsync } from './setTitleFromTask';
 export {
   getTaskFormIsVisibleForm,
   getTask,
+  getTaskFormEndDate,
+  getTaskFormStartDate,
+  getTaskFormPriorityName,
+  getTaskFormTags,
   getTaskFormError,
   getTaskFormStatus,
   getTaskFormTitle,
