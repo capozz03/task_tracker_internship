@@ -28,7 +28,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-left: 16px;
+  margin-left: 16px !important;
   :global(.ant-btn-primary){
     height: 32px !important;
     line-height: 32px !important;
@@ -45,18 +45,18 @@
 }
 
 .input{
-  border: none;
+  border: none !important;
   outline: none;
   background-color: transparent !important;
-  font: $p-regular;
-  color: $grey-800;
-  padding: 15px 29px 15px 30px;
+  font: $p-regular !important;
+  color: $grey-800 !important;
+  padding: 15px 29px 15px 30px !important;
   max-width: 294px;
-  background-image: url("/shared/assets/images/icons/check.svg");
+  background-image: url("/shared/assets/images/icons/check.svg") !important;
   background-repeat: no-repeat;
   background-position: left center;
   position: relative;
-  border-bottom: 1px solid $grey-500;
+  border-bottom: 1px solid $grey-500 !important;
   &:global(.ant-input-status-error){
     background-image: url("/shared/assets/images/icons/check.svg") !important;
     background-repeat: no-repeat !important;
