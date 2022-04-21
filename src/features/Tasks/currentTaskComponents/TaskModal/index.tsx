@@ -35,7 +35,7 @@ const TaskModal = (props: ModalProps) => {
           <div className={styles.rightColumn}>
             <Collapse className={styles.collapse} activeKey={[1, 2]} bordered={false}>
               <Collapse.Panel className={styles.collapseItem} key="1" header="Детали">
-                <Details />
+                {task && <Details taskId={task.task_id} />}
               </Collapse.Panel>
               <Collapse.Panel className={styles.collapseItem} key="2" header="Участники">
                 <div>contributors</div>

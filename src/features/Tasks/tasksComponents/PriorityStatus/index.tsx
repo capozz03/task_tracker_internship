@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { Priority } from './constants';
 
 type PriorityProps = {
-  type: keyof typeof Priority | null | undefined;
+  type: keyof typeof Priority | null;
 };
 
 const PriorityStatus = ({ type }: PriorityProps) => (
@@ -15,7 +15,7 @@ const PriorityStatus = ({ type }: PriorityProps) => (
         <span className={styles.text}>{type}</span>
       </>
     ) : (
-      <span className={styles.text}>Без статуса</span>
+      <span className={styles.text}>Без приоритета</span>
     )}
   </span>
 );
