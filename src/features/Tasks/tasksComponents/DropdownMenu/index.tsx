@@ -61,14 +61,13 @@ const DropdownMenu = ({ taskId, taskStatusId }: DropdownMenuProps) => {
   );
 
   return (
-    <div>
-      <Dropdown.Button
-        className={style.dropdownButton}
-        overlay={menu}
-        icon={<EllipsisOutlined className={style.dropdownIcon} />}
-        destroyPopupOnHide
-      />
-    </div>
+    <Dropdown.Button
+      className={style.dropdownButton}
+      overlay={menu}
+      icon={<EllipsisOutlined className={style.dropdownIcon} />}
+      destroyPopupOnHide
+      trigger={['click']}
+    />
   );
 };
 

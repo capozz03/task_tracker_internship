@@ -1,0 +1,11 @@
+.checklistItem{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  :global(.ant-checkbox-wrapper){
+    width: 100%;
+    :global(.ant-checkbox + span){
+      width: 100%;
+    }
+  }
+}

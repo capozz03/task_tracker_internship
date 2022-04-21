@@ -1,5 +1,5 @@
-import { TTask } from '../entities';
-import { RequestStatuses } from '../../../../shared';
+import { TTask } from 'store/slice/task/entities';
+import { RequestStatuses } from 'shared';
 
 export type TTaskFormReducer = {
   task: TTask | null;

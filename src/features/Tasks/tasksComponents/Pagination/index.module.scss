@@ -10,6 +10,12 @@
   }
 }
 
+:global(.ant-pagination){
+  :global(.ant-select-dropdown){
+    position: relative !important;
+  }
+}
+
 :global(.ant-pagination.mini){
   :global(.ant-pagination-total-text){
     line-height: 24px !important;
@@ -32,7 +38,6 @@
     height: 20px !important;
   }
 }
-
 :global(.ant-pagination-item) {
   border: none !important;
   font: $p-regular !important;
