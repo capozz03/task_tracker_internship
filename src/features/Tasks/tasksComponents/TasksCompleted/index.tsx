@@ -1,7 +1,7 @@
 import React, { ComponentProps, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
-import { TaskCompletedSlice, TaskInWorkSlice } from 'store/slice';
+import { TaskCompletedSlice } from 'store/slice';
 import { SortByMobileScreen, SortByPCScreen } from '../SortBy';
 import TaskCompleted from './TaskCompleted';
 import style from './index.module.scss';
@@ -15,7 +15,7 @@ const TasksCompleted = (props: ComponentProps<any>) => {
   const dispatch = useDispatch();
   const tasks = useSelector(TaskCompletedSlice.getTasks);
   const pagination = useSelector(TaskCompletedSlice.getPagination);
-  const isLoading = useSelector(TaskInWorkSlice.isLoadingStatus);
+  const isLoading = useSelector(TaskCompletedSlice.isLoadingStatus);
   const [sortType, setSortType] = useState<TSortType>('date~DESC');
 
   const paginationHandler = (page: number, pageSize: number): void => {
@@ -61,7 +61,11 @@ const TasksCompleted = (props: ComponentProps<any>) => {
           {tasks && tasks.map((task) => <TaskCompleted key={task.task_id} task={task} />)}
           <div className={style.pagination}>
             {pagination && (
-              <Pagination onChange={paginationHandler} total={pagination.items_total} />
+              <Pagination
+                current={pagination.page_current}
+                onChange={paginationHandler}
+                total={pagination.items_total}
+              />
             )}
           </div>
         </>

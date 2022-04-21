@@ -4,10 +4,7 @@ import { ClipIcon } from 'shared/ui/icons/ClipIcon';
 import style from './index.module.scss';
 import Button from 'features/Tasks/tasksComponents/Button';
 import { useDispatch } from 'react-redux';
-import {
-  createStorageFile,
-  uploadStorageFile,
-} from 'store/slice/task/taskForm/setStorageForFiles';
+import { createStorageFile, uploadStorageFile } from 'store/slice/task/taskForm/setStorageForFiles';
 
 type attachmentsProps = {
   title: string;
@@ -27,7 +24,7 @@ const Attachments = ({ title, taskStatusId }: attachmentsProps) => {
       dispatch(createStorageFile({ nameOriginal: title }));
       dispatch(
         uploadStorageFile({
-          storageFileId: 'a9f923f8-3210-45ad-aa47-408a7777cce5',
+          storageFileId: 'sdsdsd',
           nameOriginal: 'string',
           file: fileData,
         }),
