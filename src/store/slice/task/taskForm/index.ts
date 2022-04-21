@@ -41,6 +41,7 @@ export {
   pushItemForCheckList,
   removeItemFromCheckList,
   updateTask,
+  setDescriptionFromTaskForm,
 } from './fullTaskInfo/slice';
 
 export { showFormCreateChecklist, hiddenFormCreateChecklist } from './checkList/uiSlice';

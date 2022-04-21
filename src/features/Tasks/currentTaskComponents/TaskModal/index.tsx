@@ -6,6 +6,9 @@ import { TaskFormSlice, TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice } fr
 import { Title } from 'features/Tasks/currentTaskComponents';
 import MenuHeader from 'features/Tasks/currentTaskComponents/MenuHeader';
 import CheckListArea from 'features/Tasks/currentTaskComponents/CheckListArea';
+import { TaskFormSlice } from 'store/slice';
+import Title from 'features/Tasks/tasksComponents/Title';
+import Description from 'features/Tasks/tasksComponents/Description';
 
 const TaskModal = (props: ModalProps) => {
   const dispatch = useDispatch();
@@ -46,8 +49,9 @@ const TaskModal = (props: ModalProps) => {
             <div className={styles.menu}><MenuHeader /></div>
           </div>
           <div className={styles.leftColumn}>
-            <div>description</div>
+            {task && <Description description={task.description} taskId={task.task_id} />}
             <div className={styles.checklist}><CheckListArea /></div>
+            <div>checklists</div>
             <div>attachments</div>
             <div>actions</div>
           </div>

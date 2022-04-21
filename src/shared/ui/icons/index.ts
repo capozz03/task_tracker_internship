@@ -10,3 +10,4 @@ export {
   CancelIcons,
   CheckboxIcon,
 };
+export * as tasksIcons from './TasksIcons';

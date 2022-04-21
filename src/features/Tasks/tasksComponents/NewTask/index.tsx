@@ -5,8 +5,11 @@ import InputNameTask from './InputNameTask';
 import { useDispatch } from 'react-redux';
 import { createNewTaskAsync } from 'store/slice/task/taskInWork';
 import { Tooltip } from 'antd';
+import { createNewTaskAsync as createNewTaskInWorkAsync } from 'store/slice/task/taskInWork';
+import { createNewTaskAsync as createNewTaskInboxAsync } from 'store/slice/task/taskInbox';
+import { TaskStatuses } from 'shared/helpers/enums';
 
-const NewTask = ({ taskStatusId }: {taskStatusId: string}) => {
+const NewTask = ({ taskStatusId }: { taskStatusId: string }) => {
   const dispatch = useDispatch();
   const [nameTask, setNameTask] = useState('');
   const [isActive, setIsActive] = useState(false);
@@ -26,10 +29,22 @@ const NewTask = ({ taskStatusId }: {taskStatusId: string}) => {
     const titleText = nameTask.replaceAll(' ', '');
     setNameTask(titleText);
     if (titleText.length !== 0) {
-      dispatch(createNewTaskAsync({
-        task_status_id: taskStatusId,
-        title: nameTask,
-      }));
+      if (taskStatusId === TaskStatuses.IN_WORK) {
+        dispatch(
+          createNewTaskInWorkAsync({
+            task_status_id: taskStatusId,
+            title: nameTask,
+          }),
+        );
+      }
+      if (taskStatusId === TaskStatuses.CREATED) {
+        dispatch(
+          createNewTaskInboxAsync({
+            task_status_id: taskStatusId,
+            title: nameTask,
+          }),
+        );
+      }
       setNameTask('');
     } else {
       setIsVisibleTooltip(true);
@@ -44,8 +59,14 @@ const NewTask = ({ taskStatusId }: {taskStatusId: string}) => {
   return (
     <form className={styles.wrap} onSubmit={newTaskHandler}>
       <div style={isActive ? { display: 'none' } : { display: 'block' }}>
-        <button type="button" className={styles.newTaskLabel} onClick={toggleVisibleForm}>+ новая задача</button>
+        <button type="button" className={styles.newTaskLabel} onClick={toggleVisibleForm}>
+          + новая задача
+        </button>
       </div>
+      <div
+        className={styles.formNewTaskWrap}
+        style={!isActive ? { display: 'none' } : { display: 'flex' }}
+      >
       <div className={styles.formNewTaskWrap} style={!isActive ? { display: 'none' } : { display: 'flex' }}>
         <Tooltip title="Название обязательно" visible={isVisibleTooltip} placement="bottom" />
         <InputNameTask
