@@ -175,6 +175,7 @@ export const detachChecklist = createAsyncThunk(
         taskId,
         checkListId,
       });
+      dispatch(TaskFormSlice.updateTask(data.data));
       const { taskForm } = await getState() as any;
       alert(`Чек-лист "${message?.slice(0, 25)}${message!.length > 25 ? '...' : ''}" успешно удален`, 'remove', [{
         text: 'отменить',

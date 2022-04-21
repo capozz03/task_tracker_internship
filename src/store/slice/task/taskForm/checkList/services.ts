@@ -23,9 +23,11 @@ export const checkListService = {
         title,
       },
     }),
-  createItemForChecklist: async ({ checkListId, title: message }:changeCheckListTitleProps) =>
+  createItemForChecklist: async (
+    { checkListId, title: message, complete }:changeCheckListTitleProps) =>
     $apiTask.post<TCreateItemForCheckListResponse>(`/api/v1.0/check-list/check-lists/${checkListId}/items`, {
       message,
+      complete,
     }),
   changeItemForChecklist: async ({
     checkListId,
