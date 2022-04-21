@@ -7,15 +7,16 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import styles from './index.module.scss';
+import styles from 'features/Tasks/currentTaskComponents/Title/index.module.scss';
 import PencilIcon from 'shared/ui/icons/PencilIcon';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setTitleAsync } from 'store/slice/task/taskForm';
 import { Tooltip } from 'antd';
 import PlusIcons from 'shared/ui/icons/PlusIcons';
 import CancelIcons from 'shared/ui/icons/CancelIcons';
 import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
-import { alert } from '../../../../shared/ui';
+import { alert } from 'shared/ui';
+import { TaskFormSlice } from 'store/slice';
 
 type titleProps = {
   title: string,
@@ -23,12 +24,12 @@ type titleProps = {
 }
 
 const Title = ({ title, taskId }: titleProps) => {
-  const [titleTask, setTitleTask] = useState(title);
+  const dispatch = useDispatch();
+  const titleTask = useSelector(TaskFormSlice.getTaskFormTitle) || '';
   const [oldTitle, setOldTitle] = useState(title);
   const [isEdit, setIsEdit] = useState(false);
   const [isVisibleTooltip, setIsVisibleTooltip] = useState(false);
   const [isVisibleFullText, setIsVisibleFullText] = useState(true);
-  const dispatch = useDispatch();
   const textArea = useRef<HTMLTextAreaElement>(null);
   const titleTaskRef = useRef<HTMLDivElement>(null);
 
@@ -43,7 +44,7 @@ const Title = ({ title, taskId }: titleProps) => {
     textArea.current!.style.height = `${titleTaskRef.current!.offsetHeight + 5}px`;
   };
   const handleChangeTitle: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
-    setTitleTask(() => e.target.value);
+    dispatch(TaskFormSlice.setTitleFromTaskForm(e.target.value));
     if (e.target.value.length === 0 || e.target.value === '0') {
       setIsVisibleTooltip(true);
     } else {
@@ -63,8 +64,9 @@ const Title = ({ title, taskId }: titleProps) => {
 
   const saveTask = () => {
     setIsVisibleTooltip(false);
-    setTitleTask(() => titleTask.trim());
-    if (titleTask.length > 0 && titleTask !== '0') {
+    const title = titleTask.replaceAll(' ', '');
+    dispatch(TaskFormSlice.setTitleFromTaskForm(title));
+    if (title.length > 0) {
       dispatch(setTitleAsync({
         data: {
           title: titleTask,
@@ -83,7 +85,7 @@ const Title = ({ title, taskId }: titleProps) => {
   };
 
   const handleCancelClick = () => {
-    setTitleTask(() => oldTitle);
+    dispatch(TaskFormSlice.setTitleFromTaskForm(oldTitle));
     setIsEdit(false);
     setIsVisibleTooltip(false);
   };
@@ -116,6 +118,7 @@ const Title = ({ title, taskId }: titleProps) => {
         <form onSubmit={handleSubmitForm} className={styles.formEdit}>
           <Tooltip title="Название обязательно" visible={isVisibleTooltip} placement="bottom">
             <textarea
+              placeholder="Введите название задачи"
               maxLength={150}
               className={styles.textarea}
               ref={textArea}

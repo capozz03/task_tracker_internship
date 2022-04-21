@@ -4,7 +4,7 @@ import classes from './index.module.scss';
 import { ClockCircleOutlined } from '@ant-design/icons';
 
 type DateWithIconClockProps = {
-  date: string
+  date: string | null | undefined
 }
 
 const DateWithIconClock = ({ date }: DateWithIconClockProps) => {
@@ -14,6 +14,7 @@ const DateWithIconClock = ({ date }: DateWithIconClockProps) => {
   const tomorrowEnd = moment().add(1, 'day').endOf('day');
   const yesterday = moment().add(-1, 'day').startOf('day');
   const dateFormat = () => {
+    if (date === null || date === undefined) return 'Без срока';
     if (dateExec > today && dateExec < tomorrow) return 'сегодня';
     if (dateExec > tomorrow && dateExec < tomorrowEnd) return 'завтра';
     if (dateExec > yesterday) return 'вчера';
