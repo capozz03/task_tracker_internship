@@ -34,6 +34,7 @@
 
 .menu {
     max-height: 280px;
+    padding-bottom: 20px !important;
     overflow: auto;
     border-radius: 0 0 16px 16px;
 
@@ -84,10 +85,6 @@
     
     & > li:first-child {
         margin-top: 14px !important;
-    }
-    
-    & > li:last-child {
-        margin-bottom: 30px !important;
     }
 
     & > li > span > span {
@@ -171,4 +168,17 @@
             color: $grey-800;
         }
     }
+}
+
+ul.menu li.lastElement {
+    height: 0 !important;
+    width: 0 !important;
+}
+
+.spin {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
