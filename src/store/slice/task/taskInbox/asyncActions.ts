@@ -5,7 +5,7 @@ import { alert } from 'shared/ui';
 import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice } from 'store/slice';
 
 export const getTasksAsync = createAsyncThunk(
-  'taskInbox/getTaskInbox',
+  'taskInbox/getTaskInboxInbox',
   async (params: TTaskSearch, { rejectWithValue }) => {
     try {
       const { data } = await taskService.getTasks({
@@ -20,13 +20,13 @@ export const getTasksAsync = createAsyncThunk(
 );
 
 export const changeStatusTaskAsync = createAsyncThunk(
-  'taskInbox/getTask',
+  'taskInbox/getTaskInbox',
   async (params: TTaskStatusChange, { rejectWithValue, dispatch, getState }) => {
     try {
       const { taskInbox } = getState() as { taskInbox: TTasksReducer };
       const { data } = await taskService.changeStatusTask({ ...params });
       dispatch(
-        getTasksAsync({
+        TaskInboxSlice.getTasksAsync({
           per_page: taskInbox.pagination?.per_page,
           page: taskInbox.pagination?.page_current,
         }),
@@ -60,7 +60,7 @@ export const changeStatusTaskAsync = createAsyncThunk(
 );
 
 export const createNewTaskAsync = createAsyncThunk(
-  'taskInbox/createNewTaskTask',
+  'taskInbox/createNewTaskTaskInbox',
   async (
     params: { title: string; task_status_id: string },
     { rejectWithValue, dispatch, getState },
@@ -70,7 +70,7 @@ export const createNewTaskAsync = createAsyncThunk(
       const { taskInbox } = getState() as { taskInbox: TTasksReducer };
       await taskService.createNewTask({ task_status_id: taskStatusID, title });
       dispatch(
-        getTasksAsync({
+        TaskInboxSlice.getTasksAsync({
           per_page: taskInbox.pagination?.per_page,
           page: taskInbox.pagination?.page_current,
         }),
@@ -84,13 +84,13 @@ export const createNewTaskAsync = createAsyncThunk(
   },
 );
 export const duplicateTaskAsync = createAsyncThunk(
-  'taskInbox/duplicateTask',
+  'taskInbox/duplicateTaskInbox',
   async (taskId: string, { rejectWithValue, dispatch, getState }) => {
     try {
       const { taskInbox } = getState() as { taskInbox: TTasksReducer };
       await taskService.duplicateTask(taskId);
       dispatch(
-        getTasksAsync({
+        TaskInboxSlice.getTasksAsync({
           per_page: taskInbox.pagination?.per_page,
           page: taskInbox.pagination?.page_current,
         }),
@@ -105,13 +105,13 @@ export const duplicateTaskAsync = createAsyncThunk(
 );
 
 export const deleteTaskAsync = createAsyncThunk(
-  'taskInbox/deleteTask',
+  'taskInbox/deleteTaskInbox',
   async (taskId: string, { rejectWithValue, dispatch, getState }) => {
     try {
       const { taskInbox } = getState() as { taskInbox: TTasksReducer };
       await taskService.deleteTask(taskId);
       dispatch(
-        getTasksAsync({
+        TaskInboxSlice.getTasksAsync({
           per_page: taskInbox.pagination?.per_page,
           page: taskInbox.pagination?.page_current,
         }),
