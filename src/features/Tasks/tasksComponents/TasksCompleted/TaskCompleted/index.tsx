@@ -17,7 +17,6 @@ type TaskCompletedProps = {
 
 const TaskCompleted = ({ task }: TaskCompletedProps) => {
   const dispatch = useDispatch();
-  const { total, checked } = progress;
   const progressPercent = progressBarPercent(progress);
   const statusHandler = (value: string) => {
     dispatch(
@@ -36,8 +35,8 @@ const TaskCompleted = ({ task }: TaskCompletedProps) => {
         <CardName
           name={task.title}
           attachments={task.storage_files_meta.total}
-          checkListTotal={total}
-          checkListChecked={checked}
+          checkListTotal={task.progress?.total || 0}
+          checkListChecked={task.progress?.completed || 0}
         />
       </div>
       <div className={style.cardStatus}>

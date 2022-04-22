@@ -7,7 +7,6 @@ import TaskCompleted from './TaskCompleted';
 import style from './index.module.scss';
 import Pagination from '../Pagination';
 import { TSortType } from 'store/slice/task/entities';
-import styles from '../TasksInbox/index.module.scss';
 import { Spin } from 'antd';
 
 const TasksCompleted = (props: ComponentProps<any>) => {
@@ -52,24 +51,18 @@ const TasksCompleted = (props: ComponentProps<any>) => {
           <SortByPCScreen setSortType={setSortType} />
         )}
       </div>
-      {isLoading ? (
-        <div className={styles.spin}>
-          <Spin size="large" />
-        </div>
-      ) : (
-        <>
-          {tasks && tasks.map((task) => <TaskCompleted key={task.task_id} task={task} />)}
-          <div className={style.pagination}>
-            {pagination && (
-              <Pagination
-                current={pagination.page_current}
-                onChange={paginationHandler}
-                total={pagination.items_total}
-              />
-            )}
-          </div>
-        </>
-      )}
+      <Spin size="large" tip="Загрузка" spinning={isLoading}>
+        {tasks && tasks.map((task) => <TaskCompleted key={task.task_id} task={task} />)}
+      </Spin>
+      <div className={style.pagination}>
+        {pagination && (
+        <Pagination
+          current={pagination.page_current}
+          onChange={paginationHandler}
+          total={pagination.items_total}
+        />
+        )}
+      </div>
     </div>
   );
 };
