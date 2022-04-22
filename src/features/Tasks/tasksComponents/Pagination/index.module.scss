@@ -1,5 +1,13 @@
 @import "src/shared/assets/styles";
 
+.myPagination{
+  position: relative !important;
+  z-index: 100 !important;
+  :global(.ant-select-item){
+
+  }
+}
+
 :global(.ant-pagination-total-text){
   font: $p-regular !important;
   color: $grey-700 !important;
