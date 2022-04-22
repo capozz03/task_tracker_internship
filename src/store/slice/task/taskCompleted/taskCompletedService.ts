@@ -1,5 +1,5 @@
 import { $apiTask, clientCookies } from 'shared';
-import { TTask, TTaskStatusChange } from '../entities';
+import { TTask, TTaskItemResponse, TTaskStatusChange } from '../entities';
 
 export const taskService = {
   getTasks: async (params?: any) =>
@@ -10,7 +10,7 @@ export const taskService = {
       },
     }),
   changeStatusTask: async ({ task_id: taskId, task_status_id: taskStatusId }: TTaskStatusChange) =>
-    $apiTask.post<TTask[]>(
+    $apiTask.post<TTaskItemResponse>(
       `/api/v1.0/task/tasks/${taskId}/status-change`,
       { task_status_id: taskStatusId },
       {

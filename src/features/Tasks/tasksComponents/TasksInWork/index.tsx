@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TaskInWorkSlice } from 'store/slice';
 import NewTask from '../NewTask';
 import { Spin } from 'antd';
-import TaskFormCreated from 'features/Tasks/tasksComponents/TaskFormCreated';
 
 const TasksInWork = (props: ComponentProps<any>) => {
   const dispatch = useDispatch();
@@ -47,7 +46,6 @@ const TasksInWork = (props: ComponentProps<any>) => {
           {tasks && tasks.map((task) => <TaskInWork key={task.task_id} task={task} />)}
           <div>
             <NewTask taskStatusId="372d63ff-3ae3-4be2-a606-38940d7f8c8f" />
-            <TaskFormCreated taskStatusId="372d63ff-3ae3-4be2-a606-38940d7f8c8f" />
           </div>
           <div className={styles.pagination}>
             {pagination && (

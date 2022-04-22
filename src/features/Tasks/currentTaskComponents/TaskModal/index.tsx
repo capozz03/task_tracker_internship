@@ -11,23 +11,24 @@ import Description from 'features/Tasks/tasksComponents/Description';
 const TaskModal = (props: ModalProps) => {
   const dispatch = useDispatch();
   const task = useSelector(TaskFormSlice.getTask);
+  const status = useSelector(TaskFormSlice.getTaskFormStatusTask);
   const isLoading = useSelector(TaskFormSlice.isLoadingStatus);
   const paginationInbox = useSelector(TaskInboxSlice.getPagination);
   const paginationInWork = useSelector(TaskInWorkSlice.getPagination);
   const paginationInCompleted = useSelector(TaskCompletedSlice.getPagination);
 
   const cancelHandle = () => {
-    if (task?.status.name === 'Создана') {
+    if (status?.name === 'Создана') {
       dispatch(TaskInboxSlice.getTasksAsync({
         per_page: paginationInbox!.per_page,
         page: paginationInbox!.page_current }));
     }
-    if (task?.status.name === 'В работе') {
+    if (status?.name === 'В работе') {
       dispatch(TaskInWorkSlice.getTasksAsync({
         per_page: paginationInWork!.per_page,
         page: paginationInWork!.page_current }));
     }
-    if (task?.status.name === 'Выполнена' || task!.status.name === 'Не выполнена') {
+    if (status?.name === 'Выполнена' || status?.name === 'Не выполнена') {
       dispatch(TaskCompletedSlice.getTasksAsync({
         per_page: paginationInCompleted!.per_page,
         page: paginationInCompleted!.page_current }));
