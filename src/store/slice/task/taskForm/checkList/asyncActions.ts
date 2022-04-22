@@ -131,7 +131,7 @@ export const deleteItemForChecklist = createAsyncThunk(
       alert(`Пункт ${data.data.message} удален`, 'remove', [{
         text: 'отменить',
         action: () => {
-          dispatch(createItemForChecklist({
+          dispatch(TaskFormSlice.createItemForChecklist({
             checkListId: props.checkListId,
             checkListItemId: props.checkListItemId,
             title: data.data.message,
