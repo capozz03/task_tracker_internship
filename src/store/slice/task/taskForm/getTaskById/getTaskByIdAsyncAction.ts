@@ -7,8 +7,8 @@ export const getTaskByIdAsync = createAsyncThunk(
   'taskForm/getTaskByIdAsync',
   async (taskId:string, { rejectWithValue, dispatch }) => {
     try {
-      const { data } = await getTaskById(taskId);
       dispatch(TaskFormSlice.showTaskForm());
+      const { data } = await getTaskById(taskId);
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
