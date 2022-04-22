@@ -3,7 +3,7 @@ import TaskInWork from './TaskInWork';
 import styles from './index.module.scss';
 import Pagination from '../Pagination';
 import { useDispatch, useSelector } from 'react-redux';
-import { TaskInWorkSlice } from 'store/slice';
+import { CommonActions, TaskInWorkSlice } from 'store/slice';
 import NewTask from '../NewTask';
 import { Spin } from 'antd';
 
@@ -12,11 +12,13 @@ const TasksInWork = (props: ComponentProps<any>) => {
   const pagination = useSelector(TaskInWorkSlice.getPagination);
   const tasks = useSelector(TaskInWorkSlice.getTasks);
   const isLoading = useSelector(TaskInWorkSlice.isLoadingStatus);
+  const filterAssignedToMe = useSelector(CommonActions.getFilterAssignedTo);
   const paginationHandler = (page: number, pageSize: number) => {
     dispatch(
       TaskInWorkSlice.getTasksAsync({
         page,
         per_page: pageSize,
+        assigned_to_me: filterAssignedToMe === 'my' ? true : null,
       }),
     );
   };
@@ -26,9 +28,10 @@ const TasksInWork = (props: ComponentProps<any>) => {
       TaskInWorkSlice.getTasksAsync({
         page: 1,
         per_page: 3,
+        assigned_to_me: filterAssignedToMe === 'my' ? true : null,
       }),
     );
-  }, []);
+  }, [filterAssignedToMe]);
 
   return (
     <div className={styles.tasks_group} {...props}>
@@ -46,11 +49,11 @@ const TasksInWork = (props: ComponentProps<any>) => {
         </div>
         <div className={styles.pagination}>
           {pagination && (
-          <Pagination
-            current={pagination.page_current}
-            onChange={paginationHandler}
-            total={pagination.items_total}
-          />
+            <Pagination
+              current={pagination.page_current}
+              onChange={paginationHandler}
+              total={pagination.items_total}
+            />
           )}
         </div>
       </div>
