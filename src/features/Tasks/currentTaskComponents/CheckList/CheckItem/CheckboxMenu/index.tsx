@@ -11,20 +11,8 @@ type CheckboxMenuProps = {
   editItem: () => void,
 }
 
-const { Item } = Menu;
-
-const OptionMenu = ({ editItem, deleteItem }: any) => (
-  <Menu className={styles.dropdownMenu}>
-    <Item key="1" onClick={editItem}>
-      Редактировать
-    </Item>
-    <Item key="2" onClick={deleteItem} danger>
-      Удалить
-    </Item>
-  </Menu>
-);
-
 const CheckboxMenu = ({ checkListItemId, checkListId, editItem }: CheckboxMenuProps) => {
+  const { Item } = Menu;
   const dispatch = useDispatch();
   const deleteItem = () => {
     dispatch(TaskFormSlice.deleteItemForChecklist({
@@ -32,10 +20,22 @@ const CheckboxMenu = ({ checkListItemId, checkListId, editItem }: CheckboxMenuPr
       checkListId,
     }));
   };
+
+  const menu = (
+    <Menu className={styles.dropdownMenu}>
+      <Item key="1" onClick={editItem}>
+        Редактировать
+      </Item>
+      <Item key="2" onClick={deleteItem} danger>
+        Удалить
+      </Item>
+    </Menu>
+  );
+
   return (
     <Dropdown.Button
       className={styles.dropdownButton}
-      overlay={<OptionMenu editItem={editItem} deleteItem={deleteItem} />}
+      overlay={menu}
       trigger={['click']}
       icon={<EllipsisOutlined className={styles.dropdownIcon} />}
     />

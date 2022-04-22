@@ -37,9 +37,7 @@ const TaskModal = (props: ModalProps) => {
   };
   return (
     <Modal {...props} onCancel={cancelHandle} width="75%" footer={null}>
-      {isLoading ? (
-        <Spin />
-      ) : (
+      <Spin spinning={isLoading}>
         <div className={styles.wrap}>
           <div className={styles.title}>
             <div className={styles.name}>
@@ -52,7 +50,6 @@ const TaskModal = (props: ModalProps) => {
             <div className={styles.checklist}>
               <CheckListArea />
             </div>
-            <div>checklists</div>
             <div>attachments</div>
             <div>actions</div>
           </div>
@@ -61,7 +58,7 @@ const TaskModal = (props: ModalProps) => {
             <div>contributors</div>
           </div>
         </div>
-      )}
+      </Spin>
     </Modal>
   );
 };

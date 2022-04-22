@@ -16,3 +16,5 @@ export const getTaskFormIsVisibleForm = createSelector(getTaskInformation,
 export const isLoadingStatus = createSelector(getTaskInformation, ({ status }) =>
   isLoadingStatusCheck(status),
 );
+
+export const getTaskFormId = createSelector(getTaskInformation, ({ task }) => task?.task_id);

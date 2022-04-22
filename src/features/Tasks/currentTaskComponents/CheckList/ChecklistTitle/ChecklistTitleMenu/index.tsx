@@ -13,39 +13,34 @@ type CheckboxMenuProps = {
 
 const ChecklistTitleMenu = ({ checkList, editItem }: CheckboxMenuProps) => {
   const { Item } = Menu;
-  const task = useSelector(TaskFormSlice.getTask);
   const dispatch = useDispatch();
-  if (task) {
-    const detachChecklist = () => {
-      dispatch(TaskFormSlice.detachChecklist({
-        message: checkList.title,
-        checkListId: checkList.check_list_id,
-        taskId: task.task_id,
-      }));
-    };
+  const taskId = useSelector(TaskFormSlice.getTaskFormId);
+  const detachChecklist = () => {
+    dispatch(TaskFormSlice.detachChecklist({
+      message: checkList.title,
+      checkListId: checkList.check_list_id,
+      taskId: taskId || '',
+    }));
+  };
 
-    const menu = (
-      <Menu className={styles.dropdownMenu}>
-        <Item key="1" onClick={editItem}>
-          Редактировать
-        </Item>
-        <Item key="2" onClick={detachChecklist} danger>
-          Удалить
-        </Item>
-      </Menu>
-    );
+  const menu = (
+    <Menu className={styles.dropdownMenu}>
+      <Item key="1" onClick={editItem}>
+        Редактировать
+      </Item>
+      <Item key="2" onClick={detachChecklist} danger>
+        Удалить
+      </Item>
+    </Menu>
+  );
 
-    return (
-      <Dropdown.Button
-        className={styles.dropdownButton}
-        overlay={menu}
-        trigger={['click']}
-        icon={<EllipsisOutlined className={styles.dropdownIcon} />}
-      />
-    );
-  }
   return (
-    <div>Ошибка, задача не выбрана</div>
+    <Dropdown.Button
+      className={styles.dropdownButton}
+      overlay={menu}
+      trigger={['click']}
+      icon={<EllipsisOutlined className={styles.dropdownIcon} />}
+    />
   );
 };
 
