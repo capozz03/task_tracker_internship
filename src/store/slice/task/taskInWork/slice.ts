@@ -1,4 +1,4 @@
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatuses } from 'shared';
 import { getTasksAsync } from './asyncActions';
 import { TTask, TTasksReducer, TTasksResponse } from '../entities';
@@ -49,6 +49,3 @@ const taskInWorkSlice = createSlice({
 
 export const { taskUpdate } = taskInWorkSlice.actions;
 export const taskInWorkReducer = taskInWorkSlice.reducer;
-const selectSelf = (state: any) => state;
-export const taskInWorkSelector = createSelector(selectSelf,
-  (state: any) => state.taskInWork.tasks);

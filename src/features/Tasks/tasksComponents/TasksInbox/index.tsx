@@ -55,29 +55,23 @@ const TasksInbox = (props: ComponentProps<any>) => {
           )}
         </div>
       </div>
-      {isLoading ? (
-        <div className={styles.spin}>
-          <Spin size="large" />
+      <Spin size="large" tip="Загрузка" spinning={isLoading}>
+        {tasks && tasks.map((task) => <TaskInbox key={task.task_id} task={task} />)}
+      </Spin>
+      <div className={styles.footer}>
+        <div className={styles.createTask}>
+          <NewTask taskStatusId={TaskStatuses.CREATED} />
         </div>
-      ) : (
-        <>
-          {tasks && tasks.map((task) => <TaskInbox key={task.task_id} task={task} />)}
-          <div className={styles.footer}>
-            <div className={styles.createTask}>
-              <NewTask taskStatusId={TaskStatuses.CREATED} />
-            </div>
-            <div className={styles.pagination}>
-              {pagination && (
-                <Pagination
-                  current={pagination.page_current}
-                  onChange={paginationHandler}
-                  total={pagination.items_total}
-                />
-              )}
-            </div>
-          </div>
-        </>
-      )}
+        <div className={styles.pagination}>
+          {pagination && (
+          <Pagination
+            current={pagination.page_current}
+            onChange={paginationHandler}
+            total={pagination.items_total}
+          />
+          )}
+        </div>
+      </div>
     </div>
   );
 };

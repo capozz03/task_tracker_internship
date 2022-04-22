@@ -11,7 +11,7 @@ export const notImplemented = '599f5d03-1ef0-4a5b-a18c-33a4f44c4610';
 export const rejectedId = '4658859a-32a6-4206-838a-c0064f147299';
 
 export const getTasksAsync = createAsyncThunk(
-  'taskInWork/getTask',
+  'taskInWork/getTaskInWork',
   async (params: TTaskSearch, { rejectWithValue }) => {
     try {
       const { data } = await taskService.getTasks({ ...params, status_id: inWork });

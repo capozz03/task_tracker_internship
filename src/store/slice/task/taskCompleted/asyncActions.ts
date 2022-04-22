@@ -6,7 +6,7 @@ import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice } from 'store/slice
 const statusesId = ['8536592a-7340-4e10-ac4b-a280652c9310', '599f5d03-1ef0-4a5b-a18c-33a4f44c4610'];
 
 export const getTasksAsync = createAsyncThunk(
-  'taskCompleted/getTask',
+  'taskCompleted/getTaskCompleted',
   async (params: TTaskSearch, { rejectWithValue }) => {
     try {
       const { data } = await taskService.getTasks({ ...params, status_id: statusesId });

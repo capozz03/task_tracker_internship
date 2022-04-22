@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatuses } from 'shared';
 import { getTasksAsync } from './asyncActions';
-import { TTasksReducer, TTasksResponse } from '../entities';
+import { TTask, TTasksReducer, TTasksResponse } from '../entities';
 
 const initialState = {
   tasks: null,
@@ -19,7 +19,13 @@ const initialState = {
 const taskInboxSlice = createSlice({
   name: 'taskInboxSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    taskUpdate(state, { payload }: PayloadAction<TTask>) {
+      state.tasks = state.tasks!.map((task) =>
+        (task.task_id === payload.task_id ? payload : task));
+      return state;
+    },
+  },
   extraReducers: {
     [getTasksAsync.pending.type]: (state) => ({
       ...state,
@@ -42,3 +48,4 @@ const taskInboxSlice = createSlice({
 });
 
 export const taskInboxReducer = taskInboxSlice.reducer;
+export const { taskUpdate } = taskInboxSlice.actions;

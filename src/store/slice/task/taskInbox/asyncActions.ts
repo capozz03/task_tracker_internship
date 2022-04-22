@@ -5,7 +5,7 @@ import { alert } from 'shared/ui';
 import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice } from 'store/slice';
 
 export const getTasksAsync = createAsyncThunk(
-  'taskInbox/getTask',
+  'taskInbox/getTaskInbox',
   async (params: TTaskSearch, { rejectWithValue }) => {
     try {
       const { data } = await taskService.getTasks({
