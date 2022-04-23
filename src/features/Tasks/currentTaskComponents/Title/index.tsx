@@ -64,12 +64,15 @@ const Title = ({ title, taskId }: titleProps) => {
 
   const saveTask = () => {
     setIsVisibleTooltip(false);
-    const title = titleTask.replaceAll(' ', '');
-    dispatch(TaskFormSlice.setTitleFromTaskForm(title));
-    if (title.length > 0) {
+    let taskTitle = titleTask.trim();
+    while (taskTitle.includes('  ')) {
+      taskTitle = taskTitle.replaceAll('  ', ' ');
+    }
+    dispatch(TaskFormSlice.setTitleFromTaskForm(taskTitle));
+    if (taskTitle.length > 0) {
       dispatch(setTitleAsync({
         data: {
-          title: titleTask,
+          title: taskTitle,
           taskId,
         },
         successHandle: saveSuccess,
