@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dropdown, Menu } from 'antd';
+import { Dropdown, Menu, Upload } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './index.module.scss';
 import { TaskFormSlice } from 'store/slice';
@@ -9,12 +9,27 @@ const AttachMenu = () => {
   const dispatch = useDispatch();
   const { Item } = Menu;
   const task = useSelector(TaskFormSlice.getTask);
+  const taskId = task?.task_id;
+
+  const uploadFiles = async (options: any) => {
+    const { file } = options;
+    const fileData = new FormData();
+    fileData.append('file', file);
+    dispatch(TaskFormSlice.createStorageFile({ nameOriginal: file.name, file: fileData, taskId }));
+  };
+
+  const props: any = {
+    showUploadList: false,
+    accept: '.pdf, .txt, .doc, .docx, .avi, .mp4, .wmv, .csv, .xls, .jpeg, .jpg, .png',
+    customRequest: uploadFiles,
+  };
+
   if (task) {
     const checklistHandle = () => {
       dispatch(TaskFormSlice.showFormCreateChecklist());
     };
     const attachFileHandle = () => {
-
+      dispatch(TaskFormSlice.showFormStorageFiles());
     };
 
     const menu = (
@@ -23,7 +38,7 @@ const AttachMenu = () => {
           Добавить чек-лист
         </Item>
         <Item key="2" onClick={attachFileHandle}>
-          Прикрепить вложение
+          <Upload {...props}>Прикрепить вложение</Upload>
         </Item>
       </Menu>
     );
@@ -37,9 +52,7 @@ const AttachMenu = () => {
       />
     );
   }
-  return (
-    <div>Ошибка, задача не выбрана</div>
-  );
+  return <div>Ошибка, задача не выбрана</div>;
 };
 
 export default AttachMenu;

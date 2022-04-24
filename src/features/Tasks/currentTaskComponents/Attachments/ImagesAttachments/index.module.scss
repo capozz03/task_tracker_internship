@@ -1,0 +1,46 @@
+@import 'src/shared/assets/styles';
+
+.taskImages__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  width: 160px;
+  height: 100px;
+  margin: 8px 0;
+}
+.taskImages__item {
+  position: relative;
+  width: 160px;
+  height: 100px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  margin-right: 8px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% auto;
+}
+
+.taskFiles__content {
+  & .taskFiles__name {
+    font: $p-roboto-regular;
+    color: $grey-600;
+    margin-bottom: 8px;
+    max-width: 150px;
+    max-height: 32px;
+    overflow-wrap: break-word;
+    overflow: hidden;
+  }
+}
+
+.dropdown {
+  position: relative;
+  height: 100px;
+  border-radius: 8px;
+  & .menu {
+    position: absolute;
+    right: 10px;
+    top: 30px;
+  }
+  &:hover {
+    background: #44444f40;
+  }
+}

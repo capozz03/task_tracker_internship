@@ -84,7 +84,7 @@ export type TStorageFiles = {
   image_thumbnail: null;
   image_width: null;
   image_height: null;
-  modifications: [];
+  modifications: TStorageFiles[];
 };
 
 export type TTaskCheckListItem = {
@@ -184,5 +184,14 @@ export type TTaskWithRelation = {
     task_id: string,
     task_to_check_list_id: string,
     updated: string,
+  }
+}
+
+export type TTaskWithRelationStorage = {
+  data: TTask,
+  relation: {
+    task_to_storage_file_id: string,
+    task_id: string,
+    storage_file_id: string,
   }
 }

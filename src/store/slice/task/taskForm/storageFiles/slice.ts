@@ -14,4 +14,4 @@ export const storageFilesSlice = createSlice({
   reducers: {},
 });
 
-export const storageFilesReducer = storageFilesSlice.reducer;
+export const storageFilesDataReducer = storageFilesSlice.reducer;

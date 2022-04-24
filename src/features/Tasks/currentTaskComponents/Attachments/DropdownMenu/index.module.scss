@@ -1,0 +1,62 @@
+@import 'src/shared/assets/styles';
+
+.dropdownButton > button {
+  color: $grey-0;
+  background: #44444F80;
+  border: none;
+  border-radius: 4px !important;
+  outline: none;
+  box-shadow: none;
+  .dropdownIcon {
+    font-size: 24px;
+  }
+  &:hover, &:focus {
+    background: #5d5d6b80;
+    border: none;
+    border-radius: 4px;
+  }
+}
+
+.dropdownMenu {
+  font: $p-regular;
+  border-radius: 8px !important;
+  .delete {
+    color: $colors-red;
+    border-top: 1px solid $grey-400;
+  }
+}
+
+.modalDelete {
+  :global(.ant-modal-content) {
+    width: 324px;
+    border-radius: 16px !important;
+  }
+  .title {
+    font: $h4;
+    padding: 16px 0 8px 24px;
+  }
+  .text {
+    font: $p-regular;
+    color: $grey-800;
+    padding: 24px;
+  }
+  .wrapperButtons {
+    display: flex;
+    justify-content: space-between;
+    max-width: 316px;
+    padding: 0 24px 32px;
+    .deleteBtn {
+      background-color: $colors-red;
+      border-radius: 8px;
+      border: none;
+      color: $grey-0;
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+    .cancelBtn {
+      border-radius: 8px;
+    }
+  }
+}
+
