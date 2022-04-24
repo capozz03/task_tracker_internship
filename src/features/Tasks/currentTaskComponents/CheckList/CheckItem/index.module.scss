@@ -1,3 +1,5 @@
+@import "src/shared/assets/styles/vars";
+
 .checklistItem{
   display: flex;
   align-items: center;
@@ -7,5 +9,15 @@
     :global(.ant-checkbox + span){
       width: 100%;
     }
+  }
+  :global(.ant-checkbox-checked::after){
+    border-color: $success-default;
+  }
+  :global(.ant-checkbox-checked .ant-checkbox-inner){
+    background-color: $success-default;
+    border-color: $success-default;
+  }
+  :global(.ant-checkbox-wrapper:hover .ant-checkbox-inner){
+    border-color: $success-default;
   }
 }

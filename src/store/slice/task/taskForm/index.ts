@@ -24,6 +24,8 @@ export {
   getTaskFormStatus,
   getTaskFormTitle,
   isLoadingStatus,
+  getTaskFormStatusTask,
+  getTaskFormId,
 } from './fullTaskInfo/selector';
 
 export {

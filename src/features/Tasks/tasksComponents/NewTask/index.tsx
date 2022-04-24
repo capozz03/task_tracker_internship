@@ -25,14 +25,16 @@ const NewTask = ({ taskStatusId }: { taskStatusId: string }) => {
 
   const newTaskHandler: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    const titleText = nameTask.replaceAll(' ', '');
-    setNameTask(titleText);
-    if (titleText.length !== 0) {
+    let taskTitle = nameTask.trim();
+    while (taskTitle.includes('  ')) {
+      taskTitle = taskTitle.replaceAll('  ', ' ');
+    }
+    if (taskTitle.length !== 0) {
       if (taskStatusId === TaskStatuses.IN_WORK) {
         dispatch(
           createNewTaskInWorkAsync({
             task_status_id: taskStatusId,
-            title: nameTask,
+            title: taskTitle,
           }),
         );
       }
@@ -40,7 +42,7 @@ const NewTask = ({ taskStatusId }: { taskStatusId: string }) => {
         dispatch(
           createNewTaskInboxAsync({
             task_status_id: taskStatusId,
-            title: nameTask,
+            title: taskTitle,
           }),
         );
       }

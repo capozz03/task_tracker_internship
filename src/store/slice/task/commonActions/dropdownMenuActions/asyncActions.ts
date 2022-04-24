@@ -1,6 +1,6 @@
 import { createAsyncThunk, miniSerializeError } from '@reduxjs/toolkit';
 import { TTasksReducer } from '../../entities';
-import { getTasksAsync } from '../../taskInWork';
+import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice } from 'store/slice';
 import { taskService } from '../../taskInWork/taskInWorkService';
 import { alert } from 'shared/ui';
 
@@ -54,12 +54,29 @@ export const duplicateTaskAsync = createAsyncThunk(
       await taskService.duplicateTask(taskId);
       const dataCheckStatus = { taskStatusId, taskInWork, taskInbox, taskCompleted };
       const stateOfDispatch = checkForStatusId(dataCheckStatus);
-      dispatch(
-        getTasksAsync({
-          per_page: stateOfDispatch.pagination?.per_page,
-          page: stateOfDispatch.pagination?.page_current,
-        }),
-      );
+      if (taskStatusId === created) {
+        dispatch(
+          TaskInboxSlice.getTasksAsync({
+            per_page: stateOfDispatch.pagination?.per_page,
+            page: stateOfDispatch.pagination?.page_current,
+          }),
+        );
+      } else if (taskStatusId === inWork) {
+        dispatch(
+          TaskInWorkSlice.getTasksAsync({
+            per_page: stateOfDispatch.pagination?.per_page,
+            page: stateOfDispatch.pagination?.page_current,
+          }),
+        );
+      } else {
+        dispatch(
+          TaskCompletedSlice.getTasksAsync({
+            per_page: stateOfDispatch.pagination?.per_page,
+            page: stateOfDispatch.pagination?.page_current,
+          }),
+        );
+      }
+
       alert('Задача успешно скопирована', 'success');
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
@@ -84,12 +101,28 @@ export const deleteTaskAsync = createAsyncThunk(
       await taskService.deleteTask(taskId);
       const dataCheckStatus = { taskStatusId, taskInWork, taskInbox, taskCompleted };
       const stateOfDispatch = checkForStatusId(dataCheckStatus);
-      dispatch(
-        getTasksAsync({
-          per_page: stateOfDispatch.pagination?.per_page,
-          page: stateOfDispatch.pagination?.page_current,
-        }),
-      );
+      if (taskStatusId === created) {
+        dispatch(
+          TaskInboxSlice.getTasksAsync({
+            per_page: stateOfDispatch.pagination?.per_page,
+            page: stateOfDispatch.pagination?.page_current,
+          }),
+        );
+      } else if (taskStatusId === inWork) {
+        dispatch(
+          TaskInWorkSlice.getTasksAsync({
+            per_page: stateOfDispatch.pagination?.per_page,
+            page: stateOfDispatch.pagination?.page_current,
+          }),
+        );
+      } else {
+        dispatch(
+          TaskCompletedSlice.getTasksAsync({
+            per_page: stateOfDispatch.pagination?.per_page,
+            page: stateOfDispatch.pagination?.page_current,
+          }),
+        );
+      }
       alert('Задача успешно удалена', 'success');
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
