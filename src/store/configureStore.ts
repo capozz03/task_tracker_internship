@@ -16,7 +16,7 @@ const rootReducer = combineReducers({
   taskCompleted: TaskCompletedSlice.taskCompletedReducer,
   taskInbox: TaskInboxSlice.taskInboxReducer,
   taskForm: TaskFormSlice.taskFormReducer,
-  taskFilters: TaskFilters.filterAssignedToReducer,
+  taskFilters: TaskFilters.filtersReducer,
 });
 
 export const store = configureStore({

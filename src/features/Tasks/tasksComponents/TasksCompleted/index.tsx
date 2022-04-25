@@ -15,7 +15,7 @@ const TasksCompleted = (props: ComponentProps<any>) => {
   const tasks = useSelector(TaskCompletedSlice.getTasks);
   const pagination = useSelector(TaskCompletedSlice.getPagination);
   const isLoading = useSelector(TaskCompletedSlice.isLoadingStatus);
-  const filterAssignedToMe = useSelector(TaskFilters.getFilterAssignedTo);
+  const filters = useSelector(TaskFilters.getFilters);
   const [sortType, setSortType] = useState<TSortType>('date~DESC');
 
   const paginationHandler = (page: number, pageSize: number): void => {
@@ -24,7 +24,7 @@ const TasksCompleted = (props: ComponentProps<any>) => {
         sort: sortType,
         page,
         per_page: pageSize,
-        assigned_to_me: filterAssignedToMe === 'my' ? true : null,
+        ...filters,
       }),
     );
   };
@@ -35,10 +35,10 @@ const TasksCompleted = (props: ComponentProps<any>) => {
         sort: sortType,
         page: 1,
         per_page: 3,
-        assigned_to_me: filterAssignedToMe === 'my' ? true : null,
+        ...filters,
       }),
     );
-  }, [sortType, filterAssignedToMe]);
+  }, [sortType, filters]);
 
   return (
     <div className={style.tasks_group} {...props}>

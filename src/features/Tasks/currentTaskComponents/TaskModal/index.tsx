@@ -22,7 +22,7 @@ const TaskModal = (props: ModalProps) => {
   const paginationInbox = useSelector(TaskInboxSlice.getPagination);
   const paginationInWork = useSelector(TaskInWorkSlice.getPagination);
   const paginationInCompleted = useSelector(TaskCompletedSlice.getPagination);
-  const filterAssignedToMe = useSelector(TaskFilters.getFilterAssignedTo);
+  const filters = useSelector(TaskFilters.getFilters);
 
   const cancelHandle = () => {
     if (status?.name === 'Создана') {
@@ -30,7 +30,7 @@ const TaskModal = (props: ModalProps) => {
         TaskInboxSlice.getTasksAsync({
           per_page: paginationInbox!.per_page,
           page: paginationInbox!.page_current,
-          assigned_to_me: filterAssignedToMe === 'my' ? true : null,
+          ...filters,
         }),
       );
     }
@@ -39,7 +39,7 @@ const TaskModal = (props: ModalProps) => {
         TaskInWorkSlice.getTasksAsync({
           per_page: paginationInWork!.per_page,
           page: paginationInWork!.page_current,
-          assigned_to_me: filterAssignedToMe === 'my' ? true : null,
+          ...filters,
         }),
       );
     }
@@ -48,7 +48,7 @@ const TaskModal = (props: ModalProps) => {
         TaskCompletedSlice.getTasksAsync({
           per_page: paginationInCompleted!.per_page,
           page: paginationInCompleted!.page_current,
-          assigned_to_me: filterAssignedToMe === 'my' ? true : null,
+          ...filters,
         }),
       );
     }

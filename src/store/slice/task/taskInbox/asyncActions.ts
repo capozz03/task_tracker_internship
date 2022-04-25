@@ -3,6 +3,7 @@ import { taskService } from './taskInboxService';
 import { TTaskSearch, TTasksReducer, TTaskStatusChange } from '../entities';
 import { alert } from 'shared/ui';
 import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice } from 'store/slice';
+import { TFiltersSlice } from '../taskFilters/slice';
 
 export const getTasksAsync = createAsyncThunk(
   'taskInbox/getTaskInboxInbox',
@@ -23,32 +24,48 @@ export const changeStatusTaskAsync = createAsyncThunk(
   'taskInbox/getTaskInbox',
   async (params: TTaskStatusChange, { rejectWithValue, dispatch, getState }) => {
     try {
-      const { taskInbox } = getState() as { taskInbox: TTasksReducer };
+      const { taskInbox, taskFilters } = getState() as {
+        taskInbox: TTasksReducer;
+        taskFilters: TFiltersSlice;
+      };
       const { data } = await taskService.changeStatusTask({ ...params });
       dispatch(
         TaskInboxSlice.getTasksAsync({
           per_page: taskInbox.pagination?.per_page,
           page: taskInbox.pagination?.page_current,
+          ...taskFilters.filters,
         }),
       );
       const state = getState() as any;
       if (data.data.status?.name === 'Создана') {
         const paginationInbox = state.taskInbox?.pagination;
-        dispatch(TaskInboxSlice.getTasksAsync({
-          per_page: paginationInbox!.per_page,
-          page: paginationInbox!.page_current }));
+        dispatch(
+          TaskInboxSlice.getTasksAsync({
+            per_page: paginationInbox!.per_page,
+            page: paginationInbox!.page_current,
+            ...taskFilters.filters,
+          }),
+        );
       }
       if (data.data.status?.name === 'В работе') {
         const paginationInWork = state.taskInWork?.pagination;
-        dispatch(TaskInWorkSlice.getTasksAsync({
-          per_page: paginationInWork!.per_page,
-          page: paginationInWork!.page_current }));
+        dispatch(
+          TaskInWorkSlice.getTasksAsync({
+            per_page: paginationInWork!.per_page,
+            page: paginationInWork!.page_current,
+            ...taskFilters.filters,
+          }),
+        );
       }
       if (data.data.status?.name === 'Выполнена' || data.data.status?.name === 'Не выполнена') {
         const paginationInCompleted = state.taskCompleted?.pagination;
-        dispatch(TaskCompletedSlice.getTasksAsync({
-          per_page: paginationInCompleted!.per_page,
-          page: paginationInCompleted!.page_current }));
+        dispatch(
+          TaskCompletedSlice.getTasksAsync({
+            per_page: paginationInCompleted!.per_page,
+            page: paginationInCompleted!.page_current,
+            ...taskFilters.filters,
+          }),
+        );
       }
       alert('Статус задачи изменен', 'success');
     } catch (rejectedValueOrSerializedError) {
@@ -67,12 +84,16 @@ export const createNewTaskAsync = createAsyncThunk(
   ) => {
     try {
       const { task_status_id: taskStatusID, title } = params;
-      const { taskInbox } = getState() as { taskInbox: TTasksReducer };
+      const { taskInbox, taskFilters } = getState() as {
+        taskInbox: TTasksReducer;
+        taskFilters: TFiltersSlice;
+      };
       await taskService.createNewTask({ task_status_id: taskStatusID, title });
       dispatch(
         TaskInboxSlice.getTasksAsync({
           per_page: taskInbox.pagination?.per_page,
           page: taskInbox.pagination?.page_current,
+          ...taskFilters.filters,
         }),
       );
       alert('Задача успешно создана', 'success');
@@ -87,12 +108,16 @@ export const duplicateTaskAsync = createAsyncThunk(
   'taskInbox/duplicateTaskInbox',
   async (taskId: string, { rejectWithValue, dispatch, getState }) => {
     try {
-      const { taskInbox } = getState() as { taskInbox: TTasksReducer };
+      const { taskInbox, taskFilters } = getState() as {
+        taskInbox: TTasksReducer;
+        taskFilters: TFiltersSlice;
+      };
       await taskService.duplicateTask(taskId);
       dispatch(
         TaskInboxSlice.getTasksAsync({
           per_page: taskInbox.pagination?.per_page,
           page: taskInbox.pagination?.page_current,
+          ...taskFilters.filters,
         }),
       );
       alert('Задача успешно скопирована', 'success');
@@ -108,12 +133,16 @@ export const deleteTaskAsync = createAsyncThunk(
   'taskInbox/deleteTaskInbox',
   async (taskId: string, { rejectWithValue, dispatch, getState }) => {
     try {
-      const { taskInbox } = getState() as { taskInbox: TTasksReducer };
+      const { taskInbox, taskFilters } = getState() as {
+        taskInbox: TTasksReducer;
+        taskFilters: TFiltersSlice;
+      };
       await taskService.deleteTask(taskId);
       dispatch(
         TaskInboxSlice.getTasksAsync({
           per_page: taskInbox.pagination?.per_page,
           page: taskInbox.pagination?.page_current,
+          ...taskFilters.filters,
         }),
       );
       alert('Задача успешно удалена', 'success');

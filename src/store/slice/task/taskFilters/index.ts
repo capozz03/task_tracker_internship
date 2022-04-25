@@ -1,12 +1,3 @@
-import { combineReducers } from '@reduxjs/toolkit';
-import { filterAssignedToReducer } from './filterAssignedTo';
+export { filtersReducer, setFilterAssignedTo } from './slice';
 
-export {
-  filterAssignedToReducer,
-  getFilterAssignedTo,
-  setFilterAssignedTo,
-} from './filterAssignedTo';
-
-export const taskFiltersReducer = combineReducers({
-  assignedTo: filterAssignedToReducer,
-});
+export { getFilters, getFilterAssignedTo } from './selectors';

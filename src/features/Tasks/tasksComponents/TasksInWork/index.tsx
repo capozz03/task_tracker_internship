@@ -12,13 +12,13 @@ const TasksInWork = (props: ComponentProps<any>) => {
   const pagination = useSelector(TaskInWorkSlice.getPagination);
   const tasks = useSelector(TaskInWorkSlice.getTasks);
   const isLoading = useSelector(TaskInWorkSlice.isLoadingStatus);
-  const filterAssignedToMe = useSelector(TaskFilters.getFilterAssignedTo);
+  const filters = useSelector(TaskFilters.getFilters);
   const paginationHandler = (page: number, pageSize: number) => {
     dispatch(
       TaskInWorkSlice.getTasksAsync({
         page,
         per_page: pageSize,
-        assigned_to_me: filterAssignedToMe === 'my' ? true : null,
+        ...filters,
       }),
     );
   };
@@ -28,10 +28,10 @@ const TasksInWork = (props: ComponentProps<any>) => {
       TaskInWorkSlice.getTasksAsync({
         page: 1,
         per_page: 3,
-        assigned_to_me: filterAssignedToMe === 'my' ? true : null,
+        ...filters,
       }),
     );
-  }, [filterAssignedToMe]);
+  }, [filters]);
 
   return (
     <div className={styles.tasks_group} {...props}>

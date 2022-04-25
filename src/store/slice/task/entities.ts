@@ -138,11 +138,15 @@ export type TTaskItemResponse = {
   data: TTask;
 };
 
+export type TSortType = 'date~DESC' | 'title~ASC';
+
+export type TTaskSearchAssignedToMe = true | null;
+
 export type TTaskSearch = {
-  sort?: 'date~DESC' | 'title~ASC';
+  sort?: TSortType;
   search?: string;
   assign_user_id?: string[];
-  assigned_to_me?: true | null;
+  assigned_to_me?: TTaskSearchAssignedToMe;
   storage_files_gte?: number;
   tag_id?: string[];
   role_id?: string[];
@@ -160,8 +164,6 @@ export type TTaskStatusChange = {
   task_id: string;
   task_status_id: string;
 };
-
-export type TSortType = 'date~DESC' | 'title~ASC';
 
 export type TTaskWithRelation = {
   data: TTask;
