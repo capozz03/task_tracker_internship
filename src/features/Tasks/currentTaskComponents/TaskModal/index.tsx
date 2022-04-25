@@ -7,7 +7,7 @@ import {
   TaskInWorkSlice,
   TaskInboxSlice,
   TaskCompletedSlice,
-  CommonActions,
+  TaskFilters,
 } from 'store/slice';
 import Title from '../Title';
 import MenuHeader from 'features/Tasks/currentTaskComponents/MenuHeader';
@@ -22,7 +22,7 @@ const TaskModal = (props: ModalProps) => {
   const paginationInbox = useSelector(TaskInboxSlice.getPagination);
   const paginationInWork = useSelector(TaskInWorkSlice.getPagination);
   const paginationInCompleted = useSelector(TaskCompletedSlice.getPagination);
-  const filterAssignedToMe = useSelector(CommonActions.getFilterAssignedTo);
+  const filterAssignedToMe = useSelector(TaskFilters.getFilterAssignedTo);
 
   const cancelHandle = () => {
     if (status?.name === 'Создана') {

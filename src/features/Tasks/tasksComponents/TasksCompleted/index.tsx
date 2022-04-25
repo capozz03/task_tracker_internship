@@ -1,7 +1,7 @@
 import React, { ComponentProps, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
-import { CommonActions, TaskCompletedSlice } from 'store/slice';
+import { TaskFilters, TaskCompletedSlice } from 'store/slice';
 import { SortByMobileScreen, SortByPCScreen } from '../SortBy';
 import TaskCompleted from './TaskCompleted';
 import style from './index.module.scss';
@@ -15,7 +15,7 @@ const TasksCompleted = (props: ComponentProps<any>) => {
   const tasks = useSelector(TaskCompletedSlice.getTasks);
   const pagination = useSelector(TaskCompletedSlice.getPagination);
   const isLoading = useSelector(TaskCompletedSlice.isLoadingStatus);
-  const filterAssignedToMe = useSelector(CommonActions.getFilterAssignedTo);
+  const filterAssignedToMe = useSelector(TaskFilters.getFilterAssignedTo);
   const [sortType, setSortType] = useState<TSortType>('date~DESC');
 
   const paginationHandler = (page: number, pageSize: number): void => {

@@ -4,14 +4,14 @@ import styles from './index.module.scss';
 import { assignedButtons } from './constants';
 import { IconAll, IconMy } from './icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { CommonActions } from 'store/slice';
+import { TaskFilters } from 'store/slice';
 
 const FilterAssigned = () => {
   const dispatch = useDispatch();
-  const value = useSelector(CommonActions.getFilterAssignedTo);
+  const value = useSelector(TaskFilters.getFilterAssignedTo);
 
   const onChange = (e: RadioChangeEvent) => {
-    dispatch(CommonActions.setFilterAssignedTo(e.target.value));
+    dispatch(TaskFilters.setFilterAssignedTo(e.target.value));
   };
 
   return (

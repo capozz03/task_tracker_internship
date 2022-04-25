@@ -3,7 +3,7 @@ import TaskInWork from './TaskInWork';
 import styles from './index.module.scss';
 import Pagination from '../Pagination';
 import { useDispatch, useSelector } from 'react-redux';
-import { CommonActions, TaskInWorkSlice } from 'store/slice';
+import { TaskFilters, TaskInWorkSlice } from 'store/slice';
 import NewTask from '../NewTask';
 import { Spin } from 'antd';
 
@@ -12,7 +12,7 @@ const TasksInWork = (props: ComponentProps<any>) => {
   const pagination = useSelector(TaskInWorkSlice.getPagination);
   const tasks = useSelector(TaskInWorkSlice.getTasks);
   const isLoading = useSelector(TaskInWorkSlice.isLoadingStatus);
-  const filterAssignedToMe = useSelector(CommonActions.getFilterAssignedTo);
+  const filterAssignedToMe = useSelector(TaskFilters.getFilterAssignedTo);
   const paginationHandler = (page: number, pageSize: number) => {
     dispatch(
       TaskInWorkSlice.getTasksAsync({
