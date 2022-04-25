@@ -20,7 +20,7 @@ const Attachments = ({ taskId }: attachmentsProps) => {
 
   const isShowAttachments = (): boolean => {
     const isVisibleStorageFiles = useSelector(TaskFormSlice.isVisibleStorageFiles);
-    if (Array.isArray(storageFiles) && storageFiles.length) {
+    if (storageFiles?.length || storageImages?.length) {
       dispatch(TaskFormSlice.showFormStorageFiles());
     } else {
       dispatch(TaskFormSlice.hiddenFormStorageFiles());

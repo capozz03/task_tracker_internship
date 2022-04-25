@@ -18,7 +18,9 @@ const AttachMenu = () => {
     const { file } = options;
     const fileData = new FormData();
     fileData.append('file', file);
-    dispatch(TaskFormSlice.createStorageFile({ nameOriginal: file.name, file: fileData, taskId }));
+    await dispatch(
+      TaskFormSlice.createStorageFile({ nameOriginal: file.name, file: fileData, taskId }),
+    );
   };
   const checklistHandle = () => {
     if (checklists && checklists.length >= 3) {
