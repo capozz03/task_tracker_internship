@@ -16,6 +16,7 @@ const Attachments = ({ taskId }: attachmentsProps) => {
   const dispatch = useDispatch();
   const storageFiles = useSelector(TaskFormSlice.getStorageFiles);
   const storageImages = useSelector(TaskFormSlice.getStorageImages);
+  const storageCount = useSelector(TaskFormSlice.getStorageCount);
 
   const isShowAttachments = (): boolean => {
     const isVisibleStorageFiles = useSelector(TaskFormSlice.isVisibleStorageFiles);
@@ -40,6 +41,7 @@ const Attachments = ({ taskId }: attachmentsProps) => {
               <ClipIcon />
             </div>
             <h5 className={style.attachments}>Вложения</h5>
+            <h5 className={style.attachments}>{storageCount}</h5>
             <Button className={style.changeButton} onClick={visibleAttachments} type="default">
               {isVisibleAttachments ? 'Свернуть' : 'Развернуть'}
             </Button>

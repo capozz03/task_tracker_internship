@@ -6,6 +6,7 @@ import {
   TStorageFilesResponse,
   uploadStorageFileProps,
   attachFileDetailsProps,
+  detachFileDetailsProps,
 } from './entities';
 
 $apiTask.interceptors.request.use((config) => ({
@@ -32,7 +33,7 @@ export const storageFilesSlice = {
     $apiTask.post<TTaskWithRelationStorage>(`/api/v1.0/task/tasks/${taskId}/storage-file-assign`, {
       storage_file_id: storageFileId,
     }),
-  detachStorageFileToTask: async ({ taskId, storageFileId }: attachFileDetailsProps) =>
+  detachStorageFileToTask: async ({ taskId, storageFileId }: detachFileDetailsProps) =>
     $apiTask.post<TTaskWithRelationStorage>(
       `/api/v1.0/task/tasks/${taskId}/storage-file-un-assign`,
       { storage_file_id: storageFileId },

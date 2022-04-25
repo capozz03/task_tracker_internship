@@ -28,3 +28,9 @@ export type attachFileDetailsProps = {
   taskId: string,
   storageFileId: string,
 }
+
+export type detachFileDetailsProps = {
+  taskId: string,
+  storageFileId: string,
+  nameOriginal: string,
+}

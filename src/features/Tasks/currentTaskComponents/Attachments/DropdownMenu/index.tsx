@@ -25,6 +25,7 @@ const DropdownMenu = ({ taskId, storageFileId, name }: DropdownMenuProps) => {
         TaskFormSlice.deleteStorageFile({
           taskId,
           storageFileId,
+          nameOriginal: name,
         }),
       );
     }

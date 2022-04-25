@@ -3,8 +3,8 @@ import { createAsyncThunk, miniSerializeError } from '@reduxjs/toolkit';
 import { storageFilesSlice } from './services';
 import { alert } from 'shared/ui';
 import {
-  attachFileDetailsProps,
   createStorageFileProps,
+  detachFileDetailsProps,
   getStorageFileDetailsProps,
   uploadStorageFileProps,
 } from './entities';
@@ -32,18 +32,23 @@ export const createStorageFile = createAsyncThunk(
     try {
       const { data } = await storageFilesSlice.createStorageFile(props);
       const { taskForm } = (await getState()) as any;
-      dispatch(
-        uploadStorageFile({
-          storageFileId: data.data.storage_file_id,
-          file: props.file,
-        }),
-      );
-      alert(
-        `Файл "${data.data.name_original.slice(0, 25)}${
-          data.data.name_original.length > 25 ? '...' : ''
-        }" успешно загружен`,
-        'success',
-      );
+      const sizeFileBytes = data.data.size;
+      if (sizeFileBytes > 52428800) {
+        alert('Максимальный размер файла 50мб', 'error');
+      } else {
+        dispatch(
+          uploadStorageFile({
+            storageFileId: data.data.storage_file_id,
+            file: props.file,
+          }),
+        );
+        alert(
+          `Файл "${data.data.name_original.slice(0, 25)}${
+            data.data.name_original.length > 25 ? '...' : ''
+          }" успешно загружен`,
+          'success',
+        );
+      }
       const { data: task } = await storageFilesSlice.attachStorageFileToTask({
         taskId: taskForm.task.task.task_id,
         storageFileId: data.data.storage_file_id,
@@ -96,10 +101,22 @@ export const downloadStorageFile = createAsyncThunk(
 // Удалить файл
 export const deleteStorageFile = createAsyncThunk(
   'storageFile/deleteStorageFile',
-  async (props: attachFileDetailsProps, { rejectWithValue, dispatch }) => {
+  async (props: detachFileDetailsProps, { rejectWithValue, dispatch, getState }) => {
     try {
       const { data: task } = await storageFilesSlice.detachStorageFileToTask(props);
-      alert('Вложение удалено', 'remove');
+      const { taskForm } = (await getState()) as any;
+      const { data } = await storageFilesSlice.getStorageFileDetails(props);
+      alert('Вложение успешно удалено', 'remove', [
+        {
+          text: 'отменить',
+          action: () => {
+            storageFilesSlice.attachStorageFileToTask({
+              taskId: taskForm.task.task.task_id,
+              storageFileId: data.data.storage_file_id,
+            });
+          },
+        },
+      ]);
       dispatch(TaskFormSlice.updateTask(task.data));
       dispatch(TaskFormSlice.hiddenFormStorageFiles());
       return task;

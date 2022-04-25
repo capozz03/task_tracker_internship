@@ -48,7 +48,13 @@ export {
   setDescriptionFromTaskForm,
 } from './fullTaskInfo/slice';
 
-export { getStorageFiles, getStorageImages, isVisibleStorageFiles } from './storageFiles/selector';
+export {
+  getStorageFiles,
+  getStorageImages,
+  isVisibleStorageFiles,
+  getStorageCount,
+} from './storageFiles/selector';
+
 export {
   createStorageFile,
   downloadStorageFile,

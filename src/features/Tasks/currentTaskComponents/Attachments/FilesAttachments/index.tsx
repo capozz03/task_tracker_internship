@@ -43,9 +43,7 @@ const FilesAttachments = ({ name, size, storageFileId, taskId }: FilesAttachment
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {isHovering && (
-        <HoverMenu taskId={taskId} storageFileId={storageFileId} name={name} />
-      )}
+      {isHovering && <HoverMenu taskId={taskId} storageFileId={storageFileId} name={name} />}
       <div className={style.taskFiles__inner}>
         <div className={style.taskFiles__icon}>
           <FileTextIcon />

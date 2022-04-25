@@ -20,13 +20,6 @@ const AttachMenu = () => {
     fileData.append('file', file);
     dispatch(TaskFormSlice.createStorageFile({ nameOriginal: file.name, file: fileData, taskId }));
   };
-
-  const props: any = {
-    showUploadList: false,
-    accept: '.pdf, .txt, .doc, .docx, .avi, .mp4, .wmv, .csv, .xls, .jpeg, .jpg, .png',
-    customRequest: uploadFiles,
-  };
-
   const checklistHandle = () => {
     if (checklists && checklists.length >= 3) {
       alert('В задаче не может быть более 3-х чеклистов', 'error');
@@ -41,7 +34,13 @@ const AttachMenu = () => {
         Добавить чек-лист
       </Item>
       <Item key="2" onClick={uploadFiles}>
-        <Upload {...props}>Прикрепить вложение</Upload>
+        <Upload
+          showUploadList={false}
+          accept=".pdf, .txt, .doc, .docx, .avi, .mp4, .wmv, .csv, .xls, .jpeg, .jpg, .png"
+          customRequest={uploadFiles}
+        >
+          Прикрепить вложение
+        </Upload>
       </Item>
     </Menu>
   );

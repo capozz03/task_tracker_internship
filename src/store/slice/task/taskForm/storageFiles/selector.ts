@@ -12,6 +12,11 @@ export const getStorageImages = createSelector(getTaskForm, ({ task }) =>
   task.task?.storage_files?.filter((file) => file.type === 'image'),
 );
 
+export const getStorageCount = createSelector(
+  getTaskForm,
+  ({ task }) => task.task?.storage_files?.length,
+);
+
 export const isVisibleStorageFiles = createSelector(
   getStorageFile,
   ({ isVisibleStorageFiles }) => isVisibleStorageFiles,
