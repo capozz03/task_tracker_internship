@@ -1,5 +1,13 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { MainSlice, TaskInWorkSlice, UserSlice, TaskCompletedSlice, TaskInboxSlice, TaskFormSlice } from './slice';
+import {
+  MainSlice,
+  TaskInWorkSlice,
+  UserSlice,
+  TaskCompletedSlice,
+  TaskInboxSlice,
+  TaskFormSlice,
+  TaskFilters,
+} from './slice';
 
 const rootReducer = combineReducers({
   main: MainSlice.mainReducer,
@@ -8,6 +16,7 @@ const rootReducer = combineReducers({
   taskCompleted: TaskCompletedSlice.taskCompletedReducer,
   taskInbox: TaskInboxSlice.taskInboxReducer,
   taskForm: TaskFormSlice.taskFormReducer,
+  taskFilters: TaskFilters.filtersReducer,
 });
 
 export const store = configureStore({

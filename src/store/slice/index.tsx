@@ -5,3 +5,4 @@ export * as TaskInboxSlice from './task/taskInbox';
 export * as UserSlice from './user';
 export * as CommonActions from './task/commonActions';
 export * as TaskFormSlice from './task/taskForm';
+export * as TaskFilters from './task/taskFilters';

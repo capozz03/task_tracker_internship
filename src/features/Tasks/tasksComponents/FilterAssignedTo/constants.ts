@@ -1,7 +1,9 @@
 /* eslint-disable no-unused-vars */
+import { TTaskSearchAssignedToMe } from 'store/slice/task/entities';
+
 export type FilterAssignedButtonType = {
   label: string;
-  value: string;
+  value: TTaskSearchAssignedToMe;
 };
 
 export enum TFilterAssignedTo {
@@ -10,6 +12,6 @@ export enum TFilterAssignedTo {
 }
 
 export const assignedButtons: FilterAssignedButtonType[] = [
-  { label: 'Все', value: 'all' },
-  { label: 'Назначенные мне', value: 'my' },
+  { label: 'Все', value: null },
+  { label: 'Назначенные мне', value: true },
 ];
