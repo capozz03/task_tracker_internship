@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styles from './index.module.scss';
 import { Layout } from 'antd';
 import FilterAssignedTo from '../tasksComponents/FilterAssignedTo';
-import SidebarSearchInput from '../tasksComponents/SidebarSearchInput';
 import NotificationsButton from '../tasksComponents/NotificationsButton';
 import FilterToggleButton from '../tasksComponents/FilterToggleButton';
 import { CloseOutlined } from '@ant-design/icons';
@@ -13,6 +12,7 @@ import TasksInbox from '../tasksComponents/TasksInbox';
 import TaskModal from '../currentTaskComponents/TaskModal';
 import { useSelector } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
+import FiltersPanel from '../tasksComponents/FiltersPanel';
 
 const { Sider, Header, Content } = Layout;
 
@@ -31,7 +31,7 @@ const TasksLayout = () => {
               <span className={styles.text}>фильтры и поиск</span>
               <CloseOutlined className={styles.close} onClick={hideSidebar} />
             </div>
-            <SidebarSearchInput placeholder="Поиск" />
+            <FiltersPanel />
           </div>
         </Sider>
         <Layout className={styles.main}>
