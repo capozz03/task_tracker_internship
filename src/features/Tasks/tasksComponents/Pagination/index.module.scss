@@ -1,12 +1,21 @@
 @import "src/shared/assets/styles";
 
+:global(.ant-pagination::after){
+  content: "";
+  display: block;
+  position: static;
+  width: 100%;
+  order: 1;
+}
+
 .myPagination{
   position: relative !important;
   z-index: 100 !important;
-  @media screen and (max-width: 460px) {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  @media screen and (max-width: 385px) {
+
     min-height: 60px;
     align-content: space-between;
     padding-right: 5px !important;
@@ -22,7 +31,7 @@
   width: 100%;
 }
 
-@media screen and (max-width: 460px){
+@media screen and (max-width: 385px){
   :global(.ant-pagination::after){
     display: none !important;
   }
@@ -33,7 +42,7 @@
   color: $grey-700 !important;
   line-height: 32px !important;
   margin-right: 30px !important;
-  @media screen and (max-width: 460px) {
+  @media screen and (max-width: 385px) {
     margin-right: 0 !important;
   }
 }
@@ -47,10 +56,13 @@
 :global(.ant-pagination.mini){
   :global(.ant-pagination-total-text){
     line-height: 24px !important;
-    @media screen and (max-width: 460px) {
+    @media screen and (max-width: 385px) {
       order: 2;
-      flex-basis: 50%;
-      break-before: avoid;
+    }
+    @media screen and (max-width: 470px){
+      margin-right: 0 !important;
+      flex-grow: 1;
+      text-align: center;
     }
   }
   :global(.ant-pagination-item){
@@ -63,11 +75,16 @@
   :global(.ant-pagination-options){
     position: relative;
     z-index: 9999999;
-    @media screen and (max-width: 460px){
+    flex-grow: 1;
+    flex-shrink: 0;
+    text-align: right;
+    @media screen and (max-width: 385px){
       flex-basis: 50%;
       order: 3;
       margin-left: 0 !important;
-      text-align: right;
+    }
+    @media screen and (max-width: 436px){
+      margin-top: 5px;
     }
     :global(.ant-select-selection-item){
       line-height: 20px !important;
