@@ -14,3 +14,6 @@ export const getCheckLists = createSelector(getTaskForm, ({ task }) => task.task
 
 export const isCreateNewCheckList = createSelector(getCheckList,
   ({ isVisibleCreateChecklist }) => isVisibleCreateChecklist);
+
+export const checklistData = createSelector(getTaskForm, ({ checkList }) => checkList.data);
+export const checklistStatus = createSelector(checklistData, ({ status }) => status);

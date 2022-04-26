@@ -7,6 +7,8 @@ import { TaskFormSlice } from 'store/slice';
 import CheckboxMenu from './CheckboxMenu';
 import styles from './index.module.scss';
 import CheckItemMessage from './CheckitemMessage';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 type CheckItemProps = {
   item: TTaskCheckListItem,
@@ -29,8 +31,27 @@ const CheckItem = ({ item, checklistId }: CheckItemProps) => {
   const closeEditMessage = () => {
     setIsEditMessage(false);
   };
+
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+  } = useSortable({ id: item.check_list_item_id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
   return (
-    <li className={styles.checklistItem}>
+    <li
+      className={styles.checklistItem}
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+    >
       <Checkbox
         onChange={onChange}
         value={item.check_list_item_id}

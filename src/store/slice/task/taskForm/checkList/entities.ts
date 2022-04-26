@@ -25,6 +25,10 @@ export type changeItemForChecklistProps = {
   message: string,
 }
 
+export type TTaskCheckListResponse = {
+  data: TTaskCheckList
+}
+
 export type changeStatusItemForChecklistProps = {
   checkListId: string,
   checkListItemId: string,

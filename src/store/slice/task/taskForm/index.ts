@@ -31,6 +31,7 @@ export {
   isCreatedChecklistItem,
   isCreateNewCheckList,
   getCheckLists,
+  checklistStatus,
 } from './checkList/selector';
 
 export {
@@ -44,6 +45,7 @@ export {
   removeItemFromCheckList,
   updateTask,
   setDescriptionFromTaskForm,
+  updateCheckList,
 } from './fullTaskInfo/slice';
 
 export { showFormCreateChecklist, hiddenFormCreateChecklist } from './checkList/uiSlice';
