@@ -3,15 +3,10 @@ import { TTaskSearchAssignedToMe } from 'store/slice/task/entities';
 
 export type FilterAssignedButtonType = {
   label: string;
-  value: TTaskSearchAssignedToMe;
+  value: TTaskSearchAssignedToMe | false;
 };
 
-export enum TFilterAssignedTo {
-  all = 0,
-  my = 1,
-}
-
 export const assignedButtons: FilterAssignedButtonType[] = [
-  { label: 'Все', value: null },
+  { label: 'Все', value: false },
   { label: 'Назначенные мне', value: true },
 ];

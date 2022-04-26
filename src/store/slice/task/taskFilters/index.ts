@@ -1,3 +1,13 @@
-export { filtersReducer, setFilterAssignedTo } from './slice';
+export {
+  filtersReducer,
+  setIsFiltersMenuShow,
+  setFilterAssignedTo,
+  setFilterKeyword,
+} from './slice';
 
-export { getFilters, getFilterAssignedTo } from './selectors';
+export {
+  getFilters,
+  getIsFiltersMenuShow,
+  getFilterAssignedTo,
+  getFilterKeyword,
+} from './selectors';

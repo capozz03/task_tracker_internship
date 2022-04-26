@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './index.module.scss';
-import SearchIcon from './icons';
-import { Input } from 'antd';
+import { Button } from 'antd';
+import KeywordInput from './KeywordInput';
 
 const FiltersPanel = () => (
   <div className={styles.container}>
-    <Input prefix={<SearchIcon />} placeholder="Поиск" />
+    <KeywordInput />
     <div>
       <div className={styles.labelText}>Участники</div>
       asd
@@ -22,6 +22,7 @@ const FiltersPanel = () => (
     <div>
       <div className={styles.labelText}>Приоритет</div>
     </div>
+    <Button name="Очистить фильтры" />
   </div>
 );
 

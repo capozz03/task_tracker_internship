@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './index.module.scss';
 import { Layout } from 'antd';
 import FilterAssignedTo from '../tasksComponents/FilterAssignedTo';
@@ -11,15 +11,16 @@ import TasksInWork from '../tasksComponents/TasksInWork';
 import TasksInbox from '../tasksComponents/TasksInbox';
 import TaskModal from '../currentTaskComponents/TaskModal';
 import { useSelector } from 'react-redux';
-import { TaskFormSlice } from 'store/slice';
+import { TaskFilters, TaskFormSlice } from 'store/slice';
 import FiltersPanel from '../tasksComponents/FiltersPanel';
 
 const { Sider, Header, Content } = Layout;
+const { getIsFiltersMenuShow, setIsFiltersMenuShow } = TaskFilters;
 
 const TasksLayout = () => {
-  const [isSidebarShow, setIsSidebarShow] = useState(false);
-  const changeSidebarVisibility = () => setIsSidebarShow(!isSidebarShow);
-  const hideSidebar = () => setIsSidebarShow(false);
+  const isSidebarShow = useSelector(getIsFiltersMenuShow);
+  const changeSidebarVisibility = () => setIsFiltersMenuShow(!isSidebarShow);
+  const hideSidebar = () => setIsFiltersMenuShow(false);
   const isVisibleForm = useSelector(TaskFormSlice.getTaskFormIsVisibleForm);
 
   return (

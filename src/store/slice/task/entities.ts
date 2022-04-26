@@ -139,12 +139,12 @@ export type TTaskItemResponse = {
 };
 
 export type TSortType = 'date~DESC' | 'title~ASC';
-
-export type TTaskSearchAssignedToMe = true | null;
+export type TTaskSearchKeyword = string;
+export type TTaskSearchAssignedToMe = boolean | null;
 
 export type TTaskSearch = {
   sort?: TSortType;
-  search?: string;
+  search?: TTaskSearchKeyword | null;
   assign_user_id?: string[];
   assigned_to_me?: TTaskSearchAssignedToMe;
   storage_files_gte?: number;
