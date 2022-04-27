@@ -1,4 +1,4 @@
-import { AuthPage, TaskPage, TasksPage, TestingPage } from 'pages';
+import { AuthPage, TaskPage, TasksPage } from 'pages';
 import { MainPage } from 'pages/MainPage';
 import { routes } from 'shared';
 /* global JSX */
@@ -37,12 +37,6 @@ export const RoutingConfig: RoutingConfigType = [
   {
     path: routes.tasks,
     element: TasksPage,
-    private: true,
-    children: [],
-  },
-  {
-    path: routes.test,
-    element: TestingPage,
     private: true,
     children: [],
   },

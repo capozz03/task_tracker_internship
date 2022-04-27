@@ -3,5 +3,4 @@ export const routes = {
   auth: '/auth',
   tasks: '/tasks',
   task: '/task',
-  test: '/test',
 };
