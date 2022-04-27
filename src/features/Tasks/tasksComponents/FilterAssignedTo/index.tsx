@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Radio, RadioChangeEvent } from 'antd';
 import styles from './index.module.scss';
-import { assignedButtons, TFilterAssignedTo } from './constants';
+import { assignedButtons } from './constants';
 import { IconAll, IconMy } from './icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { TaskFilters } from 'store/slice';
 
-type FilterAssignedProps = {
-  currentValue: keyof typeof TFilterAssignedTo;
-};
+const FilterAssigned = () => {
+  const dispatch = useDispatch();
+  const value = useSelector(TaskFilters.getFilterAssignedTo);
 
-const FilterAssigned = ({ currentValue }: FilterAssignedProps) => {
-  const [value, setValue] = useState<keyof typeof TFilterAssignedTo>(currentValue);
-
-  const onChange = (e: RadioChangeEvent) => setValue(e.target.value);
+  const onChange = (e: RadioChangeEvent) => {
+    dispatch(TaskFilters.setFilterAssignedTo(e.target.value));
+  };
 
   return (
     <Radio.Group value={value} optionType="button" buttonStyle="outline" onChange={onChange}>

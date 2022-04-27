@@ -1,7 +1,7 @@
 import React, { ComponentProps, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
-import { TaskInboxSlice } from 'store/slice';
+import { TaskFilters, TaskInboxSlice } from 'store/slice';
 import { NewTask, SortByMobileScreen, SortByPCScreen } from '..';
 import TaskInbox from './TaskInbox';
 import { TaskStatuses } from 'shared/helpers/enums';
@@ -17,6 +17,7 @@ const TasksInbox = (props: ComponentProps<any>) => {
   const tasks = useSelector(TaskInboxSlice.getTasks);
   const pagination = useSelector(TaskInboxSlice.getPagination);
   const isLoading = useSelector(TaskInboxSlice.isLoadingStatus);
+  const filters = useSelector(TaskFilters.getFilters);
   const [sortType, setSortType] = useState<TSortType>('date~DESC');
 
   const paginationHandler = (page: number, pageSize: number) => {
@@ -25,6 +26,7 @@ const TasksInbox = (props: ComponentProps<any>) => {
         sort: sortType,
         page,
         per_page: pageSize,
+        ...filters,
       }),
     );
   };
@@ -35,9 +37,10 @@ const TasksInbox = (props: ComponentProps<any>) => {
         sort: sortType,
         page: 1,
         per_page: 3,
+        ...filters,
       }),
     );
-  }, [sortType]);
+  }, [sortType, filters]);
 
   return (
     <div className={styles.tasks_group} {...props}>
@@ -64,11 +67,11 @@ const TasksInbox = (props: ComponentProps<any>) => {
         </div>
         <div className={styles.pagination}>
           {pagination && (
-          <Pagination
-            current={pagination.page_current}
-            onChange={paginationHandler}
-            total={pagination.items_total}
-          />
+            <Pagination
+              current={pagination.page_current}
+              onChange={paginationHandler}
+              total={pagination.items_total}
+            />
           )}
         </div>
       </div>

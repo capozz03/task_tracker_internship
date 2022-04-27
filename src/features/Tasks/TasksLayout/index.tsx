@@ -49,7 +49,7 @@ const TasksLayout = () => {
               <NotificationsButton active={false} />
             </div>
             <span className={styles.filterAssignedTo}>
-              <FilterAssignedTo currentValue="all" />
+              <FilterAssignedTo />
             </span>
           </Header>
           <Content className={styles.content}>
