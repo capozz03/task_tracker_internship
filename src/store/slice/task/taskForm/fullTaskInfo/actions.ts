@@ -70,7 +70,6 @@ export const taskFormActions = {
   },
   swapItemInChecklist: (state: TTaskFormReducer,
     { payload: data }: PayloadAction<TSwapItemInChecklist>) => {
-    // eslint-disable-next-line no-unused-vars
     const checklist = state.task?.check_lists?.find(
       (checklist) => checklist.check_list_id === data.checkListId);
     let checklistItems = checklist && checklist.items ? [...checklist.items] : [];
