@@ -17,6 +17,7 @@ type CheckItemMessageProps = {
   checkListId: string;
   isEditing: boolean;
   closeEditMessage: () => void;
+  checked: boolean;
 };
 
 const CheckItemMessage = (
@@ -26,6 +27,7 @@ const CheckItemMessage = (
     checkListId,
     isEditing,
     closeEditMessage,
+    checked,
   }: CheckItemMessageProps) => {
   const dispatch = useDispatch();
   const [itemMessage, setItemMessage] = useState(message);
@@ -91,7 +93,7 @@ const CheckItemMessage = (
   return (
     <>
       <div className={isEditing ? styles.hidden : styles.visible}>
-        <div className={styles.title} ref={titleTaskRef}>
+        <div className={styles.title} ref={titleTaskRef} style={checked ? { textDecoration: 'line-through' } : {}}>
           {itemMessage}
         </div>
       </div>

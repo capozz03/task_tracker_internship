@@ -43,7 +43,7 @@ export type deleteItemForChecklistProps = {
 export type changePositionItemForChecklistProps ={
   checkListId: string,
   checkListItemId: string,
-  afterId: string
+  afterId: string | null
 }
 
 export type attachCheckListProps = {

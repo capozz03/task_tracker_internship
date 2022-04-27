@@ -36,11 +36,30 @@ const Checklist = ({ checklist }: ChecklistProps) => {
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (active.id !== over?.id) {
-      dispatch(TaskFormSlice.changePositionItemForChecklist({
-        checkListId: checklist.check_list_id,
-        checkListItemId: active.id,
-        afterId: over!.id,
-      }));
+      const newIndex = checklist.items?.findIndex(
+        (item) => item.check_list_item_id === active.id) || 0;
+      const oldIndex = checklist.items?.findIndex(
+        (item) => item.check_list_item_id === over?.id) || 0;
+      if (checklist && checklist.items) {
+        let afterId: string | null = '0';
+        if (newIndex < oldIndex) {
+          afterId = over!.id;
+        } else if (oldIndex === 0) {
+          afterId = null;
+        } else {
+          afterId = checklist.items[oldIndex - 1].check_list_item_id;
+        }
+        dispatch(TaskFormSlice.swapItemInChecklist({
+          checkListId: checklist.check_list_id,
+          checkListItemIdOne: newIndex,
+          checkListItemIdTwo: oldIndex,
+        }));
+        dispatch(TaskFormSlice.changePositionItemForChecklist({
+          checkListId: checklist.check_list_id,
+          checkListItemId: active.id,
+          afterId,
+        }));
+      }
     }
   };
   const statusChecklist = useSelector(TaskFormSlice.checklistStatus);

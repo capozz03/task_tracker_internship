@@ -46,6 +46,7 @@ export {
   updateTask,
   setDescriptionFromTaskForm,
   updateCheckList,
+  swapItemInChecklist,
 } from './fullTaskInfo/slice';
 
 export { showFormCreateChecklist, hiddenFormCreateChecklist } from './checkList/uiSlice';

@@ -90,6 +90,12 @@ export type TTaskCheckList = {
   items?: TTaskCheckListItem[]
 };
 
+export type TSwapItemInChecklist = {
+  checkListId: string,
+  checkListItemIdOne: number,
+  checkListItemIdTwo: number,
+}
+
 export type TTask = {
   task_id: string;
   title: string;

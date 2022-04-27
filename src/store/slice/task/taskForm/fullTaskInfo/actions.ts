@@ -1,7 +1,8 @@
 import { TTaskFormReducer } from 'store/slice/task/taskForm/fullTaskInfo/initialState';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { changeStatusItemForChecklistProps } from '../checkList/entities';
-import { TTask, TTaskCheckList, TTaskCheckListItem } from 'store/slice/task/entities';
+import { TSwapItemInChecklist, TTask, TTaskCheckList, TTaskCheckListItem } from 'store/slice/task/entities';
+import { arrayMove } from '@dnd-kit/sortable';
 
 type pushItemForChecklistProps = {
   checkListId: string,
@@ -64,6 +65,18 @@ export const taskFormActions = {
       (checklist) => checklist.check_list_id === data.check_list_id);
     if (checklist && checklist.items) {
       checklist.items = data.items;
+    }
+    return state;
+  },
+  swapItemInChecklist: (state: TTaskFormReducer,
+    { payload: data }: PayloadAction<TSwapItemInChecklist>) => {
+    // eslint-disable-next-line no-unused-vars
+    const checklist = state.task?.check_lists?.find(
+      (checklist) => checklist.check_list_id === data.checkListId);
+    let checklistItems = checklist && checklist.items ? [...checklist.items] : [];
+    checklistItems = arrayMove(checklistItems, data.checkListItemIdOne, data.checkListItemIdTwo);
+    if (checklist && checklist.items) {
+      checklist.items = checklistItems;
     }
     return state;
   },
