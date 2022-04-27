@@ -32,6 +32,7 @@ export {
   isCreateNewCheckList,
   getCheckLists,
   checklistStatus,
+  checklistIsLoadingStatus,
 } from './checkList/selector';
 
 export {

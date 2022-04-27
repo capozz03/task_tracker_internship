@@ -22,7 +22,6 @@ import {
 } from '@dnd-kit/sortable';
 import { useDispatch, useSelector } from 'react-redux';
 import { Spin } from 'antd';
-import { RequestStatuses } from 'shared';
 
 type ChecklistProps = {
   checklist: TTaskCheckList;
@@ -41,7 +40,7 @@ const Checklist = ({ checklist }: ChecklistProps) => {
       const oldIndex = checklist.items?.findIndex(
         (item) => item.check_list_item_id === over?.id) || 0;
       if (checklist && checklist.items) {
-        let afterId: string | null = '0';
+        let afterId;
         if (newIndex < oldIndex) {
           afterId = over!.id;
         } else if (oldIndex === 0) {
@@ -62,7 +61,7 @@ const Checklist = ({ checklist }: ChecklistProps) => {
       }
     }
   };
-  const statusChecklist = useSelector(TaskFormSlice.checklistStatus);
+  const checklistIsLoadingStatus = useSelector(TaskFormSlice.checklistIsLoadingStatus);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -74,7 +73,7 @@ const Checklist = ({ checklist }: ChecklistProps) => {
     <div className={styles.checklist}>
       <ChecklistTitle checkList={checklist} />
       <ChecklistProgress percent={percent} />
-      <Spin spinning={statusChecklist === RequestStatuses.LOADING}>
+      <Spin spinning={checklistIsLoadingStatus}>
         {
         checklist.items && (
           <ul className={styles.list}>
