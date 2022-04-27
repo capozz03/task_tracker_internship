@@ -49,13 +49,15 @@ const TasksCompleted = (props: ComponentProps<any>) => {
           шт.
         </h4>
         {isMobile ? (
-          <SortByMobileScreen setSortType={setSortType} />
+          <SortByMobileScreen disabled={tasks?.length === 0} setSortType={setSortType} />
         ) : (
-          <SortByPCScreen setSortType={setSortType} />
+          <SortByPCScreen disabled={tasks?.length === 0} setSortType={setSortType} />
         )}
       </div>
       <Spin size="large" tip="Загрузка" spinning={isLoading}>
-        {tasks && tasks.map((task) => <TaskCompleted key={task.task_id} task={task} />)}
+        {tasks && tasks.length !== 0
+          ? tasks.map((task) => <TaskCompleted key={task.task_id} task={task} />)
+          : <p className={style.noTasks}>Нет задач</p>}
       </Spin>
       <div className={style.pagination}>
         {pagination && (

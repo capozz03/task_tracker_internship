@@ -52,14 +52,16 @@ const TasksInbox = (props: ComponentProps<any>) => {
         </h4>
         <div className={styles.sort}>
           {isMobile ? (
-            <SortByMobileScreen setSortType={setSortType} />
+            <SortByMobileScreen disabled={tasks?.length === 0} setSortType={setSortType} />
           ) : (
-            <SortByPCScreen setSortType={setSortType} />
+            <SortByPCScreen disabled={tasks?.length === 0} setSortType={setSortType} />
           )}
         </div>
       </div>
       <Spin size="large" tip="Загрузка" spinning={isLoading}>
-        {tasks && tasks.map((task) => <TaskInbox key={task.task_id} task={task} />)}
+        {tasks && tasks.length !== 0
+          ? tasks.map((task) => <TaskInbox key={task.task_id} task={task} />)
+          : <p className={styles.noTasks}>Нет задач</p>}
       </Spin>
       <div className={styles.footer}>
         <div className={styles.createTask}>

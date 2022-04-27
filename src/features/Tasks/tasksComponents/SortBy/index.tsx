@@ -7,9 +7,10 @@ import { IconShape } from 'shared/ui/icons/TasksIcons';
 
 type SetSortTypeProps = {
   setSortType: React.Dispatch<React.SetStateAction<TSortType>>;
+  disabled: boolean;
 };
 
-export const SortByPCScreen = ({ setSortType }: SetSortTypeProps) => {
+export const SortByPCScreen = ({ setSortType, disabled }: SetSortTypeProps) => {
   const { Option } = Select;
 
   const sortHandler = (value: TSortType): void => {
@@ -24,6 +25,7 @@ export const SortByPCScreen = ({ setSortType }: SetSortTypeProps) => {
         suffixIcon={
           <CaretDownOutlined className="ant-select-suffix" style={{ color: '#92929D' }} />
         }
+        disabled={disabled}
         defaultValue="date~DESC"
         bordered={false}
         dropdownMatchSelectWidth={false}
@@ -37,7 +39,7 @@ export const SortByPCScreen = ({ setSortType }: SetSortTypeProps) => {
   );
 };
 
-export const SortByMobileScreen = ({ setSortType }: SetSortTypeProps) => {
+export const SortByMobileScreen = ({ setSortType, disabled }: SetSortTypeProps) => {
   const { Item } = Menu;
   const sortHandler = ({ key }: any): void => {
     setSortType(key);
@@ -56,7 +58,7 @@ export const SortByMobileScreen = ({ setSortType }: SetSortTypeProps) => {
 
   return (
     <div className={style.sortByWrapper}>
-      <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
+      <Dropdown disabled={disabled} overlay={menu} trigger={['click']} placement="bottomRight">
         <Icon component={IconShape} />
       </Dropdown>
     </div>

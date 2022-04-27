@@ -42,7 +42,9 @@ const TasksInWork = (props: ComponentProps<any>) => {
       </h4>
       <div>
         <Spin size="large" tip="Загрузка" spinning={isLoading}>
-          {tasks && tasks.map((task) => <TaskInWork key={task.task_id} task={task} />)}
+          {tasks && tasks.length !== 0
+            ? tasks.map((task) => <TaskInWork key={task.task_id} task={task} />)
+            : <p className={styles.noTasks}>Нет задач</p>}
         </Spin>
         <div>
           <NewTask taskStatusId="372d63ff-3ae3-4be2-a606-38940d7f8c8f" />
