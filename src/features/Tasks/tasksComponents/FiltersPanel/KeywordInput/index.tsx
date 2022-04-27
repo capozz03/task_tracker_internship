@@ -4,13 +4,18 @@ import './index.module.scss';
 import SearchIcon from './icon';
 import { Input } from 'antd';
 import { TaskFilters } from 'store/slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useDebounce } from '../../../../../shared';
 
-const KeywordInput = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+const SearchInput = () => {
+  const dispatch = useDispatch();
+  const storeSearchTerm = useSelector(TaskFilters.getFilterKeyword);
+  const [searchTerm, setSearchTerm] = useState(storeSearchTerm);
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   useEffect(() => {
-    TaskFilters.setFilterKeyword(searchTerm);
-  }, [searchTerm]);
+    dispatch(TaskFilters.setFilterKeyword(debouncedSearchTerm));
+  }, [debouncedSearchTerm]);
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => setSearchTerm(e.target.value);
 
@@ -26,4 +31,4 @@ const KeywordInput = () => {
   );
 };
 
-export default KeywordInput;
+export default SearchInput;

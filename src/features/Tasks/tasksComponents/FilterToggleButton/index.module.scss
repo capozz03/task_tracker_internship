@@ -10,13 +10,18 @@
   border: 1px solid $grey-300;
   box-sizing: border-box;
   border-radius: 8px;
-  background: $grey-100;
-  @include media-breakpoint-down(sm){
-    background: transparent;
-  }
+  background: transparent;
 
   &.active {
-    background: $grey-200;
+    background: $grey-200 !important;
+    color: $grey-700 !important;
+
+    svg {
+      color: $main-blue;
+      path{
+        fill: currentColor;
+      }
+    }
   }
 
   svg {
@@ -28,12 +33,12 @@
     font: $p-medium;
     color: $grey-600;
     margin: 0 8px;
-    @include media-breakpoint-down(sm){
+    @include media-breakpoint-down(sm) {
       display: none;
     }
   }
 
-  .counter{
+  .counter {
     display: none;
     background: $main-blue;
     border-radius: 30px;
@@ -42,7 +47,8 @@
     padding: 2px 4px;
     width: 22px;
     height: 20px;
-    &.active{
+
+    &.active {
       display: inline;
     }
   }

@@ -8,12 +8,16 @@ html, body {
   overflow-x: hidden;
 }
 
+:global(.ant-layout){
+  background: $grey-100 !important;
+}
+
 .layout {
   position: relative;
   display: flex;
   min-height: 100vh;
   min-width: 100%;
-  background: $grey-100 !important;
+  background: $grey-100;
 
   .sider {
     background: $grey-0;

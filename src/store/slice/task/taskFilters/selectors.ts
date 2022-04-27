@@ -19,5 +19,5 @@ export const getFilterAssignedTo = createSelector(
 );
 export const getFilterKeyword = createSelector(
   getFilters,
-  ({ search }) => search,
+  ({ search }) => search || '',
 );
