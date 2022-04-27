@@ -1,5 +1,5 @@
 import { $apiTask, clientCookies } from 'shared';
-import { TTaskCheckList, TTaskItemResponse, TTaskWithRelation } from '../../entities';
+import { TTaskItemResponse, TTaskWithRelation } from '../../entities';
 import {
   attachCheckListProps,
   changeCheckListTitleProps,
@@ -7,7 +7,7 @@ import {
   changeStatusItemForChecklistProps,
   createCheckListProps, deleteItemForChecklistProps,
   TCheckListResponse,
-  TCreateItemForCheckListResponse,
+  TCreateItemForCheckListResponse, TTaskCheckListResponse,
 } from './entities';
 
 $apiTask.interceptors.request.use((config) => ({ ...config, headers: { ...config.headers, Authorization: `Bearer ${clientCookies.getToken()}` } }));
@@ -53,9 +53,10 @@ export const checkListService = {
     checkListItemId,
     afterId,
   }: changePositionItemForChecklistProps) =>
-    $apiTask.post<TTaskCheckList>(`/api/v1.0/check-list/check-lists/${checkListId}/position-change`, {
-      checkListItemId,
-      afterId,
+    $apiTask.post<TTaskCheckListResponse>(`/api/v1.0/check-list/check-lists/${checkListId}/position-change`, {
+      check_list_id: checkListId,
+      check_list_item_id: checkListItemId,
+      after_id: afterId,
     }),
   attachCheckList: async ({
     taskId,

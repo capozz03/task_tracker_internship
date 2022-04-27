@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { Tooltip } from 'antd';
 import { icons, alert } from 'shared';
 import { TaskFormSlice } from 'store/slice';
+import classNames from 'classnames';
 
 type CheckItemMessageProps = {
   message: string;
@@ -17,6 +18,7 @@ type CheckItemMessageProps = {
   checkListId: string;
   isEditing: boolean;
   closeEditMessage: () => void;
+  checked: boolean;
 };
 
 const CheckItemMessage = (
@@ -26,6 +28,7 @@ const CheckItemMessage = (
     checkListId,
     isEditing,
     closeEditMessage,
+    checked,
   }: CheckItemMessageProps) => {
   const dispatch = useDispatch();
   const [itemMessage, setItemMessage] = useState(message);
@@ -91,7 +94,10 @@ const CheckItemMessage = (
   return (
     <>
       <div className={isEditing ? styles.hidden : styles.visible}>
-        <div className={styles.title} ref={titleTaskRef}>
+        <div
+          className={classNames([styles.title, checked && styles.lineThrough])}
+          ref={titleTaskRef}
+        >
           {itemMessage}
         </div>
       </div>
