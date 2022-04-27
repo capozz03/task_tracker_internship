@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { Tooltip } from 'antd';
 import { icons, alert } from 'shared';
 import { TaskFormSlice } from 'store/slice';
+import classNames from 'classnames';
 
 type CheckItemMessageProps = {
   message: string;
@@ -93,7 +94,10 @@ const CheckItemMessage = (
   return (
     <>
       <div className={isEditing ? styles.hidden : styles.visible}>
-        <div className={styles.title} ref={titleTaskRef} style={checked ? { textDecoration: 'line-through' } : {}}>
+        <div
+          className={classNames([styles.title, checked && styles.lineThrough])}
+          ref={titleTaskRef}
+        >
           {itemMessage}
         </div>
       </div>
