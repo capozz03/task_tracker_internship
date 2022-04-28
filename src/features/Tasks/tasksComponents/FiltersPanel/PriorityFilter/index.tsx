@@ -23,17 +23,17 @@ const PriorityFilter = () => {
   };
 
   return (
-    <>
-      <Checkbox className={styles.row} value={TaskPriorities.LOW} onChange={onChange}>
+    <div className={styles.wrapper}>
+      <Checkbox value={TaskPriorities.LOW} onChange={onChange}>
         <PriorityStatus type="Низкий" />
       </Checkbox>
-      <Checkbox className={styles.row} value={TaskPriorities.NORMAL} onChange={onChange}>
+      <Checkbox value={TaskPriorities.NORMAL} onChange={onChange}>
         <PriorityStatus type="Средний" />
       </Checkbox>
-      <Checkbox className={styles.row} value={TaskPriorities.HIGH} onChange={onChange}>
+      <Checkbox value={TaskPriorities.HIGH} onChange={onChange}>
         <PriorityStatus type="Высокий" />
       </Checkbox>
-    </>
+    </div>
   );
 };
 

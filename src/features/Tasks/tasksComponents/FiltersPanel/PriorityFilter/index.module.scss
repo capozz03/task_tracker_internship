@@ -1,7 +1,19 @@
+@import "src/shared/assets/styles";
 
-.row{
-  max-width: 100%;
+.wrapper > * {
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin: 0 6px !important;
+
+  & * {
+    font: $p-regular !important;
+    color: $grey-700 !important;
+  }
+
+
+  :global(.ant-checkbox) {
+    order: 9;
+  }
 }
