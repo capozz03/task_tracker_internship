@@ -11,3 +11,5 @@ export {
   getFilterAssignedTo,
   getFilterKeyword,
 } from './selectors';
+
+export { tagsFilterReducer, getTagsForFilters } from './tagsFilter';

@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { MainSlice } from 'store/slice';
 import { alert } from 'shared';
+import Demo from '../../features/Tasks/tasksComponents/FiltersPanel/TagsFilter/example';
+import TagsFilter from '../../features/Tasks/tasksComponents/FiltersPanel/TagsFilter';
 
 export const MainPage = () => {
   const dispatch = useDispatch();
@@ -24,6 +26,8 @@ export const MainPage = () => {
     <div>
       <h1>MainPage</h1>
       <button type="button" onClick={notify}>ALERT TEST</button>
+      <Demo />
+      <TagsFilter />
     </div>
   );
 };
