@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { ChangeEventHandler, useEffect, useState } from 'react';
 import './index.module.scss';
 import SearchIcon from './icon';
