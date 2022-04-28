@@ -4,36 +4,28 @@ import { Checkbox, PriorityStatus } from 'features/Tasks/tasksComponents';
 import { useDispatch, useSelector } from 'react-redux';
 import { TaskFilters } from 'store/slice';
 import { TaskPriorities } from 'shared';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
+import { Checkbox as AntCheckbox } from 'antd';
 
 const PriorityFilter = () => {
   const dispatch = useDispatch();
-  const prioritiesChecked = useSelector(TaskFilters.getFilterPriorityIDArray);
+  const initialValues = useSelector(TaskFilters.getFilterPriorityIDArray);
 
-  const onChange = (e: CheckboxChangeEvent) => {
-    if (prioritiesChecked.includes(e.target.value)) {
-      dispatch(
-        TaskFilters.setFilterPriorityIDArray(
-          prioritiesChecked.filter((val) => val !== e.target.value),
-        ),
-      );
-    } else {
-      dispatch(TaskFilters.setFilterPriorityIDArray([...prioritiesChecked, e.target.value]));
-    }
+  const onChange = (values: any) => {
+    dispatch(TaskFilters.setFilterPriorityIDArray(values));
   };
 
   return (
-    <div className={styles.wrapper}>
-      <Checkbox value={TaskPriorities.LOW} onChange={onChange}>
+    <AntCheckbox.Group className={styles.wrapper} onChange={onChange} value={initialValues}>
+      <Checkbox value={TaskPriorities.LOW}>
         <PriorityStatus type="Низкий" />
       </Checkbox>
-      <Checkbox value={TaskPriorities.NORMAL} onChange={onChange}>
+      <Checkbox value={TaskPriorities.NORMAL}>
         <PriorityStatus type="Средний" />
       </Checkbox>
-      <Checkbox value={TaskPriorities.HIGH} onChange={onChange}>
+      <Checkbox value={TaskPriorities.HIGH}>
         <PriorityStatus type="Высокий" />
       </Checkbox>
-    </div>
+    </AntCheckbox.Group>
   );
 };
 
