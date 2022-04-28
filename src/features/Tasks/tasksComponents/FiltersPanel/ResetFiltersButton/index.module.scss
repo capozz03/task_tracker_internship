@@ -1,0 +1,12 @@
+@import "src/shared/assets/styles";
+
+:global(.ant-btn-default) {
+  height: 36px;
+  border: 1px solid $grey-400;
+  border-radius: 8px;
+
+  .text {
+    font: $p-regular;
+    color: $grey-700;
+  }
+}

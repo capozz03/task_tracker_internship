@@ -20,4 +20,15 @@
   :global(.ant-checkbox-wrapper:hover .ant-checkbox-inner){
     border-color: $success-default;
   }
+  .dragElement{
+    margin-right: 10px;
+    cursor: pointer;
+    opacity: 0;
+    transition: .5s all;
+  }
+  &:hover{
+    .dragElement{
+      opacity: 1;
+    }
+  }
 }

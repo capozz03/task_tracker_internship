@@ -27,6 +27,13 @@
   background-color: $grey-100;
 }
 
+.noTasks{
+  margin-left: 16px;
+  margin-top: 10px;
+  font: $h4;
+  color: $grey-600;
+}
+
 .footer {
   display: flex;
   flex-direction: row;
