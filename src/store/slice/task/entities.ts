@@ -74,6 +74,19 @@ export type TTaskForm = {
   fields: TTaskFormField[];
 };
 
+export type TModifications = {
+  storage_file_id: string;
+  type: string;
+  name_original: string;
+  content_type: string;
+  size: number;
+  uploaded: boolean;
+  image_thumbnail: null;
+  image_width: null;
+  image_height: null;
+  modifications: [];
+};
+
 export type TStorageFiles = {
   storage_file_id: string;
   type: string;
@@ -84,7 +97,7 @@ export type TStorageFiles = {
   image_thumbnail: null;
   image_width: null;
   image_height: null;
-  modifications: TStorageFiles[];
+  modifications: TModifications[];
 };
 
 export type TTaskCheckListItem = {
@@ -120,7 +133,7 @@ export type TTask = {
   tags: TTagsTask[];
   progress: TTaskProgress | null;
   check_lists?: TTaskCheckList[];
-  storage_files?: TStorageFiles[];
+  storage_files?: TStorageFiles[] | null;
   storage_files_meta: {
     total: number;
   };

@@ -17,6 +17,15 @@ const Attachments = ({ taskId }: attachmentsProps) => {
   const storageFiles = useSelector(TaskFormSlice.getStorageFiles);
   const storageImages = useSelector(TaskFormSlice.getStorageImages);
   const storageCount = useSelector(TaskFormSlice.getStorageCount);
+  const backgroundImages = storageImages?.map(({ modifications }) => {
+    const defaultImage = 'https://rus-traktor.ru/upload/iblock/6e3/6e3f5afeaf9b58a1cfd954f0aeb24d0a.jpg';
+    const imagePreview = modifications.length > 0
+      ? `${process.env.REACT_APP_TASK_BACKEND_URL}/api/v1.0/storage/files/${modifications[1].storage_file_id}/download`
+      : defaultImage;
+    return imagePreview;
+  });
+  console.log(backgroundImages);
+  console.log(storageImages);
 
   const isShowAttachments = (): boolean => {
     const isVisibleStorageFiles = useSelector(TaskFormSlice.isVisibleStorageFiles);
@@ -77,6 +86,7 @@ const Attachments = ({ taskId }: attachmentsProps) => {
                         storageFileId={storageFileId}
                         taskId={taskId}
                         modifications={modifications}
+                        backgroundImages={backgroundImages}
                       />
                     ),
                   )}
