@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './index.module.scss';
 import SearchInput from './KeywordInput';
 import ResetFiltersButton from './ResetFiltersButton';
+import PriorityFilter from './PriorityFilter';
 
 const FiltersPanel = () => (
   <div className={styles.container}>
@@ -20,6 +21,7 @@ const FiltersPanel = () => (
     </div>
     <div>
       <div className={styles.labelText}>Приоритет</div>
+      <PriorityFilter />
     </div>
     <ResetFiltersButton />
   </div>

@@ -3,6 +3,7 @@ export {
   setIsFiltersMenuShow,
   setFilterAssignedTo,
   setFilterKeyword,
+  setFilterPriorityIDArray,
 } from './slice';
 
 export {
@@ -10,4 +11,5 @@ export {
   getIsFiltersMenuShow,
   getFilterAssignedTo,
   getFilterKeyword,
+  getFilterPriorityIDArray,
 } from './selectors';

@@ -1,6 +1,6 @@
 export { routes } from './routes';
 export { clientCookies } from './cookies';
-export { RequestStatuses } from './enums';
+export { RequestStatuses, TaskStatuses, TaskPriorities } from './enums';
 export { normalizeTrimWhitespaces } from './normalize';
 export {
   isFailureStatusCheck,

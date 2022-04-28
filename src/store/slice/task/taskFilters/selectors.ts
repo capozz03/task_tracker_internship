@@ -17,7 +17,8 @@ export const getFilterAssignedTo = createSelector(
   getFilters,
   ({ assigned_to_me }) => !!assigned_to_me,
 );
-export const getFilterKeyword = createSelector(
+export const getFilterKeyword = createSelector(getFilters, ({ search }) => search || '');
+export const getFilterPriorityIDArray = createSelector(
   getFilters,
-  ({ search }) => search || '',
+  ({ priority_id }) => priority_id || [],
 );

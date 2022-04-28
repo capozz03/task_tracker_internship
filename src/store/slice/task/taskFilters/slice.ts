@@ -1,6 +1,11 @@
 import { RequestStatuses } from 'shared';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TTaskSearch, TTaskSearchAssignedToMe, TTaskSearchKeyword } from '../entities';
+import {
+  TTaskSearch,
+  TTaskSearchAssignedToMe,
+  TTaskSearchKeyword,
+  TTaskSearchPriorityID,
+} from '../entities';
 
 export type TFiltersSlice = {
   filters: TTaskSearch;
@@ -13,6 +18,7 @@ const initialState = {
   filters: {
     assigned_to_me: null,
     search: null,
+    priority_id: undefined,
   },
   isFiltersMenuShow: false,
   status: RequestStatuses.IDLE,
@@ -32,9 +38,17 @@ const filtersSlice = createSlice({
     setFilterKeyword(state, { payload }: PayloadAction<TTaskSearchKeyword>) {
       state.filters.search = payload || null;
     },
+    setFilterPriorityIDArray(state, { payload }: PayloadAction<TTaskSearchPriorityID>) {
+      state.filters.priority_id = payload.length ? payload : null;
+    },
   },
   extraReducers: {},
 });
 
-export const { setFilterAssignedTo, setIsFiltersMenuShow, setFilterKeyword } = filtersSlice.actions;
+export const {
+  setFilterAssignedTo,
+  setIsFiltersMenuShow,
+  setFilterKeyword,
+  setFilterPriorityIDArray,
+} = filtersSlice.actions;
 export const filtersReducer = filtersSlice.reducer;

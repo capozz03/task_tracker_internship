@@ -91,10 +91,10 @@ export type TTaskCheckList = {
 };
 
 export type TSwapItemInChecklist = {
-  checkListId: string,
-  checkListItemIdOne: number,
-  checkListItemIdTwo: number,
-}
+  checkListId: string;
+  checkListItemIdOne: number;
+  checkListItemIdTwo: number;
+};
 
 export type TTask = {
   task_id: string;
@@ -147,6 +147,7 @@ export type TTaskItemResponse = {
 export type TSortType = 'date~DESC' | 'title~ASC';
 export type TTaskSearchKeyword = string;
 export type TTaskSearchAssignedToMe = boolean | null;
+export type TTaskSearchPriorityID = string[];
 
 export type TTaskSearch = {
   sort?: TSortType;
@@ -157,7 +158,7 @@ export type TTaskSearch = {
   tag_id?: string[];
   role_id?: string[];
   role_id_for_me?: string[];
-  priority_id?: string[];
+  priority_id?: TTaskSearchPriorityID | null;
   status_id?: string[];
   progress_gte?: string;
   relation_type?: string;
