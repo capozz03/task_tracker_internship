@@ -1,0 +1,19 @@
+@import "src/shared/assets/styles";
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  .text {
+    font: $p-light;
+    color: $grey-800;
+  }
+
+  :global(.ant-switch-checked) {
+    background-color: $success-default;
+  }
+
+}

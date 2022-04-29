@@ -3,6 +3,7 @@ import styles from './index.module.scss';
 import SearchInput from './KeywordInput';
 import ResetFiltersButton from './ResetFiltersButton';
 import PriorityFilter from './PriorityFilter';
+import AttachmentsFilter from './AttachmentsFilter';
 
 const FiltersPanel = () => (
   <div className={styles.container}>
@@ -15,6 +16,7 @@ const FiltersPanel = () => (
     </div>
     <div>
       <div className={styles.labelText}>Другие</div>
+      <AttachmentsFilter />
     </div>
     <div>
       <div className={styles.labelText}>Степень готовности</div>

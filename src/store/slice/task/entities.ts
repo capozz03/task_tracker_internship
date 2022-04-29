@@ -147,6 +147,7 @@ export type TTaskItemResponse = {
 export type TSortType = 'date~DESC' | 'title~ASC';
 export type TTaskSearchKeyword = string;
 export type TTaskSearchAssignedToMe = boolean | null;
+export type TTaskSearchAttachmentsGTE = number | null
 export type TTaskSearchPriorityID = string[];
 
 export type TTaskSearch = {
@@ -154,7 +155,7 @@ export type TTaskSearch = {
   search?: TTaskSearchKeyword | null;
   assign_user_id?: string[];
   assigned_to_me?: TTaskSearchAssignedToMe;
-  storage_files_gte?: number;
+  storage_files_gte?: TTaskSearchAttachmentsGTE;
   tag_id?: string[];
   role_id?: string[];
   role_id_for_me?: string[];

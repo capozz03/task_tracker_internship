@@ -18,6 +18,10 @@ export const getFilterAssignedTo = createSelector(
   ({ assigned_to_me }) => !!assigned_to_me,
 );
 export const getFilterKeyword = createSelector(getFilters, ({ search }) => search || '');
+export const getFilterAttachmentsGTE = createSelector(
+  getFilters,
+  ({ storage_files_gte }) => storage_files_gte,
+);
 export const getFilterPriorityIDArray = createSelector(
   getFilters,
   ({ priority_id }) => priority_id || [],
