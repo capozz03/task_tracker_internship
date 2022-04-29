@@ -1,5 +1,5 @@
 import { TUser } from '../user/entities';
-import { RequestStatuses } from '../../../shared';
+import { RequestStatuses } from 'shared';
 import { Priority } from 'features/Tasks/tasksComponents/PriorityStatus/constants';
 
 export type TTag = {
@@ -54,24 +54,46 @@ export type TRoles = {
 type TTaskFormFieldValue = {
   label: string;
   value: string;
-}
+};
 
 export type TTaskProgress = {
-  completed: number,
-  percent: number,
-  total: number,
-}
+  completed: number;
+  percent: number;
+  total: number;
+};
 
 type TTaskFormField = {
   type: 'select';
   values: TTaskFormFieldValue[];
   field_name: string;
   field_label: string;
-}
+};
 
 export type TTaskForm = {
   name: string;
   fields: TTaskFormField[];
+};
+
+export type TTaskCheckListItem = {
+  check_list_item_id: string;
+  message: string;
+  complete: boolean;
+  created: string;
+  updated: string;
+};
+
+export type TTaskCheckList = {
+  check_list_id: string;
+  title: string;
+  created: string;
+  updated: string;
+  items?: TTaskCheckListItem[];
+};
+
+export type TSwapItemInChecklist = {
+  checkListId: string,
+  checkListItemIdOne: number,
+  checkListItemIdTwo: number,
 }
 
 export type TTask = {
@@ -90,7 +112,7 @@ export type TTask = {
   roles: TRoles[];
   tags: TTagsTask[];
   progress: TTaskProgress | null;
-  check_lists?: any[];
+  check_lists?: TTaskCheckList[];
   storage_files?: any[];
   storage_files_meta: {
     total: number;
@@ -120,29 +142,48 @@ export type TTasksResponse = {
 
 export type TTaskItemResponse = {
   data: TTask;
-}
-
-export type TTaskSearch = {
-  sort?: 'date~DESC' | 'title~ASC',
-  search? : string,
-  assign_user_id?: string[],
-  assigned_to_me?: true,
-  storage_files_gte?: number,
-  tag_id?: string[],
-  role_id? :string[],
-  role_id_for_me?: string[],
-  priority_id?: string[],
-  status_id?:string[],
-  progress_gte?:string,
-  relation_type?: string,
-  relation_id?: string,
-  page?: number,
-  per_page?: number,
-}
-
-export type TTaskStatusChange = {
-  task_id: string,
-  task_status_id: string,
-}
+};
 
 export type TSortType = 'date~DESC' | 'title~ASC';
+export type TTaskSearchKeyword = string;
+export type TTaskSearchAssignedToMe = boolean | null;
+
+export type TTaskSearch = {
+  sort?: TSortType;
+  search?: TTaskSearchKeyword | null;
+  assign_user_id?: string[];
+  assigned_to_me?: TTaskSearchAssignedToMe;
+  storage_files_gte?: number;
+  tag_id?: string[];
+  role_id?: string[];
+  role_id_for_me?: string[];
+  priority_id?: string[];
+  status_id?: string[];
+  progress_gte?: string;
+  relation_type?: string;
+  relation_id?: string;
+  page?: number;
+  per_page?: number;
+};
+
+export type TTaskStatusChange = {
+  task_id: string;
+  task_status_id: string;
+};
+
+export type TTaskWithRelation = {
+  data: TTask;
+  relation: {
+    check_list_id: string;
+    created: string;
+    task_id: string;
+    task_to_check_list_id: string;
+    updated: string;
+  };
+};
+
+export type TFilterAssignedToReducer = {
+  status: RequestStatuses;
+  error: Error | null;
+  filterAssignedTo: string | null;
+}

@@ -7,6 +7,10 @@ import {
   TaskCompletedSlice,
   TaskInboxSlice,
   TaskFormSlice,
+  TaskCompletedSlice,
+  TaskInboxSlice,
+  TaskFormSlice,
+  TaskFilters,
 } from './slice';
 
 const rootReducer = combineReducers({
@@ -17,6 +21,7 @@ const rootReducer = combineReducers({
   taskCompleted: TaskCompletedSlice.taskCompletedReducer,
   taskInbox: TaskInboxSlice.taskInboxReducer,
   taskForm: TaskFormSlice.taskFormReducer,
+  taskFilters: TaskFilters.filtersReducer,
 });
 
 export const store = configureStore({

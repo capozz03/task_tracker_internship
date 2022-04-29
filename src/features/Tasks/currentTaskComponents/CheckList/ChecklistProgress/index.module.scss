@@ -1,0 +1,27 @@
+@import "src/shared/assets/styles/vars";
+
+.wrap{
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.text{
+  color: $grey-700;
+  font: $p-roboto-regular;
+  margin-right: 16px;
+}
+
+.progressBar{
+  border-radius: 4px;
+  background-color: $grey-300;
+  height: 8px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.progress{
+  height: 8px;
+  background-color: $success-default;
+  transition: all .5s;
+}

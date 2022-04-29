@@ -1,8 +1,9 @@
 import { createAsyncThunk, miniSerializeError } from '@reduxjs/toolkit';
 import { TTasksReducer } from '../../entities';
-import { getTasksAsync } from '../../taskInWork';
+import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice } from 'store/slice';
 import { taskService } from '../../taskInWork/taskInWorkService';
 import { alert } from 'shared/ui';
+import { TFiltersSlice } from '../../taskFilters/slice';
 
 export const created = 'cbb7199e-cb25-4dce-bf4e-24a8a5e07ef2';
 export const inWork = '372d63ff-3ae3-4be2-a606-38940d7f8c8f';
@@ -46,20 +47,41 @@ export const duplicateTaskAsync = createAsyncThunk(
     { rejectWithValue, dispatch, getState },
   ) => {
     try {
-      const { taskInWork, taskInbox, taskCompleted } = getState() as {
+      const { taskInWork, taskInbox, taskCompleted, taskFilters } = getState() as {
         taskInWork: TTasksReducer;
         taskInbox: TTasksReducer;
         taskCompleted: TTasksReducer;
+        taskFilters: TFiltersSlice;
       };
       await taskService.duplicateTask(taskId);
       const dataCheckStatus = { taskStatusId, taskInWork, taskInbox, taskCompleted };
       const stateOfDispatch = checkForStatusId(dataCheckStatus);
-      dispatch(
-        getTasksAsync({
-          per_page: stateOfDispatch.pagination?.per_page,
-          page: stateOfDispatch.pagination?.page_current,
-        }),
-      );
+      if (taskStatusId === created) {
+        dispatch(
+          TaskInboxSlice.getTasksAsync({
+            per_page: stateOfDispatch.pagination?.per_page,
+            page: stateOfDispatch.pagination?.page_current,
+            ...taskFilters.filters,
+          }),
+        );
+      } else if (taskStatusId === inWork) {
+        dispatch(
+          TaskInWorkSlice.getTasksAsync({
+            per_page: stateOfDispatch.pagination?.per_page,
+            page: stateOfDispatch.pagination?.page_current,
+            ...taskFilters.filters,
+          }),
+        );
+      } else {
+        dispatch(
+          TaskCompletedSlice.getTasksAsync({
+            per_page: stateOfDispatch.pagination?.per_page,
+            page: stateOfDispatch.pagination?.page_current,
+            ...taskFilters.filters,
+          }),
+        );
+      }
+
       alert('Задача успешно скопирована', 'success');
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
@@ -76,20 +98,40 @@ export const deleteTaskAsync = createAsyncThunk(
     { rejectWithValue, dispatch, getState },
   ) => {
     try {
-      const { taskInWork, taskInbox, taskCompleted } = getState() as {
+      const { taskInWork, taskInbox, taskCompleted, taskFilters } = getState() as {
         taskInWork: TTasksReducer;
         taskInbox: TTasksReducer;
         taskCompleted: TTasksReducer;
+        taskFilters: TFiltersSlice;
       };
       await taskService.deleteTask(taskId);
       const dataCheckStatus = { taskStatusId, taskInWork, taskInbox, taskCompleted };
       const stateOfDispatch = checkForStatusId(dataCheckStatus);
-      dispatch(
-        getTasksAsync({
-          per_page: stateOfDispatch.pagination?.per_page,
-          page: stateOfDispatch.pagination?.page_current,
-        }),
-      );
+      if (taskStatusId === created) {
+        dispatch(
+          TaskInboxSlice.getTasksAsync({
+            per_page: stateOfDispatch.pagination?.per_page,
+            page: stateOfDispatch.pagination?.page_current,
+            ...taskFilters.filters,
+          }),
+        );
+      } else if (taskStatusId === inWork) {
+        dispatch(
+          TaskInWorkSlice.getTasksAsync({
+            per_page: stateOfDispatch.pagination?.per_page,
+            page: stateOfDispatch.pagination?.page_current,
+            ...taskFilters.filters,
+          }),
+        );
+      } else {
+        dispatch(
+          TaskCompletedSlice.getTasksAsync({
+            per_page: stateOfDispatch.pagination?.per_page,
+            page: stateOfDispatch.pagination?.page_current,
+            ...taskFilters.filters,
+          }),
+        );
+      }
       alert('Задача успешно удалена', 'success');
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);

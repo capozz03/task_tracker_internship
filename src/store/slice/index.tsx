@@ -6,3 +6,4 @@ export * as UserSlice from './user';
 export * as UsersSlice from './users';
 export * as CommonActions from './task/commonActions';
 export * as TaskFormSlice from './task/taskForm';
+export * as TaskFilters from './task/taskFilters';

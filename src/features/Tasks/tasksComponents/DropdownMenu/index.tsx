@@ -61,14 +61,24 @@ const DropdownMenu = ({ taskId, taskStatusId }: DropdownMenuProps) => {
   );
 
   return (
-    <div>
+    <div
+      onKeyDown={(e) => e.preventDefault()}
+      role="button"
+      tabIndex={-1}
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
+    >
       <Dropdown.Button
         className={style.dropdownButton}
         overlay={menu}
         icon={<EllipsisOutlined className={style.dropdownIcon} />}
         destroyPopupOnHide
+        trigger={['click']}
       />
     </div>
+
   );
 };
 

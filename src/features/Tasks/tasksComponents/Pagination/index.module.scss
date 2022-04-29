@@ -1,18 +1,69 @@
 @import "src/shared/assets/styles";
 
+:global(.ant-pagination::after){
+  content: "";
+  display: block;
+  position: static;
+  width: 100%;
+  order: 1;
+}
+
+.myPagination{
+  position: relative !important;
+  z-index: 100 !important;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  @media screen and (max-width: 385px) {
+
+    min-height: 60px;
+    align-content: space-between;
+    padding-right: 5px !important;
+    padding-left: 5px !important;
+    width: 100%;
+  }
+}
+
+.myPagination::after{
+  content: "";
+  display: block;
+  order: 1;
+  width: 100%;
+}
+
+@media screen and (max-width: 385px){
+  :global(.ant-pagination::after){
+    display: none !important;
+  }
+}
+
 :global(.ant-pagination-total-text){
   font: $p-regular !important;
   color: $grey-700 !important;
   line-height: 32px !important;
   margin-right: 30px !important;
-  @media screen and (max-width: 400px) {
-    display: none !important;
+  @media screen and (max-width: 385px) {
+    margin-right: 0 !important;
+  }
+}
+
+:global(.ant-pagination){
+  :global(.ant-select-dropdown){
+    position: relative !important;
   }
 }
 
 :global(.ant-pagination.mini){
   :global(.ant-pagination-total-text){
     line-height: 24px !important;
+    @media screen and (max-width: 385px) {
+      order: 2;
+    }
+    @media screen and (max-width: 470px){
+      margin-right: 0 !important;
+      flex-grow: 1;
+      text-align: center;
+    }
   }
   :global(.ant-pagination-item){
     font: $p-regular !important;
@@ -24,6 +75,17 @@
   :global(.ant-pagination-options){
     position: relative;
     z-index: 9999999;
+    flex-grow: 1;
+    flex-shrink: 0;
+    text-align: right;
+    @media screen and (max-width: 385px){
+      flex-basis: 50%;
+      order: 3;
+      margin-left: 0 !important;
+    }
+    @media screen and (max-width: 436px){
+      margin-top: 5px;
+    }
     :global(.ant-select-selection-item){
       line-height: 20px !important;
     }
@@ -32,7 +94,6 @@
     height: 20px !important;
   }
 }
-
 :global(.ant-pagination-item) {
   border: none !important;
   font: $p-regular !important;
@@ -75,8 +136,6 @@
 }
 
 :global(.ant-pagination-options){
-  border: 1px solid $grey-300 !important;
-  border-radius: 8px !important;
   width: 61px;
   @media screen and (max-width: 576px){
     display: inline-block !important;
@@ -87,7 +146,9 @@
   }
 
   :global(.ant-select){
-    width: 100% !important;
+    width: 60px !important;
+    border: 1px solid $grey-300 !important;
+    border-radius: 8px !important;
   }
   :global(.ant-select-selector){
     border-radius: 8px !important;

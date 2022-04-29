@@ -13,6 +13,14 @@
   color: $grey-600;
 }
 
+.noTasks{
+  margin-left: 16px;
+  margin-top: 10px;
+  font: $h4;
+  color: $grey-600;
+}
+
+
 .pagination{
   display: flex;
   justify-content: flex-end;

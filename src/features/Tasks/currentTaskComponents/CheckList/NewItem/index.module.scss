@@ -1,0 +1,43 @@
+@import "src/shared/assets/styles/vars";
+
+.newTaskLabel{
+  font: $h6-medium;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: $main-blue;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+}
+
+.hidden{
+  display: none;
+}
+
+.wrap{
+  display: flex;
+  align-items: center;
+  padding-top: 10px;
+  margin-bottom: 5px;
+}
+
+.formNewTaskWrap{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: -8px;
+  :global(.ant-btn-primary){
+    height: 32px !important;
+    line-height: 32px !important;
+    margin-top: 0 !important;
+    padding: 0 !important;
+    width: 98px;
+    :global(span){
+      line-height: 32px !important;
+    }
+  }
+  :global(.ant-btn-default){
+    border-radius: 8px !important;
+  }
+}

@@ -4,7 +4,7 @@ import { MainSlice } from 'store/slice';
 
 // test
 import MembersChanger from 'features/Task/taskModalComponents/MembersChanger';
-import { alert } from 'shared/ui';
+import { alert } from 'shared';
 
 export const MainPage = () => {
   const dispatch = useDispatch();
@@ -13,7 +13,6 @@ export const MainPage = () => {
     dispatch(MainSlice.addTodo({ id: 4, title: 'TODO 2' }));
   }, []);
 
-  // test
   const notify = () => {
     alert('Задача успешно создана', 'success');
     alert('Обновите протоколы задач', 'warning');

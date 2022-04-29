@@ -1,7 +1,20 @@
+import { combineReducers } from '@reduxjs/toolkit';
+import { ChecklistReducer } from 'store/slice/task/taskForm/checkList';
+import { taskFormDataReducer } from 'store/slice/task/taskForm/fullTaskInfo/slice';
+
 export { getTaskByIdAsync } from './getTaskById';
-export {} from './setTitleFromTask';
-export type { TTasksReducer, TTask } from '../entities';
+export type { TTasksReducer, TTask } from 'store/slice/task/entities';
 export { setTitleAsync } from './setTitleFromTask';
+export { changeCheckListTitle,
+  changeItemForChecklist,
+  changePositionItemForChecklist,
+  changeStatusItemForChecklist,
+  createItemForChecklist,
+  deleteItemForChecklist,
+  createCheckList,
+  detachChecklist,
+} from './checkList/asyncActions';
+
 export {
   getTaskFormIsVisibleForm,
   getTask,
@@ -9,12 +22,37 @@ export {
   getTaskFormStatus,
   getTaskFormTitle,
   isLoadingStatus,
-} from './taskSelector';
+  getTaskFormStatusTask,
+  getTaskFormId,
+} from './fullTaskInfo/selector';
+
+export {
+  isCreatedChecklist,
+  isCreatedChecklistItem,
+  isCreateNewCheckList,
+  getCheckLists,
+  checklistStatus,
+  checklistIsLoadingStatus,
+} from './checkList/selector';
+
 export {
   showTaskForm,
   hiddenTaskForm,
-  taskFormReducer,
+  taskFormDataReducer,
   taskFormSelector,
   setTitleFromTaskForm,
+  changeStatusItemForChecklistTaskForm,
+  pushItemForCheckList,
+  removeItemFromCheckList,
+  updateTask,
   setDescriptionFromTaskForm,
-} from './slice';
+  updateCheckList,
+  swapItemInChecklist,
+} from './fullTaskInfo/slice';
+
+export { showFormCreateChecklist, hiddenFormCreateChecklist } from './checkList/uiSlice';
+
+export const taskFormReducer = combineReducers({
+  checkList: ChecklistReducer,
+  task: taskFormDataReducer,
+});

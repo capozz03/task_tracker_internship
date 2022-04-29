@@ -10,7 +10,6 @@ import FilterToggleButton from './FilterToggleButton';
 import NewTask from './NewTask';
 import NotificationsButton from './NotificationsButton';
 import Pagination from './Pagination';
-import SidebarSearchInput from './SidebarSearchInput';
 import { SortByPCScreen, SortByMobileScreen } from './SortBy';
 import PriorityStatus from './PriorityStatus';
 import Tag from './Tag';
@@ -33,7 +32,6 @@ export {
   NotificationsButton,
   Pagination,
   PriorityStatus,
-  SidebarSearchInput,
   SortByPCScreen,
   SortByMobileScreen,
   Tag,
