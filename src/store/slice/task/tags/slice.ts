@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TPagination, TTag } from '../../entities';
-import { getTagsForFilters } from './asyncAction';
-import { RequestStatuses } from '../../../../../shared';
+import { TPagination, TTag } from 'store/slice/task/entities';
+import { getTagsAsync } from './asyncAction';
+import { RequestStatuses } from 'shared';
+import { TTagsResponse } from 'store/slice/task/tags/entities';
 
 type TTagFilterSlice = {
   tags: TTag[],
@@ -28,26 +29,27 @@ const tagsFilterSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [getTagsForFilters.pending?.type]: (state: TTagFilterSlice) => ({
+    [getTagsAsync.pending?.type]: (state: TTagFilterSlice) => ({
       ...state,
       status: RequestStatuses.LOADING,
     }),
-    [getTagsForFilters.fulfilled?.type]: (state: TTagFilterSlice,
-      { payload: tags }: PayloadAction<TTag[]>) => {
+    [getTagsAsync.fulfilled?.type]: (state: TTagFilterSlice,
+      { payload: tags }: PayloadAction<TTagsResponse>) => {
       const newState: TTagFilterSlice = { ...state };
-      newState.tags = { ...newState.tags, ...tags };
+      // newState.tags = [...newState.tags, ...tags.data];
+      newState.tags = [...tags.data];
       newState.status = RequestStatuses.SUCCESS;
       newState.error = null;
       return newState;
     },
-    [getTagsForFilters.rejected?.type]: (state: TTagFilterSlice,
+    [getTagsAsync.rejected?.type]: (state: TTagFilterSlice,
       { payload: error }: PayloadAction<Error>) => ({
       ...state,
-      status: RequestStatuses.LOADING,
+      status: RequestStatuses.FAILURE,
       error,
     }),
   },
 });
 
-export const tagsFilterReducer = tagsFilterSlice.reducer;
+export const tagsReducer = tagsFilterSlice.reducer;
 // export const {} = tagsFilterSlice.actions;

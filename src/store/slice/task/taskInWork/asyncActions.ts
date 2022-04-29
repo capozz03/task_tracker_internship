@@ -17,7 +17,8 @@ export const getTasksAsync = createAsyncThunk(
     try {
       const { data } = await taskService.getTasks({ ...params, status_id: inWork });
       return data;
-    } catch (error) {
+    } catch (rejectedValueOrSerializedError) {
+      const error = miniSerializeError(rejectedValueOrSerializedError);
       return rejectWithValue(error);
     }
   },

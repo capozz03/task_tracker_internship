@@ -2,7 +2,7 @@ import { createAsyncThunk, miniSerializeError } from '@reduxjs/toolkit';
 import { TTagsFilterSearchProps } from './entities';
 import { tagsFilterService } from './service';
 
-export const getTagsForFilters = createAsyncThunk(
+export const getTagsAsync = createAsyncThunk(
   'tagsFilterSlice/getTagsForFilters',
   async (props: TTagsFilterSearchProps, { rejectWithValue }) => {
     try {
