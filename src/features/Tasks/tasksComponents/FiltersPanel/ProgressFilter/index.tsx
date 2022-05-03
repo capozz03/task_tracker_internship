@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import { Slider } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { TaskFilters } from 'store/slice';
+import { useDebounce } from 'shared';
 
 function formatter(value: any) {
   return `${value}%`;
@@ -10,9 +11,20 @@ function formatter(value: any) {
 
 const ProgressFilter = () => {
   const dispatch = useDispatch();
-  const minProgress = useSelector<any, any>(TaskFilters.getFilterProgressGTE);
+  const storeMinProgress = useSelector(TaskFilters.getFilterProgressGTE);
+  const [minProgress, setMinProgress] = useState(storeMinProgress);
+  const debouncedMinProgress = useDebounce(minProgress, 500);
+
+  useEffect(() => {
+    dispatch(TaskFilters.setFilterProgressGTE(debouncedMinProgress));
+  }, [debouncedMinProgress]);
+
+  useEffect(() => {
+    setMinProgress(storeMinProgress);
+  }, [storeMinProgress]);
+
   const onChange = (value: any) => {
-    dispatch(TaskFilters.setFilterProgressGTE(value));
+    setMinProgress(value);
   };
 
   return (
