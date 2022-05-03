@@ -147,7 +147,8 @@ export type TTaskItemResponse = {
 export type TSortType = 'date~DESC' | 'title~ASC';
 export type TTaskSearchKeyword = string;
 export type TTaskSearchAssignedToMe = boolean | null;
-export type TTaskSearchAttachmentsGTE = number | null
+export type TTaskSearchAttachmentsGTE = number | null;
+export type TTaskSearchProgressGTE = number;
 export type TTaskSearchPriorityID = string[];
 
 export type TTaskSearch = {
@@ -161,7 +162,7 @@ export type TTaskSearch = {
   role_id_for_me?: string[];
   priority_id?: TTaskSearchPriorityID | null;
   status_id?: string[];
-  progress_gte?: string;
+  progress_gte?: TTaskSearchProgressGTE | null;
   relation_type?: string;
   relation_id?: string;
   page?: number;

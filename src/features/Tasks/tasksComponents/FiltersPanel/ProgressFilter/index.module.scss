@@ -1,0 +1,15 @@
+@import "src/shared/assets/styles";
+
+.slider {
+  :global(&.ant-slider:hover, .ant-slider:hover) {
+    background-color: $main-blue-hover !important;
+  }
+
+  :global(.ant-slider-track) {
+    background-color: $main-blue !important;
+  }
+
+  :global(.ant-slider-handle) {
+    border: solid 2px $main-blue !important;
+  }
+}

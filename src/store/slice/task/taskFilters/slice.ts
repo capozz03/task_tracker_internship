@@ -6,6 +6,7 @@ import {
   TTaskSearchAttachmentsGTE,
   TTaskSearchKeyword,
   TTaskSearchPriorityID,
+  TTaskSearchProgressGTE,
 } from '../entities';
 
 export type TFiltersSlice = {
@@ -19,8 +20,9 @@ const initialState = {
   filters: {
     assigned_to_me: null,
     search: null,
-    storage_files_gte: 0,
-    priority_id: undefined,
+    storage_files_gte: null,
+    progress_gte: null,
+    priority_id: null,
   },
   isFiltersMenuShow: false,
   status: RequestStatuses.IDLE,
@@ -43,8 +45,16 @@ const filtersSlice = createSlice({
     setFilterAttachmentsGTE(state, { payload }: PayloadAction<TTaskSearchAttachmentsGTE>) {
       state.filters.storage_files_gte = payload || null;
     },
+    setFilterProgressGTE(state, { payload }: PayloadAction<TTaskSearchProgressGTE>) {
+      state.filters.progress_gte = payload || null;
+    },
     setFilterPriorityIDArray(state, { payload }: PayloadAction<TTaskSearchPriorityID>) {
       state.filters.priority_id = payload.length ? payload : null;
+    },
+    resetFilters(state) {
+      state.filters = {
+        ...initialState.filters,
+      };
     },
   },
   extraReducers: {},
@@ -55,6 +65,8 @@ export const {
   setIsFiltersMenuShow,
   setFilterKeyword,
   setFilterAttachmentsGTE,
+  setFilterProgressGTE,
   setFilterPriorityIDArray,
+  resetFilters,
 } = filtersSlice.actions;
 export const filtersReducer = filtersSlice.reducer;

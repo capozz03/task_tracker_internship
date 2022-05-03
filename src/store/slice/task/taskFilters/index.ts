@@ -4,7 +4,9 @@ export {
   setFilterAssignedTo,
   setFilterKeyword,
   setFilterAttachmentsGTE,
+  setFilterProgressGTE,
   setFilterPriorityIDArray,
+  resetFilters,
 } from './slice';
 
 export {
@@ -13,5 +15,6 @@ export {
   getFilterAssignedTo,
   getFilterKeyword,
   getFilterAttachmentsGTE,
+  getFilterProgressGTE,
   getFilterPriorityIDArray,
 } from './selectors';

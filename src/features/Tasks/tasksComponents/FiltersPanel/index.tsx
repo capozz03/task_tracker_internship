@@ -4,6 +4,7 @@ import SearchInput from './KeywordInput';
 import ResetFiltersButton from './ResetFiltersButton';
 import PriorityFilter from './PriorityFilter';
 import AttachmentsFilter from './AttachmentsFilter';
+import ProgressFilter from './ProgressFilter';
 
 const FiltersPanel = () => (
   <div className={styles.container}>
@@ -20,6 +21,7 @@ const FiltersPanel = () => (
     </div>
     <div>
       <div className={styles.labelText}>Степень готовности</div>
+      <ProgressFilter />
     </div>
     <div>
       <div className={styles.labelText}>Приоритет</div>

@@ -4,7 +4,7 @@ import SearchIcon from './icon';
 import { Input } from 'antd';
 import { TaskFilters } from 'store/slice';
 import { useDispatch, useSelector } from 'react-redux';
-import { useDebounce } from '../../../../../shared';
+import { useDebounce } from 'shared';
 
 const SearchInput = () => {
   const dispatch = useDispatch();

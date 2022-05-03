@@ -22,6 +22,10 @@ export const getFilterAttachmentsGTE = createSelector(
   getFilters,
   ({ storage_files_gte }) => storage_files_gte,
 );
+export const getFilterProgressGTE = createSelector(
+  getFilters,
+  ({ progress_gte }) => progress_gte || 0,
+);
 export const getFilterPriorityIDArray = createSelector(
   getFilters,
   ({ priority_id }) => priority_id || [],
