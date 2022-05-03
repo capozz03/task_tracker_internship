@@ -2,6 +2,9 @@
 
 
 .wrapper {
+  display: flex !important;
+  flex-direction: column;
+
   * {
     margin-left: 0 !important;
     padding-left: 0 !important;

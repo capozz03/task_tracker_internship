@@ -8,7 +8,7 @@
   align-items: flex-start;
 
   & > * > *:not(:first-child){
-    margin-left: 16px;
+    margin: 0 8px;
   }
 
   & > * {
