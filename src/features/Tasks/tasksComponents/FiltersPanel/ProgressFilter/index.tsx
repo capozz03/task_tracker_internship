@@ -23,7 +23,7 @@ const ProgressFilter = () => {
     setMinProgress(storeMinProgress);
   }, [storeMinProgress]);
 
-  const onChange = (value: any) => {
+  const onChange = (value: number) => {
     setMinProgress(value);
   };
 

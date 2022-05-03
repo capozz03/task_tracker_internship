@@ -1,9 +1,6 @@
-/* eslint-disable no-unused-vars */
-import { TTaskSearchAssignedToMe } from 'store/slice/task/entities';
-
 export type FilterAssignedButtonType = {
   label: string;
-  value: TTaskSearchAssignedToMe | false;
+  value: boolean;
 };
 
 export const assignedButtons: FilterAssignedButtonType[] = [

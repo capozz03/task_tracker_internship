@@ -8,7 +8,7 @@ const AttachmentsFilter = () => {
   const dispatch = useDispatch();
   const checked = useSelector(TaskFilters.getFilterAttachmentsGTE);
   const onChange = (checked: boolean) => {
-    dispatch(TaskFilters.setFilterAttachmentsGTE(checked ? 1 : null));
+    dispatch(TaskFilters.setFilterAttachmentsGTE(checked ? 1 : 0));
   };
 
   return (

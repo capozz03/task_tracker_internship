@@ -16,7 +16,9 @@ const SearchInput = () => {
     dispatch(TaskFilters.setFilterKeyword(debouncedSearchTerm));
   }, [debouncedSearchTerm]);
 
-  const onChange: ChangeEventHandler<HTMLInputElement> = (e) => setSearchTerm(e.target.value);
+  const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setSearchTerm(e.target.value);
+  };
 
   return (
     <Input
