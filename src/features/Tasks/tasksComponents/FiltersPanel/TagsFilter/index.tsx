@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { AutoComplete, Spin } from 'antd';
-import { useDebounce } from 'shared';
+import { alert, useDebounce } from 'shared';
 import { useDispatch, useSelector } from 'react-redux';
-import { TagsSlice } from 'store/slice';
+import { TagsSlice, TaskFilters } from 'store/slice';
 import { Tag } from 'features/Tasks/tasksComponents/index';
 import styles from './index.module.scss';
 import { TTag } from 'store/slice/task/entities';
@@ -10,11 +10,10 @@ import PlusSquaredIcon from 'shared/ui/icons/PlusSquaredIcon';
 
 const TagsFilter = () => {
   const [search, setSearch] = useState('');
-  const t: TTag[] = [];
-  const [tagsSelected, setTagsSelected] = useState(t);
+  const [tagsSelected, setTagsSelected] = useState<TTag[]>([]);
   const isLoading = useSelector(TagsSlice.isLoadingTags);
   const tags = useSelector(TagsSlice.getTagsSelector);
-  const debouncedSearch = useDebounce(search, 500);
+  const debouncedSearch: string = useDebounce<string>(search, 500);
   const dispatch = useDispatch();
   const handleSearch = (e: string) => {
     setSearch(e);
@@ -22,14 +21,17 @@ const TagsFilter = () => {
   const handleSelect = (value: string) => {
     setSearch('');
     const tag = tags.find((el) => el.task_tag_id === value);
-    if (tag) {
+    if (tag && tagsSelected.length < 10) {
       setTagsSelected((prev) => ([...prev, tag]));
+    } else if (tagsSelected.length === 10) {
+      alert('Нельзя добавить больше 10 меток', 'warning');
     }
   };
-
   const filtersTags = tags.filter((tag) => tagsSelected.findIndex((tagSelected) =>
     tag.task_tag_id === tagSelected.task_tag_id) === -1);
-
+  const removeTag = (tagId: string) => {
+    setTagsSelected((prev) => prev.filter((el) => el.task_tag_id !== tagId));
+  };
   useEffect(() => {
     dispatch(TagsSlice.getTagsAsync({
       search: debouncedSearch,
@@ -39,9 +41,9 @@ const TagsFilter = () => {
   },
   [debouncedSearch]);
 
-  const removeTag = (tagId: string) => {
-    setTagsSelected((prev) => prev.filter((el) => el.task_tag_id !== tagId));
-  };
+  useEffect(() => {
+    dispatch(TaskFilters.setTags(tagsSelected));
+  }, [tagsSelected]);
 
   return (
     <>
@@ -59,7 +61,10 @@ const TagsFilter = () => {
                 <AutoComplete.Option key={tag.task_tag_id} value={tag.task_tag_id}>
                   <Tag tag={tag} key={tag.task_tag_id} />
                 </AutoComplete.Option>
-              ))) }
+              )))}
+          {
+            filtersTags.length === 0 && <AutoComplete.Option>Нет меток</AutoComplete.Option>
+          }
         </AutoComplete>
         <PlusSquaredIcon />
       </div>
