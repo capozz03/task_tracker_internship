@@ -1,3 +1,32 @@
 :global(.ant-select-item){
   min-height: 34px !important;
 }
+
+.selectedTags{
+  width: 200px;
+  span{
+    margin-right: 4px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+}
+
+.autoCompleteWrap{
+  position: relative;
+  margin-bottom: 14px;
+  :global(.ant-select){
+    width: 100%;
+  }
+  :global(.ant-select-focused *){
+    box-shadow: none !important;
+  }
+  :global(.ant-select:not(.ant-select-customize-input) .ant-select-selector){
+    border: none;
+    border-bottom: 1px solid #E2E2EA;
+  }
+  svg{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) translateX(-25px);
+  }
+}

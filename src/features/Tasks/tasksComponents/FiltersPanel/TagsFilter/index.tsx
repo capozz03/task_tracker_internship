@@ -4,8 +4,9 @@ import { useDebounce } from 'shared';
 import { useDispatch, useSelector } from 'react-redux';
 import { TagsSlice } from 'store/slice';
 import { Tag } from 'features/Tasks/tasksComponents/index';
-import './index.module.scss';
+import styles from './index.module.scss';
 import { TTag } from 'store/slice/task/entities';
+import PlusSquaredIcon from 'shared/ui/icons/PlusSquaredIcon';
 
 const TagsFilter = () => {
   const [search, setSearch] = useState('');
@@ -18,7 +19,6 @@ const TagsFilter = () => {
   const handleSearch = (e: string) => {
     setSearch(e);
   };
-  // eslint-disable-next-line no-undef
   const handleSelect = (value: string) => {
     setSearch('');
     const tag = tags.find((el) => el.task_tag_id === value);
@@ -39,28 +39,40 @@ const TagsFilter = () => {
   },
   [debouncedSearch]);
 
+  const removeTag = (tagId: string) => {
+    setTagsSelected((prev) => prev.filter((el) => el.task_tag_id !== tagId));
+  };
+
   return (
     <>
-      <AutoComplete
-        style={{ width: 200 }}
-        value={search}
-        onSelect={handleSelect}
-        onSearch={handleSearch}
-        placeholder="input here"
-      >
-        { isLoading
-          ? <Spin />
-          : (
-            filtersTags && filtersTags.map((tag) => (
-              <AutoComplete.Option key={tag.task_tag_id} value={tag.task_tag_id}>
-                <Tag tag={tag} />
-              </AutoComplete.Option>
-            ))) }
-      </AutoComplete>
-      <div>
+      <div className={styles.autoCompleteWrap}>
+        <AutoComplete
+          value={search}
+          onSelect={handleSelect}
+          onSearch={handleSearch}
+          placeholder="Поиск ..."
+        >
+          { isLoading
+            ? <Spin />
+            : (
+              filtersTags && filtersTags.map((tag) => (
+                <AutoComplete.Option key={tag.task_tag_id} value={tag.task_tag_id}>
+                  <Tag tag={tag} key={tag.task_tag_id} />
+                </AutoComplete.Option>
+              ))) }
+        </AutoComplete>
+        <PlusSquaredIcon />
+      </div>
+      <div className={styles.selectedTags}>
         {
           tagsSelected.map((tag) => (
-            <Tag tag={tag} />
+            <Tag
+              tag={tag}
+              key={tag.task_tag_id}
+              deleteHandle={() => {
+                removeTag(tag.task_tag_id);
+              }}
+            />
           ))
         }
       </div>
