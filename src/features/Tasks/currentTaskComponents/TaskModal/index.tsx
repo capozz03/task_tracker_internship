@@ -3,7 +3,13 @@ import { Modal, ModalProps, Spin } from 'antd';
 import styles from './index.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import Attachments from 'features/Tasks/currentTaskComponents/Attachments';
-import { TaskFormSlice, TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice } from 'store/slice';
+import {
+  TaskFormSlice,
+  TaskInWorkSlice,
+  TaskInboxSlice,
+  TaskCompletedSlice,
+  TaskFilters,
+} from 'store/slice';
 import Title from '../Title';
 import MenuHeader from 'features/Tasks/currentTaskComponents/MenuHeader';
 import CheckListArea from 'features/Tasks/currentTaskComponents/CheckListArea';
@@ -17,6 +23,7 @@ const TaskModal = (props: ModalProps) => {
   const paginationInbox = useSelector(TaskInboxSlice.getPagination);
   const paginationInWork = useSelector(TaskInWorkSlice.getPagination);
   const paginationInCompleted = useSelector(TaskCompletedSlice.getPagination);
+  const filters = useSelector(TaskFilters.getFilters);
 
   const cancelHandle = () => {
     if (status?.name === 'Создана') {
@@ -24,6 +31,7 @@ const TaskModal = (props: ModalProps) => {
         TaskInboxSlice.getTasksAsync({
           per_page: paginationInbox!.per_page,
           page: paginationInbox!.page_current,
+          ...filters,
         }),
       );
     }
@@ -32,6 +40,7 @@ const TaskModal = (props: ModalProps) => {
         TaskInWorkSlice.getTasksAsync({
           per_page: paginationInWork!.per_page,
           page: paginationInWork!.page_current,
+          ...filters,
         }),
       );
     }
@@ -40,6 +49,7 @@ const TaskModal = (props: ModalProps) => {
         TaskCompletedSlice.getTasksAsync({
           per_page: paginationInCompleted!.per_page,
           page: paginationInCompleted!.page_current,
+          ...filters,
         }),
       );
     }

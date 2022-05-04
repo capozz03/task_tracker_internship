@@ -101,20 +101,26 @@ export type TStorageFiles = {
 };
 
 export type TTaskCheckListItem = {
-  'check_list_item_id': string,
-  'message': string,
-  'complete': boolean,
-  'created': string,
-  'updated': string
+  check_list_item_id: string;
+  message: string;
+  complete: boolean;
+  created: string;
+  updated: string;
 };
 
 export type TTaskCheckList = {
-  check_list_id: string,
-  title: string,
-  created: string,
-  updated: string,
-  items?: TTaskCheckListItem[]
+  check_list_id: string;
+  title: string;
+  created: string;
+  updated: string;
+  items?: TTaskCheckListItem[];
 };
+
+export type TSwapItemInChecklist = {
+  checkListId: string,
+  checkListItemIdOne: number,
+  checkListItemIdTwo: number,
+}
 
 export type TTask = {
   task_id: string;
@@ -164,11 +170,15 @@ export type TTaskItemResponse = {
   data: TTask;
 };
 
+export type TSortType = 'date~DESC' | 'title~ASC';
+export type TTaskSearchKeyword = string;
+export type TTaskSearchAssignedToMe = boolean | null;
+
 export type TTaskSearch = {
-  sort?: 'date~DESC' | 'title~ASC';
-  search?: string;
+  sort?: TSortType;
+  search?: TTaskSearchKeyword | null;
   assign_user_id?: string[];
-  assigned_to_me?: true;
+  assigned_to_me?: TTaskSearchAssignedToMe;
   storage_files_gte?: number;
   tag_id?: string[];
   role_id?: string[];
@@ -187,17 +197,21 @@ export type TTaskStatusChange = {
   task_status_id: string;
 };
 
-export type TSortType = 'date~DESC' | 'title~ASC';
-
 export type TTaskWithRelation = {
-  data: TTask,
+  data: TTask;
   relation: {
-    check_list_id: string,
-    created: string,
-    task_id: string,
-    task_to_check_list_id: string,
-    updated: string,
-  }
+    check_list_id: string;
+    created: string;
+    task_id: string;
+    task_to_check_list_id: string;
+    updated: string;
+  };
+};
+
+export type TFilterAssignedToReducer = {
+  status: RequestStatuses;
+  error: Error | null;
+  filterAssignedTo: string | null;
 }
 
 export type TTaskWithRelationStorage = {

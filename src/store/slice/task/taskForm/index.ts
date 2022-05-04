@@ -33,6 +33,8 @@ export {
   isCreatedChecklistItem,
   isCreateNewCheckList,
   getCheckLists,
+  checklistStatus,
+  checklistIsLoadingStatus,
 } from './checkList/selector';
 
 export {
@@ -46,6 +48,8 @@ export {
   removeItemFromCheckList,
   updateTask,
   setDescriptionFromTaskForm,
+  updateCheckList,
+  swapItemInChecklist,
 } from './fullTaskInfo/slice';
 
 export {

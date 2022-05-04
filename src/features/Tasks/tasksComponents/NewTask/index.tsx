@@ -73,8 +73,10 @@ const NewTask = ({ taskStatusId }: { taskStatusId: string }) => {
           onChange={onChange}
           placeholder="Введите название задачи"
         />
-        <Button type="primary" htmlType="submit">Сохранить</Button>
-        <Button type="default" onClick={toggleVisibleForm}>Отменить</Button>
+        <div className={styles.btnBlock}>
+          <Button type="primary" htmlType="submit">Сохранить</Button>
+          <Button type="default" onClick={toggleVisibleForm}>Отменить</Button>
+        </div>
       </div>
     </form>
   );

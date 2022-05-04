@@ -24,8 +24,8 @@
 }
 
 .formNewTaskWrap{
-  display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
   :global(.ant-btn-primary){
     height: 32px !important;
@@ -40,6 +40,13 @@
   :global(.ant-btn-default){
     border-radius: 8px !important;
   }
+}
+
+.btnBlock{
+  display: flex;
+  gap: 8px;
+  flex-grow: 1;
+  justify-content: flex-end;
 }
 
 .input{
@@ -61,4 +68,6 @@
   &:focus{
     box-shadow: none !important;
   }
+
+
 }

@@ -155,9 +155,10 @@ export const deleteItemForChecklist = createAsyncThunk(
 // Изменить положение элемента чеклиста
 export const changePositionItemForChecklist = createAsyncThunk(
   'checkList/changeStatusItemForChecklist',
-  async (props: changePositionItemForChecklistProps, { rejectWithValue }) => {
+  async (props: changePositionItemForChecklistProps, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await checkListService.changePositionItemForChecklist(props);
+      dispatch(TaskFormSlice.updateCheckList(data.data));
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
