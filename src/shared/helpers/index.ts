@@ -9,3 +9,4 @@ export {
   isSuccessStatusCheck,
 } from './requestStatusesCheckers';
 export { useBreakPoint, useDebounce } from './hooks';
+export { isArrayOfStrings } from './typeGuards';

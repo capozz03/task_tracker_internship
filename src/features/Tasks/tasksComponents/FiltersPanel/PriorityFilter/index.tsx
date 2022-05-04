@@ -3,15 +3,18 @@ import styles from './index.module.scss';
 import { Checkbox, PriorityStatus } from 'features/Tasks/tasksComponents';
 import { useDispatch, useSelector } from 'react-redux';
 import { TaskFilters } from 'store/slice';
-import { TaskPriorities } from 'shared';
+import { isArrayOfStrings, TaskPriorities } from 'shared';
 import { Checkbox as AntCheckbox } from 'antd';
+import { CheckboxValueType } from 'antd/es/checkbox/Group';
 
 const PriorityFilter = () => {
   const dispatch = useDispatch();
   const initialValues = useSelector(TaskFilters.getFilterPriorityIDArray);
 
-  const onChange = (values: any) => {
-    dispatch(TaskFilters.setFilterPriorityIDArray(values));
+  const onChange = (values: CheckboxValueType[]) => {
+    if (isArrayOfStrings(values)) {
+      dispatch(TaskFilters.setFilterPriorityIDArray(values));
+    }
   };
 
   return (
