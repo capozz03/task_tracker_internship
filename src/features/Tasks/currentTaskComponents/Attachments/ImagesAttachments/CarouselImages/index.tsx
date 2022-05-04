@@ -32,17 +32,17 @@ const CarouselImages = ({
 
   const mobileCarousel = useBreakPoint(768);
 
-  const closeModal = (): void => {
+  const closeModal = () => {
     setIsShowCarousel(false);
   };
 
-  const changeHandler = (index: any): void => {
+  const changeHandler = (index: any) => {
     if (carouselImages) {
       setNameFile(carouselImages[index].name);
     }
   };
 
-  const nextImgButton = (): void => {
+  const nextImgButton = () => {
     if (carouselImages) {
       if (currentImageIndex >= carouselImages.length - 1) {
         setCurrentImageIndex(0);
@@ -52,7 +52,7 @@ const CarouselImages = ({
     }
   };
 
-  const prevImgButton = (): void => {
+  const prevImgButton = () => {
     if (carouselImages) {
       if (currentImageIndex <= 0) {
         setCurrentImageIndex(carouselImages.length - 1);
@@ -87,7 +87,7 @@ const CarouselImages = ({
           onChange={changeHandler}
           className={style.carouselGallery}
         >
-          {carouselImages?.map(({ img, id }: TCarouselImages) => (
+          {carouselImages?.map(({ img, id }) => (
             <div className={style.contentStyle} key={id}>
               <img src={img} alt="img" />
             </div>

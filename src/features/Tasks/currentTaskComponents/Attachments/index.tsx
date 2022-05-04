@@ -34,9 +34,11 @@ const Attachments = ({ taskId }: attachmentsProps) => {
     setIsVisibleAttachments(!isVisibleAttachments);
   };
 
+  const isShowBlockOfAttachments = isShowAttachments();
+
   return (
     <div className={style.taskAttachments}>
-      {isShowAttachments() && (
+      {isShowBlockOfAttachments && (
         <>
           <div className={style.headerAttachments}>
             <div className={style.iconAttachments}>
@@ -48,45 +50,43 @@ const Attachments = ({ taskId }: attachmentsProps) => {
               {isVisibleAttachments ? 'Свернуть' : 'Развернуть'}
             </Button>
           </div>
-          <div>
-            {isVisibleAttachments && (
-              <>
-                <div className={style.taskFiles__fileList}>
-                  {storageFiles?.map(
-                    ({
-                      name_original: nameOriginal,
-                      size,
-                      storage_file_id: storageFileId,
-                      uploaded,
-                    }) => (
-                      <FilesAttachments
-                        key={storageFileId}
-                        name={nameOriginal}
-                        size={size}
-                        storageFileId={storageFileId}
-                        taskId={taskId}
-                        uploaded={uploaded}
-                      />
-                    ),
-                  )}
-                </div>
-                <div className={style.taskFiles__imageList}>
-                  {storageImages?.map(
-                    ({ name_original: nameOriginal, storage_file_id: storageFileId, uploaded }) => (
-                      <ImagesAttachments
-                        key={storageFileId}
-                        name={nameOriginal}
-                        storageFileId={storageFileId}
-                        taskId={taskId}
-                        carouselImages={carouselImages}
-                        uploaded={uploaded}
-                      />
-                    ),
-                  )}
-                </div>
-              </>
-            )}
-          </div>
+          {isVisibleAttachments && (
+            <div>
+              <div className={style.taskFiles__fileList}>
+                {storageFiles?.map(
+                  ({
+                    name_original: nameOriginal,
+                    size,
+                    storage_file_id: storageFileId,
+                    uploaded,
+                  }) => (
+                    <FilesAttachments
+                      key={storageFileId}
+                      name={nameOriginal}
+                      size={size}
+                      storageFileId={storageFileId}
+                      taskId={taskId}
+                      uploaded={uploaded}
+                    />
+                  ),
+                )}
+              </div>
+              <div className={style.taskFiles__imageList}>
+                {storageImages?.map(
+                  ({ name_original: nameOriginal, storage_file_id: storageFileId, uploaded }) => (
+                    <ImagesAttachments
+                      key={storageFileId}
+                      name={nameOriginal}
+                      storageFileId={storageFileId}
+                      taskId={taskId}
+                      carouselImages={carouselImages}
+                      uploaded={uploaded}
+                    />
+                  ),
+                )}
+              </div>
+            </div>
+          )}
         </>
       )}
     </div>

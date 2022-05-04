@@ -26,12 +26,12 @@ const FilesAttachments = ({
   const progressBar = useSelector(TaskFormSlice.progressBar);
   const fileExtension = name.split('.')[1];
 
+  const { icon, bgColor } = checkFileExtension(fileExtension);
+  const styleOfFileItem = { border: `1px solid ${bgColor}`, backgroundColor: bgColor };
+
   useEffect(() => {
     checkFileExtension(fileExtension);
   }, [fileExtension]);
-
-  const { icon, bgColor } = checkFileExtension(fileExtension);
-  const styleOfFileItem = { border: `1px solid ${bgColor}`, backgroundColor: bgColor };
 
   return (
     <div className={style.taskFiles__item} style={styleOfFileItem}>

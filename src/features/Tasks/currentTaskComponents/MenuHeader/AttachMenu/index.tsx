@@ -5,6 +5,7 @@ import styles from './index.module.scss';
 import { TaskFormSlice } from 'store/slice';
 import PlusIcons from 'shared/ui/icons/PlusIcons';
 import { alert } from 'shared';
+import { RcFile } from 'antd/lib/upload/interface';
 
 const AttachMenu = () => {
   const dispatch = useDispatch();
@@ -12,7 +13,6 @@ const AttachMenu = () => {
 
   const checklists = useSelector(TaskFormSlice.getCheckLists);
   const task = useSelector(TaskFormSlice.getTask);
-  const taskId = task?.task_id;
 
   const uploadFiles = async (options: any) => {
     const { file } = await options;
@@ -22,12 +22,12 @@ const AttachMenu = () => {
       TaskFormSlice.createStorageFile({
         nameOriginal: file.name,
         file: fileData,
-        taskId,
+        taskId: task?.task_id,
       }),
     );
   };
 
-  const beforeUpload = (file: any) => {
+  const beforeUpload = (file: RcFile) => {
     const sizeFileBytes = file.size;
     if (sizeFileBytes > 52428800) {
       alert('Максимальный размер файла 50мб', 'error');

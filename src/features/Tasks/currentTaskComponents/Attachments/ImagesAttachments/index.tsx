@@ -11,7 +11,7 @@ type ImagesAttachmentsProps = {
   name: string;
   storageFileId: string;
   taskId: string;
-  carouselImages: TCarouselImages[] | undefined;
+  carouselImages?: TCarouselImages[];
   uploaded: boolean;
 };
 
@@ -22,9 +22,9 @@ const ImagesAttachments = ({
   carouselImages,
   uploaded,
 }: ImagesAttachmentsProps) => {
-  const [isShowCarousel, setIsShowCarousel] = useState<boolean>(false);
-  const [nameFile, setNameFile] = useState<string>(name);
-  const [currentImage, setCurrentImage] = useState<number>(0);
+  const [isShowCarousel, setIsShowCarousel] = useState(false);
+  const [nameFile, setNameFile] = useState(name);
+  const [currentImage, setCurrentImage] = useState(0);
   const imagePreview = useSelector(TaskFormSlice.imagePreview);
   const imgUploaded = setImageUrl(storageFileId);
 
@@ -37,13 +37,13 @@ const ImagesAttachments = ({
     } return currentImage;
   };
 
-  const showCarousel = (): void => {
+  const showCarousel = () => {
     setIsShowCarousel(true);
     setNameFile(name);
     setCurrentImage(currentImageClicked);
   };
 
-  const handleCancel = (): void => {
+  const handleCancel = () => {
     setIsShowCarousel(false);
   };
 

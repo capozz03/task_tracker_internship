@@ -1,9 +1,9 @@
 export const formatBytes = (bytes: number, decimals: number): string => {
   if (bytes === 0) return '0 Bytes';
-  const k = 1024;
-  const dm = decimals <= 0 ? 0 : decimals || 2;
+  const numOfBytesInKb = 1024;
+  const numDecimalPlaces = decimals <= 0 ? 0 : decimals || 2;
   const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  const res = (bytes / k ** i).toFixed(dm);
-  return `${res} ${sizes[i]}`;
+  const degree = Math.floor(Math.log(bytes) / Math.log(numOfBytesInKb));
+  const res = (bytes / numOfBytesInKb ** degree).toFixed(numDecimalPlaces);
+  return `${res} ${sizes[degree]}`;
 };
