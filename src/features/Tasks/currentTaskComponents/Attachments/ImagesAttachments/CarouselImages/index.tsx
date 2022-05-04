@@ -1,55 +1,79 @@
-import {
-  CloseCircleOutlined,
-  CloudDownloadOutlined,
-  DeleteOutlined,
-  LeftOutlined,
-  RightOutlined,
-} from '@ant-design/icons';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import React, { useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { ModalDelete } from 'shared';
 import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
+import { TCarouselImages } from 'shared/helpers';
+import HeaderCarouselImages from './HeaderCarouselImages';
 import style from './index.module.scss';
 
-export const CarouselImages = ({ backgroundImages, name, setIsShowCarousel }: any) => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+type CarouselImagesProps = {
+  carouselImages: TCarouselImages[] | undefined;
+  setIsShowCarousel: React.Dispatch<React.SetStateAction<boolean>>;
+  name: string;
+  currentImage: number;
+  storageFileId: string;
+  taskId: string;
+};
+
+const CarouselImages = ({
+  carouselImages,
+  setIsShowCarousel,
+  name,
+  currentImage,
+  storageFileId,
+  taskId,
+}: CarouselImagesProps) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(currentImage);
+  const [nameFile, setNameFile] = useState<string>(name);
+  const [isVisibleModal, setIsVisibleModal] = useState<boolean>(false);
 
   const mobileCarousel = useBreakPoint(768);
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setIsShowCarousel(false);
   };
 
-  const next = () => {
-    if (currentImageIndex >= backgroundImages.length - 1) {
-      setCurrentImageIndex(0);
-    } else {
-      setCurrentImageIndex((currentImageIndex) => currentImageIndex + 1);
+  const changeHandler = (index: any): void => {
+    if (carouselImages) {
+      setNameFile(carouselImages[index].name);
     }
   };
 
-  const prev = () => {
-    if (currentImageIndex <= 0) {
-      setCurrentImageIndex(backgroundImages.length - 1);
-    } else {
-      setCurrentImageIndex((currentImageIndex) => currentImageIndex - 1);
+  const nextImgButton = (): void => {
+    if (carouselImages) {
+      if (currentImageIndex >= carouselImages.length - 1) {
+        setCurrentImageIndex(0);
+      } else {
+        setCurrentImageIndex((currentImageIndex: number) => currentImageIndex + 1);
+      }
     }
   };
+
+  const prevImgButton = (): void => {
+    if (carouselImages) {
+      if (currentImageIndex <= 0) {
+        setCurrentImageIndex(carouselImages.length - 1);
+      } else {
+        setCurrentImageIndex((currentImageIndex: number) => currentImageIndex - 1);
+      }
+    }
+  };
+
   return (
     <>
-      <div className={style.headerCarousel}>
-        <h4 className={style.headerTitle}>{name}</h4>
-        <div className={style.icons}>
-          <Button className={style.deleteIcon} onClick={closeModal} icon={<DeleteOutlined />} />
-          <Button className={style.downloadIcon} icon={<CloudDownloadOutlined />} />
-          <div className={style.separator} />
-          <Button className={style.closeIcon} onClick={closeModal} icon={<CloseCircleOutlined />} />
-        </div>
-      </div>
+      <HeaderCarouselImages
+        nameFile={nameFile}
+        storageFileId={storageFileId}
+        closeModal={closeModal}
+        setIsVisibleModal={setIsVisibleModal}
+        setIsShowCarousel={setIsShowCarousel}
+      />
       <div className={style.carouselWrapper}>
         {!mobileCarousel && (
-          <Button className={style.gallery_previous} onClick={prev}>
+          <Button className={style.gallery_previous} onClick={prevImgButton}>
             <LeftOutlined />
           </Button>
         )}
@@ -60,20 +84,30 @@ export const CarouselImages = ({ backgroundImages, name, setIsShowCarousel }: an
           showArrows={false}
           useKeyboardArrows
           dynamicHeight
+          onChange={changeHandler}
           className={style.carouselGallery}
         >
-          {backgroundImages.map((img: string) => (
-            <div className={style.contentStyle}>
+          {carouselImages?.map(({ img, id }: TCarouselImages) => (
+            <div className={style.contentStyle} key={id}>
               <img src={img} alt="img" />
             </div>
           ))}
         </Carousel>
         {!mobileCarousel && (
-          <Button className={style.gallery_next} onClick={next}>
+          <Button className={style.gallery_next} onClick={nextImgButton}>
             <RightOutlined />
           </Button>
         )}
       </div>
+      <ModalDelete
+        isVisibleModal={isVisibleModal}
+        setIsVisibleModal={setIsVisibleModal}
+        taskId={taskId}
+        storageFileId={storageFileId}
+        name={name}
+      />
     </>
   );
 };
+
+export default CarouselImages;

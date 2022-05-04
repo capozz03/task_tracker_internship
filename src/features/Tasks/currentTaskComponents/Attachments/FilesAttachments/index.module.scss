@@ -7,10 +7,8 @@
   border-radius: 8px;
   padding: 8px;
   margin: 8px 8px 8px 0;
-  border: 1px solid #C4DBFF26;
-  background-color: #C4DBFF26;
   &:hover {
-    border: 1px solid $colors-blue;
+    border: 1px solid $colors-blue !important;
     .dropdown {
       opacity: 1;
     }
@@ -24,11 +22,6 @@
 }
 
 .taskFiles__icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  padding: 8px;
-  background-color: #50B5FF1A;
   margin-right: 16px;
 }
 

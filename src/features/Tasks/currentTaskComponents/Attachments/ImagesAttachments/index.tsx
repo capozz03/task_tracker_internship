@@ -1,42 +1,56 @@
 import DropdownMenu from '../DropdownMenu';
 import React, { useState } from 'react';
 import style from './index.module.scss';
-import { TStorageFiles } from 'store/slice/task/entities';
-import { setImageUrl } from './setImageUrl';
-import { CarouselImages } from './CarouselImages';
+import { setImageUrl, TCarouselImages } from 'shared/helpers';
+import CarouselImages from './CarouselImages';
 import { Modal } from 'antd';
+import { TaskFormSlice } from 'store/slice';
+import { useSelector } from 'react-redux';
 
 type ImagesAttachmentsProps = {
   name: string;
   storageFileId: string;
   taskId: string;
-  modifications: TStorageFiles[];
-  backgroundImages: string[] | undefined;
+  carouselImages: TCarouselImages[] | undefined;
+  uploaded: boolean;
 };
 
 const ImagesAttachments = ({
   name,
   storageFileId,
   taskId,
-  modifications,
-  backgroundImages,
+  carouselImages,
+  uploaded,
 }: ImagesAttachmentsProps) => {
-  const [isShowCarousel, setIsShowCarousel] = useState(false);
+  const [isShowCarousel, setIsShowCarousel] = useState<boolean>(false);
+  const [nameFile, setNameFile] = useState<string>(name);
+  const [currentImage, setCurrentImage] = useState<number>(0);
+  const imagePreview = useSelector(TaskFormSlice.imagePreview);
+  const imgUploaded = setImageUrl(storageFileId);
+
+  const setImage = () => (uploaded ? imgUploaded : imagePreview);
+
+  const currentImageClicked = (): number => {
+    if (carouselImages) {
+      const findClickedObj = carouselImages.find((clickedImg) => clickedImg.id === storageFileId);
+      if (findClickedObj) return findClickedObj.idCurrent;
+    } return currentImage;
+  };
 
   const showCarousel = (): void => {
     setIsShowCarousel(true);
+    setNameFile(name);
+    setCurrentImage(currentImageClicked);
   };
 
   const handleCancel = (): void => {
     setIsShowCarousel(false);
   };
 
-  const imagePreview = setImageUrl(modifications);
-
   return (
     <>
       <div className={style.taskImages__wrapper}>
-        <div className={style.taskImages__item} style={{ backgroundImage: `url(${imagePreview})` }}>
+        <div className={style.taskImages__item} style={{ backgroundImage: `url(${setImage()})` }}>
           <div
             className={style.dropdown}
             onClick={showCarousel}
@@ -64,18 +78,20 @@ const ImagesAttachments = ({
         </div>
       </div>
       <Modal
-        centered
         closable={false}
+        centered
         onCancel={handleCancel}
-        width="50%"
         footer={null}
         visible={isShowCarousel}
         className={style.imagesModal}
       >
         <CarouselImages
-          backgroundImages={backgroundImages}
-          name={name}
+          carouselImages={carouselImages}
+          name={nameFile}
           setIsShowCarousel={setIsShowCarousel}
+          currentImage={currentImage}
+          storageFileId={storageFileId}
+          taskId={taskId}
         />
       </Modal>
     </>

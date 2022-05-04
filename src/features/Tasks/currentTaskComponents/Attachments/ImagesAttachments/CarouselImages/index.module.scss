@@ -1,66 +1,30 @@
 @import 'src/shared/assets/styles';
 
-.headerCarousel {
-  position: relative;
-  width: 100%;
-  background-color: #fff;
-  position: fixed;
-  left: 0;
-  top: 0;
-  display: flex;
-  justify-content: space-between;
-  padding: 28px 35px;
-  .headerTitle {
-    font: $h4-medium;
-    color: $grey-900;
-  }
-  .icons {
-    display: flex;
-    .deleteIcon, .downloadIcon, .closeIcon {
-      box-shadow: none;
-      border: none;
-    }
-    .deleteIcon {
-      font-size: 20px;
-      color: #FF9D9D;
-      margin-right: 10px;
-    }
-    .downloadIcon {
-      font-size: 20px;
-      margin-right: 20px;
-    }
-    .separator {
-      width: 10px;
-      height: 30px;
-      border-left: 1px solid $grey-400;
-    }
-    .closeIcon {
-      margin-left: 10px;
-      font-size: 20px;
-    }
-  }
-}
-
 .carouselWrapper {
   width: 100%;
 }
 
 .contentStyle {
   img {
-    max-width: 100%;
     display: block;
-    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
   }
 }
 .carouselGallery {
   :global(.carousel img) {
     border-radius: 8px;
+    height: 100%;
+    width: auto;
+    margin: 0 auto;
   }
   :global(.carousel .thumb) {
     border: 2px solid transparent !important;
     border-radius: 8px;
     img {
       border-radius: 8px;
+      width: 80px;
     }
     &:hover {
       border: 2px solid #0062ff !important;
@@ -71,12 +35,18 @@
     border: 2px solid #0062ff !important;
     border-radius: 8px;
   }
+  :global(.carousel *) {
+    max-height: 50vh;
+    @media (max-width: 768px) {
+      max-height: 35vh;
+    }
+  }
 }
 
 .gallery_previous,
 .gallery_next {
   position: absolute !important;
-  top: 50%;
+  top: 30%;
   z-index: 1;
 }
 

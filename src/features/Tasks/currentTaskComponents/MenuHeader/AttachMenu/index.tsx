@@ -15,13 +15,26 @@ const AttachMenu = () => {
   const taskId = task?.task_id;
 
   const uploadFiles = async (options: any) => {
-    const { file } = options;
+    const { file } = await options;
     const fileData = new FormData();
     fileData.append('file', file);
-    await dispatch(
-      TaskFormSlice.createStorageFile({ nameOriginal: file.name, file: fileData, taskId }),
+    dispatch(
+      TaskFormSlice.createStorageFile({
+        nameOriginal: file.name,
+        file: fileData,
+        taskId,
+      }),
     );
   };
+
+  const beforeUpload = (file: any) => {
+    const sizeFileBytes = file.size;
+    if (sizeFileBytes > 52428800) {
+      alert('Максимальный размер файла 50мб', 'error');
+      return false;
+    } return file;
+  };
+
   const checklistHandle = () => {
     if (checklists && checklists.length >= 3) {
       alert('В задаче не может быть более 3-х чеклистов', 'error');
@@ -40,6 +53,7 @@ const AttachMenu = () => {
           showUploadList={false}
           accept=".pdf, .txt, .doc, .docx, .avi, .mp4, .wmv, .csv, .xls, .jpeg, .jpg, .png"
           customRequest={uploadFiles}
+          beforeUpload={beforeUpload}
         >
           Прикрепить вложение
         </Upload>

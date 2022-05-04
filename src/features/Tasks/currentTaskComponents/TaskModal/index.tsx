@@ -8,7 +8,6 @@ import Title from '../Title';
 import MenuHeader from 'features/Tasks/currentTaskComponents/MenuHeader';
 import CheckListArea from 'features/Tasks/currentTaskComponents/CheckListArea';
 import Description from 'features/Tasks/tasksComponents/Description';
-// import MenuButton from './MenuButton';
 
 const TaskModal = (props: ModalProps) => {
   const dispatch = useDispatch();
@@ -21,19 +20,28 @@ const TaskModal = (props: ModalProps) => {
 
   const cancelHandle = () => {
     if (status?.name === 'Создана') {
-      dispatch(TaskInboxSlice.getTasksAsync({
-        per_page: paginationInbox!.per_page,
-        page: paginationInbox!.page_current }));
+      dispatch(
+        TaskInboxSlice.getTasksAsync({
+          per_page: paginationInbox!.per_page,
+          page: paginationInbox!.page_current,
+        }),
+      );
     }
     if (status?.name === 'В работе') {
-      dispatch(TaskInWorkSlice.getTasksAsync({
-        per_page: paginationInWork!.per_page,
-        page: paginationInWork!.page_current }));
+      dispatch(
+        TaskInWorkSlice.getTasksAsync({
+          per_page: paginationInWork!.per_page,
+          page: paginationInWork!.page_current,
+        }),
+      );
     }
     if (status?.name === 'Выполнена' || status?.name === 'Не выполнена') {
-      dispatch(TaskCompletedSlice.getTasksAsync({
-        per_page: paginationInCompleted!.per_page,
-        page: paginationInCompleted!.page_current }));
+      dispatch(
+        TaskCompletedSlice.getTasksAsync({
+          per_page: paginationInCompleted!.per_page,
+          page: paginationInCompleted!.page_current,
+        }),
+      );
     }
     dispatch(TaskFormSlice.hiddenTaskForm());
   };

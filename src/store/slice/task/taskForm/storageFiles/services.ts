@@ -21,9 +21,10 @@ export const storageFilesSlice = {
     }),
   getStorageFileDetails: async ({ storageFileId }: getStorageFileDetailsProps) =>
     $apiTask.get(`/api/v1.0/storage/files/${storageFileId}`),
-  uploadStorageFile: async ({ storageFileId, file }: uploadStorageFileProps) =>
+  uploadStorageFile: async ({ storageFileId, file, onUploadProgress }: uploadStorageFileProps) =>
     $apiTask.post<TStorageFilesResponse>(`/api/v1.0/storage/files/${storageFileId}/upload`, file, {
       headers: { 'content-type': 'multipart/form-data' },
+      onUploadProgress,
     }),
   downloadStorageFile: async ({ storageFileId }: getStorageFileDetailsProps) =>
     $apiTask.get<TStorageFilesResponse>(`/api/v1.0/storage/files/${storageFileId}/download`, {

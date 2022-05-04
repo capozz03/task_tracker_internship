@@ -1,21 +1,31 @@
-// import { downloadStorageFile } from './asyncActions';
 import { createAsyncThunk, miniSerializeError } from '@reduxjs/toolkit';
 import { storageFilesSlice } from './services';
 import { alert } from 'shared/ui';
 import {
+  attachFileDetailsProps,
   createStorageFileProps,
   detachFileDetailsProps,
   getStorageFileDetailsProps,
   uploadStorageFileProps,
 } from './entities';
 import { TaskFormSlice } from 'store/slice';
+import { getTaskByIdAsync } from '../getTaskById/getTaskByIdAsyncAction';
 
 // Загрузить файл
 export const uploadStorageFile = createAsyncThunk(
   'storageFile/uploadStorageFile',
-  async (props: uploadStorageFileProps, { rejectWithValue }) => {
+  async (
+    { storageFileId, file, onUploadProgress }: uploadStorageFileProps,
+    { rejectWithValue, dispatch, getState },
+  ) => {
     try {
-      const { data } = await storageFilesSlice.uploadStorageFile(props);
+      const { data } = await storageFilesSlice.uploadStorageFile({
+        storageFileId,
+        file,
+        onUploadProgress,
+      });
+      const { taskForm } = (await getState()) as any;
+      dispatch(getTaskByIdAsync(taskForm.task.task.task_id));
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
@@ -28,32 +38,32 @@ export const uploadStorageFile = createAsyncThunk(
 // Создаём место под файл
 export const createStorageFile = createAsyncThunk(
   'storageFile/createStorageFile',
-  async (props: createStorageFileProps, { rejectWithValue, getState, dispatch }) => {
+  async (props: createStorageFileProps, { rejectWithValue, dispatch, getState }) => {
     try {
       const { data } = await storageFilesSlice.createStorageFile(props);
+
       const { taskForm } = (await getState()) as any;
-      const sizeFileBytes = data.data.size;
-      if (sizeFileBytes > 52428800) {
-        alert('Максимальный размер файла 50мб', 'error');
-      } else {
-        dispatch(
-          uploadStorageFile({
-            storageFileId: data.data.storage_file_id,
-            file: props.file,
-          }),
-        );
-        alert(
-          `Файл "${data.data.name_original.slice(0, 25)}${
-            data.data.name_original.length > 25 ? '...' : ''
-          }" успешно загружен`,
-          'success',
-        );
-      }
       const { data: task } = await storageFilesSlice.attachStorageFileToTask({
         taskId: taskForm.task.task.task_id,
         storageFileId: data.data.storage_file_id,
       });
       dispatch(TaskFormSlice.updateTask(task.data));
+      dispatch(
+        uploadStorageFile({
+          storageFileId: data.data.storage_file_id,
+          file: props.file,
+          onUploadProgress: (event: any) => {
+            const progressPercent = Math.round((100 * event.loaded) / event.total);
+            dispatch(TaskFormSlice.setProgress(progressPercent));
+          },
+        }),
+      );
+      alert(
+        `Файл "${data.data.name_original.slice(0, 25)}${
+          data.data.name_original.length > 25 ? '...' : ''
+        }" успешно загружен`,
+        'success',
+      );
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
@@ -98,6 +108,21 @@ export const downloadStorageFile = createAsyncThunk(
   },
 );
 
+// Привязать файл к задаче
+export const attachStorageToTask = createAsyncThunk(
+  'storageFile/attachStorageToTask',
+  async (props: attachFileDetailsProps, { rejectWithValue }) => {
+    try {
+      const { data } = await storageFilesSlice.attachStorageFileToTask(props);
+      return data;
+    } catch (rejectedValueOrSerializedError) {
+      const error = miniSerializeError(rejectedValueOrSerializedError);
+      alert(`Не удалось загрузить файл. Ошибка: "${error.message}"`, 'error');
+      return rejectWithValue(error);
+    }
+  },
+);
+
 // Удалить файл
 export const deleteStorageFile = createAsyncThunk(
   'storageFile/deleteStorageFile',
@@ -110,10 +135,13 @@ export const deleteStorageFile = createAsyncThunk(
         {
           text: 'отменить',
           action: () => {
-            storageFilesSlice.attachStorageFileToTask({
-              taskId: taskForm.task.task.task_id,
-              storageFileId: data.data.storage_file_id,
-            });
+            dispatch(
+              attachStorageToTask({
+                taskId: taskForm.task.task.task_id,
+                storageFileId: data.data.storage_file_id,
+              }),
+            );
+            dispatch(getTaskByIdAsync(taskForm.task.task.task_id));
           },
         },
       ]);

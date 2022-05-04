@@ -5,7 +5,7 @@
   flex-wrap: wrap;
   width: 160px;
   height: 120px;
-  margin: 8px 0;
+  margin: 10px 0;
   &:hover {
     .dropdown {
       opacity: 1;
@@ -52,9 +52,10 @@
 }
 
 .imagesModal {
+  position: absolute;
+  left: 0;
+  bottom: 0;
   max-height: 50vh !important;
-  max-width: 60vw !important;
-  position: relative;
   :global(.ant-modal-content) {
     background-color: transparent !important;
     box-shadow: none !important;

@@ -49,9 +49,11 @@ export {
 } from './fullTaskInfo/slice';
 
 export {
+  imagePreview,
   getStorageFiles,
   getStorageImages,
   isVisibleStorageFiles,
+  progressBar,
   getStorageCount,
 } from './storageFiles/selector';
 
@@ -59,10 +61,15 @@ export {
   createStorageFile,
   downloadStorageFile,
   deleteStorageFile,
+  getStorageFileDetails,
 } from './storageFiles/asyncActions';
 
 export { showFormCreateChecklist, hiddenFormCreateChecklist } from './checkList/uiSlice';
-export { showFormStorageFiles, hiddenFormStorageFiles } from './storageFiles/uiSlice';
+export {
+  showFormStorageFiles,
+  hiddenFormStorageFiles,
+  setProgress,
+} from './storageFiles/uiSlice';
 
 export const taskFormReducer = combineReducers({
   storageFile: StorageFilesReducer,

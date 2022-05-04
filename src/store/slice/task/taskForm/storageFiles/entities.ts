@@ -18,6 +18,7 @@ export type createStorageFileProps = {
 export type uploadStorageFileProps = {
   storageFileId: string,
   file: any,
+  onUploadProgress: any,
 }
 
 export type getStorageFileDetailsProps = {
