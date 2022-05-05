@@ -68,7 +68,9 @@ const TaskModal = (props: ModalProps) => {
             </div>
           </div>
           <div className={styles.leftColumn}>
-            {task && <Description description={task.description} taskId={task.task_id} />}
+            <div className={styles.description}>
+              {task && <Description description={task.description} taskId={task.task_id} />}
+            </div>
             <div className={styles.checklist}>
               <CheckListArea />
             </div>
