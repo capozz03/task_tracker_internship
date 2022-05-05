@@ -3,6 +3,7 @@ export {
   setIsFiltersMenuShow,
   setFilterAssignedTo,
   setFilterKeyword,
+  setTags,
 } from './slice';
 
 export {

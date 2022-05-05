@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from './index.module.scss';
 import { TTag } from 'store/slice/task/entities';
+import XIcon from 'shared/ui/icons/XIcon';
 
 type TagProps = {
-  tag: TTag
+  tag: TTag,
+  deleteHandle?: () => void,
 }
 
-const Tag = ({ tag }: TagProps) => (
+const Tag: FC<TagProps> = ({ tag, deleteHandle }) => (
   <span
     className={styles.mark}
     style={{
@@ -16,6 +18,14 @@ const Tag = ({ tag }: TagProps) => (
     }}
   >
     { tag.name }
+    {
+        deleteHandle && (
+          <button onClick={deleteHandle} type="button" className={styles.btnDelete}>
+            <XIcon />
+          </button>
+        )
+      }
+
   </span>);
 
 export default Tag;

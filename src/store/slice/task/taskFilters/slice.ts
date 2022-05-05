@@ -1,6 +1,6 @@
 import { RequestStatuses } from 'shared';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TTaskSearch, TTaskSearchAssignedToMe, TTaskSearchKeyword } from '../entities';
+import { TTag, TTaskSearch, TTaskSearchAssignedToMe, TTaskSearchKeyword } from '../entities';
 
 export type TFiltersSlice = {
   filters: TTaskSearch;
@@ -32,9 +32,16 @@ const filtersSlice = createSlice({
     setFilterKeyword(state, { payload }: PayloadAction<TTaskSearchKeyword>) {
       state.filters.search = payload || null;
     },
+    setTags(state: TFiltersSlice, { payload: tags }: PayloadAction<TTag[]>) {
+      state.filters.tag_id = tags.map((tag) => tag.task_tag_id);
+    },
   },
   extraReducers: {},
 });
 
-export const { setFilterAssignedTo, setIsFiltersMenuShow, setFilterKeyword } = filtersSlice.actions;
+export const {
+  setFilterAssignedTo,
+  setIsFiltersMenuShow,
+  setFilterKeyword,
+  setTags } = filtersSlice.actions;
 export const filtersReducer = filtersSlice.reducer;
