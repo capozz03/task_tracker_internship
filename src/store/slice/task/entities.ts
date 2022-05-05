@@ -74,6 +74,32 @@ export type TTaskForm = {
   fields: TTaskFormField[];
 };
 
+export type TModifications = {
+  storage_file_id: string;
+  type: string;
+  name_original: string;
+  content_type: string;
+  size: number;
+  uploaded: boolean;
+  image_thumbnail: null;
+  image_width: null;
+  image_height: null;
+  modifications: [];
+};
+
+export type TStorageFiles = {
+  storage_file_id: string;
+  type: string;
+  name_original: string;
+  content_type: string;
+  size: number;
+  uploaded: boolean;
+  image_thumbnail: null;
+  image_width: null;
+  image_height: null;
+  modifications: TModifications[];
+};
+
 export type TTaskCheckListItem = {
   check_list_item_id: string;
   message: string;
@@ -91,10 +117,10 @@ export type TTaskCheckList = {
 };
 
 export type TSwapItemInChecklist = {
-  checkListId: string;
-  checkListItemIdOne: number;
-  checkListItemIdTwo: number;
-};
+  checkListId: string,
+  checkListItemIdOne: number,
+  checkListItemIdTwo: number,
+}
 
 export type TTask = {
   task_id: string;
@@ -113,7 +139,7 @@ export type TTask = {
   tags: TTagsTask[];
   progress: TTaskProgress | null;
   check_lists?: TTaskCheckList[];
-  storage_files?: any[];
+  storage_files?: TStorageFiles[] | null;
   storage_files_meta: {
     total: number;
   };
@@ -179,3 +205,18 @@ export type TTaskWithRelation = {
     updated: string;
   };
 };
+
+export type TFilterAssignedToReducer = {
+  status: RequestStatuses;
+  error: Error | null;
+  filterAssignedTo: string | null;
+}
+
+export type TTaskWithRelationStorage = {
+  data: TTask,
+  relation: {
+    task_to_storage_file_id: string,
+    task_id: string,
+    storage_file_id: string,
+  }
+}

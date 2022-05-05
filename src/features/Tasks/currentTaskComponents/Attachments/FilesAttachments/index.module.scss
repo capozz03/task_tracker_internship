@@ -1,0 +1,49 @@
+@import 'src/shared/assets/styles';
+
+.taskFiles__item {
+  position: relative;
+  width: 245px;
+  height: 80px;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 8px 8px 8px 0;
+  &:hover {
+    border: 1px solid $colors-blue !important;
+    .dropdown {
+      opacity: 1;
+    }
+  }
+}
+
+.taskFiles__inner {
+  display: flex;
+  align-items: center;
+  align-content: center;
+}
+
+.taskFiles__icon {
+  margin-right: 16px;
+}
+
+.taskFiles__content {
+  & .taskFiles__name {
+    font: $h6-medium;
+    color: $grey-900;
+    margin-bottom: 8px;
+    max-width: 150px;
+    max-height: 32px;
+    overflow-wrap: break-word;
+    overflow: hidden;
+  }
+  & .taskFiles__size {
+    font: $h6-regular;
+    color: $grey-600;
+  }
+}
+
+.dropdown {
+  opacity: 0;
+  position: absolute;
+  right: 10px;
+  top: 20px;
+}

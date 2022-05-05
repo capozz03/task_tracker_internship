@@ -1,0 +1,44 @@
+@import 'src/shared/assets/styles';
+
+.headerCarousel {
+  position: relative;
+  width: 100%;
+  background-color: #fff;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 28px 35px;
+  .headerTitle {
+    font: $h4-medium;
+    color: $grey-900;
+  }
+  .icons {
+    display: flex;
+    .deleteIcon,
+    .downloadIcon,
+    .closeIcon {
+      box-shadow: none;
+      border: none;
+    }
+    .deleteIcon {
+      font-size: 20px;
+      color: #ff9d9d;
+      margin-right: 10px;
+    }
+    .downloadIcon {
+      font-size: 20px;
+      margin-right: 20px;
+    }
+    .separator {
+      width: 10px;
+      height: 30px;
+      border-left: 1px solid $grey-400;
+    }
+    .closeIcon {
+      margin-left: 10px;
+      font-size: 20px;
+    }
+  }
+}
