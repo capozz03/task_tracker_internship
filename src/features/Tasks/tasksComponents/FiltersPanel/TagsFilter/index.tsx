@@ -13,6 +13,7 @@ const TagsFilter = () => {
   const [tagsSelected, setTagsSelected] = useState<TTag[]>([]);
   const isLoading = useSelector(TagsSlice.isLoadingTags);
   const tags = useSelector(TagsSlice.getTagsSelector);
+  const tagsFilterSelected = useSelector(TaskFilters.getTags);
   const debouncedSearch: string = useDebounce<string>(search, 500);
   const dispatch = useDispatch();
   const handleSearch = (e: string) => {
@@ -44,6 +45,12 @@ const TagsFilter = () => {
   useEffect(() => {
     dispatch(TaskFilters.setTags(tagsSelected));
   }, [tagsSelected]);
+
+  useEffect(() => {
+    if (tagsFilterSelected.length === 0 && tagsSelected.length !== 0) {
+      setTagsSelected([]);
+    }
+  }, [tagsFilterSelected]);
 
   return (
     <>
