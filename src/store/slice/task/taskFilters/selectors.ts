@@ -30,3 +30,5 @@ export const getFilterPriorityIDArray = createSelector(
   getFilters,
   ({ priority_id }) => priority_id || [],
 );
+
+export const getTags = createSelector(getFilters, ({ tag_id }) => tag_id || []);

@@ -178,7 +178,7 @@ export type TTaskSearch = {
   assign_user_id?: string[];
   assigned_to_me?: boolean | null;
   storage_files_gte?: number | null;
-  tag_id?: string[];
+  tag_id?: string[] | null;
   role_id?: string[];
   role_id_for_me?: string[];
   priority_id?: string[] | null;

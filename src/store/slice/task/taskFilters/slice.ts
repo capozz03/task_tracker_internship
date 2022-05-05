@@ -14,6 +14,7 @@ const initialState = {
     assigned_to_me: null,
     search: null,
     storage_files_gte: null,
+    tag_id: null,
     progress_gte: null,
     priority_id: null,
   },
