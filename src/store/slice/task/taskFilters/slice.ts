@@ -1,6 +1,6 @@
 import { RequestStatuses } from 'shared';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TTaskSearch } from '../entities';
+import { TTaskSearch, TTag } from '../entities';
 
 export type TFiltersSlice = {
   filters: TTaskSearch;
@@ -35,6 +35,9 @@ const filtersSlice = createSlice({
     setFilterKeyword(state, { payload }: PayloadAction<string>) {
       state.filters.search = payload || null;
     },
+    setTags(state: TFiltersSlice, { payload: tags }: PayloadAction<TTag[]>) {
+      state.filters.tag_id = tags.map((tag) => tag.task_tag_id);
+    },
     setFilterAttachmentsGTE(state, { payload }: PayloadAction<number>) {
       state.filters.storage_files_gte = payload || null;
     },
@@ -57,6 +60,7 @@ export const {
   setFilterAssignedTo,
   setIsFiltersMenuShow,
   setFilterKeyword,
+  setTags,
   setFilterAttachmentsGTE,
   setFilterProgressGTE,
   setFilterPriorityIDArray,

@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './index.module.scss';
 import SearchInput from './KeywordInput';
 import ResetFiltersButton from './ResetFiltersButton';
+import TagsFilter from 'features/Tasks/tasksComponents/FiltersPanel/TagsFilter';
 import PriorityFilter from './PriorityFilter';
 import AttachmentsFilter from './AttachmentsFilter';
 import ProgressFilter from './ProgressFilter';
@@ -14,6 +15,7 @@ const FiltersPanel = () => (
     </div>
     <div>
       <div className={styles.labelText}>Метки</div>
+      <TagsFilter />
     </div>
     <div>
       <div className={styles.labelText}>Другие</div>
