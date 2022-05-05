@@ -1,0 +1,28 @@
+@import "src/shared/assets/styles";
+
+.category {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.title {
+    display: inline-block;
+    min-width: 160px;
+    margin: 0;
+    padding: 0 0 0 20px;
+    font: $p-regular;
+    color: $grey-700;
+}
+
+.labels {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 8px;
+}

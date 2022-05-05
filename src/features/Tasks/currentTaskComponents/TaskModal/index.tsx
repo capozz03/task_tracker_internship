@@ -8,27 +8,25 @@ import {
   TaskInboxSlice,
   TaskCompletedSlice,
   TaskFilters,
-  UserSlice,
 } from 'store/slice';
 import Title from '../Title';
 import MenuHeader from 'features/Tasks/currentTaskComponents/MenuHeader';
 import CheckListArea from 'features/Tasks/currentTaskComponents/CheckListArea';
 import Description from 'features/Tasks/tasksComponents/Description';
-import MembersChanger from 'features/Task/taskModalComponents/MembersChanger';
-import { isAuthor, isResponsible } from 'shared/helpers';
+import MembersPanel from './MembersPanel';
+import { ArrowIcon } from 'shared/ui/icons';
 // import Details from 'features/Tasks/currentTaskComponents/Details';
 
 const TaskModal = (props: ModalProps) => {
   const dispatch = useDispatch();
   const task = useSelector(TaskFormSlice.getTask);
+  const roles = useSelector(TaskFormSlice.getRoles);
   const status = useSelector(TaskFormSlice.getTaskFormStatusTask);
   const isLoading = useSelector(TaskFormSlice.isLoadingStatus);
   const paginationInbox = useSelector(TaskInboxSlice.getPagination);
   const paginationInWork = useSelector(TaskInWorkSlice.getPagination);
   const paginationInCompleted = useSelector(TaskCompletedSlice.getPagination);
   const filters = useSelector(TaskFilters.getFilters);
-  const roles = useSelector(TaskFormSlice.getRoles);
-  const currentUserId = useSelector(UserSlice.userId);
 
   const cancelHandle = () => {
     if (status?.name === 'Создана') {
@@ -60,6 +58,16 @@ const TaskModal = (props: ModalProps) => {
     }
     dispatch(TaskFormSlice.hiddenTaskForm());
   };
+
+  const membersHeader = () => (
+    <div className={styles.memberHeader}>
+      <ArrowIcon />
+      <p>Участники</p>
+      <hr />
+      <span>{ (roles?.observers.length || 0) + (roles?.responsible.length || 0) }</span>
+    </div>
+  );
+
   return (
     <Modal {...props} onCancel={cancelHandle} width="75%" footer={null}>
       <Spin spinning={isLoading}>
@@ -81,35 +89,16 @@ const TaskModal = (props: ModalProps) => {
             <div>actions</div>
           </div>
           <div className={styles.rightColumn}>
-            <Collapse className={styles.collapse} activeKey={[1, 2]} bordered={false}>
-              <Collapse.Panel className={styles.collapseItem} key="1" header="Детали">
+            <Collapse
+              className={styles.collapse}
+              defaultActiveKey={['details', 'members']}
+              bordered={false}
+            >
+              <Collapse.Panel className={styles.collapseItem} key="details" header="Детали">
                 {/* {task && <Details />} */}
               </Collapse.Panel>
-              <Collapse.Panel className={styles.collapseItem} key="2" header="Участники">
-                <div>
-                  Автор:
-                  {' '}
-                  { `${roles?.author?.userId} - ${roles?.author?.userName}` }
-                </div>
-                <div>
-                  Ответственный:
-                  {' '}
-                  { `${roles?.responsible.map((e) => `${e.userId} - ${e.userName}`).join(' / ')}` }
-                </div>
-                <div>
-                  Исполнитель:
-                  {' '}
-                  { `${roles?.performers.map((e) => `${e.userId} - ${e.userName}`).join(' / ')}` }
-                </div>
-                <div>
-                  Наблюдатели:
-                  {' '}
-                  { `${roles?.observers.map((e) => `${e.userId} - ${e.userName}`).join(' / ')}` }
-                </div>
-                {
-                  (isAuthor(currentUserId, roles) || isResponsible(currentUserId, roles))
-                  && <MembersChanger />
-                }
+              <Collapse.Panel className={styles.collapseItem} key="members" header={membersHeader()} showArrow={false}>
+                <MembersPanel />
               </Collapse.Panel>
             </Collapse>
           </div>

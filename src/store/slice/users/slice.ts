@@ -3,21 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatuses } from 'shared';
 import { usersSliceActions } from './actions';
 import { getUsersListPage } from './asyncActions';
-
-const initialState = {
-  data: {
-    pagination: {
-      items_count: 0,
-      items_total: 0,
-      page_current: 1,
-      page_total: 0,
-      per_page: 20,
-    },
-    data: [],
-  },
-  status: RequestStatuses.IDLE,
-  error: null,
-} as TUsersState;
+import { initialState } from './initialState';
 
 const usersSlice = createSlice({
   name: 'users',

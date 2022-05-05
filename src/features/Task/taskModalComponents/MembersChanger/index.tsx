@@ -109,7 +109,9 @@ const MembersChanger = () => {
       visible={visible}
       onVisibleChange={onVisibleChange}
     >
-      <button type="button">Users</button>
+      <button type="button" className={styles.addMemberButton}>
+        <span>+ Добавить участника</span>
+      </button>
     </Dropdown>);
 };
 
