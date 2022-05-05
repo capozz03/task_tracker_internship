@@ -15,6 +15,10 @@ const ProgressFilter = () => {
   const [minProgress, setMinProgress] = useState(storeMinProgress);
   const debouncedMinProgress = useDebounce(minProgress, 500);
 
+  const onChange = (value: number) => {
+    setMinProgress(value);
+  };
+
   useEffect(() => {
     dispatch(TaskFilters.setFilterProgressGTE(debouncedMinProgress));
   }, [debouncedMinProgress]);
@@ -22,10 +26,6 @@ const ProgressFilter = () => {
   useEffect(() => {
     setMinProgress(storeMinProgress);
   }, [storeMinProgress]);
-
-  const onChange = (value: number) => {
-    setMinProgress(value);
-  };
 
   return (
     <Slider
