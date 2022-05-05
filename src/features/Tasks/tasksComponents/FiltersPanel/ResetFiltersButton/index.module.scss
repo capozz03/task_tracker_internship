@@ -1,9 +1,9 @@
 @import "src/shared/assets/styles";
 
-:global(.ant-btn-default) {
-  height: 36px;
-  border: 1px solid $grey-400;
-  border-radius: 8px;
+:global(.ant-btn) {
+  height: 36px !important;
+  border: 1px solid $grey-400 !important;
+  border-radius: 8px !important;
 
   .text {
     font: $p-regular;

@@ -3,6 +3,7 @@ import CardChecklistCount from './CardChecklistCount';
 import CardAttachmentsCount from './CardAttachmentsCount';
 import CardName from './CardName';
 import CardNameText from './CardNameText';
+import Checkbox from './Checkbox';
 import DateWithIconClock from './DateWithIconClock';
 import DropdownMenu from './DropdownMenu';
 import FilterAssignedTo from './FilterAssignedTo';
@@ -24,6 +25,7 @@ export {
   CardAttachmentsCount,
   CardChecklistCount,
   CardNameText,
+  Checkbox,
   DateWithIconClock,
   DropdownMenu,
   FilterAssignedTo,

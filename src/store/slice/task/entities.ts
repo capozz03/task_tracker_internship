@@ -171,21 +171,19 @@ export type TTaskItemResponse = {
 };
 
 export type TSortType = 'date~DESC' | 'title~ASC';
-export type TTaskSearchKeyword = string;
-export type TTaskSearchAssignedToMe = boolean | null;
 
 export type TTaskSearch = {
   sort?: TSortType;
-  search?: TTaskSearchKeyword | null;
+  search?: string | null;
   assign_user_id?: string[];
-  assigned_to_me?: TTaskSearchAssignedToMe;
-  storage_files_gte?: number;
+  assigned_to_me?: boolean | null;
+  storage_files_gte?: number | null;
   tag_id?: string[];
   role_id?: string[];
   role_id_for_me?: string[];
-  priority_id?: string[];
+  priority_id?: string[] | null;
   status_id?: string[];
-  progress_gte?: string;
+  progress_gte?: number | null;
   relation_type?: string;
   relation_id?: string;
   page?: number;

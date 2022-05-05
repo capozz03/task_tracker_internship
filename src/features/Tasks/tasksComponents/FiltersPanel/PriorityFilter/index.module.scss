@@ -1,0 +1,27 @@
+@import "src/shared/assets/styles";
+
+
+.wrapper {
+  display: flex !important;
+  flex-direction: column;
+
+  * {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+    font: $p-regular !important;
+    color: $grey-800 !important;
+    letter-spacing: 0.1px;
+  }
+
+  & > * {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 !important;
+  }
+
+  :global(.ant-checkbox) {
+    order: 9;
+  }
+}

@@ -7,7 +7,12 @@
   justify-content: flex-start;
   align-items: flex-start;
 
+  & > * > *:not(:first-child){
+    margin: 0 8px;
+  }
+
   & > * {
+    width: 100%;
     margin: 16px 0;
   }
 

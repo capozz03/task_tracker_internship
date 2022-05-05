@@ -18,10 +18,10 @@
     background-color: $colors-salad;
   }
 
-  .white{
+  .white {
     background-color: $grey-600;
   }
-  
+
   .dot {
     width: 8px;
     height: 8px;
@@ -30,11 +30,7 @@
   }
 
   .text {
-    font-family: 'Roboto', sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 16px;
+    font: $p-roboto-regular;
     color: $grey-600;
   }
 }
