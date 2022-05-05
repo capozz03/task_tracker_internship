@@ -1,3 +1,5 @@
+import ModalDelete from './ui/ModalDelete';
+
 export {
   routes,
   clientCookies,
@@ -11,3 +13,4 @@ export {
 export { $api, $apiTask } from './api';
 export * as icons from './ui/icons';
 export { alert } from './ui/Alert';
+export { ModalDelete };
