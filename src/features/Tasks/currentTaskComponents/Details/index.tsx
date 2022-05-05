@@ -46,12 +46,10 @@ const Details = () => {
           <span className={styles.itemTitleText}>Статус</span>
           <span>
             { task
-              && (
-                <TaskStatus
-                  defaultValue={task.status.name}
-                  onChange={statusHandler}
-                />
-              )}
+              && (<TaskStatus
+                defaultValue={task.status.name}
+                onChange={statusHandler}
+              />)}
 
           </span>
         </div>

@@ -8,12 +8,15 @@ import {
   TaskInboxSlice,
   TaskCompletedSlice,
   TaskFilters,
+  UserSlice,
 } from 'store/slice';
 import Title from '../Title';
 import MenuHeader from 'features/Tasks/currentTaskComponents/MenuHeader';
 import CheckListArea from 'features/Tasks/currentTaskComponents/CheckListArea';
 import Description from 'features/Tasks/tasksComponents/Description';
-import Details from 'features/Tasks/currentTaskComponents/Details';
+import MembersChanger from 'features/Task/taskModalComponents/MembersChanger';
+import { isAuthor, isResponsible } from 'shared/helpers';
+// import Details from 'features/Tasks/currentTaskComponents/Details';
 
 const TaskModal = (props: ModalProps) => {
   const dispatch = useDispatch();
@@ -24,6 +27,8 @@ const TaskModal = (props: ModalProps) => {
   const paginationInWork = useSelector(TaskInWorkSlice.getPagination);
   const paginationInCompleted = useSelector(TaskCompletedSlice.getPagination);
   const filters = useSelector(TaskFilters.getFilters);
+  const roles = useSelector(TaskFormSlice.getRoles);
+  const currentUserId = useSelector(UserSlice.userId);
 
   const cancelHandle = () => {
     if (status?.name === 'Создана') {
@@ -78,10 +83,33 @@ const TaskModal = (props: ModalProps) => {
           <div className={styles.rightColumn}>
             <Collapse className={styles.collapse} activeKey={[1, 2]} bordered={false}>
               <Collapse.Panel className={styles.collapseItem} key="1" header="Детали">
-                {task && <Details />}
+                {/* {task && <Details />} */}
               </Collapse.Panel>
               <Collapse.Panel className={styles.collapseItem} key="2" header="Участники">
-                <div>contributors</div>
+                <div>
+                  Автор:
+                  {' '}
+                  { `${roles?.author?.userId} - ${roles?.author?.userName}` }
+                </div>
+                <div>
+                  Ответственный:
+                  {' '}
+                  { `${roles?.responsible.map((e) => `${e.userId} - ${e.userName}`).join(' / ')}` }
+                </div>
+                <div>
+                  Исполнитель:
+                  {' '}
+                  { `${roles?.performers.map((e) => `${e.userId} - ${e.userName}`).join(' / ')}` }
+                </div>
+                <div>
+                  Наблюдатели:
+                  {' '}
+                  { `${roles?.observers.map((e) => `${e.userId} - ${e.userName}`).join(' / ')}` }
+                </div>
+                {
+                  (isAuthor(currentUserId, roles) || isResponsible(currentUserId, roles))
+                  && <MembersChanger />
+                }
               </Collapse.Panel>
             </Collapse>
           </div>

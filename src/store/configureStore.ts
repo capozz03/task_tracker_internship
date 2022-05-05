@@ -7,9 +7,6 @@ import {
   TaskCompletedSlice,
   TaskInboxSlice,
   TaskFormSlice,
-  TaskCompletedSlice,
-  TaskInboxSlice,
-  TaskFormSlice,
   TaskFilters,
 } from './slice';
 

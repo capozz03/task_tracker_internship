@@ -1,6 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { ChecklistReducer } from 'store/slice/task/taskForm/checkList';
 import { taskFormDataReducer } from 'store/slice/task/taskForm/fullTaskInfo/slice';
+import { taskFormRolesReducer } from './roles/slice';
 
 export { getTaskByIdAsync } from './getTaskById';
 export type { TTasksReducer, TTask } from 'store/slice/task/entities';
@@ -20,6 +21,7 @@ export {
   getTask,
   getTaskFormError,
   getTaskFormStatus,
+  getTaskFormRoles,
   getTaskFormTitle,
   isLoadingStatus,
   getTaskFormStatusTask,
@@ -50,9 +52,14 @@ export {
   swapItemInChecklist,
 } from './fullTaskInfo/slice';
 
+export { taskFormRolesReducer, taskFormRolesSelector, setRoles } from './roles/slice';
+export { addUserRole, removeUserRole } from './roles/asyncActions';
+export { getRoles, isLoadingRolesStatus } from './roles/selector';
+
 export { showFormCreateChecklist, hiddenFormCreateChecklist } from './checkList/uiSlice';
 
 export const taskFormReducer = combineReducers({
   checkList: ChecklistReducer,
   task: taskFormDataReducer,
+  roles: taskFormRolesReducer,
 });
