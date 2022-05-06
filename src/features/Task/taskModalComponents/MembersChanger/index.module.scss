@@ -186,7 +186,7 @@ ul.menu li.lastElement {
 .addMemberButton {
     margin: 25px 0;
     padding: 0;
-    padding-left: 20px;
+    padding-left: 30px;
 
     border: none;
     background-color: inherit;
@@ -201,4 +201,25 @@ ul.menu li.lastElement {
 
 .addMemberButton:hover > span {
     color: $main-blue-hover;
+}
+
+.performerChooseBtn {
+    margin: 0;
+    margin-top: 3px;
+    padding: 0;
+    border: none;
+    background-color: inherit;
+}
+
+.performerChooseBtn > span {
+    font: $p-regular;
+    line-height: 24px;
+    color: $grey-700;
+    border-bottom: 1px solid $grey-700;
+    cursor: pointer;
+}
+
+.performerChooseBtn:hover > span {
+    color: $grey-900;
+    border-bottom-color: $grey-900;
 }

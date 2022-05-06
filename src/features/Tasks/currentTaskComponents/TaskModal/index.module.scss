@@ -126,6 +126,8 @@
   justify-content: space-between;
   align-items: center;
   gap: 10px;
+  background-color: inherit;
+  border: none;
 }
 
 .memberHeader > * {
@@ -136,10 +138,11 @@
 .memberHeader > svg {
   width: 16px;
   height: 12px;
+  transition: all 0.2s linear;
 }
 
-.memberHeader > svg.arrowRotate {
-  transform: rotate(90);
+.memberHeader.arrowRotate > svg {
+  transform: rotate(-90deg);
 }
 
 .memberHeader > svg > path {

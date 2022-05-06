@@ -14,8 +14,8 @@ import MenuHeader from 'features/Tasks/currentTaskComponents/MenuHeader';
 import CheckListArea from 'features/Tasks/currentTaskComponents/CheckListArea';
 import Description from 'features/Tasks/tasksComponents/Description';
 import MembersPanel from './MembersPanel';
-import { ArrowIcon } from 'shared/ui/icons';
-// import Details from 'features/Tasks/currentTaskComponents/Details';
+import Details from 'features/Task/taskModalComponents/Details';
+import { CollapseHeader, CollapseMembersHeader } from './MembersPanel/MemberPanelHeaders';
 
 const TaskModal = (props: ModalProps) => {
   const dispatch = useDispatch();
@@ -59,15 +59,6 @@ const TaskModal = (props: ModalProps) => {
     dispatch(TaskFormSlice.hiddenTaskForm());
   };
 
-  const membersHeader = () => (
-    <div className={styles.memberHeader}>
-      <ArrowIcon />
-      <p>Участники</p>
-      <hr />
-      <span>{ (roles?.observers.length || 0) + (roles?.responsible.length || 0) }</span>
-    </div>
-  );
-
   return (
     <Modal {...props} onCancel={cancelHandle} width="75%" footer={null}>
       <Spin spinning={isLoading}>
@@ -94,10 +85,20 @@ const TaskModal = (props: ModalProps) => {
               defaultActiveKey={['details', 'members']}
               bordered={false}
             >
-              <Collapse.Panel className={styles.collapseItem} key="details" header="Детали">
-                {/* {task && <Details />} */}
+              <Collapse.Panel
+                className={styles.collapseItem}
+                key="details"
+                header={CollapseHeader({ name: 'Детали', children: '' })}
+                showArrow={false}
+              >
+                <Details />
               </Collapse.Panel>
-              <Collapse.Panel className={styles.collapseItem} key="members" header={membersHeader()} showArrow={false}>
+              <Collapse.Panel
+                className={styles.collapseItem}
+                key="members"
+                header={CollapseMembersHeader({ roles })}
+                showArrow={false}
+              >
                 <MembersPanel />
               </Collapse.Panel>
             </Collapse>

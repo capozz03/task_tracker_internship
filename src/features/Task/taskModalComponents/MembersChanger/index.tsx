@@ -1,25 +1,24 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { usersList, getUsersListPage, usersListPagination, resetUserList, loadingStatus } from 'store/slice/users';
-
 import { searchIcons } from 'shared/ui/icons';
 import { UserAvatar } from 'features/Tasks/tasksComponents';
-
 import { Menu, Dropdown, Input, Spin } from 'antd';
 import 'antd/dist/antd.css';
 import styles from './index.module.scss';
-
 import { InView } from 'react-intersection-observer';
 import { RequestStatuses, useDebounce } from 'shared';
-
 import MemberChangerPopover from './Popover';
 import { TUser } from 'store/slice/user/entities';
 import { TaskFormSlice } from 'store/slice';
 
+type TProps = {
+  buttonType: 'blue' | 'gray';
+}
+
 const { SearchInputIcon, SearchArrowIcon } = searchIcons;
 
-const MembersChanger = () => {
+const MembersChanger = ({ buttonType }: TProps) => {
   const [value, setValue] = useState<string>('');
   const [visible, setVisible] = useState<boolean>(false);
   const [members, setMembers] = useState<TUser[]>([]);
@@ -30,6 +29,17 @@ const MembersChanger = () => {
   const roles = useSelector(TaskFormSlice.getTaskFormRoles);
   const pagination = useSelector(usersListPagination);
   const isLoading = useSelector(loadingStatus);
+
+  const buttonParams = {
+    blue: {
+      style: styles.addMemberButton,
+      title: '+ Добавить участника',
+    },
+    gray: {
+      style: styles.performerChooseBtn,
+      title: 'Выбрать участника',
+    },
+  };
 
   useEffect(() => {
     if (users) {
@@ -109,10 +119,11 @@ const MembersChanger = () => {
       visible={visible}
       onVisibleChange={onVisibleChange}
     >
-      <button type="button" className={styles.addMemberButton}>
-        <span>+ Добавить участника</span>
+      <button type="button" className={buttonParams[buttonType].style}>
+        <span>{ buttonParams[buttonType].title }</span>
       </button>
-    </Dropdown>);
+    </Dropdown>
+  );
 };
 
 export default MembersChanger;

@@ -44,14 +44,16 @@ const Details = () => {
       <div className={styles.container}>
         <div className={styles.item}>
           <span className={styles.itemTitleText}>Статус</span>
-          <span>
+          {/* <span>
             { task
-              && (<TaskStatus
-                defaultValue={task.status.name}
-                onChange={statusHandler}
-              />)}
+              && (
+                <TaskStatus
+                  defaultValue={task.status.name}
+                  onChange={statusHandler}
+                />
+              )}
 
-          </span>
+          </span> */}
         </div>
         <div className={styles.item}>
           <span className={styles.itemTitleText}>Назначена</span>

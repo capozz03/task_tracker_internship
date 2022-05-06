@@ -12,8 +12,17 @@
     display: inline-block;
     min-width: 160px;
     margin: 0;
-    padding: 0 0 0 20px;
+    margin-top: 5px;
+    padding: 0;
+    padding-left: 30px;
     font: $p-regular;
+}
+
+.titleDetails {
+    color: $grey-800;
+}
+
+.titleMembers {
     color: $grey-700;
 }
 

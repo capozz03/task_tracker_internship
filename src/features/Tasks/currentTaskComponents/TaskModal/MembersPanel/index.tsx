@@ -1,5 +1,5 @@
 import React from 'react';
-import MemberCategory from 'features/Task/taskModalComponents/MemberCategory';
+import DetailCategory from 'features/Task/taskModalComponents/DetailCategory';
 import MembersChanger from 'features/Task/taskModalComponents/MembersChanger';
 import UserLabel from 'features/Task/taskModalComponents/UserLabel';
 import { useSelector } from 'react-redux';
@@ -18,7 +18,7 @@ const MembersPanel = () => {
       {
         roles?.author
         && (
-          <MemberCategory name="Автор">
+          <DetailCategory name="Автор" type="members">
             <UserLabel
               key={roles.author.userId}
               user={roles.author}
@@ -26,13 +26,13 @@ const MembersPanel = () => {
               roleName="Автор"
               canRemove={false}
             />
-          </MemberCategory>
+          </DetailCategory>
         )
       }
       {
         roles?.observers && roles.observers.length !== 0
         && (
-          <MemberCategory name="Наблюдатель">
+          <DetailCategory name="Наблюдатель" type="members">
             {
               roles.observers.map((member) => (
                 <UserLabel
@@ -44,13 +44,13 @@ const MembersPanel = () => {
                 />
               ))
             }
-          </MemberCategory>
+          </DetailCategory>
         )
       }
       {
         roles?.responsible && roles.responsible.length !== 0
         && (
-          <MemberCategory name="Ответственный">
+          <DetailCategory name="Ответственный" type="members">
             {
               roles.responsible.map((member) => (
                 <UserLabel
@@ -62,12 +62,14 @@ const MembersPanel = () => {
                 />
               ))
             }
-          </MemberCategory>
+          </DetailCategory>
         )
       }
       {
         isAuthorOrResponsible
-        && <MembersChanger />
+        && (
+          <MembersChanger buttonType="blue" />
+        )
       }
     </>
   );
