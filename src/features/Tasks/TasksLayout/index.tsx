@@ -13,6 +13,7 @@ import TaskModal from '../currentTaskComponents/TaskModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { TaskFilters, TaskFormSlice } from 'store/slice';
 import FiltersPanel from '../tasksComponents/FiltersPanel';
+import ModalDeleteTask from 'shared/ui/ModalDeleteTask';
 
 const { Sider, Header, Content } = Layout;
 const { getIsFiltersMenuShow, setIsFiltersMenuShow } = TaskFilters;
@@ -62,6 +63,7 @@ const TasksLayout = () => {
         </Layout>
       </Layout>
       <TaskModal visible={isVisibleForm} />
+      <ModalDeleteTask />
     </>
   );
 };
