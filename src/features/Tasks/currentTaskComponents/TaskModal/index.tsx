@@ -74,7 +74,6 @@ const TaskModal = (props: ModalProps) => {
             <div className={styles.checklist}>
               <CheckListArea />
             </div>
-            <div>checklists</div>
             {task && <Attachments taskId={task.task_id} />}
             <div>actions</div>
           </div>
