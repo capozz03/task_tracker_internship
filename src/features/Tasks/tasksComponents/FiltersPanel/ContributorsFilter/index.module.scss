@@ -1,0 +1,10 @@
+
+.contributorsSelect {
+  width: 100%;
+
+  :global(.ant-select-selector) {
+    border-top: none !important;
+    border-right: none !important;
+    border-left: none !important;
+  }
+}

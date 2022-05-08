@@ -13,6 +13,7 @@ const initialState = {
   filters: {
     assigned_to_me: null,
     search: null,
+    assign_user_id: null,
     storage_files_gte: null,
     tag_id: null,
     progress_gte: null,
@@ -35,6 +36,9 @@ const filtersSlice = createSlice({
     },
     setFilterKeyword(state, { payload }: PayloadAction<string>) {
       state.filters.search = payload || null;
+    },
+    setFilterAssignUserIDArray(state, { payload }: PayloadAction<string[]>) {
+      state.filters.assign_user_id = payload.length ? payload : null;
     },
     setTags(state: TFiltersSlice, { payload: tags }: PayloadAction<TTag[]>) {
       state.filters.tag_id = tags.map((tag) => tag.task_tag_id);
@@ -61,6 +65,7 @@ export const {
   setFilterAssignedTo,
   setIsFiltersMenuShow,
   setFilterKeyword,
+  setFilterAssignUserIDArray,
   setTags,
   setFilterAttachmentsGTE,
   setFilterProgressGTE,
