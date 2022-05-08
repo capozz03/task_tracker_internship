@@ -11,6 +11,10 @@ export const getIsFiltersMenuShow = createSelector(
   getFiltersSliceStore,
   ({ isFiltersMenuShow }) => isFiltersMenuShow,
 );
+export const getIsFiltersResetButtonShow = createSelector(
+  getFiltersSliceStore,
+  ({ filters }) => Object.values(filters).some((value) => !!value),
+);
 
 // Logic
 export const getFilterAssignedTo = createSelector(
@@ -34,5 +38,4 @@ export const getFilterPriorityIDArray = createSelector(
   getFilters,
   ({ priority_id }) => priority_id || [],
 );
-
 export const getTags = createSelector(getFilters, ({ tag_id }) => tag_id || []);

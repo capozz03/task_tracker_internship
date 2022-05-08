@@ -5,6 +5,7 @@ import { TTaskSearch, TTag } from '../entities';
 export type TFiltersSlice = {
   filters: TTaskSearch;
   isFiltersMenuShow: boolean;
+  isFiltersResetButtonShow: boolean;
   status: RequestStatuses;
   error: Error | null;
 };
@@ -20,6 +21,7 @@ const initialState = {
     priority_id: null,
   },
   isFiltersMenuShow: false,
+  isFiltersResetButtonShow: false,
   status: RequestStatuses.IDLE,
   error: null,
 } as TFiltersSlice;
@@ -41,7 +43,7 @@ const filtersSlice = createSlice({
       state.filters.assign_user_id = payload.length ? payload : null;
     },
     setTags(state: TFiltersSlice, { payload: tags }: PayloadAction<TTag[]>) {
-      state.filters.tag_id = tags.map((tag) => tag.task_tag_id);
+      state.filters.tag_id = tags.length ? tags.map((tag) => tag.task_tag_id) : null;
     },
     setFilterAttachmentsGTE(state, { payload }: PayloadAction<number>) {
       state.filters.storage_files_gte = payload || null;
