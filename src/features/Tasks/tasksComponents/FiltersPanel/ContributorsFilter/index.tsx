@@ -61,6 +61,7 @@ const ContributorsFilter = () => {
         dropdownClassName={styles.contributorsSelectDropdown}
         mode="multiple"
         placeholder="Выберите ..."
+        showArrow
         filterOption={false}
         notFoundContent={notFoundContent}
         value={selectedUserIDs}
