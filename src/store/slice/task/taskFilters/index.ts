@@ -15,6 +15,7 @@ export {
   getFilters,
   getIsFiltersMenuShow,
   getIsFiltersResetButtonShow,
+  getFiltersCount,
   getFilterAssignedTo,
   getFilterKeyword,
   getFilterAssignUserIDArray,

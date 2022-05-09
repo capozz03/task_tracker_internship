@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import { TState } from 'store/configureStore';
 import { createSelector } from '@reduxjs/toolkit';
+import { isArray } from 'lodash';
 
 const getFiltersSliceStore = (state: TState) => state.taskFilters;
 
@@ -11,9 +12,19 @@ export const getIsFiltersMenuShow = createSelector(
   getFiltersSliceStore,
   ({ isFiltersMenuShow }) => isFiltersMenuShow,
 );
-export const getIsFiltersResetButtonShow = createSelector(
-  getFiltersSliceStore,
-  ({ filters }) => Object.values(filters).some((value) => !!value),
+export const getIsFiltersResetButtonShow = createSelector(getFiltersSliceStore, ({ filters }) =>
+  Object.values(filters).some((value) => !!value),
+);
+export const getFiltersCount = createSelector(getFiltersSliceStore, ({ filters }) =>
+  Object.values(filters).reduce((prev: number, current) => {
+    if (isArray(current)) {
+      return prev + current.length;
+    }
+    if (current) {
+      return prev + 1;
+    }
+    return prev;
+  }, 0),
 );
 
 // Logic
