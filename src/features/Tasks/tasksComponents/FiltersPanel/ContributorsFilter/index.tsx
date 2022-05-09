@@ -4,6 +4,7 @@ import { Select, Spin } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { TaskFilters, UsersSlice } from 'store/slice';
 import { debounce } from 'lodash';
+import { alert } from 'shared';
 
 const ContributorsFilter = () => {
   const dispatch = useDispatch();
@@ -34,8 +35,12 @@ const ContributorsFilter = () => {
   };
 
   const onChange = (values: string[]) => {
-    setSelectedUserIDs(values);
-    dispatch(TaskFilters.setFilterAssignUserIDArray(values));
+    if (values.length <= 10) {
+      setSelectedUserIDs(values);
+      dispatch(TaskFilters.setFilterAssignUserIDArray(values));
+    } else {
+      alert('Нельзя выбрать больше участников', 'warning');
+    }
   };
 
   const onSearch = debounce((searchValue: string) => {
