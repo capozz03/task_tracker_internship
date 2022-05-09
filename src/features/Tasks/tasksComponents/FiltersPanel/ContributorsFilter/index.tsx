@@ -1,75 +1,76 @@
-/* eslint-disable no-unused-vars */ /* FIXME */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styles from './index.module.scss';
 import { Select, Spin } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { TaskFilters, UsersSlice } from 'store/slice';
-
-type TOption = { label: string; value: string };
+import { debounce } from 'lodash';
 
 const ContributorsFilter = () => {
   const dispatch = useDispatch();
 
-  const [searchValue, setSearchValue] = useState('');
-  const searchedUsers = useSelector(UsersSlice.usersList);
+  const storeSelectedUserIDs = useSelector(TaskFilters.getFilterAssignUserIDArray);
+  const [selectedUserIDs, setSelectedUserIDs] = useState<string[]>([]);
+
+  const findedUsers = useSelector(UsersSlice.usersList);
   const isLoading = useSelector(UsersSlice.isLoadingStatus);
-  const [options, setOptions] = useState<TOption[]>([]);
+  const options = useMemo(
+    () =>
+      findedUsers.map((user) => ({
+        label: user.name,
+        value: user.user_id,
+      })) /* .filter((user) => !selectedUserIDs.includes(user.value)) */,
+    [findedUsers, selectedUserIDs],
+  );
 
-  const storeSelectedUsers = useSelector(TaskFilters.getFilterAssignUserIDArray);
-  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
-
-  useEffect(() => {
+  const fetchUsers = (searchValue: string) => {
     dispatch(UsersSlice.resetUserList());
     dispatch(
       UsersSlice.getUsersListPage({
         page: 1,
-        limit: 100,
+        limit: 50,
         search: searchValue,
       }),
     );
-  }, [searchValue]);
-
-  useEffect(() => {
-    setOptions(
-      searchedUsers ? searchedUsers.map((user) => ({ label: user.name, value: user.user_id })) : [],
-    );
-  }, [searchedUsers]);
-
-  useEffect(() => {
-    dispatch(TaskFilters.setFilterAssignUserIDArray(selectedUsers));
-  }, [selectedUsers]);
-
-  useEffect(() => {
-    setSelectedUsers(storeSelectedUsers || []);
-  }, [storeSelectedUsers]);
-
-  const onSearch = (value: string) => {
-    setSearchValue(value);
   };
 
-  const onSelect = (value: string) => {
-    setSelectedUsers([...selectedUsers, value]);
+  const onChange = (values: string[]) => {
+    setSelectedUserIDs(values);
+    dispatch(TaskFilters.setFilterAssignUserIDArray(values));
   };
 
-  const onDeselect = (value: string) => {
-    setSelectedUsers([...selectedUsers.filter((userID) => !(userID === value))]);
-  };
+  const onSearch = debounce((searchValue: string) => {
+    fetchUsers(searchValue);
+  }, 500);
+
+  const fetchAllUsers = debounce(() => {
+    fetchUsers('');
+  }, 500);
+
+  const notFoundContent = (
+    <span className={styles.notFoundPlaceholder}>{isLoading ? <Spin /> : 'Нет участников'}</span>
+  );
+
+  useEffect(() => {
+    setSelectedUserIDs(storeSelectedUserIDs || []);
+  }, [storeSelectedUserIDs]);
 
   return (
-    <div>
+    <div className={styles.contributorsSelectWrap}>
       <Select
         className={styles.contributorsSelect}
-        placeholder="Выберите ..."
-        notFoundContent={isLoading ? <Spin size="small" /> : 'Нет участников'}
+        dropdownClassName={styles.contributorsSelectDropdown}
         mode="multiple"
-        searchValue={searchValue}
-        value={selectedUsers}
+        placeholder="Выберите ..."
+        filterOption={false}
+        notFoundContent={notFoundContent}
+        value={selectedUserIDs}
         options={options}
-        onDeselect={onDeselect}
+        onChange={onChange}
+        onFocus={fetchAllUsers}
         onSearch={onSearch}
-        onSelect={onSelect}
       />
     </div>
   );
 };
+
 export default ContributorsFilter;
