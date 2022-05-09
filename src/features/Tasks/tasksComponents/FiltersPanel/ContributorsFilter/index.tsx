@@ -18,7 +18,7 @@ const ContributorsFilter = () => {
       findedUsers.map((user) => ({
         label: user.name,
         value: user.user_id,
-      })) /* .filter((user) => !selectedUserIDs.includes(user.value)) */,
+      })),
     [findedUsers, selectedUserIDs],
   );
 
