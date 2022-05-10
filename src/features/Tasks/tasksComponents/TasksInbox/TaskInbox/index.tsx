@@ -44,7 +44,8 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
           <CardNameText text={task.title} />
         </div>
         <div className={styles.indicators}>
-          {task.storage_files && <CardAttachmentsCount count={task.storage_files.length} />}
+          { task.storage_files_meta
+            && <CardAttachmentsCount count={task.storage_files_meta.total} /> }
           {task.progress && task.progress.total !== 0 && (
             <CardChecklistCount
               checkListTotal={task.progress.total}

@@ -14,9 +14,6 @@ type DropdownMenuProps = {
 const DropdownMenu = ({ task }: DropdownMenuProps) => {
   const { Item } = Menu;
   const dispatch = useDispatch();
-  // const currentTask = useSelector(CommonSlice.getTaskDropdownMenuSelector);
-  // const [visibleModal, setVisibleModal] = useState(false);
-  // const [isLoadingModal, setIsLoadingModal] = useState(false);
 
   const openTask = () => {
     if (task.task_id) {
@@ -25,27 +22,15 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
   };
 
   const duplicateResolvedHandle = () => {
-    alert('Задача успешно скопирована', 'success');
+    alert(`Дубль задачи ${task.title.slice(0, 25)}${task.title.length > 25 ? '...' : ''}
+    успешно создан`, 'success');
   };
 
   const duplicateRejectedHandle = () => {
-    alert('Ошибка во время создание копии задачи', 'error');
+    alert(`Ошибка копирования задачи ${task.title.slice(0, 25)}${task.title.length > 25 ? '...' : ''}`, 'error');
   };
 
-  // const deleteResolvedHandle = () => {
-  //   alert(`Задача ${titleTask.slice(0, 25)}${titleTask.length > 25 ? '...' : ''}
-  //   удалена`, 'remove');
-  //   setIsLoadingModal(false);
-  //   setVisibleModal(false);
-  // };
-  //
-  // const deleteRejectedHandle = () => {
-  //   alert('Во время удаления задачи произошла ошибка', 'error');
-  //   setIsLoadingModal(false);
-  // };
-
   const duplicateHandle = () => {
-    // setIsLoadingModal(true);
     if (task.task_id) {
       dispatch(
         CommonSlice.duplicateTaskAsync({
@@ -60,23 +45,7 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
     }
   };
   const deleteTaskHandle = () => {
-    // setIsLoadingModal(true);
-    if (task.task_id) {
-      dispatch(
-        CommonSlice.deleteTaskAsync({
-          data: {
-            taskId: task.task_id,
-            taskStatusId: task.status.task_status_id,
-          },
-          resolvedHandle: duplicateResolvedHandle,
-          rejectedHandle: duplicateRejectedHandle,
-        }),
-      );
-    }
-  };
-
-  const dropdownClick = () => {
-    dispatch(CommonSlice.setTask(task));
+    dispatch(CommonSlice.showModalForDeleteTask(task));
   };
 
   const menu = (
@@ -101,7 +70,6 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        dropdownClick();
       }}
     >
       <Dropdown.Button
