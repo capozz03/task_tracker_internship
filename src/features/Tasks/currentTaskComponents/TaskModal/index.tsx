@@ -2,6 +2,7 @@ import React from 'react';
 import { Collapse, Modal, ModalProps, Spin } from 'antd';
 import styles from './index.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
+import Attachments from 'features/Tasks/currentTaskComponents/Attachments';
 import {
   TaskFormSlice,
   TaskInWorkSlice,
@@ -72,11 +73,13 @@ const TaskModal = (props: ModalProps) => {
             </div>
           </div>
           <div className={styles.leftColumn}>
-            {task && <Description description={task.description} taskId={task.task_id} />}
+            <div className={styles.description}>
+              {task && <Description description={task.description} taskId={task.task_id} />}
+            </div>
             <div className={styles.checklist}>
               <CheckListArea />
             </div>
-            <div>attachments</div>
+            {task && <Attachments taskId={task.task_id} />}
             <div>actions</div>
           </div>
           <div className={styles.rightColumn}>

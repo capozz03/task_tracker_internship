@@ -3,47 +3,49 @@ import { Dropdown, Menu } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
 import style from './index.module.scss';
 import { useDispatch } from 'react-redux';
-import { CommonActions } from 'store/slice';
-import { getTaskByIdAsync } from 'store/slice/task/taskForm';
+import { CommonSlice } from 'store/slice';
+import { getTaskByIdAsync, TTask } from 'store/slice/task/taskForm';
+import { alert } from 'shared';
 
 type DropdownMenuProps = {
-  // eslint-disable-next-line react/require-default-props
-  taskId?: string;
-  taskStatusId: string;
+  task: TTask;
 };
 
-const DropdownMenu = ({ taskId, taskStatusId }: DropdownMenuProps) => {
+const DropdownMenu = ({ task }: DropdownMenuProps) => {
   const { Item } = Menu;
   const dispatch = useDispatch();
 
   const openTask = () => {
-    if (taskId) {
-      dispatch(getTaskByIdAsync(taskId));
+    if (task.task_id) {
+      dispatch(getTaskByIdAsync(task.task_id));
     }
   };
+
+  const duplicateResolvedHandle = () => {
+    alert(`Дубль задачи ${task.title.slice(0, 25)}${task.title.length > 25 ? '...' : ''}
+    успешно создан`, 'success');
+  };
+
+  const duplicateRejectedHandle = () => {
+    alert(`Ошибка копирования задачи ${task.title.slice(0, 25)}${task.title.length > 25 ? '...' : ''}`, 'error');
+  };
+
   const duplicateHandle = () => {
-    if (taskId) {
+    if (task.task_id) {
       dispatch(
-        CommonActions.duplicateTaskAsync({
+        CommonSlice.duplicateTaskAsync({
           data: {
-            taskId,
-            taskStatusId,
+            taskId: task.task_id,
+            taskStatusId: task.status.task_status_id,
           },
+          resolvedHandle: duplicateResolvedHandle,
+          rejectedHandle: duplicateRejectedHandle,
         }),
       );
     }
   };
   const deleteTaskHandle = () => {
-    if (taskId) {
-      dispatch(
-        CommonActions.deleteTaskAsync({
-          data: {
-            taskId,
-            taskStatusId,
-          },
-        }),
-      );
-    }
+    dispatch(CommonSlice.showModalForDeleteTask(task));
   };
 
   const menu = (
@@ -78,7 +80,6 @@ const DropdownMenu = ({ taskId, taskStatusId }: DropdownMenuProps) => {
         trigger={['click']}
       />
     </div>
-
   );
 };
 

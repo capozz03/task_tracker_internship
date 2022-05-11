@@ -5,9 +5,13 @@ import CheckboxIcon from './CheckboxIcon';
 import CheckIcon from './CheckIcon';
 import CrossIcon from './CrossIcon';
 import ArrowIcon from './ArrowIcon';
+import MoreVerticalIcon from './MoreVerticalIcon';
+import ClipIcon from './ClipIcon';
+
+export * as searchIcons from './SearchIcons';
 
 export * as alertIcons from './AlertIcons';
-export * as searchIcons from './SearchIcons';
+export * as attachmentsIcons from './AttachmentsIcons';
 export {
   PencilIcon,
   PlusIcons,
@@ -16,5 +20,7 @@ export {
   CheckIcon,
   CrossIcon,
   ArrowIcon,
+  MoreVerticalIcon,
+  ClipIcon,
 };
 export * as tasksIcons from './TasksIcons';

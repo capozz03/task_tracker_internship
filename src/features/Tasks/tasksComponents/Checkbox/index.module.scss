@@ -1,0 +1,27 @@
+@import "src/shared/assets/styles";
+
+:global(.ant-checkbox-checked::after) {
+    border: none !important;
+}
+
+.label > span:last-child { // title
+  padding: 0 11px;
+  font: $p-regular !important;
+  color: $grey-800 !important;
+}
+
+.label > span:first-child > span {
+  width: 17px !important;
+  height: 17px !important;
+  border: 1px solid $grey-500 !important;
+  border-radius: 4px !important;
+}
+
+.label:hover > span:first-child > span {
+  border-color: $success-default !important;
+}
+
+.label > span:first-child > input[type="checkbox"]:checked + span {
+  border-color: $success-default !important;
+  background: $success-default !important;
+}

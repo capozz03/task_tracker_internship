@@ -19,6 +19,7 @@
     "import/no-unresolved": "off",
     "import/prefer-default-export": "off",
     "import/extensions": "off",
+    "react/require-default-props": "off",
     "react/jsx-filename-extension": [
       "error",
       {
@@ -35,6 +36,7 @@
     "implicit-arrow-linebreak": "off",
     "react/jsx-wrap-multilines": "off",
     "react/jsx-props-no-spreading": "off",
+    "react/require-default-props": "off",
     "object-curly-newline": "off",
     "prefer-promise-reject-errors": "off",
     "no-shadow": "off",

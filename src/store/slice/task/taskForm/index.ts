@@ -2,11 +2,13 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { ChecklistReducer } from 'store/slice/task/taskForm/checkList';
 import { taskFormDataReducer } from 'store/slice/task/taskForm/fullTaskInfo/slice';
 import { taskFormRolesReducer } from './roles/slice';
+import { StorageFilesReducer } from './storageFiles';
 
 export { getTaskByIdAsync } from './getTaskById';
 export type { TTasksReducer, TTask } from 'store/slice/task/entities';
 export { setTitleAsync } from './setTitleFromTask';
-export { changeCheckListTitle,
+export {
+  changeCheckListTitle,
   changeItemForChecklist,
   changePositionItemForChecklist,
   changeStatusItemForChecklist,
@@ -55,10 +57,31 @@ export {
 export { taskFormRolesReducer, taskFormRolesSelector, setRoles } from './roles/slice';
 export { addUserRole, removeUserRole } from './roles/asyncActions';
 export { getRoles, isLoadingRolesStatus } from './roles/selector';
+export {
+  imagePreview,
+  getStorageFiles,
+  getStorageImages,
+  isVisibleStorageFiles,
+  progressBar,
+  getStorageCount,
+} from './storageFiles/selector';
+
+export {
+  createStorageFile,
+  downloadStorageFile,
+  deleteStorageFile,
+  getStorageFileDetails,
+} from './storageFiles/asyncActions';
 
 export { showFormCreateChecklist, hiddenFormCreateChecklist } from './checkList/uiSlice';
+export {
+  showFormStorageFiles,
+  hiddenFormStorageFiles,
+  setProgress,
+} from './storageFiles/uiSlice';
 
 export const taskFormReducer = combineReducers({
+  storageFile: StorageFilesReducer,
   checkList: ChecklistReducer,
   task: taskFormDataReducer,
   roles: taskFormRolesReducer,

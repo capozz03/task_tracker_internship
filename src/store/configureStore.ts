@@ -8,6 +8,8 @@ import {
   TaskInboxSlice,
   TaskFormSlice,
   TaskFilters,
+  TagsSlice,
+  CommonSlice,
 } from './slice';
 
 const rootReducer = combineReducers({
@@ -19,6 +21,8 @@ const rootReducer = combineReducers({
   taskInbox: TaskInboxSlice.taskInboxReducer,
   taskForm: TaskFormSlice.taskFormReducer,
   taskFilters: TaskFilters.filtersReducer,
+  tags: TagsSlice.tagsReducer,
+  common: CommonSlice.commonReducer,
 });
 
 export const store = configureStore({
