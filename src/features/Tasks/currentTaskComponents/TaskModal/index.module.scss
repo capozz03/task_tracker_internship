@@ -77,6 +77,10 @@
 
       .collapseItem {
         border-bottom: 0;
+
+        & > div:first-child {
+          padding: 0;
+        }
       }
     }
 
@@ -121,6 +125,7 @@
   height: 25px;
   width: 100%;
   margin: 0 30px 0 10px;
+  padding: 20px 6px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -128,6 +133,7 @@
   gap: 10px;
   background-color: inherit;
   border: none;
+  cursor: pointer;
 }
 
 .memberHeader > * {
@@ -136,8 +142,8 @@
 }
 
 .memberHeader > svg {
-  width: 16px;
-  height: 12px;
+  min-width: 12px !important;
+  min-height: 12px !important;
   transition: all 0.2s linear;
 }
 

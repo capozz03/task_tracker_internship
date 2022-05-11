@@ -1,8 +1,9 @@
 @import "src/shared/assets/styles";
 
 .label {
-    height: 30px;
-    padding: 8px 10px;
+    min-height: 30px;
+    padding: 0 10px;
+    box-sizing: border-box;
 
     display: inline-flex;
     flex-direction: row;
@@ -26,6 +27,7 @@
 
 .label > p {
     margin: 0;
+    padding: 3px 0;
     display: inline-block;
     font: $p-roboto-regular;
     color: $grey-800;
