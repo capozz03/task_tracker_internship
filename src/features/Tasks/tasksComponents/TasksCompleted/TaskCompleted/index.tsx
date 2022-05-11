@@ -52,7 +52,9 @@ const TaskCompleted = ({ task }: TaskCompletedProps) => {
         <UserAssignedToTask users={task.roles} />
       </div>
       <div className={style.cardMenu}>
-        <DropdownMenu taskId={task.task_id} taskStatusId={task.status.task_status_id} />
+        <DropdownMenu
+          task={task}
+        />
       </div>
     </div>
   );
