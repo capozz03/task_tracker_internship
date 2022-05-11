@@ -100,60 +100,10 @@ export const createNewTaskAsync = createAsyncThunk(
           ...taskFilters.filters,
         }),
       );
-      alert('Задача успешно создана', 'success');
+      alert(`Задача "${title.slice(0, 25)}${title.length > 25 ? '...' : ''}" успешно создана`, 'success');
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
       alert(`Ошибка во создания задачи "${error.message}"`, 'error');
-      return rejectWithValue(error);
-    }
-  },
-);
-
-export const duplicateTaskAsync = createAsyncThunk(
-  'taskInWork/duplicateTask',
-  async (taskId: string, { rejectWithValue, dispatch, getState }) => {
-    try {
-      const { taskInWork, taskFilters } = getState() as {
-        taskInWork: TTasksReducer;
-        taskFilters: TFiltersSlice;
-      };
-      await taskService.duplicateTask(taskId);
-      dispatch(
-        getTasksAsync({
-          per_page: taskInWork.pagination?.per_page,
-          page: taskInWork.pagination?.page_current,
-          ...taskFilters.filters,
-        }),
-      );
-      alert('Задача успешно скопирована', 'success');
-    } catch (rejectedValueOrSerializedError) {
-      const error = miniSerializeError(rejectedValueOrSerializedError);
-      alert(`Ошибка во время создание копии задачи "${error.message}"`, 'error');
-      return rejectWithValue(error);
-    }
-  },
-);
-
-export const deleteTaskAsync = createAsyncThunk(
-  'taskInWork/deleteTask',
-  async (taskId: string, { rejectWithValue, dispatch, getState }) => {
-    try {
-      const { taskInWork, taskFilters } = getState() as {
-        taskInWork: TTasksReducer;
-        taskFilters: TFiltersSlice;
-      };
-      await taskService.deleteTask(taskId);
-      dispatch(
-        getTasksAsync({
-          per_page: taskInWork.pagination?.per_page,
-          page: taskInWork.pagination?.page_current,
-          ...taskFilters.filters,
-        }),
-      );
-      alert('Задача успешно удалена', 'success');
-    } catch (rejectedValueOrSerializedError) {
-      const error = miniSerializeError(rejectedValueOrSerializedError);
-      alert(`Ошибка во время удалена задачи "${error.message}"`, 'error');
       return rejectWithValue(error);
     }
   },

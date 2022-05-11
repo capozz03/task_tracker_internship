@@ -3,6 +3,11 @@ import { TTask, TTaskItemResponse, TTaskStatusChange } from '../entities';
 
 $apiTask.interceptors.request.use((config) => ({ ...config, headers: { ...config.headers, Authorization: `Bearer ${clientCookies.getToken()}` } }));
 
+type duplicateTaskProps = {
+  data: TTask,
+  clone: TTask,
+}
+
 export const taskService = {
   getTasks: async (params?: any) => $apiTask.get<TTask[]>('/api/v1.0/task/tasks', {
     params,
@@ -27,11 +32,11 @@ export const taskService = {
       },
     ),
   duplicateTask: async (taskId: string) =>
-    $apiTask.post<TTask[]>(`/api/v1.0/task/tasks/${taskId}/clone`, {}, {
+    $apiTask.post<duplicateTaskProps>(`/api/v1.0/task/tasks/${taskId}/clone`, {}, {
       headers: {
         Authorization: `Bearer ${clientCookies.getToken()}`,
       },
     }),
   deleteTask: async (taskId: string) =>
-    $apiTask.delete<TTask[]>(`/api/v1.0/task/tasks/${taskId}`),
+    $apiTask.delete<TTask>(`/api/v1.0/task/tasks/${taskId}`),
 };
