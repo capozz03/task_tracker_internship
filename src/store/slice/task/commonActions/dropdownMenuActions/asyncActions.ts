@@ -2,8 +2,8 @@ import { createAsyncThunk, miniSerializeError } from '@reduxjs/toolkit';
 import { TTasksReducer } from '../../entities';
 import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice } from 'store/slice';
 import { taskService } from '../../taskInWork/taskInWorkService';
-import { alert } from 'shared/ui';
 import { TFiltersSlice } from '../../taskFilters/slice';
+import { clearState } from './slice';
 
 export const created = 'cbb7199e-cb25-4dce-bf4e-24a8a5e07ef2';
 export const inWork = '372d63ff-3ae3-4be2-a606-38940d7f8c8f';
@@ -38,12 +38,14 @@ type commonActionProps = {
     taskId: string;
     taskStatusId: string;
   };
+  resolvedHandle: () => void,
+  rejectedHandle: () => void,
 };
 
 export const duplicateTaskAsync = createAsyncThunk(
   'tasks/duplicateTask',
   async (
-    { data: { taskId, taskStatusId } }: commonActionProps,
+    { data: { taskId, taskStatusId }, resolvedHandle, rejectedHandle }: commonActionProps,
     { rejectWithValue, dispatch, getState },
   ) => {
     try {
@@ -81,11 +83,10 @@ export const duplicateTaskAsync = createAsyncThunk(
           }),
         );
       }
-
-      alert('Задача успешно скопирована', 'success');
+      resolvedHandle();
     } catch (rejectedValueOrSerializedError) {
+      rejectedHandle();
       const error = miniSerializeError(rejectedValueOrSerializedError);
-      alert(`Ошибка во время создание копии задачи "${error.message}"`, 'error');
       return rejectWithValue(error);
     }
   },
@@ -94,7 +95,7 @@ export const duplicateTaskAsync = createAsyncThunk(
 export const deleteTaskAsync = createAsyncThunk(
   'tasks/deleteTask',
   async (
-    { data: { taskId, taskStatusId } }: commonActionProps,
+    { data: { taskId, taskStatusId }, resolvedHandle, rejectedHandle }: commonActionProps,
     { rejectWithValue, dispatch, getState },
   ) => {
     try {
@@ -132,10 +133,11 @@ export const deleteTaskAsync = createAsyncThunk(
           }),
         );
       }
-      alert('Задача успешно удалена', 'success');
+      resolvedHandle();
+      dispatch(clearState());
     } catch (rejectedValueOrSerializedError) {
+      rejectedHandle();
       const error = miniSerializeError(rejectedValueOrSerializedError);
-      alert(`Ошибка во время удалена задачи "${error.message}"`, 'error');
       return rejectWithValue(error);
     }
   },
