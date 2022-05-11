@@ -22,12 +22,12 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
   };
 
   const duplicateResolvedHandle = () => {
-    alert(`Дубль задачи ${task.title.slice(0, 25)}${task.title.length > 25 ? '...' : ''}
+    alert(`Дубль задачи "${task.title.slice(0, 25)}${task.title.length > 25 ? '...' : ''}"
     успешно создан`, 'success');
   };
 
   const duplicateRejectedHandle = () => {
-    alert(`Ошибка копирования задачи ${task.title.slice(0, 25)}${task.title.length > 25 ? '...' : ''}`, 'error');
+    alert(`Ошибка создания дубля задачи "${task.title.slice(0, 25)}${task.title.length > 25 ? '...' : ''}"`, 'error');
   };
 
   const duplicateHandle = () => {

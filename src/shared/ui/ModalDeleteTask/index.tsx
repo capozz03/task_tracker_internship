@@ -13,7 +13,7 @@ const ModalDeleteTask = () => {
   const task = useSelector(CommonSlice.getTaskDropdownMenuSelector);
   const deleteResolvedHandle = () => {
     if (task) {
-      alert(`Задача ${task.title.slice(0, 25)}${task.title.length > 25 ? '...' : ''}
+      alert(`Задача "${task.title.slice(0, 25)}${task.title.length > 25 ? '...' : ''}"
     удалена`, 'remove');
     }
   };
@@ -52,7 +52,7 @@ const ModalDeleteTask = () => {
     >
       <Spin spinning={isLoading}>
         <h4 className={style.title}>Вы уверены?</h4>
-        <p className={style.text}>{ task && `Задача ${task.title.slice(0, 25)}${task.title.length > 25 ? '...' : ''} будет безвозвратно удалена`}</p>
+        <p className={style.text}>{ task && `Задача "${task.title.slice(0, 25)}${task.title.length > 25 ? '...' : ''}" будет безвозвратно удалена`}</p>
         <div className={style.wrapperButtons}>
           <Button className={style.deleteBtn} icon={<DeleteOutlined />} onClick={okClick}>
             Удалить задачу
