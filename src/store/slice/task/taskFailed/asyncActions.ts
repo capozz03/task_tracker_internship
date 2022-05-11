@@ -1,14 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { taskService } from './taskCompletedService';
+import { taskService } from './taskFailedService';
 import { TTaskSearch, TTasksReducer, TTaskStatusChange } from '../entities';
-import { TaskInWorkSlice, TaskInboxSlice, TaskFailedSlice, TaskCompletedSlice } from 'store/slice';
+import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice, TaskFailedSlice } from 'store/slice';
 import { TFiltersSlice } from '../taskFilters/slice';
 import { TaskStatuses } from 'shared';
 
-const statusId = TaskStatuses.COMPLETED;
+const statusId = TaskStatuses.FAILED;
 
 export const getTasksAsync = createAsyncThunk(
-  'taskCompleted/getTaskCompleted',
+  'taskFailed/gettaskFailed',
   async (params: TTaskSearch, { rejectWithValue }) => {
     try {
       const { data } = await taskService.getTasks({ ...params, status_id: statusId });
@@ -20,18 +20,18 @@ export const getTasksAsync = createAsyncThunk(
 );
 
 export const changeStatusTaskAsync = createAsyncThunk(
-  'taskCompleted/getTask',
+  'taskFailed/getTask',
   async (params: TTaskStatusChange, { rejectWithValue, dispatch, getState }) => {
     try {
-      const { taskCompleted, taskFilters } = getState() as {
-        taskCompleted: TTasksReducer;
+      const { taskFailed, taskFilters } = getState() as {
+        taskFailed: TTasksReducer;
         taskFilters: TFiltersSlice;
       };
       const { data } = await taskService.changeStatusTask({ ...params });
       dispatch(
         getTasksAsync({
-          per_page: taskCompleted.pagination?.per_page,
-          page: taskCompleted.pagination?.page_current,
+          per_page: taskFailed.pagination?.per_page,
+          page: taskFailed.pagination?.page_current,
           ...taskFilters.filters,
         }),
       );

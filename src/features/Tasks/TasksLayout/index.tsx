@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TaskFilters, TaskFormSlice } from 'store/slice';
 import FiltersPanel from '../tasksComponents/FiltersPanel';
 import ModalDeleteTask from 'shared/ui/ModalDeleteTask';
+import TasksFailed from '../tasksComponents/TasksFailed';
 
 const { Sider, Header, Content } = Layout;
 const { getIsFiltersMenuShow, setIsFiltersMenuShow } = TaskFilters;
@@ -44,10 +45,7 @@ const TasksLayout = () => {
               <UserAvatarMenu />
             </div>
             <div className={styles.tools}>
-              <FilterToggleButton
-                filtersCount={1}
-                onClick={changeSidebarVisibility}
-              />
+              <FilterToggleButton filtersCount={1} onClick={changeSidebarVisibility} />
               <NotificationsButton active={false} />
             </div>
             <span className={styles.filterAssignedTo}>
@@ -59,6 +57,7 @@ const TasksLayout = () => {
             <TasksInbox />
             <TasksInWork />
             <TasksCompleted />
+            <TasksFailed />
           </Content>
         </Layout>
       </Layout>
