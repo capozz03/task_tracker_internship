@@ -4,12 +4,13 @@ import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice, TaskFailedSlice } 
 import { taskService } from '../../taskInWork/taskInWorkService';
 import { TFiltersSlice } from '../../taskFilters/slice';
 import { clearState } from './slice';
+import { TaskStatuses } from 'shared';
 
-export const created = 'cbb7199e-cb25-4dce-bf4e-24a8a5e07ef2';
-export const inWork = '372d63ff-3ae3-4be2-a606-38940d7f8c8f';
-export const completed = '8536592a-7340-4e10-ac4b-a280652c9310';
-export const notImplemented = '599f5d03-1ef0-4a5b-a18c-33a4f44c4610';
-export const rejectedId = '4658859a-32a6-4206-838a-c0064f147299';
+export const created = TaskStatuses.CREATED;
+export const inWork = TaskStatuses.IN_WORK;
+export const completed = TaskStatuses.COMPLETED;
+export const notImplemented = TaskStatuses.FAILED;
+export const rejectedId = TaskStatuses.REJECTED;
 
 type checkForStatusIdProps = {
   taskStatusId: string;
