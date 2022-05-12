@@ -25,7 +25,15 @@ const DescriptionEditor = ({
   const config = {
     readonly: false,
     placeholder: 'Начните писать...',
+    askBeforePasteFromWord: false,
+    askBeforePasteHTML: false,
+    enableDragAndDropFileToEditor: true,
+    uploader: { insertImageAsBase64URI: true },
+    toolbarAdaptive: true,
+    toolbarSticky: true,
   };
+
+  const configRef = useRef(config);
 
   const handleSetContext = (value: string) => {
     setContent(value);
@@ -33,6 +41,7 @@ const DescriptionEditor = ({
 
   const handleVisibleEditor = (): void => {
     setIsVisibleEditor(false);
+    setContent('');
   };
 
   const saveSuccess = () => {
@@ -59,7 +68,13 @@ const DescriptionEditor = ({
 
   return (
     <div>
-      <JoditEditor ref={editor} value={content} config={config} onBlur={handleSetContext} />
+      <JoditEditor
+        ref={editor}
+        value={content}
+        config={configRef.current}
+        onBlur={handleSetContext}
+        onChange={handleSetContext}
+      />
       <div className={style.wrapBtn}>
         <Button type="default" className={style.saveButton} onClick={saveButton}>
           Сохранить
