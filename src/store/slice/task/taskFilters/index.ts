@@ -18,4 +18,5 @@ export {
   getFilterAttachmentsGTE,
   getFilterProgressGTE,
   getFilterPriorityIDArray,
+  getTags,
 } from './selectors';

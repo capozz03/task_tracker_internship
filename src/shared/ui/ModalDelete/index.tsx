@@ -8,7 +8,6 @@ import style from './index.module.scss';
 type ModalDeleteProps = {
   isVisibleModal: boolean;
   setIsVisibleModal: React.Dispatch<React.SetStateAction<boolean>>;
-  // eslint-disable-next-line react/require-default-props
   taskId?: string;
   storageFileId: string;
   name: string;

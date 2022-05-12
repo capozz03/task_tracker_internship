@@ -36,7 +36,7 @@ const FilesAttachments = ({
   return (
     <div className={style.taskFiles__item} style={styleOfFileItem}>
       <div className={style.dropdown}>
-        <div className={style.menu}>
+        <div>
           <DropdownMenu taskId={taskId} storageFileId={storageFileId} name={name} />
         </div>
       </div>
