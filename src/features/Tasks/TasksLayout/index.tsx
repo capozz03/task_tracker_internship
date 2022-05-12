@@ -24,6 +24,7 @@ const TasksLayout = () => {
   const changeSidebarVisibility = () => dispatch(setIsFiltersMenuShow(!isSidebarShow));
   const hideSidebar = () => dispatch(setIsFiltersMenuShow(false));
   const isVisibleForm = useSelector(TaskFormSlice.getTaskFormIsVisibleForm);
+  const filtersCount = useSelector(TaskFilters.getFiltersCount);
 
   return (
     <>
@@ -45,7 +46,7 @@ const TasksLayout = () => {
             </div>
             <div className={styles.tools}>
               <FilterToggleButton
-                filtersCount={1}
+                filtersCount={filtersCount}
                 onClick={changeSidebarVisibility}
               />
               <NotificationsButton active={false} />

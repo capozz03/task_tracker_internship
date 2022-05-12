@@ -3,6 +3,7 @@ import {
   MainSlice,
   TaskInWorkSlice,
   UserSlice,
+  UsersSlice,
   TaskCompletedSlice,
   TaskInboxSlice,
   TaskFormSlice,
@@ -14,6 +15,7 @@ import {
 const rootReducer = combineReducers({
   main: MainSlice.mainReducer,
   user: UserSlice.userReducer,
+  users: UsersSlice.usersReducer,
   taskInWork: TaskInWorkSlice.taskInWorkReducer,
   taskCompleted: TaskCompletedSlice.taskCompletedReducer,
   taskInbox: TaskInboxSlice.taskInboxReducer,
