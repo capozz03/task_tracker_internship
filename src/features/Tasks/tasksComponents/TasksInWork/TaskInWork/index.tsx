@@ -2,7 +2,7 @@ import React, { MouseEventHandler } from 'react';
 import { TTask } from 'store/slice/task/entities';
 import styles from './index.module.scss';
 import { useDispatch } from 'react-redux';
-import { TaskInWorkSlice } from 'store/slice';
+import { TaskInWorkSlice, TaskFormSlice } from 'store/slice';
 import {
   CardAttachmentsCount,
   CardChecklistCount,
@@ -14,7 +14,6 @@ import {
   TaskStatus,
   UserAssignedToTask,
 } from 'features/Tasks/tasksComponents';
-import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 
 type TaskInWorkProps = {
   task: TTask;
@@ -31,7 +30,7 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
     );
   };
   const openTask: MouseEventHandler<HTMLElement> = () => {
-    dispatch(getTaskByIdAsync(task.task_id));
+    dispatch(TaskFormSlice.getTaskByIdAsync(task.task_id));
   };
   return (
     <div
@@ -45,7 +44,8 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
         <CardNameText text={task.title} />
       </div>
       <div className={styles.cardFilesAndCheckbox}>
-        { task.storage_files && <CardAttachmentsCount count={task.storage_files.length} /> }
+        { task.storage_files_meta
+          && <CardAttachmentsCount count={task.storage_files_meta.total} /> }
         {
           task.progress && task.progress.total !== 0 && (
             <CardChecklistCount
@@ -74,7 +74,9 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
         <UserAssignedToTask users={task.roles} />
       </div>
       <div className={styles.cardMenu}>
-        <DropdownMenu taskId={task.task_id} taskStatusId={task.status.task_status_id} />
+        <DropdownMenu
+          task={task}
+        />
       </div>
     </div>
   );

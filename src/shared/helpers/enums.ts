@@ -26,3 +26,9 @@ export enum RoleMaxAmounts {
   PERFORMER = 1,
   RESPONSIBLE = 1,
 }
+
+export enum TaskPriorities {
+  HIGH = 'bd509d32-ecf1-4413-8d0b-e4e5e14d2aa3',
+  NORMAL = '389f4ff4-1637-4222-8f41-67beacd478ea',
+  LOW = '04d1ab57-3e9d-435a-9dd2-8d0a86b0231b',
+}

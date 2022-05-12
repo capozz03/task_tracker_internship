@@ -3,6 +3,11 @@ export {
   setIsFiltersMenuShow,
   setFilterAssignedTo,
   setFilterKeyword,
+  setTags,
+  setFilterAttachmentsGTE,
+  setFilterProgressGTE,
+  setFilterPriorityIDArray,
+  resetFilters,
 } from './slice';
 
 export {
@@ -10,4 +15,8 @@ export {
   getIsFiltersMenuShow,
   getFilterAssignedTo,
   getFilterKeyword,
+  getFilterAttachmentsGTE,
+  getFilterProgressGTE,
+  getFilterPriorityIDArray,
+  getTags,
 } from './selectors';
