@@ -1,0 +1,35 @@
+@import "src/shared/assets/styles";
+
+.contributorsSelectWrap {
+  display: flex;
+
+  .contributorsSelect {
+    width: 100%;
+
+    :global(.ant-select-selector) {
+      border-top: none !important;
+      border-right: none !important;
+      border-left: none !important;
+      border-bottom: 1px solid $grey-300 !important;
+      border-radius: 0 !important;
+    }
+  }
+}
+
+.contributorsSelectDropdown {
+  :global(.ant-select-item-option-selected) {
+    min-height: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+
+    & * {
+      display: none;
+    }
+  }
+}
+
+.notFoundPlaceholder {
+  display: flex;
+  justify-content: center;
+  cursor: default;
+}

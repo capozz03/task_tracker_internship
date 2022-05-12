@@ -5,16 +5,16 @@ import FilterAssignedTo from '../tasksComponents/FilterAssignedTo';
 import NotificationsButton from '../tasksComponents/NotificationsButton';
 import FilterToggleButton from '../tasksComponents/FilterToggleButton';
 import { CloseOutlined } from '@ant-design/icons';
-import TasksCompleted from '../tasksComponents/TasksCompleted';
 import UserAvatarMenu from '../../Auth/UserAvatarMenu';
-import TasksInWork from '../tasksComponents/TasksInWork';
 import TasksInbox from '../tasksComponents/TasksInbox';
+import TasksInWork from '../tasksComponents/TasksInWork';
+import TasksCompleted from '../tasksComponents/TasksCompleted';
+import TasksFailed from '../tasksComponents/TasksFailed';
 import TaskModal from '../currentTaskComponents/TaskModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { TaskFilters, TaskFormSlice } from 'store/slice';
 import FiltersPanel from '../tasksComponents/FiltersPanel';
 import ModalDeleteTask from 'shared/ui/ModalDeleteTask';
-import TasksFailed from '../tasksComponents/TasksFailed';
 
 const { Sider, Header, Content } = Layout;
 const { getIsFiltersMenuShow, setIsFiltersMenuShow } = TaskFilters;
@@ -25,6 +25,7 @@ const TasksLayout = () => {
   const changeSidebarVisibility = () => dispatch(setIsFiltersMenuShow(!isSidebarShow));
   const hideSidebar = () => dispatch(setIsFiltersMenuShow(false));
   const isVisibleForm = useSelector(TaskFormSlice.getTaskFormIsVisibleForm);
+  const filtersCount = useSelector(TaskFilters.getFiltersCount);
 
   return (
     <>
@@ -45,7 +46,10 @@ const TasksLayout = () => {
               <UserAvatarMenu />
             </div>
             <div className={styles.tools}>
-              <FilterToggleButton filtersCount={1} onClick={changeSidebarVisibility} />
+              <FilterToggleButton
+                filtersCount={filtersCount}
+                onClick={changeSidebarVisibility}
+              />
               <NotificationsButton active={false} />
             </div>
             <span className={styles.filterAssignedTo}>
