@@ -21,7 +21,7 @@
 .changeButton {
   background: $grey-200 !important;
   border: none !important;
-  border-radius: 8px !important; 
+  border-radius: 8px !important;
   & > span {
     font: $h6-regular !important;
     color: $grey-600 !important;
@@ -36,8 +36,25 @@
 
 .placeholderDecription {
   margin-top: 16px;
-  & > .content {
-    font: $p-regular;
+  & > .descriptionPreview {
     color: $grey-600;
   }
+}
+
+.desc {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-x: scroll;
+  text-overflow: ellipsis;
+}
+
+.expanded {
+  -webkit-line-clamp: 2;
+  overflow-x: hidden;
+}
+
+.expandBtn {
+  font: $p-regular;
+  color: $main-blue !important;
 }
