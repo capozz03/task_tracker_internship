@@ -13,6 +13,8 @@ import CardNameText from '../../CardNameText';
 import CardChecklistCount from '../../CardChecklistCount';
 import CardAttachmentsCount from '../../CardAttachmentsCount';
 import { getTaskByIdAsync } from 'store/slice/task/taskForm';
+import classNames from 'classnames';
+import moment, { now } from 'moment';
 
 type TaskInboxProps = {
   task: TTask;
@@ -33,11 +35,13 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
   };
   return (
     <div
-      className={styles.innerContent}
       role="button"
       onClick={openTask}
       onKeyDown={() => {}}
       tabIndex={-1}
+      className={classNames([
+        styles.innerContent,
+        { [styles.overdue]: moment(task?.exec_stop).diff(now()) < 0 }])}
     >
       <div className={styles.wrap}>
         <div className={styles.cardName}>
