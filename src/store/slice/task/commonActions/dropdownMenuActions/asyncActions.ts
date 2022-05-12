@@ -1,6 +1,6 @@
 import { createAsyncThunk, miniSerializeError } from '@reduxjs/toolkit';
 import { TTasksReducer } from '../../entities';
-import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice } from 'store/slice';
+import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice, TaskFailedSlice } from 'store/slice';
 import { taskService } from '../../taskInWork/taskInWorkService';
 import { TFiltersSlice } from '../../taskFilters/slice';
 import { clearState } from './slice';
@@ -16,6 +16,7 @@ type checkForStatusIdProps = {
   taskInWork: TTasksReducer;
   taskInbox: TTasksReducer;
   taskCompleted: TTasksReducer;
+  taskFailed: TTasksReducer;
 };
 
 const checkForStatusId = ({
@@ -23,6 +24,7 @@ const checkForStatusId = ({
   taskInWork,
   taskInbox,
   taskCompleted,
+  taskFailed,
 }: checkForStatusIdProps) => {
   if (taskStatusId === created) {
     return taskInbox;
@@ -30,7 +32,10 @@ const checkForStatusId = ({
   if (taskStatusId === inWork) {
     return taskInWork;
   }
-  return taskCompleted;
+  if (taskStatusId === completed) {
+    return taskCompleted;
+  }
+  return taskFailed;
 };
 
 type commonActionProps = {
@@ -38,8 +43,8 @@ type commonActionProps = {
     taskId: string;
     taskStatusId: string;
   };
-  resolvedHandle: () => void,
-  rejectedHandle: () => void,
+  resolvedHandle: () => void;
+  rejectedHandle: () => void;
 };
 
 export const duplicateTaskAsync = createAsyncThunk(
@@ -49,14 +54,15 @@ export const duplicateTaskAsync = createAsyncThunk(
     { rejectWithValue, dispatch, getState },
   ) => {
     try {
-      const { taskInWork, taskInbox, taskCompleted, taskFilters } = getState() as {
+      const { taskInWork, taskInbox, taskCompleted, taskFailed, taskFilters } = getState() as {
         taskInWork: TTasksReducer;
         taskInbox: TTasksReducer;
         taskCompleted: TTasksReducer;
+        taskFailed: TTasksReducer;
         taskFilters: TFiltersSlice;
       };
       await taskService.duplicateTask(taskId);
-      const dataCheckStatus = { taskStatusId, taskInWork, taskInbox, taskCompleted };
+      const dataCheckStatus = { taskStatusId, taskInWork, taskInbox, taskCompleted, taskFailed };
       const stateOfDispatch = checkForStatusId(dataCheckStatus);
       if (taskStatusId === created) {
         dispatch(
@@ -74,9 +80,17 @@ export const duplicateTaskAsync = createAsyncThunk(
             ...taskFilters.filters,
           }),
         );
-      } else {
+      } else if (taskStatusId === completed) {
         dispatch(
           TaskCompletedSlice.getTasksAsync({
+            per_page: stateOfDispatch.pagination?.per_page,
+            page: stateOfDispatch.pagination?.page_current,
+            ...taskFilters.filters,
+          }),
+        );
+      } else if (taskStatusId === notImplemented) {
+        dispatch(
+          TaskFailedSlice.getTasksAsync({
             per_page: stateOfDispatch.pagination?.per_page,
             page: stateOfDispatch.pagination?.page_current,
             ...taskFilters.filters,
@@ -99,14 +113,15 @@ export const deleteTaskAsync = createAsyncThunk(
     { rejectWithValue, dispatch, getState },
   ) => {
     try {
-      const { taskInWork, taskInbox, taskCompleted, taskFilters } = getState() as {
+      const { taskInWork, taskInbox, taskCompleted, taskFailed, taskFilters } = getState() as {
         taskInWork: TTasksReducer;
         taskInbox: TTasksReducer;
         taskCompleted: TTasksReducer;
+        taskFailed: TTasksReducer;
         taskFilters: TFiltersSlice;
       };
       await taskService.deleteTask(taskId);
-      const dataCheckStatus = { taskStatusId, taskInWork, taskInbox, taskCompleted };
+      const dataCheckStatus = { taskStatusId, taskInWork, taskInbox, taskCompleted, taskFailed };
       const stateOfDispatch = checkForStatusId(dataCheckStatus);
       if (taskStatusId === created) {
         dispatch(
@@ -124,9 +139,17 @@ export const deleteTaskAsync = createAsyncThunk(
             ...taskFilters.filters,
           }),
         );
-      } else {
+      } else if (taskStatusId === completed) {
         dispatch(
           TaskCompletedSlice.getTasksAsync({
+            per_page: stateOfDispatch.pagination?.per_page,
+            page: stateOfDispatch.pagination?.page_current,
+            ...taskFilters.filters,
+          }),
+        );
+      } else if (taskStatusId === notImplemented) {
+        dispatch(
+          TaskFailedSlice.getTasksAsync({
             per_page: stateOfDispatch.pagination?.per_page,
             page: stateOfDispatch.pagination?.page_current,
             ...taskFilters.filters,

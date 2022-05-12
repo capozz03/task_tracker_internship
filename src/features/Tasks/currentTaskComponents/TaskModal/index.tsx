@@ -9,6 +9,7 @@ import {
   TaskInboxSlice,
   TaskCompletedSlice,
   TaskFilters,
+  TaskFailedSlice,
 } from 'store/slice';
 import Title from '../Title';
 import MenuHeader from 'features/Tasks/currentTaskComponents/MenuHeader';
@@ -44,9 +45,18 @@ const TaskModal = (props: ModalProps) => {
         }),
       );
     }
-    if (status?.name === 'Выполнена' || status?.name === 'Не выполнена') {
+    if (status?.name === 'Выполнена') {
       dispatch(
         TaskCompletedSlice.getTasksAsync({
+          per_page: paginationInCompleted!.per_page,
+          page: paginationInCompleted!.page_current,
+          ...filters,
+        }),
+      );
+    }
+    if (status?.name === 'Не выполнена') {
+      dispatch(
+        TaskFailedSlice.getTasksAsync({
           per_page: paginationInCompleted!.per_page,
           page: paginationInCompleted!.page_current,
           ...filters,
