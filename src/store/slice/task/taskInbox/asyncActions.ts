@@ -96,10 +96,10 @@ export const createNewTaskAsync = createAsyncThunk(
           ...taskFilters.filters,
         }),
       );
-      alert('Задача успешно создана', 'success');
+      alert(`Задача "${title.slice(0, 25)}${title.length > 25 ? '...' : ''}" успешно создана`, 'success');
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
-      alert(`Ошибка во создания задачи "${error.message}"`, 'error');
+      alert('Ошибка создания задачи', 'error');
       return rejectWithValue(error);
     }
   },
