@@ -1,43 +1,37 @@
-import { createAsyncThunk, miniSerializeError } from '@reduxjs/toolkit';
-import { taskService } from './taskInWorkService';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { taskService } from './taskFailedService';
 import { TTaskSearch, TTasksReducer, TTaskStatusChange } from '../entities';
-import { alert } from 'shared/ui';
 import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice, TaskFailedSlice } from 'store/slice';
 import { TFiltersSlice } from '../taskFilters/slice';
 import { TaskStatuses } from 'shared';
 
-export const created = TaskStatuses.CREATED;
-export const inWork = TaskStatuses.IN_WORK;
-export const completed = TaskStatuses.COMPLETED;
-export const notImplemented = TaskStatuses.FAILED;
-export const rejectedId = TaskStatuses.REJECTED;
+const statusId = TaskStatuses.FAILED;
 
 export const getTasksAsync = createAsyncThunk(
-  'taskInWork/getTaskInWork',
+  'taskFailed/gettaskFailed',
   async (params: TTaskSearch, { rejectWithValue }) => {
     try {
-      const { data } = await taskService.getTasks({ ...params, status_id: inWork });
+      const { data } = await taskService.getTasks({ ...params, status_id: statusId });
       return data;
-    } catch (rejectedValueOrSerializedError) {
-      const error = miniSerializeError(rejectedValueOrSerializedError);
+    } catch (error) {
       return rejectWithValue(error);
     }
   },
 );
 
 export const changeStatusTaskAsync = createAsyncThunk(
-  'taskInWork/changeStatusTask',
+  'taskFailed/getTask',
   async (params: TTaskStatusChange, { rejectWithValue, dispatch, getState }) => {
     try {
-      const { taskInWork, taskFilters } = getState() as {
-        taskInWork: TTasksReducer;
+      const { taskFailed, taskFilters } = getState() as {
+        taskFailed: TTasksReducer;
         taskFilters: TFiltersSlice;
       };
       const { data } = await taskService.changeStatusTask({ ...params });
       dispatch(
-        TaskInWorkSlice.getTasksAsync({
-          per_page: taskInWork.pagination?.per_page,
-          page: taskInWork.pagination?.page_current,
+        getTasksAsync({
+          per_page: taskFailed.pagination?.per_page,
+          page: taskFailed.pagination?.page_current,
           ...taskFilters.filters,
         }),
       );
@@ -82,42 +76,7 @@ export const changeStatusTaskAsync = createAsyncThunk(
           }),
         );
       }
-      alert('Статус задачи изменен', 'success');
-    } catch (rejectedValueOrSerializedError) {
-      const error = miniSerializeError(rejectedValueOrSerializedError);
-      alert(`Статус не изминен. Ошибка: "${error.message}"`, 'error');
-      return rejectWithValue(error);
-    }
-  },
-);
-
-export const createNewTaskAsync = createAsyncThunk(
-  'taskInWork/createNewTaskTask',
-  async (
-    params: { title: string; task_status_id: string },
-    { rejectWithValue, dispatch, getState },
-  ) => {
-    try {
-      const { task_status_id: taskStatusID, title } = params;
-      const { taskInWork, taskFilters } = getState() as {
-        taskInWork: TTasksReducer;
-        taskFilters: TFiltersSlice;
-      };
-      await taskService.createNewTask({ task_status_id: taskStatusID, title });
-      dispatch(
-        getTasksAsync({
-          per_page: taskInWork.pagination?.per_page,
-          page: taskInWork.pagination?.page_current,
-          ...taskFilters.filters,
-        }),
-      );
-      alert(
-        `Задача "${title.slice(0, 25)}${title.length > 25 ? '...' : ''}" успешно создана`,
-        'success',
-      );
-    } catch (rejectedValueOrSerializedError) {
-      const error = miniSerializeError(rejectedValueOrSerializedError);
-      alert('Ошибка создания задачи', 'error');
+    } catch (error) {
       return rejectWithValue(error);
     }
   },

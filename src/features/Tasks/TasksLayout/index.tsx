@@ -5,10 +5,11 @@ import FilterAssignedTo from '../tasksComponents/FilterAssignedTo';
 import NotificationsButton from '../tasksComponents/NotificationsButton';
 import FilterToggleButton from '../tasksComponents/FilterToggleButton';
 import { CloseOutlined } from '@ant-design/icons';
-import TasksCompleted from '../tasksComponents/TasksCompleted';
 import UserAvatarMenu from '../../Auth/UserAvatarMenu';
-import TasksInWork from '../tasksComponents/TasksInWork';
 import TasksInbox from '../tasksComponents/TasksInbox';
+import TasksInWork from '../tasksComponents/TasksInWork';
+import TasksCompleted from '../tasksComponents/TasksCompleted';
+import TasksFailed from '../tasksComponents/TasksFailed';
 import TaskModal from '../currentTaskComponents/TaskModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { TaskFilters, TaskFormSlice } from 'store/slice';
@@ -60,6 +61,7 @@ const TasksLayout = () => {
             <TasksInbox />
             <TasksInWork />
             <TasksCompleted />
+            <TasksFailed />
           </Content>
         </Layout>
       </Layout>
