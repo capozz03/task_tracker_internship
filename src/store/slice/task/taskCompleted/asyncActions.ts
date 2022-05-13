@@ -1,16 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { taskService } from './taskCompletedService';
 import { TTaskSearch, TTasksReducer, TTaskStatusChange } from '../entities';
-import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice } from 'store/slice';
+import { TaskInWorkSlice, TaskInboxSlice, TaskFailedSlice, TaskCompletedSlice } from 'store/slice';
 import { TFiltersSlice } from '../taskFilters/slice';
+import { TaskStatuses } from 'shared';
 
-const statusesId = ['8536592a-7340-4e10-ac4b-a280652c9310', '599f5d03-1ef0-4a5b-a18c-33a4f44c4610'];
+const statusId = TaskStatuses.COMPLETED;
 
 export const getTasksAsync = createAsyncThunk(
   'taskCompleted/getTaskCompleted',
   async (params: TTaskSearch, { rejectWithValue }) => {
     try {
-      const { data } = await taskService.getTasks({ ...params, status_id: statusesId });
+      const { data } = await taskService.getTasks({ ...params, status_id: statusId });
       return data;
     } catch (error) {
       return rejectWithValue(error);
@@ -55,12 +56,22 @@ export const changeStatusTaskAsync = createAsyncThunk(
           }),
         );
       }
-      if (data.data.status?.name === 'Выполнена' || data.data.status?.name === 'Не выполнена') {
+      if (data.data.status?.name === 'Выполнена') {
         const paginationInCompleted = state.taskCompleted?.pagination;
         dispatch(
           TaskCompletedSlice.getTasksAsync({
             per_page: paginationInCompleted!.per_page,
             page: paginationInCompleted!.page_current,
+            ...taskFilters.filters,
+          }),
+        );
+      }
+      if (data.data.status?.name === 'Не выполнена') {
+        const paginationInFailed = state.taskFailed?.pagination;
+        dispatch(
+          TaskFailedSlice.getTasksAsync({
+            per_page: paginationInFailed!.per_page,
+            page: paginationInFailed!.page_current,
             ...taskFilters.filters,
           }),
         );
