@@ -45,7 +45,7 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  overflow-x: scroll;
+  overflow-x: auto;
   text-overflow: ellipsis;
 }
 
@@ -57,4 +57,5 @@
 .expandBtn {
   font: $p-regular;
   color: $main-blue !important;
+  cursor: pointer;
 }
