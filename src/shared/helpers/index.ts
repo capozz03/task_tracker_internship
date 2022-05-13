@@ -11,6 +11,7 @@ export {
 
 export { formatBytes } from './formatBytes';
 export { checkFileExtension } from './checkFileExtension';
+export { validFileType, slicedName } from './validFileType';
 export { setImageUrl, setCarouselImages } from './setImageUrl';
 export type { TCarouselImages } from './setImageUrl';
 export { useBreakPoint, useDebounce } from './hooks';

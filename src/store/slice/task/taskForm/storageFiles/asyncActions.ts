@@ -94,7 +94,7 @@ export const downloadStorageFile = createAsyncThunk(
   async (props: getStorageFileDetailsProps, { rejectWithValue }) => {
     try {
       const { data } = await storageFilesSlice.getStorageFileDetails(props);
-      const url = window.URL.createObjectURL(new Blob([data as Blob]));
+      const url = `${process.env.REACT_APP_TASK_BACKEND_URL}/api/v1.0/storage/files/${data.data.storage_file_id}/download`;
       const link = document.createElement('a');
       link.href = url;
       link.setAttribute('download', data.data.name_original);

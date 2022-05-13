@@ -13,7 +13,7 @@ import {
 import Title from '../Title';
 import MenuHeader from 'features/Tasks/currentTaskComponents/MenuHeader';
 import CheckListArea from 'features/Tasks/currentTaskComponents/CheckListArea';
-import Description from 'features/Tasks/tasksComponents/Description';
+import Description from 'features/Tasks/currentTaskComponents/Description';
 
 const TaskModal = (props: ModalProps) => {
   const dispatch = useDispatch();

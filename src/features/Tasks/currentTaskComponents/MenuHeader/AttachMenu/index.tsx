@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './index.module.scss';
 import { TaskFormSlice } from 'store/slice';
 import PlusIcons from 'shared/ui/icons/PlusIcons';
-import { alert } from 'shared';
+import { alert, validFileType } from 'shared';
 import { RcFile } from 'antd/lib/upload/interface';
 
 const AttachMenu = () => {
@@ -12,6 +12,7 @@ const AttachMenu = () => {
   const { Item } = Menu;
 
   const checklists = useSelector(TaskFormSlice.getCheckLists);
+  const storageCount = useSelector(TaskFormSlice.getStorageCount);
   const task = useSelector(TaskFormSlice.getTask);
 
   const uploadFiles = async (options: any) => {
@@ -28,11 +29,23 @@ const AttachMenu = () => {
   };
 
   const beforeUpload = (file: RcFile) => {
+    if (storageCount && storageCount >= 15) {
+      alert('Максимальное кол-во файлов 15', 'error');
+      return false;
+    }
     const sizeFileBytes = file.size;
     if (sizeFileBytes > 52428800) {
       alert('Максимальный размер файла 50мб', 'error');
       return false;
-    } return file;
+    }
+    if (!validFileType(file)) {
+      alert(
+        'Разрешенные форматы: .pdf, .txt, .doc, .docx, .avi, .mp4, .wmv, .csv, .xls, .xlsx, jpeg, png',
+        'error',
+      );
+      return false;
+    }
+    return file;
   };
 
   const checklistHandle = () => {
@@ -51,7 +64,7 @@ const AttachMenu = () => {
       <Item key="2" onClick={uploadFiles}>
         <Upload
           showUploadList={false}
-          accept=".pdf, .txt, .doc, .docx, .avi, .mp4, .wmv, .csv, .xls, .jpeg, .jpg, .png"
+          accept=".pdf, .txt, .doc, .docx, .avi, .mp4, .wmv, .csv, .xls, .xlsx, .jpeg, .jpg, .png"
           customRequest={uploadFiles}
           beforeUpload={beforeUpload}
         >

@@ -25,7 +25,7 @@
 .changeButton {
   background: $grey-200 !important;
   border: none !important;
-  border-radius: 8px !important; 
+  border-radius: 8px !important;
   & > span {
     font: $h6-regular !important;
     color: $grey-600 !important;
@@ -42,7 +42,26 @@
   background-color: rgb(255, 77, 79, 0.05) !important;
 }
 
-.taskFiles__fileList, .taskFiles__imageList {
+.taskFiles__fileList,
+.taskFiles__imageList {
   display: flex;
   flex-wrap: wrap;
+  margin: 5px 0;
+}
+
+@media screen and (max-width: 992px) {
+  .taskFiles__fileList,
+  .taskFiles__imageList {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .taskFiles__fileList::-webkit-scrollbar,
+  .taskFiles__imageList::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
 }

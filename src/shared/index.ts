@@ -9,6 +9,11 @@ export {
   useDebounce,
   useBreakPoint,
   isArrayOfStrings,
+  validFileType,
+  slicedName,
+  formatBytes,
+  checkFileExtension,
+  setCarouselImages,
 } from './helpers';
 export { $api, $apiTask } from './api';
 export * as icons from './ui/icons';

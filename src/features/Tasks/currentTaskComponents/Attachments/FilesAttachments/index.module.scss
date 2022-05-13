@@ -7,7 +7,7 @@
   border-radius: 8px;
   padding: 8px;
   margin: 8px 8px 8px 0;
-  &:hover {
+  &:hover, &:active {
     border: 1px solid $colors-blue !important;
     .dropdown {
       opacity: 1;
@@ -17,6 +17,7 @@
 
 .taskFiles__inner {
   display: flex;
+  width: 245px;
   align-items: center;
   align-content: center;
 }

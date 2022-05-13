@@ -27,7 +27,7 @@ export const storageFilesSlice = {
       onUploadProgress,
     }),
   downloadStorageFile: async ({ storageFileId }: getStorageFileDetailsProps) =>
-    $apiTask.get<TStorageFilesResponse>(`/api/v1.0/storage/files/${storageFileId}/download`, {
+    $apiTask.get<any>(`/api/v1.0/storage/files/${storageFileId}/download`, {
       headers: { accept: 'application/json' },
     }),
   attachStorageFileToTask: async ({ taskId, storageFileId }: attachFileDetailsProps) =>
