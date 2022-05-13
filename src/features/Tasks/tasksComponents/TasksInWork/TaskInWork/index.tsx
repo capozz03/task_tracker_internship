@@ -44,7 +44,7 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
         <CardNameText text={task.title} />
       </div>
       <div className={styles.cardFilesAndCheckbox}>
-        { task.storage_files_meta
+        { task.storage_files_meta.total !== 0
           && <CardAttachmentsCount count={task.storage_files_meta.total} /> }
         {
           task.progress && task.progress.total !== 0 && (

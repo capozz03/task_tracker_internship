@@ -7,3 +7,5 @@ export * as CommonSlice from './task/commonActions';
 export * as TaskFormSlice from './task/taskForm';
 export * as TaskFilters from './task/taskFilters';
 export * as TagsSlice from './task/tags';
+export * as HistorySlice from './task/history';
+export * as NotificationsSlice from './task/notifications';

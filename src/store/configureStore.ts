@@ -9,6 +9,8 @@ import {
   TaskFilters,
   TagsSlice,
   CommonSlice,
+  HistorySlice,
+  NotificationsSlice,
 } from './slice';
 
 const rootReducer = combineReducers({
@@ -21,6 +23,8 @@ const rootReducer = combineReducers({
   taskFilters: TaskFilters.filtersReducer,
   tags: TagsSlice.tagsReducer,
   common: CommonSlice.commonReducer,
+  history: HistorySlice.historyReducer,
+  notifications: NotificationsSlice.notificationReducer,
 });
 
 export const store = configureStore({
