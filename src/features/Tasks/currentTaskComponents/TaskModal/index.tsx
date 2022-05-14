@@ -24,6 +24,7 @@ const TaskModal = (props: ModalProps) => {
   const paginationInbox = useSelector(TaskInboxSlice.getPagination);
   const paginationInWork = useSelector(TaskInWorkSlice.getPagination);
   const paginationInCompleted = useSelector(TaskCompletedSlice.getPagination);
+  const paginationInFailed = useSelector(TaskFailedSlice.getPagination);
   const filters = useSelector(TaskFilters.getFilters);
 
   const cancelHandle = () => {
@@ -57,8 +58,8 @@ const TaskModal = (props: ModalProps) => {
     if (status?.name === 'Не выполнена') {
       dispatch(
         TaskFailedSlice.getTasksAsync({
-          per_page: paginationInCompleted!.per_page,
-          page: paginationInCompleted!.page_current,
+          per_page: paginationInFailed!.per_page,
+          page: paginationInFailed!.page_current,
           ...filters,
         }),
       );
