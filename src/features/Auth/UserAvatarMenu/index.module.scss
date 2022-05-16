@@ -31,13 +31,13 @@
     min-width: 0 !important;
 
     & ul {
-        padding: 5px;
+        padding: 5px 0;
         border-radius: 8px;
-        border: 1px solid $grey-100;
-        box-shadow: 0px 8px 40px rgba($grey-900, 0.15);
+        border: none;
+        box-shadow: 0px 8px 40px rgba(23, 31, 70, 0.08);
     }
 
     & li {
-        border-radius: 5px;
+        padding: 10px 25px;
     }
 }

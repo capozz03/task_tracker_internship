@@ -1,6 +1,6 @@
 export { routes } from './routes';
 export { clientCookies } from './cookies';
-export { RequestStatuses, TaskStatuses, TaskPriorities } from './enums';
+export { RequestStatuses, RolesIds, RoleMaxAmounts, TaskStatuses, TaskPriorities } from './enums';
 export { normalizeTrimWhitespaces } from './normalize';
 export {
   isFailureStatusCheck,
@@ -15,4 +15,6 @@ export { validFileType, slicedName } from './validFileType';
 export { setImageUrl, setCarouselImages } from './setImageUrl';
 export type { TCarouselImages } from './setImageUrl';
 export { useBreakPoint, useDebounce } from './hooks';
+export { convertRolesToObject } from './convert';
+export { isAuthor, isObserver, isPerformer, isResponsible } from './userRoleChecker';
 export { isArrayOfStrings } from './typeGuards';

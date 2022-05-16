@@ -1,8 +1,7 @@
-// import { TUsersState } from './entities';
-import { RequestStatuses } from 'shared';
+import { initialState } from './initialState';
 
 export const usersSliceActions = {
   resetUserList() {
-    return { data: null, status: RequestStatuses.IDLE, error: null };
+    return { ...initialState };
   },
 };

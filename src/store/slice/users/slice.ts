@@ -3,12 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatuses } from 'shared';
 import { usersSliceActions } from './actions';
 import { getUsersListPage } from './asyncActions';
-
-const initialState = {
-  data: null,
-  status: RequestStatuses.IDLE,
-  error: null,
-} as TUsersState;
+import { initialState } from './initialState';
 
 const usersSlice = createSlice({
   name: 'users',

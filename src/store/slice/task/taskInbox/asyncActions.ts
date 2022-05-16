@@ -81,7 +81,7 @@ export const changeStatusTaskAsync = createAsyncThunk(
       alert('Статус задачи изменен', 'success');
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
-      alert(`Статус не изминен. Ошибка: "${error.message}"`, 'error');
+      alert(`Статус не изменен. Ошибка: "${error.message}"`, 'error');
       return rejectWithValue(error);
     }
   },
@@ -110,7 +110,7 @@ export const createNewTaskAsync = createAsyncThunk(
       alert(`Задача "${title.slice(0, 25)}${title.length > 25 ? '...' : ''}" успешно создана`, 'success');
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
-      alert('Ошибка создания задачи', 'error');
+      alert(`Ошибка при создании задачи "${error.message}"`, 'error');
       return rejectWithValue(error);
     }
   },
@@ -134,7 +134,7 @@ export const duplicateTaskAsync = createAsyncThunk(
       alert('Задача успешно скопирована', 'success');
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
-      alert(`Ошибка во время создание копии задачи "${error.message}"`, 'error');
+      alert(`Ошибка во время создания копии задачи "${error.message}"`, 'error');
       return rejectWithValue(error);
     }
   },
@@ -159,7 +159,7 @@ export const deleteTaskAsync = createAsyncThunk(
       alert('Задача успешно удалена', 'success');
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
-      alert(`Ошибка во время удалена задачи "${error.message}"`, 'error');
+      alert(`Ошибка во время удаления задачи "${error.message}"`, 'error');
       return rejectWithValue(error);
     }
   },
