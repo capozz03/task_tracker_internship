@@ -72,10 +72,22 @@
     flex-direction: column;
     align-items: flex-start;
 
+    .collapse {
+      width: 100%;
+
+      .collapseItem {
+        border-bottom: 0;
+
+        & > div:first-child {
+          padding: 0;
+        }
+      }
+    }
+
   }
 
   @include media-breakpoint-down(lg) {
-    grid-template-columns: auto 0;
+    grid-template-columns: 100% 0;
     .title {
       border-radius: 16px 16px;
       grid-row: 1;
@@ -92,6 +104,7 @@
         height: 24px;
         margin: 24px 32px 16px;
       }
+      
     }
     .rightColumn {
       padding: 0 16px;
@@ -105,10 +118,74 @@
   }
 }
 
-.checklist{
+.checklist {
+  margin-top: 40px;
   width: 100%;
 }
 
+.memberHeader {
+  height: 25px;
+  width: 100%;
+  margin: 0 30px 0 10px;
+  padding: 20px 6px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  background-color: inherit;
+  border: none;
+  cursor: pointer;
+}
+
+.memberHeader > * {
+  margin: 0;
+  padding: 0;
+}
+
+.memberHeader > svg {
+  min-width: 12px !important;
+  min-height: 12px !important;
+  transition: all 0.2s linear;
+}
+
+.memberHeader.arrowRotate > svg {
+  transform: rotate(-90deg);
+}
+
+.memberHeader > svg > path {
+  fill: #95959f !important;
+}
+
+.memberHeader:hover > svg > path {
+  fill: $main-blue-hover !important;
+}
+
+.memberHeader > p {
+  font: $p-medium;
+  font-weight: 900;
+  color: $grey-900;
+  text-transform: uppercase;
+}
+
+.memberHeader > hr {
+  width: 100%;
+  height: 0;
+  margin: 0 6px;
+  border: none;
+  border-top: 1px solid $grey-400;
+}
+
+.memberHeader > span {
+  font: $h5;
+  color: $grey-500;
+}
+
 .description {
+  width: 100%;
+}
+
+.attachments {
+  margin-top: 40px;
   width: 100%;
 }

@@ -5,6 +5,7 @@ import { TTaskSearch, TTag } from '../entities';
 export type TFiltersSlice = {
   filters: TTaskSearch;
   isFiltersMenuShow: boolean;
+  isFiltersResetButtonShow: boolean;
   status: RequestStatuses;
   error: Error | null;
 };
@@ -13,12 +14,14 @@ const initialState = {
   filters: {
     assigned_to_me: null,
     search: null,
+    assign_user_id: null,
     storage_files_gte: null,
     tag_id: null,
     progress_gte: null,
     priority_id: null,
   },
   isFiltersMenuShow: false,
+  isFiltersResetButtonShow: false,
   status: RequestStatuses.IDLE,
   error: null,
 } as TFiltersSlice;
@@ -36,8 +39,11 @@ const filtersSlice = createSlice({
     setFilterKeyword(state, { payload }: PayloadAction<string>) {
       state.filters.search = payload || null;
     },
+    setFilterAssignUserIDArray(state, { payload }: PayloadAction<string[]>) {
+      state.filters.assign_user_id = payload.length ? payload : null;
+    },
     setTags(state: TFiltersSlice, { payload: tags }: PayloadAction<TTag[]>) {
-      state.filters.tag_id = tags.map((tag) => tag.task_tag_id);
+      state.filters.tag_id = tags.length ? tags.map((tag) => tag.task_tag_id) : null;
     },
     setFilterAttachmentsGTE(state, { payload }: PayloadAction<number>) {
       state.filters.storage_files_gte = payload || null;
@@ -61,6 +67,7 @@ export const {
   setFilterAssignedTo,
   setIsFiltersMenuShow,
   setFilterKeyword,
+  setFilterAssignUserIDArray,
   setTags,
   setFilterAttachmentsGTE,
   setFilterProgressGTE,

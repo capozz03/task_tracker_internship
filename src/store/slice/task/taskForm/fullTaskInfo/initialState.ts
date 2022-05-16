@@ -37,7 +37,7 @@ export const initialState = {
           updated: '',
         },
         assign_user: {
-          user_id: 0,
+          user_id: '',
           name: '',
         },
       },

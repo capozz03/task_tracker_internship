@@ -1,0 +1,28 @@
+@import "src/shared/assets/styles";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+
+  .item {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 32px;
+
+    .itemTitleText {
+      color: $grey-700;
+      font: $p-regular;
+      margin-right: 12px;
+      min-width: 100px;
+    }
+  }
+}
+
+.icons {
+  margin: 32px;
+}

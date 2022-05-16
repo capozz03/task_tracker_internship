@@ -6,12 +6,14 @@ import TagsFilter from 'features/Tasks/tasksComponents/FiltersPanel/TagsFilter';
 import PriorityFilter from './PriorityFilter';
 import AttachmentsFilter from './AttachmentsFilter';
 import ProgressFilter from './ProgressFilter';
+import ContributorsFilter from './ContributorsFilter';
 
 const FiltersPanel = () => (
   <div className={styles.container}>
     <SearchInput />
     <div>
       <div className={styles.labelText}>Участники</div>
+      <ContributorsFilter />
     </div>
     <div>
       <div className={styles.labelText}>Метки</div>

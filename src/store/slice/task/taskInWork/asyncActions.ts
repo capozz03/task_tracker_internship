@@ -2,14 +2,15 @@ import { createAsyncThunk, miniSerializeError } from '@reduxjs/toolkit';
 import { taskService } from './taskInWorkService';
 import { TTaskSearch, TTasksReducer, TTaskStatusChange } from '../entities';
 import { alert } from 'shared/ui';
-import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice } from 'store/slice';
+import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice, TaskFailedSlice } from 'store/slice';
 import { TFiltersSlice } from '../taskFilters/slice';
+import { TaskStatuses } from 'shared';
 
-export const created = 'cbb7199e-cb25-4dce-bf4e-24a8a5e07ef2';
-export const inWork = '372d63ff-3ae3-4be2-a606-38940d7f8c8f';
-export const completed = '8536592a-7340-4e10-ac4b-a280652c9310';
-export const notImplemented = '599f5d03-1ef0-4a5b-a18c-33a4f44c4610';
-export const rejectedId = '4658859a-32a6-4206-838a-c0064f147299';
+export const created = TaskStatuses.CREATED;
+export const inWork = TaskStatuses.IN_WORK;
+export const completed = TaskStatuses.COMPLETED;
+export const notImplemented = TaskStatuses.FAILED;
+export const rejectedId = TaskStatuses.REJECTED;
 
 export const getTasksAsync = createAsyncThunk(
   'taskInWork/getTaskInWork',
@@ -61,12 +62,22 @@ export const changeStatusTaskAsync = createAsyncThunk(
           }),
         );
       }
-      if (data.data.status?.name === 'Выполнена' || data.data.status?.name === 'Не выполнена') {
+      if (data.data.status?.name === 'Выполнена') {
         const paginationInCompleted = state.taskCompleted?.pagination;
         dispatch(
           TaskCompletedSlice.getTasksAsync({
             per_page: paginationInCompleted!.per_page,
             page: paginationInCompleted!.page_current,
+            ...taskFilters.filters,
+          }),
+        );
+      }
+      if (data.data.status?.name === 'Не выполнена') {
+        const paginationInFailed = state.taskFailed?.pagination;
+        dispatch(
+          TaskFailedSlice.getTasksAsync({
+            per_page: paginationInFailed!.per_page,
+            page: paginationInFailed!.page_current,
             ...taskFilters.filters,
           }),
         );
@@ -100,10 +111,13 @@ export const createNewTaskAsync = createAsyncThunk(
           ...taskFilters.filters,
         }),
       );
-      alert(`Задача "${title.slice(0, 25)}${title.length > 25 ? '...' : ''}" успешно создана`, 'success');
+      alert(
+        `Задача "${title.slice(0, 25)}${title.length > 25 ? '...' : ''}" успешно создана`,
+        'success',
+      );
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
-      alert(`Ошибка во создания задачи "${error.message}"`, 'error');
+      alert('Ошибка создания задачи', 'error');
       return rejectWithValue(error);
     }
   },

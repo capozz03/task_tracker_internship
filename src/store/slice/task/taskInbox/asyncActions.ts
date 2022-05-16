@@ -2,8 +2,9 @@ import { createAsyncThunk, miniSerializeError } from '@reduxjs/toolkit';
 import { taskService } from './taskInboxService';
 import { TTaskSearch, TTasksReducer, TTaskStatusChange } from '../entities';
 import { alert } from 'shared/ui';
-import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice } from 'store/slice';
+import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice, TaskFailedSlice } from 'store/slice';
 import { TFiltersSlice } from '../taskFilters/slice';
+import { TaskStatuses } from 'shared';
 
 export const getTasksAsync = createAsyncThunk(
   'taskInbox/getTaskInboxInbox',
@@ -11,7 +12,7 @@ export const getTasksAsync = createAsyncThunk(
     try {
       const { data } = await taskService.getTasks({
         ...params,
-        status_id: 'cbb7199e-cb25-4dce-bf4e-24a8a5e07ef2',
+        status_id: TaskStatuses.CREATED,
       });
       return data;
     } catch (error) {
@@ -57,7 +58,7 @@ export const changeStatusTaskAsync = createAsyncThunk(
           }),
         );
       }
-      if (data.data.status?.name === 'Выполнена' || data.data.status?.name === 'Не выполнена') {
+      if (data.data.status?.name === 'Выполнена') {
         const paginationInCompleted = state.taskCompleted?.pagination;
         dispatch(
           TaskCompletedSlice.getTasksAsync({
@@ -67,10 +68,20 @@ export const changeStatusTaskAsync = createAsyncThunk(
           }),
         );
       }
+      if (data.data.status?.name === 'Не выполнена') {
+        const paginationInFailed = state.taskFailed?.pagination;
+        dispatch(
+          TaskFailedSlice.getTasksAsync({
+            per_page: paginationInFailed!.per_page,
+            page: paginationInFailed!.page_current,
+            ...taskFilters.filters,
+          }),
+        );
+      }
       alert('Статус задачи изменен', 'success');
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
-      alert(`Статус не изминен. Ошибка: "${error.message}"`, 'error');
+      alert(`Статус не изменен. Ошибка: "${error.message}"`, 'error');
       return rejectWithValue(error);
     }
   },
@@ -96,10 +107,10 @@ export const createNewTaskAsync = createAsyncThunk(
           ...taskFilters.filters,
         }),
       );
-      alert('Задача успешно создана', 'success');
+      alert(`Задача "${title.slice(0, 25)}${title.length > 25 ? '...' : ''}" успешно создана`, 'success');
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
-      alert(`Ошибка во создания задачи "${error.message}"`, 'error');
+      alert(`Ошибка при создании задачи "${error.message}"`, 'error');
       return rejectWithValue(error);
     }
   },
@@ -123,7 +134,7 @@ export const duplicateTaskAsync = createAsyncThunk(
       alert('Задача успешно скопирована', 'success');
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
-      alert(`Ошибка во время создание копии задачи "${error.message}"`, 'error');
+      alert(`Ошибка во время создания копии задачи "${error.message}"`, 'error');
       return rejectWithValue(error);
     }
   },
@@ -148,7 +159,7 @@ export const deleteTaskAsync = createAsyncThunk(
       alert('Задача успешно удалена', 'success');
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
-      alert(`Ошибка во время удалена задачи "${error.message}"`, 'error');
+      alert(`Ошибка во время удаления задачи "${error.message}"`, 'error');
       return rejectWithValue(error);
     }
   },

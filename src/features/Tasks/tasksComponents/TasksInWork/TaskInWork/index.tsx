@@ -14,6 +14,8 @@ import {
   TaskStatus,
   UserAssignedToTask,
 } from 'features/Tasks/tasksComponents';
+import classNames from 'classnames';
+import moment, { now } from 'moment';
 
 type TaskInWorkProps = {
   task: TTask;
@@ -38,7 +40,9 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
   };
   return (
     <div
-      className={styles.wrap}
+      className={classNames([
+        styles.wrap,
+        { [styles.overdue]: moment(task?.exec_stop).diff(now()) < 0 }])}
       role="button"
       onClick={openTask}
       onKeyDown={() => {}}
