@@ -33,12 +33,15 @@ const AttachMenu = () => {
       alert('Максимальное кол-во файлов 15', 'error');
       return false;
     }
+
     const sizeFileBytes = file.size;
     if (sizeFileBytes > 52428800) {
       alert('Максимальный размер файла 50мб', 'error');
       return false;
     }
-    if (!validFileType(file)) {
+
+    const isValidFileType = validFileType(file);
+    if (!isValidFileType) {
       alert(
         'Разрешенные форматы: .pdf, .txt, .doc, .docx, .avi, .mp4, .wmv, .csv, .xls, .xlsx, jpeg, png',
         'error',
