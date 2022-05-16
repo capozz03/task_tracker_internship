@@ -1,5 +1,5 @@
 import React, { MouseEventHandler, useEffect, useState } from 'react';
-import { Select, SelectProps } from 'antd';
+import { Select, SelectProps, Tooltip } from 'antd';
 import style from './index.module.scss';
 import { taskStatuses } from './constants';
 
@@ -24,24 +24,26 @@ const TaskStatus = ({ ...props }: SelectProps) => {
   };
 
   return (
-    <Select
-      className={style.taskStatus}
-      defaultValue={currentStatus}
-      bordered={false}
-      showArrow={false}
-      dropdownMatchSelectWidth={false}
-      dropdownStyle={{ borderRadius: '8px' }}
-      onSelect={changeTaskStatus}
-      style={{ backgroundColor: `${color}` }}
-      onChange={props.onChange}
-      onClick={onClick}
-    >
-      {taskStatuses.map(({ status, taskStatusId }) => (
-        <Option key={taskStatusId} value={taskStatusId} className={style.taskStatusItem}>
-          {status}
-        </Option>
-      ))}
-    </Select>
+    <Tooltip title="Изменить статус">
+      <Select
+        className={style.taskStatus}
+        defaultValue={currentStatus}
+        bordered={false}
+        showArrow={false}
+        dropdownMatchSelectWidth={false}
+        dropdownStyle={{ borderRadius: '8px' }}
+        onSelect={changeTaskStatus}
+        style={{ backgroundColor: `${color}` }}
+        onChange={props.onChange}
+        onClick={onClick}
+      >
+        {taskStatuses.map(({ status, taskStatusId }) => (
+          <Option key={taskStatusId} value={taskStatusId} className={style.taskStatusItem} title="">
+            {status}
+          </Option>
+        ))}
+      </Select>
+    </Tooltip>
   );
 };
 
