@@ -5,12 +5,14 @@ import InputNameTask from './InputNameTask';
 import { useDispatch } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
 import { Tooltip } from 'antd';
+import { TTaskCheckList } from 'store/slice/task/entities';
+import { alert } from '../../../../../shared';
 
 type createItemForChecklistProps = {
-  checkListId: string,
+  checklist: TTaskCheckList,
 }
 
-const createItemForChecklist = ({ checkListId }: createItemForChecklistProps) => {
+const createItemForChecklist = ({ checklist }: createItemForChecklistProps) => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState('');
   const [isActive, setIsActive] = useState(false);
@@ -28,11 +30,13 @@ const createItemForChecklist = ({ checkListId }: createItemForChecklistProps) =>
   const newTaskHandler:FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const titleText = title.replaceAll(' ', '');
-    setTitle(titleText);
-    if (titleText.length !== 0) {
+    // setTitle(titleText);
+    if (checklist.items && checklist.items?.length >= 20) {
+      alert('Нельзя добавить более 20 элементов чеклиста', 'error');
+    } else if (titleText.length !== 0) {
       dispatch(TaskFormSlice.createItemForChecklist({
         title,
-        checkListId,
+        checkListId: checklist.check_list_id,
       }));
       setTitle('');
     } else {
