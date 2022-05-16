@@ -1,7 +1,7 @@
 import { RequestStatuses } from 'shared';
 
 export type TUser = {
-  user_id: string | number;
+  user_id: string;
   name: string;
   logo?: string;
   permissions?: any[];
@@ -19,7 +19,7 @@ export type TAuthResponse = {
   userId: string;
   data: {
     token: string;
-  }
+  };
 };
 
 export type TAuthResponseError = {

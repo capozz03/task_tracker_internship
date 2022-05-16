@@ -12,13 +12,17 @@ const SearchInput = () => {
   const [searchTerm, setSearchTerm] = useState(storeSearchTerm);
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  useEffect(() => {
-    dispatch(TaskFilters.setFilterKeyword(debouncedSearchTerm));
-  }, [debouncedSearchTerm]);
-
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setSearchTerm(e.target.value);
   };
+
+  useEffect(() => {
+    setSearchTerm(storeSearchTerm);
+  }, [storeSearchTerm]);
+
+  useEffect(() => {
+    dispatch(TaskFilters.setFilterKeyword(debouncedSearchTerm));
+  }, [debouncedSearchTerm]);
 
   return (
     <Input

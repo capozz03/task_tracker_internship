@@ -1,5 +1,7 @@
 @import "src/shared/assets/styles";
-
+.overdue{
+  background-color: #FDF0F0 !important;
+}
 .wrap {
   display: grid;
   grid-template-areas: "title status datepriority tags users menu"
