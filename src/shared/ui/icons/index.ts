@@ -8,6 +8,8 @@ import ArrowIcon from './ArrowIcon';
 import MoreVerticalIcon from './MoreVerticalIcon';
 import ClipIcon from './ClipIcon';
 
+export * as searchIcons from './SearchIcons';
+
 export * as alertIcons from './AlertIcons';
 export * as searchIcons from './SearchIcons';
 export * as attachmentsIcons from './AttachmentsIcons';

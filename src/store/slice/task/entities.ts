@@ -175,7 +175,7 @@ export type TSortType = 'date~DESC' | 'title~ASC';
 export type TTaskSearch = {
   sort?: TSortType;
   search?: string | null;
-  assign_user_id?: string[];
+  assign_user_id?: string[] | null;
   assigned_to_me?: boolean | null;
   storage_files_gte?: number | null;
   tag_id?: string[] | null;

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { usersList, getUsersListPage, usersListPagination, resetUserList, loadingStatus } from 'store/slice/users';
+import { usersList, getUsersListPage, usersListPagination, resetUserList, isLoadingStatus } from 'store/slice/users';
 import { searchIcons } from 'shared/ui/icons';
 import { UserAvatar } from 'features/Tasks/tasksComponents';
 import { Menu, Dropdown, Input, Spin } from 'antd';
 import 'antd/dist/antd.css';
 import styles from './index.module.scss';
 import { InView } from 'react-intersection-observer';
-import { RequestStatuses, useDebounce } from 'shared';
+import { useDebounce } from 'shared';
 import MemberChangerPopover from './Popover';
 import { TUser } from 'store/slice/user/entities';
 import { TaskFormSlice } from 'store/slice';
@@ -28,7 +28,7 @@ const MembersChanger = ({ buttonType }: TProps) => {
   const users = useSelector(usersList);
   const roles = useSelector(TaskFormSlice.getTaskFormRoles);
   const pagination = useSelector(usersListPagination);
-  const isLoading = useSelector(loadingStatus);
+  const isLoading = useSelector(isLoadingStatus);
 
   const buttonParams = {
     blue: {
@@ -80,7 +80,7 @@ const MembersChanger = ({ buttonType }: TProps) => {
       {({ ref }) => (
         <>
           <li className={styles.lastElement} ref={ref} key="_observer_point" />
-          { isLoading === RequestStatuses.LOADING && <Spin className={styles.spin} /> }
+          { isLoading && <Spin className={styles.spin} /> }
         </>
       )}
     </InView>

@@ -9,6 +9,7 @@ import {
   TaskInboxSlice,
   TaskCompletedSlice,
   TaskFilters,
+  TaskFailedSlice,
 } from 'store/slice';
 import Title from '../Title';
 import MenuHeader from 'features/Tasks/currentTaskComponents/MenuHeader';
@@ -27,6 +28,7 @@ const TaskModal = (props: ModalProps) => {
   const paginationInbox = useSelector(TaskInboxSlice.getPagination);
   const paginationInWork = useSelector(TaskInWorkSlice.getPagination);
   const paginationInCompleted = useSelector(TaskCompletedSlice.getPagination);
+  const paginationInFailed = useSelector(TaskFailedSlice.getPagination);
   const filters = useSelector(TaskFilters.getFilters);
 
   const cancelHandle = () => {
@@ -48,11 +50,20 @@ const TaskModal = (props: ModalProps) => {
         }),
       );
     }
-    if (status?.name === 'Выполнена' || status?.name === 'Не выполнена') {
+    if (status?.name === 'Выполнена') {
       dispatch(
         TaskCompletedSlice.getTasksAsync({
           per_page: paginationInCompleted!.per_page,
           page: paginationInCompleted!.page_current,
+          ...filters,
+        }),
+      );
+    }
+    if (status?.name === 'Не выполнена') {
+      dispatch(
+        TaskFailedSlice.getTasksAsync({
+          per_page: paginationInFailed!.per_page,
+          page: paginationInFailed!.page_current,
           ...filters,
         }),
       );
@@ -79,7 +90,9 @@ const TaskModal = (props: ModalProps) => {
             <div className={styles.checklist}>
               <CheckListArea />
             </div>
-            {task && <Attachments taskId={task.task_id} />}
+            <div className={styles.attachments}>
+              {task && <Attachments taskId={task.task_id} />}
+            </div>
             <div>actions</div>
           </div>
           <div className={styles.rightColumn}>

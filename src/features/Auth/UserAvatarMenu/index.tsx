@@ -28,7 +28,9 @@ const UserAvatarMenu = () => {
   const menu = (
     <Menu>
       <Menu.Item key={0}>
-        <button className={styles.btn} type="button" onClick={logoutAction}>Выйти</button>
+        <button className={styles.btn} type="button" onClick={logoutAction}>
+          Выйти
+        </button>
       </Menu.Item>
     </Menu>
   );
@@ -36,7 +38,7 @@ const UserAvatarMenu = () => {
   return (
     <Dropdown overlay={menu} trigger={['click']} overlayClassName={styles.dropdown}>
       <div className={styles.wrapper}>
-        <UserAvatar user={info || { user_id: 0, name: 'Unknown User' }} color="#FFC542" />
+        <UserAvatar user={info || { user_id: '0', name: 'Unknown User' }} color="#FFC542" />
         <CaretDownOutlined className={styles.icon} />
       </div>
     </Dropdown>
