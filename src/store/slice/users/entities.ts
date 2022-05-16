@@ -1,5 +1,4 @@
 import { RequestStatuses } from 'shared';
-import { TUser } from '../user/entities';
 
 export type TUsersStateData = {
   pagination: {
@@ -8,8 +7,15 @@ export type TUsersStateData = {
     per_page: number;
     page_current: number;
     page_total: number;
-  };
-  data: TUser[];
+  },
+  data: Array<
+    {
+      user_id: string,
+      name: string,
+      logo: string;
+      permissions: Array<string>
+    }
+  >
 };
 
 export type TUsersState = {

@@ -1,0 +1,37 @@
+@import "src/shared/assets/styles";
+
+.category {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.title {
+    display: inline-block;
+    min-width: 160px;
+    margin: 0;
+    margin-top: 5px;
+    padding: 0;
+    padding-left: 30px;
+    font: $p-regular;
+}
+
+.titleDetails {
+    color: $grey-800;
+}
+
+.titleMembers {
+    color: $grey-700;
+}
+
+.labels {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 8px;
+}
