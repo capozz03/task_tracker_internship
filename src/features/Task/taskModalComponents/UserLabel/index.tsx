@@ -31,7 +31,7 @@ const UserLabel = ({ user, roleId, roleName, canRemove = false }: TProps) => {
 
   return (
     <div className={styles.label}>
-      <UserAvatar user={{ user_id: user.userId, name: user.userName, logo: user.logo }} color="#FF974A" />
+      <UserAvatar user={{ user_id: `${user.userId}`, name: user.userName, logo: user.logo }} color="#FF974A" />
       <p>{user.userName}</p>
       {
         canRemove
