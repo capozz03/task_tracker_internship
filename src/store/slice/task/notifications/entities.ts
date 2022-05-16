@@ -3,8 +3,8 @@ import { TPagination, TStorageFiles } from 'store/slice/task/entities';
 import { TUser } from 'store/slice/user/entities';
 
 export type TNotifiesRequest = {
-  viewed: boolean | null;
-  include: string[];
+  viewed?: boolean | null;
+  include?: string[];
   page: number;
   per_page: number;
 }
