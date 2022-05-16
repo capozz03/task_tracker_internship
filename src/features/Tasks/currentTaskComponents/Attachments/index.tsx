@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
 import FilesAttachments from './FilesAttachments';
 import ImagesAttachments from './ImagesAttachments';
-import { setCarouselImages } from 'shared/helpers';
+import { setCarouselImages, useBreakPoint } from 'shared';
+import DraggerAttachments from './DraggerAttachments';
 
 type attachmentsProps = {
   taskId: string;
@@ -35,6 +36,7 @@ const Attachments = ({ taskId }: attachmentsProps) => {
   };
 
   const isShowBlockOfAttachments = isShowAttachments();
+  const isShowDraggerAttachments = !useBreakPoint(992) && storageCount && storageCount < 15;
 
   return (
     <div className={style.taskAttachments}>
@@ -69,6 +71,9 @@ const Attachments = ({ taskId }: attachmentsProps) => {
                       uploaded={uploaded}
                     />
                   ),
+                )}
+                {isShowDraggerAttachments && (
+                  <DraggerAttachments taskId={taskId} storageCount={storageCount} />
                 )}
               </div>
               <div className={style.taskFiles__imageList}>

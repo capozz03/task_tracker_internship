@@ -6,6 +6,7 @@ import CarouselImages from './CarouselImages';
 import { Modal } from 'antd';
 import { TaskFormSlice } from 'store/slice';
 import { useSelector } from 'react-redux';
+import { slicedName } from 'shared';
 
 type ImagesAttachmentsProps = {
   name: string;
@@ -74,7 +75,7 @@ const ImagesAttachments = ({
           </div>
         </div>
         <div className={style.taskFiles__content}>
-          <div className={style.taskFiles__name}>{name}</div>
+          <div className={style.taskFiles__name}>{slicedName(name)}</div>
         </div>
       </div>
       <Modal
