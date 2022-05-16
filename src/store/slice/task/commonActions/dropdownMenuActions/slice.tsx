@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TTask } from 'store/slice/task/entities';
 import { RequestStatuses } from '../../../../../shared';
 import { deleteTaskAsync } from './asyncActions';
-// import { deleteTaskAsync } from './asyncActions';
 
 type TCommonActionReducer = {
   visibleModalDeleteTask: boolean;
