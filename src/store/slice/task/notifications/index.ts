@@ -1,2 +1,3 @@
 export { notificationReducer } from './slice';
-export { getCommandListAsync } from './asyncThunk';
+export { getNotificationsAsync } from './asyncThunk';
+export { getNotificationsSelector, getPaginationSelector } from './selector';

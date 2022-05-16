@@ -11,6 +11,7 @@ import {
   CommonSlice,
   HistorySlice,
   NotificationsSlice,
+  SubscribesSlice,
 } from './slice';
 
 const rootReducer = combineReducers({
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   common: CommonSlice.commonReducer,
   history: HistorySlice.historyReducer,
   notifications: NotificationsSlice.notificationReducer,
+  subscribes: SubscribesSlice.subscribeReducer,
 });
 
 export const store = configureStore({

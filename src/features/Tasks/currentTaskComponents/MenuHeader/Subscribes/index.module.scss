@@ -1,0 +1,18 @@
+
+
+.default{
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #92929D;
+  &:hover{
+    color: #005bee;
+  }
+  &.active{
+    color: #0062ff;
+    &:hover{
+      color: #005bee;
+    }
+  }
+}
+
