@@ -1,4 +1,3 @@
-/* eslint-disable react/require-default-props */
 import React, { useState } from 'react';
 import styles from './index.module.scss';
 import { Select } from 'antd';
@@ -9,13 +8,15 @@ const { Option } = Select;
 
 type PrioritySelectProps = {
   value?: keyof typeof Priority | null;
+  onPriorityChange: Function;
 };
 
-const PrioritySelect = ({ value = null }: PrioritySelectProps) => {
+const PrioritySelect = ({ value = null, onPriorityChange }: PrioritySelectProps) => {
   const [priority, setPriority] = useState(value);
 
-  const onChange = (val: any) => {
-    setPriority(val);
+  const onChange = (newvalue: keyof typeof Priority | null) => {
+    setPriority(newvalue);
+    onPriorityChange(newvalue);
   };
 
   return (

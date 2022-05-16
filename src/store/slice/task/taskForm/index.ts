@@ -2,6 +2,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { ChecklistReducer } from 'store/slice/task/taskForm/checkList';
 import { taskFormDataReducer } from 'store/slice/task/taskForm/fullTaskInfo/slice';
 import { taskFormRolesReducer } from './roles/slice';
+import { taskFormPriorityReducer } from './priority/slice';
 import { StorageFilesReducer } from './storageFiles';
 
 export { getTaskByIdAsync } from './getTaskById';
@@ -28,6 +29,7 @@ export {
   isLoadingStatus,
   getTaskFormStatusTask,
   getTaskFormId,
+  getTaskFormPriority,
 } from './fullTaskInfo/selector';
 
 export {
@@ -57,6 +59,7 @@ export {
 export { taskFormRolesReducer, taskFormRolesSelector, setRoles } from './roles/slice';
 export { addUserRole, removeUserRole } from './roles/asyncActions';
 export { getRoles, isLoadingRolesStatus } from './roles/selector';
+
 export {
   imagePreview,
   getStorageFiles,
@@ -80,9 +83,14 @@ export {
   setProgress,
 } from './storageFiles/uiSlice';
 
+export { taskFormPriorityReducer, taskFormPrioritySelector, setPriority } from './priority/slice';
+export { changeTaskPriority } from './priority/asyncActions';
+export { getPriority, isLoadingPriorityStatus } from './priority/selector';
+
 export const taskFormReducer = combineReducers({
   storageFile: StorageFilesReducer,
   checkList: ChecklistReducer,
   task: taskFormDataReducer,
   roles: taskFormRolesReducer,
+  priority: taskFormPriorityReducer,
 });

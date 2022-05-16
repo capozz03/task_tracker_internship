@@ -19,3 +19,4 @@ export const isLoadingStatus = createSelector(getTaskInformation, ({ status }) =
 );
 
 export const getTaskFormId = createSelector(getTaskInformation, ({ task }) => task?.task_id);
+export const getTaskFormPriority = createSelector(getTaskInformation, ({ task }) => task?.priority);

@@ -1,0 +1,18 @@
+@import "src/shared/assets/styles";
+
+.select {
+  width: 180px;
+
+  .selectItem {
+    height: 100%;
+  }
+
+  & > :global(.ant-select-selector) {
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  :global(.ant-select-selection-item) > span > span:first-child {
+    margin-left: 0 !important;
+  }
+}

@@ -10,6 +10,7 @@ export const getTaskByIdAsync = createAsyncThunk(
       dispatch(TaskFormSlice.showTaskForm());
       const { data } = await getTaskById(taskId);
       dispatch(TaskFormSlice.setRoles(data.data.roles));
+      dispatch(TaskFormSlice.setPriority(data.data.priority));
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
