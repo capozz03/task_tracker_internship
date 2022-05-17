@@ -7,12 +7,15 @@ import PerformerCategory from './PerformerCategory';
 import StatusCategory from './StatusCategory';
 import PriorityCategory from './PriorityCategory';
 import styles from './index.module.scss';
+import { DateStartCategory, DateStopCategory } from './DateCategory';
 
 const Details = () => {
   const dispatch = useDispatch();
   const roles = useSelector(TaskFormSlice.getRoles);
   const status = useSelector(TaskFormSlice.getTaskFormStatusTask);
   const priority = useSelector(TaskFormSlice.getPriority);
+  const dateStart = useSelector(TaskFormSlice.getDateStart);
+  const dateStop = useSelector(TaskFormSlice.getDateStop);
   const currentTaskId = useSelector(TaskFormSlice.getTaskFormId);
   const currentUserId = useSelector(UserSlice.userId);
 
@@ -27,6 +30,8 @@ const Details = () => {
       }
       <PerformerCategory roles={roles} isAuthorOrResponsible={isAuthorOrResponsible} />
       <PriorityCategory priority={priority} currentTaskId={currentTaskId} />
+      <DateStartCategory currentDateISO={dateStart} currentTaskId={currentTaskId} />
+      <DateStopCategory currentDateISO={dateStop} currentTaskId={currentTaskId} />
     </>
   );
 };

@@ -9,9 +9,8 @@ import MoreVerticalIcon from './MoreVerticalIcon';
 import ClipIcon from './ClipIcon';
 
 export * as searchIcons from './SearchIcons';
-
+export * as detailsIcons from './DetailsIcons';
 export * as alertIcons from './AlertIcons';
-export * as searchIcons from './SearchIcons';
 export * as attachmentsIcons from './AttachmentsIcons';
 export {
   PencilIcon,

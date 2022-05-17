@@ -1,0 +1,24 @@
+@import "src/shared/assets/styles";
+
+.wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 9px;    
+    cursor: pointer;
+}
+
+.datepicker {
+    height: 24px !important;
+    padding: 0 !important;
+    border: none !important;
+    background: inherit !important;
+    box-shadow: none !important;
+
+    input {
+        width: 140px !important;
+        font: $p-medium;
+        color: $grey-900;
+        cursor: pointer;
+    }
+}

@@ -4,8 +4,7 @@ import { TaskStatus } from 'features/Tasks/tasksComponents';
 import { TStatus } from 'store/slice/task/entities';
 import { TaskStatuses } from 'shared';
 import { useDispatch } from 'react-redux';
-import { changeStatusTaskAsync } from 'store/slice/task/taskInWork';
-import { TaskCompletedSlice, TaskInWorkSlice } from 'store/slice';
+import { TaskCompletedSlice, TaskFailedSlice, TaskInWorkSlice, TaskInboxSlice } from 'store/slice';
 
 type TProps = {
   status: TStatus;
@@ -21,14 +20,16 @@ const StatusCategory = ({ status, currentTaskId }: TProps) => {
 
     switch (prevStatusId) {
       case TaskStatuses.CREATED:
-        dispatch(changeStatusTaskAsync(requestParams));
+        dispatch(TaskInboxSlice.changeStatusTaskAsync(requestParams));
         break;
       case TaskStatuses.IN_WORK:
         dispatch(TaskInWorkSlice.changeStatusTaskAsync(requestParams));
         break;
       case TaskStatuses.COMPLETED:
-      case TaskStatuses.FAILED:
         dispatch(TaskCompletedSlice.changeStatusTaskAsync(requestParams));
+        break;
+      case TaskStatuses.FAILED:
+        dispatch(TaskFailedSlice.changeStatusTaskAsync(requestParams));
         break;
       default:
         break;

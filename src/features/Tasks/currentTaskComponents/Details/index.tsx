@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
 import PrioritySelect from './PrioritySelect';
 import { Button, DatePicker } from 'antd';
-import { DatePickerPrevIcon, EndDateIcon, PriorityIcon, StartDateIcon, TagsIcon } from './icons';
+import { EndDateIcon, PriorityIcon, StartDateIcon, TagsIcon } from './icons';
 
 const Details = () => {
   const task = useSelector(TaskFormSlice.getTask);
@@ -62,13 +62,13 @@ const Details = () => {
         {isStartDateShow && (
           <div className={styles.item}>
             <span className={styles.itemTitleText}>Начало</span>
-            <DatePicker bordered={false} prevIcon={<DatePickerPrevIcon />} suffixIcon={null} />
+            <DatePicker bordered={false} suffixIcon={null} />
           </div>
         )}
         {isEndDateShow && (
           <div className={styles.item}>
             <span className={styles.itemTitleText}>Срок</span>
-            <DatePicker bordered={false} prevIcon={<DatePickerPrevIcon />} suffixIcon={null} />
+            <DatePicker bordered={false} suffixIcon={null} />
           </div>
         )}
         {isTagsShow && (

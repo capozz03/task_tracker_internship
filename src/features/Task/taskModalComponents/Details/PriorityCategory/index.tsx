@@ -1,15 +1,19 @@
 import React, { useCallback } from 'react';
-import DetailCategory from 'features/Task/taskModalComponents/DetailCategory';
-import PrioritySelect from './PrioritySelect';
-import { TPriorityStateData } from 'store/slice/task/taskForm/priority/entities';
 import { useDispatch } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
 import { TaskPriorities } from 'shared';
+import { Select } from 'antd';
+import DetailCategory from 'features/Task/taskModalComponents/DetailCategory';
+import { TPriorityStateData } from 'store/slice/task/taskForm/priority/entities';
+import { PriorityStatus } from 'features/Tasks/tasksComponents';
+import styles from './index.module.scss';
 
 type TProps = {
   priority: TPriorityStateData | null;
   currentTaskId: string | undefined;
 };
+
+const { Option } = Select;
 
 const PriorityCategory = ({ priority, currentTaskId }: TProps) => {
   const dispatch = useDispatch();
@@ -43,7 +47,26 @@ const PriorityCategory = ({ priority, currentTaskId }: TProps) => {
 
   return (
     <DetailCategory name="Приоритет" type="details">
-      <PrioritySelect value={priority?.name || null} onPriorityChange={priorityChangeHandler} />
+      <Select
+        className={styles.select}
+        bordered={false}
+        showArrow={false}
+        value={priority?.name || null}
+        onChange={priorityChangeHandler}
+      >
+        <Option className={styles.selectItem} value={null}>
+          <PriorityStatus type={null} />
+        </Option>
+        <Option className={styles.selectItem} value="Высокий">
+          <PriorityStatus type="Высокий" />
+        </Option>
+        <Option className={styles.selectItem} value="Средний">
+          <PriorityStatus type="Средний" />
+        </Option>
+        <Option className={styles.selectItem} value="Низкий">
+          <PriorityStatus type="Низкий" />
+        </Option>
+      </Select>
     </DetailCategory>
   );
 };

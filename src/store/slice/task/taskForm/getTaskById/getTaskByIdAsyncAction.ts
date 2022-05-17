@@ -11,6 +11,8 @@ export const getTaskByIdAsync = createAsyncThunk(
       const { data } = await getTaskById(taskId);
       dispatch(TaskFormSlice.setRoles(data.data.roles));
       dispatch(TaskFormSlice.setPriority(data.data.priority));
+      dispatch(TaskFormSlice.setDateStart(data.data.exec_start));
+      dispatch(TaskFormSlice.setDateStop(data.data.exec_stop));
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
