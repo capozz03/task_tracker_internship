@@ -15,6 +15,7 @@ import CardAttachmentsCount from '../../CardAttachmentsCount';
 import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 import classNames from 'classnames';
 import moment, { now } from 'moment';
+import { SubscribesSlice } from 'store/slice';
 
 type TaskInboxProps = {
   task: TTask;
@@ -32,6 +33,10 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
   };
   const openTask: MouseEventHandler<HTMLElement> = () => {
     dispatch(getTaskByIdAsync(task.task_id));
+    dispatch(SubscribesSlice.getSubscribeAsync({
+      relation_id: task.task_id,
+      relation_type: 'task',
+    }));
   };
   return (
     <div
@@ -48,7 +53,7 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
           <CardNameText text={task.title} />
         </div>
         <div className={styles.indicators}>
-          { task.storage_files_meta
+          { task.storage_files_meta.total !== 0
             && <CardAttachmentsCount count={task.storage_files_meta.total} /> }
           {task.progress && task.progress.total !== 0 && (
             <CardChecklistCount

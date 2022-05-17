@@ -1,0 +1,26 @@
+@import 'src/shared/assets/styles';
+
+.dragUpload {
+  background-color: $grey-0 !important;
+  height: 80px !important;
+  border-radius: 8px !important;
+  margin: 8px 8px 8px 0 !important;
+  .dragWrapper {
+    display: flex;
+    padding: 0 24px;
+  }
+  .dragIconWrap {
+    margin-right: 24px;
+    .dragIcon {
+      border-radius: 8px;
+      color: $grey-200;
+      font-size: 32px;
+    }
+  }
+  .dragText {
+    max-width: 135px;
+    font: $p-regular;
+    color: $grey-600;
+    text-align: left;
+  }
+}

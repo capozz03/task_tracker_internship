@@ -2,7 +2,7 @@ import React, { MouseEventHandler } from 'react';
 import { TTask } from 'store/slice/task/entities';
 import styles from './index.module.scss';
 import { useDispatch } from 'react-redux';
-import { TaskInWorkSlice, TaskFormSlice } from 'store/slice';
+import { TaskInWorkSlice, TaskFormSlice, SubscribesSlice } from 'store/slice';
 import {
   CardAttachmentsCount,
   CardChecklistCount,
@@ -33,6 +33,10 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
   };
   const openTask: MouseEventHandler<HTMLElement> = () => {
     dispatch(TaskFormSlice.getTaskByIdAsync(task.task_id));
+    dispatch(SubscribesSlice.getSubscribeAsync({
+      relation_id: task.task_id,
+      relation_type: 'task',
+    }));
   };
   return (
     <div
@@ -48,7 +52,7 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
         <CardNameText text={task.title} />
       </div>
       <div className={styles.cardFilesAndCheckbox}>
-        { task.storage_files_meta
+        { task.storage_files_meta.total !== 0
           && <CardAttachmentsCount count={task.storage_files_meta.total} /> }
         {
           task.progress && task.progress.total !== 0 && (

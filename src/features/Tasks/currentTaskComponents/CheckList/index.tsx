@@ -101,7 +101,7 @@ const Checklist = ({ checklist }: ChecklistProps) => {
         )
       }
       </Spin>
-      <NewItem checkListId={checklist.check_list_id} />
+      <NewItem checklist={checklist} />
     </div>
   );
 };

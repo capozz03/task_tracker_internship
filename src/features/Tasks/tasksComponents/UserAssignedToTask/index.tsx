@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import UserAvatar from 'features/Tasks/tasksComponents/UserAvatar';
 import classes from './index.module.scss';
 import { TRoles } from 'store/slice/task/entities';
-import { v4 as uuidv4 } from 'uuid';
 import { uniqBy } from 'lodash';
 
 type UserAssignedToTaskProps = {
@@ -28,6 +27,7 @@ const UserAssignedToTask = ({ users }: UserAssignedToTaskProps) => {
   let usersNew: TRoles[] = [];
   usersNew = uniqBy(users, (e) => e.assign_user.user_id);
   users = usersNew;
+
   const calculationCountElement = () => {
     const count = Math.floor(wrap.current!.offsetWidth / 40) - 1;
     return count + 1 < users.length ? count : users.length;
@@ -48,7 +48,7 @@ const UserAssignedToTask = ({ users }: UserAssignedToTaskProps) => {
   return (
     <div className={classes.users} ref={wrap}>
       {users.slice(0, countElement).map((user, index) => (
-        <UserAvatar key={`${user.assign_user.user_id}_${uuidv4()}`} user={user.assign_user} color={colors[index]} />
+        <UserAvatar key={`${user.assign_user.user_id}`} user={user.assign_user} color={colors[index]} />
       ))}
       { users.length - countElement > 0 && <Other count={users.length - countElement} /> }
     </div>);
