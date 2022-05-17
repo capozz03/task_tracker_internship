@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
 import { TaskPriorities } from 'shared';
 import { Select } from 'antd';
-import DetailCategory from 'features/Task/taskModalComponents/DetailCategory';
+import DetailCategory from 'features/Task/taskModalComponents/Details/DetailCategory';
 import { TPriorityStateData } from 'store/slice/task/taskForm/priority/entities';
 import { PriorityStatus } from 'features/Tasks/tasksComponents';
 import styles from './index.module.scss';

@@ -8,10 +8,12 @@ import StatusCategory from './StatusCategory';
 import PriorityCategory from './PriorityCategory';
 import styles from './index.module.scss';
 import { DateStartCategory, DateStopCategory } from './DateCategory';
+import TagsCategory from './TagsCategory';
 
 const Details = () => {
   const dispatch = useDispatch();
   const roles = useSelector(TaskFormSlice.getRoles);
+  const tags = useSelector(TaskFormSlice.getTags);
   const status = useSelector(TaskFormSlice.getTaskFormStatusTask);
   const priority = useSelector(TaskFormSlice.getPriority);
   const dateStart = useSelector(TaskFormSlice.getDateStart);
@@ -32,6 +34,7 @@ const Details = () => {
       <PriorityCategory priority={priority} currentTaskId={currentTaskId} />
       <DateStartCategory currentDateISO={dateStart} currentTaskId={currentTaskId} />
       <DateStopCategory currentDateISO={dateStop} currentTaskId={currentTaskId} />
+      <TagsCategory currentTaskId={currentTaskId} taskTags={tags} />
     </>
   );
 };

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useCallback } from 'react';
-import DetailCategory from 'features/Task/taskModalComponents/DetailCategory';
+import DetailCategory from 'features/Task/taskModalComponents/Details/DetailCategory';
 import { DatePicker } from 'antd';
 import locale from 'antd/es/date-picker/locale/ru_RU';
 import moment, { Moment } from 'moment';
@@ -15,7 +15,7 @@ type TProps = {
 };
 
 const formatDate = (value: Moment) => {
-  const arr = value.locale('ru').format('DD MMMM YYYY HH:mm').split(' ');
+  const arr = value.locale('ru').format('DD MMMM YYYY').split(' ');
   arr[1] = arr[1].toLowerCase().slice(0, 3);
   return arr.join(' ');
 };

@@ -1,10 +1,10 @@
 import React from 'react';
 import MembersChanger from 'features/Task/taskModalComponents/MembersChanger';
-import DetailCategory from 'features/Task/taskModalComponents/DetailCategory';
+import DetailCategory from 'features/Task/taskModalComponents/Details/DetailCategory';
 import UserLabel from 'features/Task/taskModalComponents/UserLabel';
 import { TStateData } from 'store/slice/task/taskForm/roles/entities';
 import { RolesIds } from 'shared';
-import styles from '../index.module.scss';
+import styles from './index.module.scss';
 
 type TProps = {
   roles: TStateData | null;

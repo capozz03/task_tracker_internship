@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import DetailCategory from 'features/Task/taskModalComponents/DetailCategory';
+import DetailCategory from 'features/Task/taskModalComponents/Details/DetailCategory';
 import { TaskStatus } from 'features/Tasks/tasksComponents';
 import { TStatus } from 'store/slice/task/entities';
 import { TaskStatuses } from 'shared';
@@ -14,7 +14,6 @@ type TProps = {
 const StatusCategory = ({ status, currentTaskId }: TProps) => {
   const dispatch = useDispatch();
 
-  // TODO: Переделать смену статуса с НЕВЫПОЛНЕНО, когда Тема закончит список невыполненых
   const statusChanger = (prevStatusId: string, taskId: string, newStatusId: string) => {
     const requestParams = { task_id: taskId, task_status_id: newStatusId };
 

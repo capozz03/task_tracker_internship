@@ -13,6 +13,7 @@ export const getTaskByIdAsync = createAsyncThunk(
       dispatch(TaskFormSlice.setPriority(data.data.priority));
       dispatch(TaskFormSlice.setDateStart(data.data.exec_start));
       dispatch(TaskFormSlice.setDateStop(data.data.exec_stop));
+      dispatch(TaskFormSlice.setTags(data.data.tags));
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
