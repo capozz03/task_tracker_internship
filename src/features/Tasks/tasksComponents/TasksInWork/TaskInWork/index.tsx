@@ -9,13 +9,13 @@ import {
   CardNameText,
   DateWithIconClock,
   DropdownMenu,
-  PriorityStatus,
   TagsGroup,
   TaskStatus,
   UserAssignedToTask,
 } from 'features/Tasks/tasksComponents';
 import classNames from 'classnames';
 import moment, { now } from 'moment';
+import PriorityChanger from '../../AttributeChangers/PriorityChanger';
 
 type TaskInWorkProps = {
   task: TTask;
@@ -33,16 +33,19 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
   };
   const openTask: MouseEventHandler<HTMLElement> = () => {
     dispatch(TaskFormSlice.getTaskByIdAsync(task.task_id));
-    dispatch(SubscribesSlice.getSubscribeAsync({
-      relation_id: task.task_id,
-      relation_type: 'task',
-    }));
+    dispatch(
+      SubscribesSlice.getSubscribeAsync({
+        relation_id: task.task_id,
+        relation_type: 'task',
+      }),
+    );
   };
   return (
     <div
       className={classNames([
         styles.wrap,
-        { [styles.overdue]: moment(task?.exec_stop).diff(now()) < 0 }])}
+        { [styles.overdue]: moment(task?.exec_stop).diff(now()) < 0 },
+      ])}
       role="button"
       onClick={openTask}
       onKeyDown={() => {}}
@@ -52,17 +55,15 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
         <CardNameText text={task.title} />
       </div>
       <div className={styles.cardFilesAndCheckbox}>
-        { task.storage_files_meta.total !== 0
-          && <CardAttachmentsCount count={task.storage_files_meta.total} /> }
-        {
-          task.progress && task.progress.total !== 0 && (
-            <CardChecklistCount
-              checkListTotal={task.progress.total}
-              checkListChecked={task.progress.completed}
-            />
-          )
-        }
-
+        {task.storage_files_meta.total !== 0 && (
+          <CardAttachmentsCount count={task.storage_files_meta.total} />
+        )}
+        {task.progress && task.progress.total !== 0 && (
+          <CardChecklistCount
+            checkListTotal={task.progress.total}
+            checkListChecked={task.progress.completed}
+          />
+        )}
       </div>
       <div className={styles.cardStatus}>
         <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
@@ -72,7 +73,7 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
           <DateWithIconClock date={task.exec_stop} />
         </div>
         <div className={styles.cardPriority}>
-          {task.priority && <PriorityStatus type={task.priority.name} />}
+          <PriorityChanger taskId={task.task_id} taskPriority={task.priority} />
         </div>
       </div>
       <div className={styles.cardTagsGroup}>
@@ -82,9 +83,7 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
         <UserAssignedToTask users={task.roles} />
       </div>
       <div className={styles.cardMenu}>
-        <DropdownMenu
-          task={task}
-        />
+        <DropdownMenu task={task} />
       </div>
     </div>
   );

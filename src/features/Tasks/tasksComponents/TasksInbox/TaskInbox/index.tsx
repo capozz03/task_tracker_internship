@@ -6,7 +6,6 @@ import { changeStatusTaskAsync } from 'store/slice/task/taskInbox/asyncActions';
 import TaskStatus from '../../TaskStatus';
 import DateWithIconClock from '../../DateWithIconClock';
 import TagsGroup from '../../TagsGroup';
-import PriorityStatus from '../../PriorityStatus';
 import UserAssignedToTask from '../../UserAssignedToTask';
 import DropdownMenu from 'features/Tasks/tasksComponents/DropdownMenu';
 import CardNameText from '../../CardNameText';
@@ -16,6 +15,7 @@ import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 import classNames from 'classnames';
 import moment, { now } from 'moment';
 import { SubscribesSlice } from 'store/slice';
+import PriorityChanger from '../../AttributeChangers/PriorityChanger';
 
 type TaskInboxProps = {
   task: TTask;
@@ -70,7 +70,7 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
           <div className={styles.cardDate}>
             <DateWithIconClock date={task.exec_stop} />
           </div>
-          {task.priority && <PriorityStatus type={task.priority.name} />}
+          <PriorityChanger taskId={task.task_id} taskPriority={task.priority} />
         </div>
         <div className={styles.cardTagsGroupt}>
           <TagsGroup tags={task.tags} />

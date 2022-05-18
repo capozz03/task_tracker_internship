@@ -1,7 +1,8 @@
 import React, { MouseEventHandler, useEffect, useState } from 'react';
-import { Select, SelectProps, Tooltip } from 'antd';
+import { Select, SelectProps } from 'antd';
 import style from './index.module.scss';
 import { taskStatuses } from './constants';
+import Tooltip from '../Tooltip';
 
 const TaskStatus = ({ ...props }: SelectProps) => {
   const [color, setColor] = useState<string>('#50B5FF');

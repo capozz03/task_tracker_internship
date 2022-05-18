@@ -1,6 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { ChecklistReducer } from 'store/slice/task/taskForm/checkList';
 import { taskFormDataReducer } from 'store/slice/task/taskForm/fullTaskInfo/slice';
+import { taskFormPriorityReducer } from './priority/slice';
 import { taskFormRolesReducer } from './roles/slice';
 import { StorageFilesReducer } from './storageFiles';
 
@@ -80,9 +81,14 @@ export {
   setProgress,
 } from './storageFiles/uiSlice';
 
+export { taskFormPriorityReducer, taskFormPrioritySelector, setPriority } from './priority/slice';
+export { changeTaskPriority } from './priority/asyncActions';
+export { getPriority, isLoadingPriorityStatus } from './priority/selector';
+
 export const taskFormReducer = combineReducers({
   storageFile: StorageFilesReducer,
   checkList: ChecklistReducer,
   task: taskFormDataReducer,
   roles: taskFormRolesReducer,
+  priority: taskFormPriorityReducer,
 });
