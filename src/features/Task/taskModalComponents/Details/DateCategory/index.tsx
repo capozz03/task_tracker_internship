@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useCallback } from 'react';
 import DetailCategory from 'features/Task/taskModalComponents/Details/DetailCategory';
 import { DatePicker } from 'antd';
@@ -8,10 +7,12 @@ import { useDispatch } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
 import { detailsIcons } from 'shared/ui/icons';
 import styles from './index.module.scss';
+import { AlertWarningIcon } from 'shared/ui/icons/AlertIcons';
 
 type TProps = {
   currentTaskId: string | undefined;
   currentDateISO: string | null | undefined;
+  hiddenCategory: ()=>void;
 };
 
 const formatDate = (value: Moment) => {
@@ -22,7 +23,7 @@ const formatDate = (value: Moment) => {
 
 const { DatePickerIcon } = detailsIcons;
 
-export const DateStartCategory = ({ currentDateISO, currentTaskId }: TProps) => {
+export const DateStartCategory = ({ currentDateISO, currentTaskId, hiddenCategory }: TProps) => {
   const dispatch = useDispatch();
 
   const onChangeDate = (date: Moment | null, currentTaskId: string | undefined) => {
@@ -39,8 +40,13 @@ export const DateStartCategory = ({ currentDateISO, currentTaskId }: TProps) => 
     onChangeDate(value, currentTaskId)
   ), [currentTaskId, currentDateISO]);
 
+  const removeCategory = useCallback(() => {
+    if (currentDateISO) onChangeDate(null, currentTaskId);
+    hiddenCategory();
+  }, [currentTaskId, currentDateISO, hiddenCategory]);
+
   return (
-    <DetailCategory name="Начало" type="details">
+    <DetailCategory name="Начало" type="details" removeHandler={removeCategory}>
       <div className={styles.wrapper}>
         <DatePickerIcon />
         <DatePicker
@@ -57,8 +63,9 @@ export const DateStartCategory = ({ currentDateISO, currentTaskId }: TProps) => 
   );
 };
 
-export const DateStopCategory = ({ currentDateISO, currentTaskId }: TProps) => {
+export const DateStopCategory = ({ currentDateISO, currentTaskId, hiddenCategory }: TProps) => {
   const dispatch = useDispatch();
+  const overdue = currentDateISO ? moment().utc().toISOString() > currentDateISO : false;
 
   const onChangeDate = (date: Moment | null, currentTaskId: string | undefined) => {
     if (currentTaskId) {
@@ -74,8 +81,13 @@ export const DateStopCategory = ({ currentDateISO, currentTaskId }: TProps) => {
     onChangeDate(value, currentTaskId)
   ), [currentTaskId, currentDateISO]);
 
+  const removeCategory = useCallback(() => {
+    if (currentDateISO) onChangeDate(null, currentTaskId);
+    hiddenCategory();
+  }, [currentTaskId, currentDateISO, hiddenCategory]);
+
   return (
-    <DetailCategory name="Срок" type="details">
+    <DetailCategory name="Срок" type="details" removeHandler={removeCategory}>
       <div className={styles.wrapper}>
         <DatePickerIcon />
         <DatePicker
@@ -87,6 +99,10 @@ export const DateStopCategory = ({ currentDateISO, currentTaskId }: TProps) => {
           onChange={onChangeDateHandler}
           format={formatDate}
         />
+        {
+          overdue
+          && <AlertWarningIcon />
+        }
       </div>
     </DetailCategory>
   );

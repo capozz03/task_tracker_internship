@@ -11,11 +11,12 @@ import styles from './index.module.scss';
 type TProps = {
   priority: TPriorityStateData | null;
   currentTaskId: string | undefined;
+  hiddenCategory: ()=>void;
 };
 
 const { Option } = Select;
 
-const PriorityCategory = ({ priority, currentTaskId }: TProps) => {
+const PriorityCategory = ({ priority, currentTaskId, hiddenCategory }: TProps) => {
   const dispatch = useDispatch();
 
   const priorityChanger = (taskId: string, value: string | null) => {
@@ -41,9 +42,10 @@ const PriorityCategory = ({ priority, currentTaskId }: TProps) => {
     }));
   };
 
-  const priorityChangeHandler = useCallback((newPriorityName: string | null) => (
-    priorityChanger(currentTaskId || '', newPriorityName)
-  ), [currentTaskId, priority]);
+  const priorityChangeHandler = useCallback((newPriorityName: string | null) => {
+    priorityChanger(currentTaskId || '', newPriorityName);
+    if (!newPriorityName) hiddenCategory();
+  }, [currentTaskId, priority]);
 
   return (
     <DetailCategory name="Приоритет" type="details">

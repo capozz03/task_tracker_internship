@@ -29,6 +29,7 @@ export {
   getTaskFormRoles,
   getTaskFormTitle,
   isLoadingStatus,
+  isLoadingStatusSuccess,
   getTaskFormStatusTask,
   getTaskFormId,
   getTaskFormPriority,

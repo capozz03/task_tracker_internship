@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useCallback, useEffect, useState } from 'react';
 import { TTag, TTagsTask } from 'store/slice/task/entities';
 import DetailCategory from 'features/Task/taskModalComponents/Details/DetailCategory';
@@ -11,9 +10,10 @@ import { Dropdown, Menu } from 'antd';
 type TProps = {
   currentTaskId: string | undefined;
   taskTags: TTagsTask[] | null;
+  hiddenCategory: ()=>void;
 };
 
-const TagsCategory = ({ currentTaskId, taskTags }: TProps) => {
+const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory }: TProps) => {
   const dispatch = useDispatch();
   const allTags = useSelector(TagsSlice.getTagsSelector);
   const [visible, setVisible] = useState<boolean>(false);
@@ -44,6 +44,19 @@ const TagsCategory = ({ currentTaskId, taskTags }: TProps) => {
     onTagRemove(tagId, currentTaskId)
   ), [currentTaskId, taskTags]);
 
+  const removeCategory = useCallback(() => {
+    if (taskTags && currentTaskId) {
+      taskTags.forEach((tag) => {
+        dispatch(TaskFormSlice.removeTagToTask({
+          taskId: currentTaskId,
+          tagId: tag.task_tag.task_tag_id,
+        }));
+      });
+
+      hiddenCategory();
+    }
+  }, [currentTaskId, taskTags, hiddenCategory]);
+
   const menu = (
     <Menu onClick={() => setVisible(true)} className={styles.menu}>
       {
@@ -57,7 +70,7 @@ const TagsCategory = ({ currentTaskId, taskTags }: TProps) => {
   );
 
   return (
-    <DetailCategory name="Метки" type="details">
+    <DetailCategory name="Метки" type="details" removeHandler={removeCategory} tooltip="Убрать все метки">
       <div className={styles.wrapper}>
         <div className={styles.tags}>
           {

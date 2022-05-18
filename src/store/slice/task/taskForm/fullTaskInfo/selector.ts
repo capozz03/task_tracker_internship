@@ -1,6 +1,6 @@
 import { TState } from 'store/configureStore';
 import { createSelector } from '@reduxjs/toolkit';
-import { isLoadingStatusCheck } from 'shared/helpers';
+import { isLoadingStatusCheck, isSuccessStatusCheck } from 'shared/helpers';
 
 const getTaskForm = (state: TState) => state.taskForm;
 
@@ -16,6 +16,9 @@ export const getTaskFormIsVisibleForm = createSelector(getTaskInformation,
   ({ isVisibleForm }) => isVisibleForm);
 export const isLoadingStatus = createSelector(getTaskInformation, ({ status }) =>
   isLoadingStatusCheck(status),
+);
+export const isLoadingStatusSuccess = createSelector(getTaskInformation, ({ status }) =>
+  isSuccessStatusCheck(status),
 );
 
 export const getTaskFormId = createSelector(getTaskInformation, ({ task }) => task?.task_id);

@@ -1,20 +1,30 @@
 @import "src/shared/assets/styles";
 
 .category {
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
 }
 
-.title {
-    display: inline-block;
-    min-width: 160px;
+.category:hover .removeButton {
+    display: block;
+}
+
+.titleWrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    min-width: 150px;
     margin: 0;
     margin-top: 5px;
     padding: 0;
     padding-left: 30px;
+}
+
+.title {
+    display: inline-block;
     font: $p-regular;
 }
 
@@ -24,6 +34,27 @@
 
 .titleMembers {
     color: $grey-700;
+}
+
+.removeButton {
+    width: 17px;
+    height: 17px;
+    margin-left: 5px;
+    padding: 0;
+    padding-top: 1px;
+    border: none;
+    background: inherit;
+    cursor: pointer;
+    display: none;
+
+    & > svg {
+        width: 17px;
+        height: 17px;
+    }
+
+    &:hover > svg > path {
+        fill: rgba($colors-red, 0.8);
+    }
 }
 
 .labels {
