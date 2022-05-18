@@ -1,6 +1,7 @@
 @import "src/shared/assets/styles";
 
 .wrapper {
+    height: 32px !important;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -9,7 +10,7 @@
 
     svg:last-child {
         margin-top: -2px;
-        margin-left: -3px;
+        margin-left: -18px;
         width: 18px;
         height: 18px;
 
@@ -27,7 +28,7 @@
     box-shadow: none !important;
 
     input {
-        width: 95px !important;
+        width: 110px !important;
         font: $p-medium;
         color: $grey-900;
         cursor: pointer;

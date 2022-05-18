@@ -1,7 +1,7 @@
 @import "src/shared/assets/styles";
 
 .category {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -18,13 +18,13 @@
     align-items: flex-start;
     min-width: 150px;
     margin: 0;
-    margin-top: 5px;
     padding: 0;
     padding-left: 30px;
 }
 
 .title {
     display: inline-block;
+    margin: 7px 0;
     font: $p-regular;
 }
 
@@ -39,9 +39,9 @@
 .removeButton {
     width: 17px;
     height: 17px;
-    margin-left: 5px;
+    margin-left: 7px;
     padding: 0;
-    padding-top: 1px;
+    padding-top: 8px;
     border: none;
     background: inherit;
     cursor: pointer;
