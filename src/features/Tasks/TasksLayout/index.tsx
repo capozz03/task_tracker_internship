@@ -11,7 +11,7 @@ import TasksCompleted from '../tasksComponents/TasksCompleted';
 import TasksFailed from '../tasksComponents/TasksFailed';
 import TaskModal from '../currentTaskComponents/TaskModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { TaskFilters, TaskFormSlice } from 'store/slice';
+import { TaskFilters, TaskFormSlice, NotificationsSlice } from 'store/slice';
 import FiltersPanel from '../tasksComponents/FiltersPanel';
 import ModalDeleteTask from 'shared/ui/ModalDeleteTask';
 import Notifications from '../../../shared/ui/Notifications';
@@ -27,6 +27,7 @@ const TasksLayout = () => {
   const hideSidebar = () => dispatch(setIsFiltersMenuShow(false));
   const isVisibleForm = useSelector(TaskFormSlice.getTaskFormIsVisibleForm);
   const filtersCount = useSelector(TaskFilters.getFiltersCount);
+  const isVisibleNotifications = useSelector(NotificationsSlice.isVisible);
 
   return (
     <>
@@ -71,7 +72,7 @@ const TasksLayout = () => {
       </Layout>
       <TaskModal visible={isVisibleForm} />
       <ModalDeleteTask />
-      <Notifications />
+      { isVisibleNotifications && <Notifications /> }
     </>
   );
 };

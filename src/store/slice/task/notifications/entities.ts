@@ -11,7 +11,7 @@ export type TNotifiesRequest = {
 
 export type TNotification = {
   subscribe_notify_id: string;
-  viewed: false;
+  viewed: boolean;
   history_command: {
     history_command_id: string;
     command_code: TCommandCode;
