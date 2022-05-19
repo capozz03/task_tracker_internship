@@ -3,6 +3,7 @@ import { TaskFailedSlice } from 'store/slice';
 import { getTaskByIdAsync } from '../getTaskById/getTaskByIdAsyncAction';
 import { TFormResultChangeProps } from './entities';
 import { formResultChangeService } from './services';
+import { alert } from 'shared/ui';
 
 export const setFormResult = createAsyncThunk(
   'formResultChangeService/setFormResult',
@@ -24,6 +25,7 @@ export const setFormResult = createAsyncThunk(
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
+      alert(`Не удалось оставить резюме. Ошибка: "${error.message}"`, 'error');
       return rejectWithValue(error);
     }
   },

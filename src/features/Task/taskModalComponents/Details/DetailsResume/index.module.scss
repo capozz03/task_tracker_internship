@@ -1,7 +1,7 @@
 @import 'src/shared/assets/styles';
 
 .category {
-  margin-bottom: 16px;
+  margin-bottom: 10px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -10,7 +10,7 @@
 
 .titleDetails {
   display: flex;
-  min-width: 160px;
+  min-width: 150px;
   margin: 0;
   margin-top: 5px;
   padding: 0;
@@ -37,6 +37,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   gap: 8px;
+  padding: 0;
 }
 
 .dropdownButton {
@@ -73,5 +74,3 @@
     }
   }
 }
-
-

@@ -1,5 +1,5 @@
 import React from 'react';
-import DetailCategory from 'features/Task/taskModalComponents/DetailCategory';
+import DetailCategory from 'features/Task/taskModalComponents/Details/DetailCategory';
 import MembersChanger from 'features/Task/taskModalComponents/MembersChanger';
 import UserLabel from 'features/Task/taskModalComponents/UserLabel';
 import { useSelector } from 'react-redux';
