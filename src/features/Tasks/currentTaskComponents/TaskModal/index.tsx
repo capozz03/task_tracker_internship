@@ -14,7 +14,7 @@ import {
 import Title from '../Title';
 import MenuHeader from 'features/Tasks/currentTaskComponents/MenuHeader';
 import CheckListArea from 'features/Tasks/currentTaskComponents/CheckListArea';
-import Description from 'features/Tasks/tasksComponents/Description';
+import Description from 'features/Tasks/currentTaskComponents/Description';
 import MembersPanel from './MembersPanel';
 import Details from 'features/Task/taskModalComponents/Details';
 import { CollapseHeader, CollapseMembersHeader } from './MembersPanel/MemberPanelHeaders';

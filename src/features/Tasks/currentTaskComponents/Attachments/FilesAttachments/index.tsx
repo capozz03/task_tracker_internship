@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
 import { Progress } from 'antd';
 import Icon from '@ant-design/icons';
-import { checkFileExtension, formatBytes } from 'shared/helpers';
+import { checkFileExtension, formatBytes, slicedName } from 'shared';
 
 type FilesAttachmentsProps = {
   name: string;
@@ -41,9 +41,11 @@ const FilesAttachments = ({
         </div>
       </div>
       <div className={style.taskFiles__inner}>
-        <div className={style.taskFiles__icon}><Icon component={icon} /></div>
+        <div className={style.taskFiles__icon}>
+          <Icon component={icon} />
+        </div>
         <div className={style.taskFiles__content}>
-          <div className={style.taskFiles__name}>{name}</div>
+          <div className={style.taskFiles__name}>{slicedName(name)}</div>
           <div className={style.taskFiles__size}>
             {!uploaded ? <Progress percent={progressBar} size="small" /> : fileSize}
           </div>
