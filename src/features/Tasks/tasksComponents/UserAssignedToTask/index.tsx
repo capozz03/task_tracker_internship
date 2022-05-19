@@ -15,7 +15,7 @@ const UsersPopoverContent = (users: TRoles[]) => (
   <div className={classes.usersPopoverContent}>
     {/* eslint-disable-next-line react/destructuring-assignment */}
     {uniqBy(users, (item) => item.assign_user.user_id).map((user, index) => (
-      <span className={classes.row}>
+      <span className={classes.row} key={user.assign_user.user_id}>
         <UserAvatar user={user.assign_user} color={colors[index % colors.length]} />
         <span className={classes.role}>{`${user.task_role.name}: `}</span>
         <span className={classes.name}>{user.assign_user.name}</span>
@@ -62,12 +62,11 @@ const UserAssignedToTask = ({ users }: UserAssignedToTaskProps) => {
   return (
     <div className={classes.users} ref={wrap}>
       {users.slice(0, countElement).map((user, index) => (
-        <Tooltip title={`${user.task_role.name}: ${user.assign_user.name}`}>
-          <UserAvatar
-            key={`${user.assign_user.user_id}`}
-            user={user.assign_user}
-            color={colors[index]}
-          />
+        <Tooltip
+          key={`${user.assign_user.user_id}`}
+          title={`${user.task_role.name}: ${user.assign_user.name}`}
+        >
+          <UserAvatar user={user.assign_user} color={colors[index]} />
         </Tooltip>
       ))}
       {users.length - countElement > 0 && (
