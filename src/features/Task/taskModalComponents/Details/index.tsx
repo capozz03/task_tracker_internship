@@ -78,7 +78,8 @@ const Details = () => {
         categoryView.dateStart
         && (
           <DateStartCategory
-            currentDateISO={dateStart}
+            startDateISO={dateStart}
+            stopDateISO={dateStop}
             currentTaskId={currentTaskId}
             hiddenCategory={setHiddenCategoryDateStart}
           />
@@ -88,7 +89,8 @@ const Details = () => {
         categoryView.dateStop
         && (
           <DateStopCategory
-            currentDateISO={dateStop}
+            startDateISO={dateStart}
+            stopDateISO={dateStop}
             currentTaskId={currentTaskId}
             hiddenCategory={setHiddenCategoryDateStop}
           />
@@ -122,18 +124,18 @@ const Details = () => {
           )
         }
         {
-          !categoryView.tags
-          && (
-            <button type="button" onClick={setViewCategoryTags} className={styles.button}>
-              <TagsIcon />
-            </button>
-          )
-        }
-        {
           !categoryView.priority
           && (
             <button type="button" onClick={setViewCategoryPriority} className={styles.button}>
               <PriorityIcon />
+            </button>
+          )
+        }
+        {
+          !categoryView.tags
+          && (
+            <button type="button" onClick={setViewCategoryTags} className={styles.button}>
+              <TagsIcon />
             </button>
           )
         }
