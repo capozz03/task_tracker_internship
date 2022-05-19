@@ -1,6 +1,6 @@
 @import "src/shared/assets/styles/vars";
 
-.users{
+.users {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -9,12 +9,12 @@
   width: 100%;
 }
 
-.users > *{
+.users > * {
   flex-grow: 0;
   flex-shrink: 0;
 }
 
-.others{
+.others {
   border-radius: 50%;
   border: 1px solid $grey-300;
   color: $grey-700;
@@ -24,4 +24,39 @@
   align-items: center;
   width: 32px;
   height: 32px;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    border-color: $main-blue-hover;
+    color: $main-blue-hover;
+  }
+}
+
+.usersPopoverContent {
+  display: flex;
+  flex-direction: column;
+
+  &>*:not(:first-child){
+    margin-top: 5px;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    .role {
+      font: $p-medium;
+    }
+
+    .name {
+      font: $p-regular;
+    }
+
+    & > *:not(:first-child) {
+      margin-left: 5px;
+    }
+  }
 }
