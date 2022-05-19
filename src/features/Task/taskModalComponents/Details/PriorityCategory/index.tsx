@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
 import { TaskPriorities } from 'shared';
@@ -42,10 +42,10 @@ const PriorityCategory = ({ priority, currentTaskId, hiddenCategory }: TProps) =
     }));
   };
 
-  const priorityChangeHandler = useCallback((newPriorityName: string | null) => {
+  const priorityChangeHandler = (newPriorityName: string | null) => {
     priorityChanger(currentTaskId || '', newPriorityName);
     if (!newPriorityName) hiddenCategory();
-  }, [currentTaskId, priority]);
+  };
 
   return (
     <DetailCategory name="Приоритет" type="details">

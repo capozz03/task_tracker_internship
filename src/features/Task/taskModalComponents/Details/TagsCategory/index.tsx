@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { TTag, TTagsTask } from 'store/slice/task/entities';
 import DetailCategory from 'features/Task/taskModalComponents/Details/DetailCategory';
 import { Checkbox, Tag } from 'features/Tasks/tasksComponents';
@@ -31,6 +30,41 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory }: TProps) => {
   const [searchValue, setSearchValue] = useState<string>('');
   const debouncedValue = useDebounce(searchValue, 500);
 
+  const onTagAdd = (tagId: string, currentTaskId: string | undefined) => {
+    if (currentTaskId) dispatch(TaskFormSlice.addTagToTask({ taskId: currentTaskId, tagId }));
+  };
+
+  const onTagRemove = (tagId: string, currentTaskId: string | undefined) => {
+    if (currentTaskId) dispatch(TaskFormSlice.removeTagToTask({ taskId: currentTaskId, tagId }));
+  };
+
+  const onTagChangeStateHandler = (tagId: string) => () => {
+    const elem = tags.find((tag) => tag.task_tag_id === tagId);
+    if (elem) {
+      if (!elem.checked) {
+        if (taskTags && taskTags.length >= 7) {
+          alert('Нельзя назначить более 7 меток на задачу', 'warning');
+        } else {
+          onTagAdd(tagId, currentTaskId);
+        }
+      } else {
+        onTagRemove(tagId, currentTaskId);
+      }
+    }
+  };
+
+  const removeCategory = () => {
+    if (taskTags && currentTaskId) {
+      taskTags.forEach((tag) => onTagRemove(tag.task_tag.task_tag_id, currentTaskId));
+      hiddenCategory();
+    }
+  };
+
+  const stopPropagation = (e: any) => e.stopPropagation();
+  const searchHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
+  };
+
   useEffect(() => {
     if (taskTags && allTags) {
       setTags(allTags.map((tag) => ({
@@ -50,41 +84,6 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory }: TProps) => {
   },
   [debouncedValue]);
 
-  const onTagAdd = (tagId: string, currentTaskId: string | undefined) => {
-    if (currentTaskId) dispatch(TaskFormSlice.addTagToTask({ taskId: currentTaskId, tagId }));
-  };
-
-  const onTagRemove = (tagId: string, currentTaskId: string | undefined) => {
-    if (currentTaskId) dispatch(TaskFormSlice.removeTagToTask({ taskId: currentTaskId, tagId }));
-  };
-
-  const onTagChangeStateHandler = useCallback((tagId: string) => {
-    const elem = tags.find((tag) => tag.task_tag_id === tagId);
-    if (elem) {
-      if (!elem.checked) {
-        if (taskTags && taskTags.length >= 7) {
-          alert('Нельзя назначить более 7 меток на задачу', 'warning');
-        } else {
-          onTagAdd(tagId, currentTaskId);
-        }
-      } else {
-        onTagRemove(tagId, currentTaskId);
-      }
-    }
-  }, [currentTaskId, taskTags, tags]);
-
-  const removeCategory = useCallback(() => {
-    if (taskTags && currentTaskId) {
-      taskTags.forEach((tag) => onTagRemove(tag.task_tag.task_tag_id, currentTaskId));
-      hiddenCategory();
-    }
-  }, [currentTaskId, taskTags, hiddenCategory]);
-
-  const stopPropagation = (e: any) => e.stopPropagation();
-  const searchHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value);
-  };
-
   const menu = (
     <div
       className={styles.menu}
@@ -103,7 +102,7 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory }: TProps) => {
               >
                 <Checkbox
                   checked={tag.checked}
-                  onChange={() => onTagChangeStateHandler(tag.task_tag_id)}
+                  onChange={onTagChangeStateHandler(tag.task_tag_id)}
                 >
                   <Tag tag={tag} />
                 </Checkbox>
@@ -123,7 +122,7 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory }: TProps) => {
               <Tag
                 tag={tag.task_tag}
                 key={tag.task_to_tag_id}
-                deleteHandle={() => onTagChangeStateHandler(tag.task_tag.task_tag_id)}
+                deleteHandle={onTagChangeStateHandler(tag.task_tag.task_tag_id)}
               />
             ))
           }

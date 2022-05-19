@@ -44,15 +44,12 @@ const Details = () => {
     });
   }, [isSuccessLoadingTask]);
 
-  const setViewCategoryDateStop = () => setCategoryView({ ...categoryView, dateStop: true });
-  const setViewCategoryDateStart = () => setCategoryView({ ...categoryView, dateStart: true });
-  const setViewCategoryTags = () => setCategoryView({ ...categoryView, tags: true });
-  const setViewCategoryPriority = () => setCategoryView({ ...categoryView, priority: true });
-
-  const setHiddenCategoryDateStop = () => setCategoryView({ ...categoryView, dateStop: false });
-  const setHiddenCategoryDateStart = () => setCategoryView({ ...categoryView, dateStart: false });
-  const setHiddenCategoryTags = () => setCategoryView({ ...categoryView, tags: false });
-  const setHiddenCategoryPriority = () => setCategoryView({ ...categoryView, priority: false });
+  const setStateButton = (
+    argName: 'dateStart' | 'dateStop' | 'tags' | 'priority',
+    flag: boolean,
+  ) => () => {
+    setCategoryView({ ...categoryView, [argName]: flag });
+  };
 
   const isAuthorOrResponsible = isAuthor(currentUserId, roles)
     || isResponsible(currentUserId, roles);
@@ -70,7 +67,7 @@ const Details = () => {
           <PriorityCategory
             priority={priority}
             currentTaskId={currentTaskId}
-            hiddenCategory={setHiddenCategoryPriority}
+            hiddenCategory={setStateButton('priority', false)}
           />
         )
       }
@@ -81,7 +78,7 @@ const Details = () => {
             startDateISO={dateStart}
             stopDateISO={dateStop}
             currentTaskId={currentTaskId}
-            hiddenCategory={setHiddenCategoryDateStart}
+            hiddenCategory={setStateButton('dateStart', false)}
           />
         )
       }
@@ -92,7 +89,7 @@ const Details = () => {
             startDateISO={dateStart}
             stopDateISO={dateStop}
             currentTaskId={currentTaskId}
-            hiddenCategory={setHiddenCategoryDateStop}
+            hiddenCategory={setStateButton('dateStop', false)}
           />
         )
       }
@@ -102,7 +99,7 @@ const Details = () => {
           <TagsCategory
             currentTaskId={currentTaskId}
             taskTags={tags}
-            hiddenCategory={setHiddenCategoryTags}
+            hiddenCategory={setStateButton('tags', false)}
           />
         )
       }
@@ -110,7 +107,7 @@ const Details = () => {
         {
           !categoryView.dateStop
           && (
-            <button type="button" onClick={setViewCategoryDateStop} className={styles.button}>
+            <button type="button" onClick={setStateButton('dateStop', true)} className={styles.button}>
               <DateStopIcon />
             </button>
           )
@@ -118,7 +115,7 @@ const Details = () => {
         {
           !categoryView.dateStart
           && (
-            <button type="button" onClick={setViewCategoryDateStart} className={styles.button}>
+            <button type="button" onClick={setStateButton('dateStart', true)} className={styles.button}>
               <DateStartIcon />
             </button>
           )
@@ -126,7 +123,7 @@ const Details = () => {
         {
           !categoryView.priority
           && (
-            <button type="button" onClick={setViewCategoryPriority} className={styles.button}>
+            <button type="button" onClick={setStateButton('priority', true)} className={styles.button}>
               <PriorityIcon />
             </button>
           )
@@ -134,7 +131,7 @@ const Details = () => {
         {
           !categoryView.tags
           && (
-            <button type="button" onClick={setViewCategoryTags} className={styles.button}>
+            <button type="button" onClick={setStateButton('tags', true)} className={styles.button}>
               <TagsIcon />
             </button>
           )

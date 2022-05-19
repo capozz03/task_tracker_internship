@@ -1,6 +1,6 @@
+import React from 'react';
 import { Tooltip } from 'antd';
 import classNames from 'classnames';
-import React from 'react';
 import { CancelIcons } from 'shared/ui/icons';
 import styles from './index.module.scss';
 
@@ -24,7 +24,7 @@ const DetailCategory = ({ name, type, children, removeHandler, tooltip }: TProps
         { name }
       </p>
       {
-        removeHandler !== undefined
+        removeHandler
         && (
         <Tooltip title={tooltip || 'Убрать свойство'}>
           <button type="button" className={styles.removeButton} onClick={removeHandler}>

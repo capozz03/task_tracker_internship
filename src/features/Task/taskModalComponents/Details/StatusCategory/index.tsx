@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import DetailCategory from 'features/Task/taskModalComponents/Details/DetailCategory';
 import { TaskStatus } from 'features/Tasks/tasksComponents';
 import { TStatus } from 'store/slice/task/entities';
@@ -35,9 +35,9 @@ const StatusCategory = ({ status, currentTaskId }: TProps) => {
     }
   };
 
-  const statusChangeHandler = useCallback((value: string) => (
+  const statusChangeHandler = (value: string) => (
     statusChanger(status?.task_status_id || '', currentTaskId || '', value)
-  ), [status, currentTaskId]);
+  );
 
   return (
     <DetailCategory name="Статус" type="details">
