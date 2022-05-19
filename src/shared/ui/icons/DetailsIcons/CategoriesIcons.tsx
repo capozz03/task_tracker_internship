@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const EndDateIcon = () => (
+export const DateStopIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       fillRule="evenodd"
@@ -11,7 +11,7 @@ export const EndDateIcon = () => (
   </svg>
 );
 
-export const StartDateIcon = () => (
+export const DateStartIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       fillRule="evenodd"
@@ -40,39 +40,6 @@ export const PriorityIcon = () => (
       clipRule="evenodd"
       d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12ZM4 12C4 16.4183 7.58172 20 12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12ZM11 8V13C11 13.5523 11.4477 14 12 14C12.5523 14 13 13.5523 13 13V8C13 7.44772 12.5523 7 12 7C11.4477 7 11 7.44772 11 8ZM13 16C13 16.5523 12.5523 17 12 17C11.4477 17 11 16.5523 11 16C11 15.4477 11.4477 15 12 15C12.5523 15 13 15.4477 13 16Z"
       fill="#92929D"
-    />
-  </svg>
-);
-
-export const DatePickerPrevIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M1.33325 7.33325H14.6666V11.3333C14.6666 13.1742 13.1742 14.6666 11.3333 14.6666H4.66659C2.82564 14.6666 1.33325 13.1742 1.33325 11.3333V7.33325Z"
-      stroke="#92929D"
-      strokeWidth="1.5"
-    />
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M2.66659 3.33325H13.3333C14.0696 3.33325 14.6666 3.93021 14.6666 4.66659V7.33325H1.33325V4.66659C1.33325 3.93021 1.93021 3.33325 2.66659 3.33325Z"
-      stroke="#92929D"
-      strokeWidth="1.5"
-    />
-    <path
-      d="M11.9999 2V4"
-      stroke="#92929D"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M4.66667 2V4"
-      stroke="#92929D"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
     />
   </svg>
 );

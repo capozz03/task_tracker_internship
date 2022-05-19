@@ -1,3 +1,4 @@
+import { Moment } from 'moment';
 import { TRoles } from 'store/slice/task/entities';
 import { TRolesUnit, TStateData } from 'store/slice/task/taskForm/roles/entities';
 import { RolesIds } from './enums';
@@ -38,4 +39,10 @@ export const convertRolesToObject = (rolesData: TRoles[]) => {
 
   roles.observers.sort();
   return roles;
+};
+
+export const formatDate = (value: Moment) => {
+  const arr = value.locale('ru').format('DD MMMM YYYY HH:mm').split(' ');
+  arr[1] = arr[1].toLowerCase().slice(0, 3);
+  return arr.join(' ');
 };

@@ -15,6 +15,6 @@ export { validFileType, slicedName } from './validFileType';
 export { setImageUrl, setCarouselImages } from './setImageUrl';
 export type { TCarouselImages } from './setImageUrl';
 export { useBreakPoint, useDebounce } from './hooks';
-export { convertRolesToObject } from './convert';
+export { convertRolesToObject, formatDate } from './convert';
 export { isAuthor, isObserver, isPerformer, isResponsible } from './userRoleChecker';
 export { isArrayOfStrings } from './typeGuards';

@@ -4,7 +4,6 @@ import { usersList, getUsersListPage, usersListPagination, resetUserList, isLoad
 import { searchIcons } from 'shared/ui/icons';
 import { UserAvatar } from 'features/Tasks/tasksComponents';
 import { Menu, Dropdown, Input, Spin } from 'antd';
-import 'antd/dist/antd.css';
 import styles from './index.module.scss';
 import { InView } from 'react-intersection-observer';
 import { useDebounce } from 'shared';

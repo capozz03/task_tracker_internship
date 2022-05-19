@@ -209,6 +209,7 @@ ul.menu li.lastElement {
     padding: 0;
     border: none;
     background-color: inherit;
+    cursor: pointer;
 }
 
 .performerChooseBtn > span {
@@ -216,7 +217,6 @@ ul.menu li.lastElement {
     line-height: 24px;
     color: $grey-700;
     border-bottom: 1px solid $grey-700;
-    cursor: pointer;
 }
 
 .performerChooseBtn:hover > span {

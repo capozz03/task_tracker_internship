@@ -1,61 +1,142 @@
-/* eslint-disable no-unused-vars */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { RolesIds } from 'shared';
 import { isAuthor, isResponsible } from 'shared/helpers';
 import { TaskFormSlice, UserSlice } from 'store/slice';
-import DetailCategory from '../DetailCategory';
-import MembersChanger from '../MembersChanger';
-import UserLabel from '../UserLabel';
+import PerformerCategory from './PerformerCategory';
+import StatusCategory from './StatusCategory';
+import PriorityCategory from './PriorityCategory';
+import { DateStartCategory, DateStopCategory } from './DateCategory';
+import TagsCategory from './TagsCategory';
+import { detailsIcons } from 'shared/ui/icons';
 import styles from './index.module.scss';
-import { TaskStatus } from 'features/Tasks/tasksComponents';
+
+const {
+  DateStartIcon,
+  DateStopIcon,
+  TagsIcon,
+  PriorityIcon,
+} = detailsIcons;
 
 const Details = () => {
+  const isSuccessLoadingTask = useSelector(TaskFormSlice.isLoadingStatusSuccess);
   const roles = useSelector(TaskFormSlice.getRoles);
+  const tags = useSelector(TaskFormSlice.getTags);
   const status = useSelector(TaskFormSlice.getTaskFormStatusTask);
+  const priority = useSelector(TaskFormSlice.getPriority);
+  const dateStart = useSelector(TaskFormSlice.getDateStart);
+  const dateStop = useSelector(TaskFormSlice.getDateStop);
+  const currentTaskId = useSelector(TaskFormSlice.getTaskFormId);
   const currentUserId = useSelector(UserSlice.userId);
+
+  const [categoryView, setCategoryView] = useState({
+    dateStart: !!dateStart,
+    dateStop: !!dateStop,
+    tags: tags ? tags.length !== 0 : false,
+    priority: !!priority,
+  });
+
+  useEffect(() => {
+    setCategoryView({
+      dateStart: !!dateStart,
+      dateStop: !!dateStop,
+      tags: tags ? tags.length !== 0 : false,
+      priority: !!priority,
+    });
+  }, [isSuccessLoadingTask]);
+
+  const setStateButton = (
+    argName: 'dateStart' | 'dateStop' | 'tags' | 'priority',
+    flag: boolean,
+  ) => () => {
+    setCategoryView({ ...categoryView, [argName]: flag });
+  };
 
   const isAuthorOrResponsible = isAuthor(currentUserId, roles)
     || isResponsible(currentUserId, roles);
-
-  const performerContent = () => {
-    if (isAuthorOrResponsible) return <MembersChanger buttonType="gray" />;
-    return <p className={styles.notPerformer}>Без исполнителя</p>;
-  };
-
-  useEffect(() => {
-    console.log(status);
-  }, [status]);
 
   return (
     <>
       {
         status?.name
+        && <StatusCategory status={status} currentTaskId={currentTaskId} />
+      }
+      <PerformerCategory roles={roles} isAuthorOrResponsible={isAuthorOrResponsible} />
+      {
+        categoryView.priority
         && (
-          <DetailCategory name="Статус" type="details">
-            <TaskStatus defaultValue={status.name} />
-          </DetailCategory>
+          <PriorityCategory
+            priority={priority}
+            currentTaskId={currentTaskId}
+            hiddenCategory={setStateButton('priority', false)}
+          />
         )
       }
-      <DetailCategory name="Назначена" type="details">
+      {
+        categoryView.dateStart
+        && (
+          <DateStartCategory
+            startDateISO={dateStart}
+            stopDateISO={dateStop}
+            currentTaskId={currentTaskId}
+            hiddenCategory={setStateButton('dateStart', false)}
+          />
+        )
+      }
+      {
+        categoryView.dateStop
+        && (
+          <DateStopCategory
+            startDateISO={dateStart}
+            stopDateISO={dateStop}
+            currentTaskId={currentTaskId}
+            hiddenCategory={setStateButton('dateStop', false)}
+          />
+        )
+      }
+      {
+        categoryView.tags
+        && (
+          <TagsCategory
+            currentTaskId={currentTaskId}
+            taskTags={tags}
+            hiddenCategory={setStateButton('tags', false)}
+          />
+        )
+      }
+      <div className={styles.buttonsWrapper}>
         {
-          roles?.performers && roles?.performers.length !== 0
-            ? (
-              roles.performers.map((member) => (
-                <UserLabel
-                  key={member.userId}
-                  user={member}
-                  roleId={RolesIds.PERFORMER}
-                  roleName="Исполнитель"
-                  canRemove={isAuthorOrResponsible}
-                />
-              ))
-            )
-            : (
-              performerContent()
-            )
+          !categoryView.dateStop
+          && (
+            <button type="button" onClick={setStateButton('dateStop', true)} className={styles.button}>
+              <DateStopIcon />
+            </button>
+          )
         }
-      </DetailCategory>
+        {
+          !categoryView.dateStart
+          && (
+            <button type="button" onClick={setStateButton('dateStart', true)} className={styles.button}>
+              <DateStartIcon />
+            </button>
+          )
+        }
+        {
+          !categoryView.priority
+          && (
+            <button type="button" onClick={setStateButton('priority', true)} className={styles.button}>
+              <PriorityIcon />
+            </button>
+          )
+        }
+        {
+          !categoryView.tags
+          && (
+            <button type="button" onClick={setStateButton('tags', true)} className={styles.button}>
+              <TagsIcon />
+            </button>
+          )
+        }
+      </div>
     </>
   );
 };
