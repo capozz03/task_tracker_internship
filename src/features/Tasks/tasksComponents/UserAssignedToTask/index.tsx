@@ -11,9 +11,8 @@ type UserAssignedToTaskProps = {
   users: TRoles[];
 };
 
-const UsersPopoverContent = (users: TRoles[]) => (
+const UsersPopoverContent = ({ users }: UserAssignedToTaskProps) => (
   <div className={classes.usersPopoverContent}>
-    {/* eslint-disable-next-line react/destructuring-assignment */}
     {uniqBy(users, (item) => item.assign_user.user_id).map((user, index) => (
       <span className={classes.row} key={user.assign_user.user_id}>
         <UserAvatar user={user.assign_user} color={colors[index % colors.length]} />
@@ -30,7 +29,7 @@ type OtherProps = {
 };
 // Вынес только потому что ESLint ругается
 const Other = ({ count, allUsers }: OtherProps) => (
-  <Popover content={UsersPopoverContent(allUsers)}>
+  <Popover content={<UsersPopoverContent users={allUsers} />}>
     <div className={classes.others}>{`+${count}`}</div>
   </Popover>
 );
