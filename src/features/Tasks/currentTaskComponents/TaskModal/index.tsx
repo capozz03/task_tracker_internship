@@ -107,7 +107,7 @@ const TaskModal = (props: ModalProps) => {
                 header={CollapseHeader({ name: 'Детали', children: '' })}
                 showArrow={false}
               >
-                <Details />
+                {task && <Details taskId={task.task_id} />}
               </Collapse.Panel>
               <Collapse.Panel
                 className={styles.collapseItem}

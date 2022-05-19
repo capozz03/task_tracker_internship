@@ -9,14 +9,18 @@ import MembersChanger from '../MembersChanger';
 import UserLabel from '../UserLabel';
 import styles from './index.module.scss';
 import { TaskStatus } from 'features/Tasks/tasksComponents';
+import DetailsResume from '../DetailsResume';
 
-const Details = () => {
+type TDetailsProps = { taskId: string };
+
+const Details = ({ taskId }: TDetailsProps) => {
   const roles = useSelector(TaskFormSlice.getRoles);
   const status = useSelector(TaskFormSlice.getTaskFormStatusTask);
+  const formResultRequired = useSelector(TaskFormSlice.getTaskFormStatusTaskFormRequired);
   const currentUserId = useSelector(UserSlice.userId);
 
   const isAuthorOrResponsible = isAuthor(currentUserId, roles)
-    || isResponsible(currentUserId, roles);
+  || isResponsible(currentUserId, roles);
 
   const performerContent = () => {
     if (isAuthorOrResponsible) return <MembersChanger buttonType="gray" />;
@@ -29,32 +33,26 @@ const Details = () => {
 
   return (
     <>
-      {
-        status?.name
-        && (
-          <DetailCategory name="Статус" type="details">
-            <TaskStatus defaultValue={status.name} />
-          </DetailCategory>
-        )
-      }
+      {status?.name && (
+        <DetailCategory name="Статус" type="details">
+          <TaskStatus defaultValue={status.name} />
+        </DetailCategory>
+      )}
+      {(status?.name === 'Выполнена' || status?.name === 'Не выполнена') && (
+        <DetailsResume taskId={taskId} formResultRequired={formResultRequired} />
+      )}
       <DetailCategory name="Назначена" type="details">
-        {
-          roles?.performers && roles?.performers.length !== 0
-            ? (
-              roles.performers.map((member) => (
-                <UserLabel
-                  key={member.userId}
-                  user={member}
-                  roleId={RolesIds.PERFORMER}
-                  roleName="Исполнитель"
-                  canRemove={isAuthorOrResponsible}
-                />
-              ))
-            )
-            : (
-              performerContent()
-            )
-        }
+        {roles?.performers && roles?.performers.length !== 0
+          ? roles.performers.map((member) => (
+            <UserLabel
+              key={member.userId}
+              user={member}
+              roleId={RolesIds.PERFORMER}
+              roleName="Исполнитель"
+              canRemove={isAuthorOrResponsible}
+            />
+          ))
+          : performerContent()}
       </DetailCategory>
     </>
   );

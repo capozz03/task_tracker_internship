@@ -3,6 +3,7 @@ import { ChecklistReducer } from 'store/slice/task/taskForm/checkList';
 import { taskFormDataReducer } from 'store/slice/task/taskForm/fullTaskInfo/slice';
 import { taskFormRolesReducer } from './roles/slice';
 import { StorageFilesReducer } from './storageFiles';
+import { resumeSliceReducer } from './resume';
 
 export { getTaskByIdAsync } from './getTaskById';
 export type { TTasksReducer, TTask } from 'store/slice/task/entities';
@@ -38,6 +39,17 @@ export {
   checklistStatus,
   checklistIsLoadingStatus,
 } from './checkList/selector';
+
+export {
+  getTaskFormStatusTaskFormRequired,
+  getTaskFormResultForm,
+  getFormResultComment,
+  getFormResultResume,
+} from './resume/selectors';
+
+export {
+  setFormResult,
+} from './resume/asyncAction';
 
 export {
   showTaskForm,
@@ -85,4 +97,5 @@ export const taskFormReducer = combineReducers({
   checkList: ChecklistReducer,
   task: taskFormDataReducer,
   roles: taskFormRolesReducer,
+  resume: resumeSliceReducer,
 });
