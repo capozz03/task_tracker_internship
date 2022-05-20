@@ -1,6 +1,6 @@
 import { createAsyncThunk, miniSerializeError } from '@reduxjs/toolkit';
 import { priorityService } from './services';
-import { TaskFormSlice } from 'store/slice/index';
+import { TaskFormSlice } from 'store/slice';
 import { alert } from 'shared/ui';
 import { TRequestChangePriorityProps } from './entities';
 

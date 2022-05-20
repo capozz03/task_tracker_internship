@@ -1,8 +1,10 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { ChecklistReducer } from 'store/slice/task/taskForm/checkList';
 import { taskFormDataReducer } from 'store/slice/task/taskForm/fullTaskInfo/slice';
+import { taskFormDatesReducer } from './dates/slice';
 import { taskFormPriorityReducer } from './priority/slice';
 import { taskFormRolesReducer } from './roles/slice';
+import { taskFormTagsReducer } from './tags/slice';
 import { StorageFilesReducer } from './storageFiles';
 
 export { getTaskByIdAsync } from './getTaskById';
@@ -27,8 +29,10 @@ export {
   getTaskFormRoles,
   getTaskFormTitle,
   isLoadingStatus,
+  isLoadingStatusSuccess,
   getTaskFormStatusTask,
   getTaskFormId,
+  getTaskFormPriority,
 } from './fullTaskInfo/selector';
 
 export {
@@ -58,6 +62,15 @@ export {
 export { taskFormRolesReducer, taskFormRolesSelector, setRoles } from './roles/slice';
 export { addUserRole, removeUserRole } from './roles/asyncActions';
 export { getRoles, isLoadingRolesStatus } from './roles/selector';
+
+export { taskFormDatesReducer, setDateStart, setDateStop } from './dates/slice';
+export { changeTaskDateStart, changeTaskDateStop } from './dates/asyncActions';
+export { getDateStart, getDateStop, isLoadingDatesStatus } from './dates/selector';
+
+export { taskFormTagsReducer, setTags } from './tags/slice';
+export { addTagToTask, removeTagToTask } from './tags/asyncActions';
+export { getTags, isLoadingTagsStatus } from './tags/selector';
+
 export {
   imagePreview,
   getStorageFiles,
@@ -91,4 +104,6 @@ export const taskFormReducer = combineReducers({
   task: taskFormDataReducer,
   roles: taskFormRolesReducer,
   priority: taskFormPriorityReducer,
+  dates: taskFormDatesReducer,
+  tags: taskFormTagsReducer,
 });

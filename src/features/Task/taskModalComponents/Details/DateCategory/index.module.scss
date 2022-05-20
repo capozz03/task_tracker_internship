@@ -1,0 +1,36 @@
+@import "src/shared/assets/styles";
+
+.wrapper {
+    height: 32px !important;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 9px;    
+    cursor: pointer;
+
+    svg:last-child {
+        margin-top: -2px;
+        margin-left: -7px;
+        width: 18px;
+        height: 18px;
+
+        path {
+            fill: $colors-red;
+        }
+    }
+}
+
+.datepicker {
+    height: 24px !important;
+    padding: 0 !important;
+    border: none !important;
+    background: inherit !important;
+    box-shadow: none !important;
+
+    input {
+        width: 140px !important;
+        font: $p-medium;
+        color: $grey-900;
+        cursor: pointer;
+    }
+}
