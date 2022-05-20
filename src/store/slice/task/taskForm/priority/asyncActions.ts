@@ -11,6 +11,7 @@ export const changeTaskPriority = createAsyncThunk(
       const { data } = await priorityService.changeTaskPriority(props);
       alert('Приоритет успешно изменен', 'success');
       dispatch(TaskFormSlice.updateTask(data.data));
+      dispatch(TaskFormSlice.resetTaskHistory());
       return data.data.priority;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);

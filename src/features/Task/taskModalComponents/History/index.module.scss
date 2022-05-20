@@ -1,0 +1,68 @@
+@import "src/shared/assets/styles";
+
+.historyWrapper {
+    width: 100%;
+}
+
+.header {
+    height: 40px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+
+    & > svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    & > h5 {
+        margin: 0;
+        font: $h5;
+        color: $grey-900;
+    }
+}
+
+.historyList {
+    width: 100%;
+    padding: 20px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 22px;
+    list-style-type: none;
+
+    & > .historyItem {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        div {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 8px;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .actionUserName {
+            font: $p-medium;
+            color: $grey-900;
+        }
+
+        .actionDescription {
+            font: $p-regular;
+            color: $grey-900;
+        }
+
+        .actionTime {
+            font: $h6-regular;
+            color: $grey-600;
+        }
+    }
+}

@@ -18,6 +18,7 @@ import Description from 'features/Tasks/currentTaskComponents/Description';
 import MembersPanel from './MembersPanel';
 import Details from 'features/Task/taskModalComponents/Details';
 import { CollapseHeader, CollapseMembersHeader } from './MembersPanel/MemberPanelHeaders';
+import TaskHistory from 'features/Task/taskModalComponents/History';
 
 const TaskModal = (props: ModalProps) => {
   const dispatch = useDispatch();
@@ -93,7 +94,7 @@ const TaskModal = (props: ModalProps) => {
             <div className={styles.attachments}>
               {task && <Attachments taskId={task.task_id} />}
             </div>
-            <div>actions</div>
+            <TaskHistory />
           </div>
           <div className={styles.rightColumn}>
             <Collapse

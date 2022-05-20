@@ -1,8 +1,9 @@
 import { RequestStatuses } from 'shared';
+import { TCommandCode } from 'store/slice/task/history/entities';
 
 export type THistoryUnit = {
   history_command_id: string,
-  command_code: string,
+  command_code: TCommandCode,
   command_name: string,
   created: string,
   user: {
@@ -78,8 +79,25 @@ export type THistoryUnit = {
   ]
 };
 
+export type TStateData = {
+  pagination: {
+    items_count: number,
+    items_total: number,
+    per_page: number,
+    page_current: number,
+    page_total: number
+  },
+  data: THistoryUnit[];
+};
+
 export type TState = {
-  data: THistoryUnit[] | null;
+  data: TStateData;
   status: RequestStatuses;
   error: Error | null;
 };
+
+export type TTaskHistoryProps = {
+  taskId: string;
+  page: number;
+  limit: number;
+}

@@ -7,6 +7,7 @@ import CrossIcon from './CrossIcon';
 import ArrowIcon from './ArrowIcon';
 import MoreVerticalIcon from './MoreVerticalIcon';
 import ClipIcon from './ClipIcon';
+import HistoryLabelIcon from './HistoryLabelIcon';
 
 export * as searchIcons from './SearchIcons';
 export * as detailsIcons from './DetailsIcons';
@@ -22,5 +23,6 @@ export {
   ArrowIcon,
   MoreVerticalIcon,
   ClipIcon,
+  HistoryLabelIcon,
 };
 export * as tasksIcons from './TasksIcons';
