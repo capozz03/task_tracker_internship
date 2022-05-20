@@ -12,8 +12,10 @@ export const getTaskFormRoles = createSelector(getTaskInformation, ({ task }) =>
 export const getTaskFormStatusTask = createSelector(getTaskInformation, ({ task }) => task?.status);
 export const getTaskFormStatus = createSelector(getTaskInformation, ({ status }) => status);
 export const getTaskFormError = createSelector(getTaskInformation, ({ error }) => error);
-export const getTaskFormIsVisibleForm = createSelector(getTaskInformation,
-  ({ isVisibleForm }) => isVisibleForm);
+export const getTaskFormIsVisibleForm = createSelector(
+  getTaskInformation,
+  ({ isVisibleForm }) => isVisibleForm,
+);
 export const isLoadingStatus = createSelector(getTaskInformation, ({ status }) =>
   isLoadingStatusCheck(status),
 );
