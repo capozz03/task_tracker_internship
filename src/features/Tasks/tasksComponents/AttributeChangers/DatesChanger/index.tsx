@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable */ // FIXME
 import React, { MouseEventHandler } from 'react';
 import styles from './index.module.scss';
 import Tooltip from '../../Tooltip';
