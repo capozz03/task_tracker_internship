@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { TTask } from 'store/slice/task/entities';
 import { changeStatusTaskAsync } from 'store/slice/task/taskInbox/asyncActions';
 import TaskStatus from '../../TaskStatus';
-import DateWithIconClock from '../../DateWithIconClock';
 import TagsGroup from '../../TagsGroup';
 import UserAssignedToTask from '../../UserAssignedToTask';
 import DropdownMenu from 'features/Tasks/tasksComponents/DropdownMenu';
@@ -16,6 +15,7 @@ import classNames from 'classnames';
 import moment, { now } from 'moment';
 import { SubscribesSlice } from 'store/slice';
 import PriorityChanger from '../../AttributeChangers/PriorityChanger';
+import DateChanger from '../../AttributeChangers/DatesChanger';
 
 type TaskInboxProps = {
   task: TTask;
@@ -33,10 +33,12 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
   };
   const openTask: MouseEventHandler<HTMLElement> = () => {
     dispatch(getTaskByIdAsync(task.task_id));
-    dispatch(SubscribesSlice.getSubscribeAsync({
-      relation_id: task.task_id,
-      relation_type: 'task',
-    }));
+    dispatch(
+      SubscribesSlice.getSubscribeAsync({
+        relation_id: task.task_id,
+        relation_type: 'task',
+      }),
+    );
   };
   return (
     <div
@@ -46,15 +48,17 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
       tabIndex={-1}
       className={classNames([
         styles.innerContent,
-        { [styles.overdue]: moment(task?.exec_stop).diff(now()) < 0 }])}
+        { [styles.overdue]: moment(task?.exec_stop).diff(now()) < 0 },
+      ])}
     >
       <div className={styles.wrap}>
         <div className={styles.cardName}>
           <CardNameText text={task.title} />
         </div>
         <div className={styles.indicators}>
-          { task.storage_files_meta.total !== 0
-            && <CardAttachmentsCount count={task.storage_files_meta.total} /> }
+          {task.storage_files_meta.total !== 0 && (
+            <CardAttachmentsCount count={task.storage_files_meta.total} />
+          )}
           {task.progress && task.progress.total !== 0 && (
             <CardChecklistCount
               checkListTotal={task.progress.total}
@@ -68,7 +72,11 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
         </div>
         <div className={styles.dateAndStatus}>
           <div className={styles.cardDate}>
-            <DateWithIconClock date={task.exec_stop} />
+            <DateChanger
+              taskId={task.task_id}
+              start={task.exec_start}
+              end={task.exec_stop}
+            />
           </div>
           <PriorityChanger taskId={task.task_id} taskPriority={task.priority} />
         </div>
@@ -80,9 +88,7 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
         </div>
       </div>
       <div className={styles.cardMenu}>
-        <DropdownMenu
-          task={task}
-        />
+        <DropdownMenu task={task} />
       </div>
     </div>
   );

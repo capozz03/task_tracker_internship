@@ -64,7 +64,7 @@ export { addUserRole, removeUserRole } from './roles/asyncActions';
 export { getRoles, isLoadingRolesStatus } from './roles/selector';
 
 export { taskFormDatesReducer, setDateStart, setDateStop } from './dates/slice';
-export { changeTaskDateStart, changeTaskDateStop } from './dates/asyncActions';
+export { changeTaskDateStart, changeTaskDateStop, changeTaskDates, deleteTaskDates } from './dates/asyncActions';
 export { getDateStart, getDateStop, isLoadingDatesStatus } from './dates/selector';
 
 export { taskFormTagsReducer, setTags } from './tags/slice';

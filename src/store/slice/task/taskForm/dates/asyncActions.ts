@@ -2,7 +2,7 @@ import { createAsyncThunk, miniSerializeError } from '@reduxjs/toolkit';
 import { datesService } from './services';
 import { TaskFormSlice } from 'store/slice';
 import { alert } from 'shared/ui';
-import { TRequestParams } from './entities';
+import { TRequestParams, TRequestParamsDeleteDate, TRequestParamsDoubleDate } from './entities';
 
 export const changeTaskDateStart = createAsyncThunk(
   'dates/changeTaskDateStart',
@@ -37,6 +37,56 @@ export const changeTaskDateStop = createAsyncThunk(
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
       alert(`Не удалось изменить срок выполнения. Ошибка: "${error.message}"`, 'error');
+      return rejectWithValue(error);
+    }
+  },
+);
+
+export const changeTaskDates = createAsyncThunk(
+  'dates/changeTaskDates',
+  async ({ taskId, datetimesISO }: TRequestParamsDoubleDate, { rejectWithValue }) => {
+    try {
+      await datesService.changeTaskDateStart({
+        taskId,
+        datetimeISO: datetimesISO[0],
+      });
+
+      if (datetimesISO[0]) alert('Дата начала установлена', 'success');
+      else alert('Дата начала удалена', 'success');
+
+      await datesService.changeTaskDateStop({
+        taskId,
+        datetimeISO: datetimesISO[1],
+      });
+
+      if (datetimesISO[1]) alert('Срок выполнения установлен', 'success');
+      else alert('Срок выполнения удален', 'success');
+    } catch (rejectedValueOrSerializedError) {
+      const error = miniSerializeError(rejectedValueOrSerializedError);
+      alert(`Не удалось изменить даты. Ошибка: "${error.message}"`, 'error');
+      return rejectWithValue(error);
+    }
+  },
+);
+
+export const deleteTaskDates = createAsyncThunk(
+  'dates/deleteTaskDates',
+  async ({ taskId }: TRequestParamsDeleteDate, { rejectWithValue }) => {
+    try {
+      await datesService.changeTaskDateStart({
+        taskId,
+        datetimeISO: null,
+      });
+      alert('Дата начала удалена', 'success');
+
+      await datesService.changeTaskDateStop({
+        taskId,
+        datetimeISO: null,
+      });
+      alert('Срок выполнения удален', 'success');
+    } catch (rejectedValueOrSerializedError) {
+      const error = miniSerializeError(rejectedValueOrSerializedError);
+      alert(`Не удалось удалить даты. Ошибка: "${error.message}"`, 'error');
       return rejectWithValue(error);
     }
   },

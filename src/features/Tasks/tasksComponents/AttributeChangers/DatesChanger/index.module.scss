@@ -1,0 +1,37 @@
+@import "src/shared/assets/styles";
+
+.wrapper {
+  all: unset;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+
+  .icon {
+    margin-right: 8px;
+
+    svg {
+      fill: $main-blue;
+    }
+  }
+
+  .text {
+    font: $p-regular;
+    color: $grey-600;
+  }
+
+  .rangePicker {
+    display: flex;
+    flex-direction: column;
+
+    .picker {
+
+    }
+
+    :global {
+      .ant-picker-active-bar {
+        display: none;
+      }
+    }
+  }
+}

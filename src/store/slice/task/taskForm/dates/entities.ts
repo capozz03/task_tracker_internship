@@ -17,6 +17,15 @@ export type TRequestParams = {
   datetimeISO: string | null;
 };
 
+export type TRequestParamsDoubleDate = {
+  taskId: string;
+  datetimesISO: [string | null, string | null];
+};
+
+export type TRequestParamsDeleteDate = {
+  taskId:string;
+}
+
 export type TResponse = {
   data: TTask;
-}
+};

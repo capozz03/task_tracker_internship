@@ -7,7 +7,6 @@ import {
   CardAttachmentsCount,
   CardChecklistCount,
   CardNameText,
-  DateWithIconClock,
   DropdownMenu,
   TagsGroup,
   TaskStatus,
@@ -16,6 +15,7 @@ import {
 import classNames from 'classnames';
 import moment, { now } from 'moment';
 import PriorityChanger from '../../AttributeChangers/PriorityChanger';
+import DateChanger from '../../AttributeChangers/DatesChanger';
 
 type TaskInWorkProps = {
   task: TTask;
@@ -70,7 +70,11 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
       </div>
       <div className={styles.cardDateAndPriority}>
         <div className={styles.cardDate}>
-          <DateWithIconClock date={task.exec_stop} />
+          <DateChanger
+            taskId={task.task_id}
+            start={task.exec_start}
+            end={task.exec_stop}
+          />
         </div>
         <div className={styles.cardPriority}>
           <PriorityChanger taskId={task.task_id} taskPriority={task.priority} />

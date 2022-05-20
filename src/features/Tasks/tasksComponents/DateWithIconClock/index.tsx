@@ -17,7 +17,7 @@ const DateWithIconClock = ({ date }: DateWithIconClockProps) => {
     if (date === null || date === undefined) return 'Без срока';
     if (dateExec > today && dateExec < tomorrow) return 'сегодня';
     if (dateExec > tomorrow && dateExec < tomorrowEnd) return 'завтра';
-    if (dateExec > yesterday) return 'вчера';
+    if (dateExec < yesterday) return 'вчера';
     return dateExec.format('DD MMM YYYY').replace('.', '');
   };
   const dateString = dateFormat();
