@@ -47,3 +47,8 @@ export type TChangeViewerRequest = {
   viewed: boolean;
   subscribe_notify_id: string[];
 }
+
+export type TToggleReadStatusProps = {
+  listNotificationId: string[];
+  status?: boolean;
+}

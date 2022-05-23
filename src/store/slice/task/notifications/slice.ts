@@ -3,7 +3,7 @@ import { RequestStatuses } from 'shared';
 import { getNotificationsAsync, pushNotificationsAsync, readAllNotificationAsync } from './asyncThunk';
 import {
   TNotification,
-  TNotificationsResponse,
+  TNotificationsResponse, TToggleReadStatusProps,
 } from './entities';
 import { TPagination } from 'store/slice/task/entities';
 
@@ -45,10 +45,12 @@ const notificationSlice = createSlice({
       state = initialState;
       return state;
     },
-    toggleReadStatus(state, { payload }: PayloadAction<string[]>) {
+    toggleReadStatus(state, { payload }: PayloadAction<TToggleReadStatusProps>) {
       state.notifications = state.notifications.map((notification) => {
-        if (payload.includes(notification.subscribe_notify_id)) {
-          notification.viewed = !notification.viewed;
+        if (payload.listNotificationId.includes(notification.subscribe_notify_id)) {
+          notification.viewed = payload.status === undefined
+            ? !notification.viewed
+            : payload.status;
           if (notification.viewed) {
             state.pagination.items_total -= 1;
           } else {

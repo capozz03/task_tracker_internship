@@ -67,7 +67,10 @@ export const toggleReadNotificationAsync = createAsyncThunk(
   async (props: TChangeViewerRequest, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await notificationServices.changeViewedNotification(props);
-      dispatch(toggleReadStatus(props.subscribe_notify_id));
+      dispatch(toggleReadStatus({
+        listNotificationId: props.subscribe_notify_id,
+        status: props.viewed,
+      }));
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
@@ -93,7 +96,10 @@ export const readAllNotificationAsync = createAsyncThunk(
         subscribe_notify_id: listNotificationId,
         viewed: true,
       });
-      dispatch(toggleReadStatus(listNotificationId));
+      dispatch(toggleReadStatus({
+        listNotificationId,
+        status: true,
+      }));
       alert('Все уведомления прочитаны', 'success');
       return data;
     } catch (rejectedValueOrSerializedError) {
