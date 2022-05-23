@@ -4,7 +4,7 @@
   position: fixed;
   top: 80px;
   right: 30px;
-  max-height: calc(100vh - 80px);
+  max-height: calc(100vh - 85px);
   background-color: #fff;
   overflow-y: scroll;
   z-index: 100;
@@ -15,10 +15,11 @@
   border-radius: 16px;
   @media screen and (max-width: 500px){
     max-width: calc( 100% - 10px);
-    max-height: calc(100vh - 60px);
+    max-height: calc(100vh - 65px);
     right: 5px;
     left: 5px;
-    bottom: 0;
+    //bottom: 5px;
+    top: 60px;
   }
   .header{
     display: flex;

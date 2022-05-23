@@ -4,8 +4,6 @@ import { NotificationsSlice } from 'store/slice';
 import styles from './index.module.scss';
 import NotificationItem from './NotificationItem';
 import { Spin } from 'antd';
-import { AsyncThunkPayloadCreatorReturnValue } from '@reduxjs/toolkit';
-import { alert } from 'shared/ui/Alert';
 
 const Notifications = () => {
   const dispatch = useDispatch();
@@ -23,21 +21,7 @@ const Notifications = () => {
   };
   const readAllHandle = async () => {
     setIsReadAll(true);
-    const response: AsyncThunkPayloadCreatorReturnValue<any, any> = await dispatch(
-      NotificationsSlice.getNotificationsAsync({
-        viewed: false,
-        per_page: 10000000,
-      }));
-    await dispatch(NotificationsSlice.toggleReadNotificationAsync({
-      viewed: true,
-      subscribe_notify_id: response.payload.data.map(
-        (notification: any) => notification.subscribe_notify_id),
-    }));
-    alert('Все уведомления прочитаны', 'success');
-    await dispatch(NotificationsSlice.getNotificationsAsync({
-      viewed: false,
-      per_page: 10,
-    }));
+    await dispatch(NotificationsSlice.readAllNotificationAsync());
     setIsReadAll(false);
   };
   useEffect(() => {
@@ -60,7 +44,7 @@ const Notifications = () => {
       </header>
       <Spin spinning={isLoading || isReadAll} tip={isReadAll && 'Прочитать все…'}>
         {
-          pagination.items_total !== 0
+          pagination.items_total !== 0 || notifications.length !== 0
             ? (
               <div className={styles.body}>
                 { notifications.map((notification) => (

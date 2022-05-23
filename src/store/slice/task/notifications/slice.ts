@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatuses } from 'shared';
-import { getNotificationsAsync, pushNotificationsAsync } from './asyncThunk';
+import { getNotificationsAsync, pushNotificationsAsync, readAllNotificationAsync } from './asyncThunk';
 import {
   TNotification,
   TNotificationsResponse,
@@ -94,6 +94,9 @@ const notificationSlice = createSlice({
       state.status = RequestStatuses.FAILURE;
       state.error = error;
       return state;
+    },
+    [readAllNotificationAsync.fulfilled.type]: (state) => {
+      state.pagination.items_total = 0;
     },
   },
 });

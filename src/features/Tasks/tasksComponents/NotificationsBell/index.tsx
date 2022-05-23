@@ -7,7 +7,7 @@ import { NotificationsSlice } from 'store/slice';
 
 const NotificationBell = () => {
   const dispatch = useDispatch();
-  const notifications = useSelector(NotificationsSlice.getNotificationsSelector);
+  const pagination = useSelector(NotificationsSlice.getPaginationSelector);
   const toggleVisibleNotificationHandle = () => {
     dispatch(NotificationsSlice.toggleVisible());
   };
@@ -21,7 +21,7 @@ const NotificationBell = () => {
       type="button"
       onClick={toggleVisibleNotificationHandle}
       className={classNames([styles.notification, {
-        [styles.present]: notifications.length > 0,
+        [styles.present]: pagination.items_total !== 0,
       }])}
     >
       <BellIcon />

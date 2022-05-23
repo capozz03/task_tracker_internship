@@ -76,3 +76,30 @@ export const toggleReadNotificationAsync = createAsyncThunk(
     }
   },
 );
+
+// Все уведомление просмотренны
+export const readAllNotificationAsync = createAsyncThunk(
+  'notificationSlice/readAllNotificationAsync',
+  async (_, { rejectWithValue, dispatch }) => {
+    try {
+      const { data: notifications } = await notificationServices.getNotifications({
+        viewed: false,
+        page: 1,
+        per_page: 10000000,
+      });
+      const listNotificationId = notifications.data.map((notification) =>
+        notification.subscribe_notify_id);
+      const { data } = await notificationServices.changeViewedNotification({
+        subscribe_notify_id: listNotificationId,
+        viewed: true,
+      });
+      dispatch(toggleReadStatus(listNotificationId));
+      alert('Все уведомления прочитаны', 'success');
+      return data;
+    } catch (rejectedValueOrSerializedError) {
+      const error = miniSerializeError(rejectedValueOrSerializedError);
+      alert('Ошибка при прочтение всех записей', 'error');
+      return rejectWithValue(error);
+    }
+  },
+);
