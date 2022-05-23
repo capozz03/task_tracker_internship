@@ -58,15 +58,21 @@ const MemberChangerPopover = ({ member, children }: TProps) => {
         roleName,
       }));
     } else {
-      if (rolesInTask && rolesInTask[roleArrayKey].length === maxOnRole) {
-        const firstUser = rolesInTask[roleArrayKey][0];
-        dispatch(removeUserRole({
-          userId: firstUser.userId,
-          userName: firstUser.userName,
-          taskId: currentTaskId,
-          roleId,
-          roleName,
-        }));
+      if (rolesInTask && rolesInTask[roleArrayKey].length >= maxOnRole) {
+        const amountUsersOnRemove = rolesInTask[roleArrayKey].length - maxOnRole + 1;
+        const removedUsers = [];
+        for (let i = 0; i < amountUsersOnRemove; i += 1) {
+          removedUsers.push(rolesInTask[roleArrayKey][i]);
+        }
+        removedUsers.forEach((user) => {
+          dispatch(removeUserRole({
+            userId: user.userId,
+            userName: user.userName,
+            taskId: currentTaskId,
+            roleId,
+            roleName,
+          }));
+        });
       }
 
       dispatch(addUserRole({

@@ -122,6 +122,11 @@ export type TSwapItemInChecklist = {
   checkListItemIdTwo: number,
 }
 
+export type TFormResult = {
+  field_name: string;
+  value?: string;
+};
+
 export type TTask = {
   task_id: string;
   title: string;
@@ -134,7 +139,7 @@ export type TTask = {
   priority: TPriority | null;
   form?: TTaskForm;
   form_available?: boolean;
-  form_result?: any | null;
+  form_result?: TFormResult[] | null;
   roles: TRoles[];
   tags: TTagsTask[];
   progress: TTaskProgress | null;
