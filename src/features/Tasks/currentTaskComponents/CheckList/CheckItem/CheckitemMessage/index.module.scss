@@ -1,7 +1,7 @@
 @import "src/shared/assets/styles/vars";
 
 .title{
-  padding: 0 60px 0 0;
+  padding: 0;
   width: 100%;
 }
 .btnEdit{
@@ -23,6 +23,7 @@
   border: none;
   margin: 0;
   padding: 5px;
+  padding-right: 70px;
   border-bottom: 1px solid $main-blue;
   &:focus{
     outline: none;

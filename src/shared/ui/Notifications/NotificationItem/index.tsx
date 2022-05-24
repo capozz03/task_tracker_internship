@@ -3,20 +3,28 @@ import styles from './index.module.scss';
 import { TNotification } from 'store/slice/task/notifications/entities';
 import { useDispatch } from 'react-redux';
 import { NotificationsSlice, SubscribesSlice, TaskFormSlice } from 'store/slice';
-import { UserAvatar } from 'features/Tasks/tasksComponents';
 import SubscribeEye from './SubscribeEye';
 import HeaderNotificationsArea from './Header';
-import { NotificationCheckList, NotificationDefault } from './NotificationTypes';
+import { NotificationCheckList, NotificationDefault, NotificationRoleAssign } from './NotificationTypes';
 
 const NotificationItem = ({ notification }: { notification: TNotification }) => {
   const dispatch = useDispatch();
   const notificationsComponents = {
     default: NotificationDefault,
     checklist: NotificationCheckList,
+    roleAssign: NotificationRoleAssign,
   };
   const definesTypeNotificationComponent = () => {
     switch (notification.history_command.command_code) {
-      case 'task.check_list_assign': {
+      case 'task.role_un_assign':
+      case 'task.role_assign': {
+        return notificationsComponents.roleAssign;
+      }
+      case 'task.title_change':
+      case 'task.exec_start_change':
+      case 'task.exec_stop_change':
+      case 'task.tag_assign':
+      case 'task.status_change': {
         return notificationsComponents.default;
       }
       case 'check_list.item_position_set': {
@@ -47,19 +55,6 @@ const NotificationItem = ({ notification }: { notification: TNotification }) => 
       <div role="button" onKeyDown={(e) => e.preventDefault()} tabIndex={-1} onClick={showTaskHandle} className={styles.notification}>
         <HeaderNotificationsArea notification={notification} />
         <div>
-          <div className={styles.userAssigned}>
-            <div className={styles.avatar}>
-              <UserAvatar user={notification.history_command.user} color="#A461D8" />
-            </div>
-            <div className={styles.nameAndEvent}>
-              <div className={styles.name}>
-                { notification.history_command.user.name }
-              </div>
-              <div className={styles.event}>
-                { notification.history_command.command_name }
-              </div>
-            </div>
-          </div>
           <Notifications notification={notification} />
         </div>
       </div>

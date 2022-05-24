@@ -4,7 +4,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-basis: 100%;
+  max-width: 100%;
   :global(.ant-checkbox-wrapper){
+    @media screen and (max-width: 760px){
+      width: 77%;
+    }
+    @media screen and (max-width: 370px){
+      width: 75%;
+    }
     width: 100%;
     :global(.ant-checkbox + span){
       width: 100%;
@@ -30,5 +38,8 @@
     .dragElement{
       opacity: 1;
     }
+  }
+  .checkBoxMenu{
+    align-self: flex-start;
   }
 }

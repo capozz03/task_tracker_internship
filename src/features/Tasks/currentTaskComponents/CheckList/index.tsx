@@ -67,6 +67,7 @@ const Checklist = ({ checklist }: ChecklistProps) => {
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
+      scrollBehavior: 'smooth',
     }),
   );
   return (

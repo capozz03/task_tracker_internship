@@ -38,7 +38,9 @@ const Notifications = () => {
         </div>
         <div>
           {
-            pagination.items_total !== 0 && <button className={styles.readAllBtn} onClick={readAllHandle} type="button">Прочитать все</button>
+            pagination.items_total !== 0
+              ? <button className={styles.readAllBtn} onClick={readAllHandle} type="button">Прочитать все</button>
+              : <span className={styles.readAllText}>Прочитать все</span>
           }
         </div>
       </header>
@@ -56,7 +58,7 @@ const Notifications = () => {
               </div>
             )
             : (
-              <h2>Новых уведомлений нет</h2>
+              <p>Нет уведомлений</p>
             )
         }
       </Spin>

@@ -92,8 +92,12 @@
         }
         .event{
           font: $p-regular;
+          text-transform: lowercase;
         }
       }
     }
   }
+}
+.contentWithMarginTop{
+  margin-top: 16px;
 }

@@ -1,4 +1,4 @@
-@import "src/shared/assets/styles/vars";
+@import "src/shared/assets/styles/index";
 
 .notifications{
   position: fixed;
@@ -47,6 +47,10 @@
       background-color: transparent;
       border: none;
       cursor: pointer;
+    }
+    .readAllText{
+      font: $p-light;
+      color: $grey-400;
     }
   }
   &::-webkit-scrollbar{

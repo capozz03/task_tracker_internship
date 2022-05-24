@@ -1,5 +1,5 @@
 import { TCommandCode } from 'store/slice/task/history/entities';
-import { TPagination, TStorageFiles } from 'store/slice/task/entities';
+import { TPagination, TStorageFiles, TTag } from 'store/slice/task/entities';
 import { TUser } from 'store/slice/user/entities';
 
 export type TNotifiesRequest = {
@@ -7,6 +7,13 @@ export type TNotifiesRequest = {
   include?: string[];
   page: number;
   per_page: number;
+}
+
+type isoDate = string;
+
+type formResultType = {
+  field_name: string;
+  value: string;
 }
 
 export type TNotification = {
@@ -23,7 +30,31 @@ export type TNotification = {
       task: {
         task_id: string;
         title: string;
+      },
+      task_role?: {
+        task_role_id: string;
+        name: string;
+      },
+      assign_user?: TUser;
+      title?: string;
+      status?: {
+        task_status_id: string;
+        name: string;
+      },
+      exec_start?: isoDate;
+      exec_stop?: isoDate;
+      tag?: TTag;
+      priority?: {
+        task_priority_id: string;
+        name: 'Высокий' | 'Средний' | 'Низкий' | null;
+      },
+      form_result?: formResultType[],
+      check_list?: {
+        check_list_id: string;
+        title: string;
       }
+      message?: string;
+      complete?: boolean;
     },
     relations: [
       {
