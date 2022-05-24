@@ -46,7 +46,6 @@ const TasksCompleted = (props: ComponentProps<any>) => {
         <h4 className={style.title}>
           Завершено
           <span className={style.totalCount}>{pagination && pagination.items_total}</span>
-          шт.
         </h4>
         {isMobile ? (
           <SortByMobileScreen disabled={tasks?.length === 0} setSortType={setSortType} />

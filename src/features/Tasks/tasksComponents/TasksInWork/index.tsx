@@ -38,7 +38,6 @@ const TasksInWork = (props: ComponentProps<any>) => {
       <h4 className={styles.title}>
         В работе
         <span className={styles.totalCount}>{pagination && pagination.items_total}</span>
-        шт.
       </h4>
       <div>
         <Spin size="large" tip="Загрузка" spinning={isLoading}>
