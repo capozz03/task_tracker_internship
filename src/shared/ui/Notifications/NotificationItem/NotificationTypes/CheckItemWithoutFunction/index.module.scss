@@ -1,0 +1,14 @@
+@import "shared/assets/styles/index";
+
+.checkbox{
+  :global(.ant-checkbox-checked::after){
+    border-color: $success-default;
+  }
+  :global(.ant-checkbox-checked .ant-checkbox-inner){
+    background-color: $success-default;
+    border-color: $success-default;
+  }
+  :global(.ant-checkbox-wrapper:hover .ant-checkbox-inner){
+    border-color: $success-default;
+  }
+}

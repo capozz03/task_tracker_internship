@@ -4,6 +4,8 @@ import styles from 'shared/ui/Notifications/NotificationItem/index.module.scss';
 import { PriorityStatus, UserAvatar } from 'features/Tasks/tasksComponents';
 import moment from 'moment';
 import Tag from 'features/Tasks/tasksComponents/Tag';
+import CheckItemWithoutFunction from '../CheckItemWithoutFunction';
+import BlockIcon from '../../../../icons/BlockIcon';
 
 type NotificationProps = {
   notification: TNotification;
@@ -35,6 +37,18 @@ const NotificationRoleAssign = ({ notification }: NotificationProps) => {
                 event.params.exec_stop && moment(event.params.exec_stop).format('DD.MM.YYYY')
               }
               { event.params.check_list && !event.params.title && event.params.check_list.title }
+              { (event.params.check_list_item || event.params.message) && (
+                <div>
+                  <CheckItemWithoutFunction completed={event.params.complete || false}>
+                    {event.params.check_list_item?.message || event.params.message}
+                  </CheckItemWithoutFunction>
+                </div>
+              ) }
+              { event.params.check_list_item === null && (
+                <div className={styles.removeCheckListItem}>
+                  <BlockIcon color="#FC5A5A" />
+                  Удаленный пункт
+                </div>) }
             </strong>
           </div>
           <div className={styles.contentWithMarginTop}>

@@ -52,7 +52,11 @@ export type TNotification = {
       check_list?: {
         check_list_id: string;
         title: string;
-      }
+      },
+      check_list_item?:{
+        check_list_item_id: string,
+        message: string,
+      },
       message?: string;
       complete?: boolean;
     },

@@ -101,3 +101,11 @@
 .contentWithMarginTop{
   margin-top: 16px;
 }
+
+.removeCheckListItem{
+  display: flex;
+  align-items: center;
+  svg{
+    margin-right: 4px;
+  }
+}
