@@ -32,7 +32,7 @@
 
 .wrap {
   display: grid;
-  grid-template-columns: 60% auto;
+  grid-template-columns: 60% 40%;
 
   .title {
     background: $grey-0;
