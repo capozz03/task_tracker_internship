@@ -8,7 +8,6 @@ import TagsGroup from '../../TagsGroup';
 import TaskStatus from '../../TaskStatus';
 import UserAssignedToTask from '../../UserAssignedToTask';
 import style from './index.module.scss';
-import { progress, progressBarPercent } from './progressBar';
 import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 
 type TaskCompletedProps = {
@@ -17,7 +16,7 @@ type TaskCompletedProps = {
 
 const TaskCompleted = ({ task }: TaskCompletedProps) => {
   const dispatch = useDispatch();
-  const progressPercent = progressBarPercent(progress);
+  const progressPercent = task.progress?.percent || 0;
   const statusHandler = (value: string) => {
     dispatch(
       TaskCompletedSlice.changeStatusTaskAsync({
@@ -52,9 +51,7 @@ const TaskCompleted = ({ task }: TaskCompletedProps) => {
         <UserAssignedToTask users={task.roles} />
       </div>
       <div className={style.cardMenu}>
-        <DropdownMenu
-          task={task}
-        />
+        <DropdownMenu task={task} />
       </div>
     </div>
   );
