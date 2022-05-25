@@ -70,11 +70,13 @@ const CheckItem = ({ item, checklistId }: CheckItemProps) => {
           closeEditMessage={closeEditMessage}
         />
       </Checkbox>
-      <CheckboxMenu
-        checkListItemId={item.check_list_item_id}
-        checkListId={checklistId}
-        editItem={editItem}
-      />
+      <div className={styles.checkBoxMenu}>
+        <CheckboxMenu
+          checkListItemId={item.check_list_item_id}
+          checkListId={checklistId}
+          editItem={editItem}
+        />
+      </div>
     </li>);
 };
 
