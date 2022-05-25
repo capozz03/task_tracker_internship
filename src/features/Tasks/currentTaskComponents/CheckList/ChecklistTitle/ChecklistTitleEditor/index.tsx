@@ -95,7 +95,7 @@ const ChecklistTitleEditor = (
         <form onSubmit={handleSubmitForm} className={styles.formEdit}>
           <Tooltip title="Название обязательно" visible={isVisibleTooltip} placement="bottom">
             <input
-              placeholder="Название задачи"
+              placeholder="Название чек-листа"
               autoComplete="off"
               maxLength={150}
               className={styles.textarea}
