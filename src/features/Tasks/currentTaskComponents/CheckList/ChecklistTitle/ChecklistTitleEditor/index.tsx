@@ -96,6 +96,7 @@ const ChecklistTitleEditor = (
           <Tooltip title="Название обязательно" visible={isVisibleTooltip} placement="bottom">
             <input
               placeholder="Название задачи"
+              autoComplete="off"
               maxLength={150}
               className={styles.textarea}
               ref={textArea}
