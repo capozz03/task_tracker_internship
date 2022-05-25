@@ -50,8 +50,10 @@ const CheckListFormCreate = () => {
           onChange={onChange}
           placeholder="Название чек-листа"
         />
-        <Button type="primary" htmlType="submit">Сохранить</Button>
-        <Button type="default" onClick={toggleVisibleForm}>Отменить</Button>
+        <div className={styles.btnGroup}>
+          <Button type="primary" htmlType="submit">Сохранить</Button>
+          <Button type="default" onClick={toggleVisibleForm}>Отменить</Button>
+        </div>
       </div>
     </form>
   );
