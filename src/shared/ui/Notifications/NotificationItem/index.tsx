@@ -5,13 +5,12 @@ import { useDispatch } from 'react-redux';
 import { NotificationsSlice, SubscribesSlice, TaskFormSlice } from 'store/slice';
 import SubscribeEye from './SubscribeEye';
 import HeaderNotificationsArea from './Header';
-import { NotificationCheckList, NotificationDefault, NotificationRoleAssign } from './NotificationTypes';
+import { NotificationDefault, NotificationRoleAssign } from './NotificationTypes';
 
 const NotificationItem = ({ notification }: { notification: TNotification }) => {
   const dispatch = useDispatch();
   const notificationsComponents = {
     default: NotificationDefault,
-    checklist: NotificationCheckList,
     roleAssign: NotificationRoleAssign,
   };
   const definesTypeNotificationComponent = () => {
@@ -19,16 +18,6 @@ const NotificationItem = ({ notification }: { notification: TNotification }) => 
       case 'task.role_un_assign':
       case 'task.role_assign': {
         return notificationsComponents.roleAssign;
-      }
-      case 'task.title_change':
-      case 'task.exec_start_change':
-      case 'task.exec_stop_change':
-      case 'task.tag_assign':
-      case 'task.status_change': {
-        return notificationsComponents.default;
-      }
-      case 'check_list.item_position_set': {
-        return notificationsComponents.checklist;
       }
       default: {
         return notificationsComponents.default;
