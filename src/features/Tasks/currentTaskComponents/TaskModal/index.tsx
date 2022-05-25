@@ -81,7 +81,7 @@ const TaskModal = (props: ModalProps) => {
   }, [formResultRequired]);
 
   return (
-    <Modal {...props} onCancel={cancelHandle} width="75%" footer={null}>
+    <Modal {...props} onCancel={cancelHandle} width="75%" footer={null} style={{ top: 0 }}>
       <Spin spinning={isLoading}>
         <div className={styles.wrap}>
           <div className={styles.title}>

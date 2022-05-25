@@ -2,6 +2,7 @@
 
 :global {
   .ant-modal {
+    margin-top: 0 !important;
     .ant-modal-content {
       background: $grey-100;
       border-radius: 16px !important;
