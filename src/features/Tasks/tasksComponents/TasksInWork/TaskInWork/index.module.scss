@@ -1,7 +1,9 @@
 @import "src/shared/assets/styles";
-.overdue{
+
+.overdue {
   background-color: #FDF0F0 !important;
 }
+
 .wrap {
   display: grid;
   grid-template-areas: "title status datepriority tags users menu"
@@ -18,6 +20,10 @@
 
   &:hover {
     background: $grey-200 !important;
+
+    .cardMenu {
+      opacity: 1;
+    }
   }
 
   @media (max-width: 1500px) {
@@ -32,11 +38,11 @@
     grid-template-columns: 250px 114px 120px auto 120px 70px;
   }
 
-  @media (max-width: 1200px){
+  @media (max-width: 1200px) {
     grid-template-columns: 250px 114px 120px auto 80px 70px;
   }
 
-  @media (max-width: 1180px){
+  @media (max-width: 1180px) {
     gap: 15px;
     grid-template-columns: auto 100px;
     grid-template-areas:  "title menu"
@@ -45,7 +51,7 @@
                           "tags tags"
                           "users filesAndCheckbox";
   }
-  @media (max-width: 400px){
+  @media (max-width: 400px) {
     grid-template-columns: auto 40px;
     gap: 10px;
     grid-template-areas:  "title menu"
@@ -57,43 +63,44 @@
   }
 }
 
-.cardName{
+.cardName {
   grid-area: title;
 }
 
-.cardFilesAndCheckbox{
+.cardFilesAndCheckbox {
   grid-area: filesAndCheckbox;
   display: flex;
 
 }
 
 
-.cardStatus{
+.cardStatus {
   grid-area: status;
   min-width: 100px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
 }
-.cardDateAndPriority{
+
+.cardDateAndPriority {
   grid-area: datepriority;
   display: flex;
   flex-wrap: wrap;
 }
 
-.cardDate{
+.cardDate {
   display: flex;
   align-items: center;
   flex-shrink: 0;
 }
 
-.cardPriority{
+.cardPriority {
   display: flex;
   align-items: center;
 }
 
 
-.cardTagsGroup{
+.cardTagsGroup {
   grid-area: tags;
   flex-grow: 1;
   display: flex;
@@ -101,14 +108,19 @@
   flex-shrink: 1;
 }
 
-.cardUsers{
+.cardUsers {
   grid-area: users;
   flex-shrink: 0;
 }
 
-.cardMenu{
+.cardMenu {
   grid-area: menu;
   display: flex;
-  align-items:center;
+  align-items: center;
   justify-content: flex-end;
+  opacity: 0;
+  transition: all 0.3s;
+  @include media-breakpoint-down(lg) {
+    opacity: 1;
+  }
 }
