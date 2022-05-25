@@ -102,7 +102,7 @@ const TaskModal = (props: ModalProps) => {
             <div className={styles.attachments}>
               {task && <Attachments taskId={task.task_id} />}
             </div>
-            <div>actions</div>
+            <div className={styles.actions}>actions</div>
           </div>
           <div className={styles.rightColumn}>
             <Collapse
