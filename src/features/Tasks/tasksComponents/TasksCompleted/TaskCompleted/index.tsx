@@ -16,7 +16,6 @@ type TaskCompletedProps = {
 
 const TaskCompleted = ({ task }: TaskCompletedProps) => {
   const dispatch = useDispatch();
-  const progressPercent = task.progress?.percent || 0;
   const statusHandler = (value: string) => {
     dispatch(
       TaskCompletedSlice.changeStatusTaskAsync({
@@ -45,7 +44,7 @@ const TaskCompleted = ({ task }: TaskCompletedProps) => {
         <TagsGroup tags={task.tags} />
       </div>
       <div className={style.cardProgress}>
-        <Progress percent={progressPercent} size="small" strokeColor="#3DD598" />
+        {task.progress && <Progress percent={task.progress.percent} size="small" strokeColor="#3DD598" />}
       </div>
       <div className={style.cardUsers}>
         <UserAssignedToTask users={task.roles} />
