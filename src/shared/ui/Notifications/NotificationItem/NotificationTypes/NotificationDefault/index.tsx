@@ -6,6 +6,8 @@ import moment from 'moment';
 import Tag from 'features/Tasks/tasksComponents/Tag';
 import CheckItemWithoutFunction from '../CheckItemWithoutFunction';
 import BlockIcon from '../../../../icons/BlockIcon';
+import FilesAttachments from 'features/Tasks/currentTaskComponents/Attachments/FilesAttachments';
+import ImagesAttachments from 'features/Tasks/currentTaskComponents/Attachments/ImagesAttachments';
 
 type NotificationProps = {
   notification: TNotification;
@@ -49,6 +51,7 @@ const NotificationRoleAssign = ({ notification }: NotificationProps) => {
                   <BlockIcon color="#FC5A5A" />
                   Удаленный пункт
                 </div>) }
+              { event.params.task_to?.title && event.params.task_to.title }
             </strong>
           </div>
           <div className={styles.contentWithMarginTop}>
@@ -66,6 +69,21 @@ const NotificationRoleAssign = ({ notification }: NotificationProps) => {
                 </div>
               </>
             )}
+            { event.params.storage_file && event.params.storage_file.type === 'file'
+                && <FilesAttachments
+                  name={event.params.storage_file.name_original}
+                  size={event.params.storage_file.size}
+                  storageFileId={event.params.storage_file.storage_file_id}
+                  taskId={event.params.task.task_id}
+                  uploaded
+                /> }
+            { event.params.storage_file && event.params.storage_file.type === 'image'
+                && <ImagesAttachments
+                  name={event.params.storage_file.name_original}
+                  storageFileId={event.params.storage_file.storage_file_id}
+                  taskId={event.params.task.task_id}
+                  uploaded
+                /> }
           </div>
         </div>
       </div>

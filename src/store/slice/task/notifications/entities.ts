@@ -26,7 +26,7 @@ export type TNotification = {
     created: string;
     user: TUser;
     params: {
-      storage_files: TStorageFiles;
+      storage_file?: TStorageFiles;
       task: {
         task_id: string;
         title: string;
@@ -59,6 +59,14 @@ export type TNotification = {
       },
       message?: string;
       complete?: boolean;
+      task_from?: {
+        task_id: string,
+        title: string,
+      },
+      task_to?: {
+        task_id: string,
+        title: string,
+      },
     },
     relations: [
       {

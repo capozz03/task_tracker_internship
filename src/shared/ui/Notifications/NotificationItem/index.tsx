@@ -37,7 +37,8 @@ const NotificationItem = ({ notification }: { notification: TNotification }) => 
   };
   const Notifications = definesTypeNotificationComponent();
   const showTaskHandle = () => {
-    dispatch(TaskFormSlice.getTaskByIdAsync(notification.history_command.relations[0].relation_id));
+    dispatch(TaskFormSlice.getTaskByIdAsync(notification.history_command.params.task_to?.task_id
+      || notification.history_command.relations[0].relation_id));
     dispatch(SubscribesSlice.getSubscribeAsync({
       relation_id: notification.history_command.relations[0].relation_id,
       relation_type: 'task',
