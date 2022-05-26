@@ -108,10 +108,13 @@ const Title = ({ title, taskId }: titleProps) => {
         <div className={styles.title} ref={titleTaskRef}>
           {
             useBreakPoint(1000) && titleTask.length > 70 && isVisibleFullText
-              ? titleTask.slice(0, 70)
+              ? (
+                <button type="button" className={styles.ellipsis} onClick={handleClickEllipsis}>
+                  { titleTask.slice(0, 70) }
+                  ...
+                </button>)
               : titleTask
           }
-          { useBreakPoint(1000) && titleTask.length > 70 && isVisibleFullText && <button type="button" className={styles.ellipsis} onClick={handleClickEllipsis}>...</button> }
           <button type="button" id="changeBtn" className={styles.btnEdit} onClick={handleEditor}>
             <PencilIcon color="#B5B5BE" />
           </button>

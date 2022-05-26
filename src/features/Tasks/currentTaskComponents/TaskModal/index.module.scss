@@ -43,7 +43,11 @@
 
     .name {
       display: flex;
+      max-width: 80%;
       width: 100%;
+      @media screen and (max-width: 992px){
+        max-width: 100%;
+      }
     }
 
     .menu {

@@ -19,7 +19,7 @@ const ModalDeleteTask = () => {
   };
   const deleteRejectedHandle = () => {
     if (task) {
-      alert(`Ошибка удаления задачи ${task.title.slice(0, 25)}${task.title.length > 25 ? '...' : ''}`, 'error');
+      alert(`Ошибка удаления задачи "${task.title.slice(0, 25)}${task.title.length > 25 ? '...' : ''}"`, 'error');
     }
   };
   const cancelClick = () => {
