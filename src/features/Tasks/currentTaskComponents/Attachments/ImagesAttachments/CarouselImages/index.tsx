@@ -27,7 +27,10 @@ const CarouselImages = ({
   taskId,
 }: CarouselImagesProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(currentImage);
-  const [nameFile, setNameFile] = useState<string>(name);
+  const [fileProperties, setFileProperties] = useState({
+    file_id: storageFileId,
+    file_name: name,
+  });
   const [isVisibleModal, setIsVisibleModal] = useState<boolean>(false);
 
   const mobileCarousel = useBreakPoint(768);
@@ -38,7 +41,10 @@ const CarouselImages = ({
 
   const changeHandler = (index: any) => {
     if (carouselImages) {
-      setNameFile(carouselImages[index].name);
+      setFileProperties({
+        file_id: carouselImages[index].id,
+        file_name: carouselImages[index].name,
+      });
     }
   };
 
@@ -65,8 +71,8 @@ const CarouselImages = ({
   return (
     <>
       <HeaderCarouselImages
-        nameFile={nameFile}
-        storageFileId={storageFileId}
+        nameFile={fileProperties.file_name}
+        storageFileId={fileProperties.file_id}
         closeModal={closeModal}
         setIsVisibleModal={setIsVisibleModal}
         setIsShowCarousel={setIsShowCarousel}
@@ -84,11 +90,13 @@ const CarouselImages = ({
           showArrows={false}
           useKeyboardArrows
           dynamicHeight
+          swipeable
+          infiniteLoop
           onChange={changeHandler}
           className={style.carouselGallery}
         >
-          {carouselImages?.map(({ img, id }) => (
-            <div className={style.contentStyle} key={id}>
+          {carouselImages?.map(({ img }) => (
+            <div className={style.contentStyle} key={currentImageIndex}>
               <img src={img} alt="img" />
             </div>
           ))}
@@ -103,8 +111,8 @@ const CarouselImages = ({
         isVisibleModal={isVisibleModal}
         setIsVisibleModal={setIsVisibleModal}
         taskId={taskId}
-        storageFileId={storageFileId}
-        name={name}
+        storageFileId={fileProperties.file_id}
+        name={fileProperties.file_name}
       />
     </>
   );

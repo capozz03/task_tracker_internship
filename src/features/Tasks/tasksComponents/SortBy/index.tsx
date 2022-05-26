@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Select, Menu, Dropdown } from 'antd';
 import style from './index.module.scss';
 import Icon, { CaretDownOutlined } from '@ant-design/icons';
 import { TSortType } from 'store/slice/task/entities';
 import { IconShape } from 'shared/ui/icons/TasksIcons';
+import classnames from 'classnames';
 
 type SetSortTypeProps = {
   setSortType: React.Dispatch<React.SetStateAction<TSortType>>;
@@ -41,16 +42,31 @@ export const SortByPCScreen = ({ setSortType, disabled }: SetSortTypeProps) => {
 
 export const SortByMobileScreen = ({ setSortType, disabled }: SetSortTypeProps) => {
   const { Item } = Menu;
+  const [isActiveSort, setIsActiveSort] = useState({
+    isDate: true,
+    isTitle: false,
+  });
   const sortHandler = ({ key }: any): void => {
     setSortType(key);
+    if (key === 'date~DESC') {
+      setIsActiveSort({
+        isDate: true,
+        isTitle: false,
+      });
+    } else {
+      setIsActiveSort({
+        isDate: false,
+        isTitle: true,
+      });
+    }
   };
 
   const menu = (
     <Menu className={style.dropdown} onClick={sortHandler}>
-      <Item key="date~DESC" className={style.dropdownItem}>
+      <Item key="date~DESC" className={classnames([style.dropdownItem, isActiveSort.isDate && style.activeSort])}>
         <div>Упорядочить по дате создания</div>
       </Item>
-      <Item key="title~ASC" className={style.dropdownItem}>
+      <Item key="title~ASC" className={classnames([style.dropdownItem, isActiveSort.isTitle && style.activeSort])}>
         <div>Упорядочить по наименованию</div>
       </Item>
     </Menu>
