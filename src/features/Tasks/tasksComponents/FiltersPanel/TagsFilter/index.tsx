@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AutoComplete } from 'antd';
+import { AutoComplete, Spin } from 'antd';
 import { alert, useDebounce } from 'shared';
 import { useDispatch, useSelector } from 'react-redux';
 import { TagsSlice, TaskFilters } from 'store/slice';
@@ -12,7 +12,7 @@ const TagsFilter = () => {
   const [search, setSearch] = useState('');
   const [tagsSelected, setTagsSelected] = useState<TTag[]>([]);
   const [open, setOpen] = useState(false);
-  // const isLoading = useSelector(TagsSlice.isLoadingTags);
+  const isLoading = useSelector(TagsSlice.isLoadingTags);
   const tags = useSelector(TagsSlice.getTagsSelector);
   const tagsFilterSelected = useSelector(TaskFilters.getTags);
   const debouncedSearch: string = useDebounce<string>(search, 500);
@@ -74,11 +74,17 @@ const TagsFilter = () => {
           placeholder="Поиск ..."
         >
           {
-            filtersTags && filtersTags.map((tag) => (
-              <AutoComplete.Option key={tag.task_tag_id} value={tag.task_tag_id}>
-                <Tag tag={tag} key={tag.task_tag_id} />
-              </AutoComplete.Option>
-            ))
+            filtersTags && !isLoading
+              ? filtersTags.map((tag) => (
+                <AutoComplete.Option key={tag.task_tag_id} value={tag.task_tag_id}>
+                  <Tag tag={tag} key={tag.task_tag_id} />
+                </AutoComplete.Option>
+              ))
+              : (
+                <AutoComplete.Option>
+                  <Spin />
+                </AutoComplete.Option>
+              )
 }
           {
             filtersTags.length === 0 && <AutoComplete.Option>Нет меток</AutoComplete.Option>
