@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
 import { Tooltip } from 'antd';
 import { TTaskCheckList } from 'store/slice/task/entities';
-import { alert } from '../../../../../shared';
+import { alert } from 'shared';
 
 type createItemForChecklistProps = {
   checklist: TTaskCheckList,
@@ -55,16 +55,19 @@ const createItemForChecklist = ({ checklist }: createItemForChecklistProps) => {
         <button type="button" className={styles.newTaskLabel} onClick={toggleVisibleForm}>+ Добавить новый пункт</button>
       </div>
       <div className={styles.formNewTaskWrap} style={!isActive ? { display: 'none' } : { display: 'flex' }}>
-        <Tooltip title="Название обязательно" visible={isVisibleTooltip} placement="bottom" />
-        <InputNameTask
-          type="text"
-          name="inputNewTask"
-          value={title}
-          onChange={onChange}
-          placeholder="Создание пункта списка"
-        />
-        <Button type="primary" htmlType="submit">Сохранить</Button>
-        <Button type="default" onClick={toggleVisibleForm}>Отменить</Button>
+        <Tooltip title="Название обязательно" visible={isVisibleTooltip} placement="bottom">
+          <InputNameTask
+            type="text"
+            name="inputNewTask"
+            value={title}
+            onChange={onChange}
+            placeholder="Создание пункта списка"
+          />
+        </Tooltip>
+        <div className={styles.btnGroup}>
+          <Button type="primary" htmlType="submit">Сохранить</Button>
+          <Button type="default" onClick={toggleVisibleForm}>Отменить</Button>
+        </div>
       </div>
     </form>
   );
