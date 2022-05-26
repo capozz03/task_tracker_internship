@@ -85,6 +85,7 @@ const ImagesAttachments = ({
         footer={null}
         visible={isShowCarousel}
         className={style.imagesModal}
+        maskClosable={false}
       >
         <CarouselImages
           carouselImages={carouselImages}
