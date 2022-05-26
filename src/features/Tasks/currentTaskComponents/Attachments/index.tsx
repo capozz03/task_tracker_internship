@@ -15,6 +15,8 @@ type attachmentsProps = {
 
 const Attachments = ({ taskId }: attachmentsProps) => {
   const [isVisibleAttachments, setIsVisibleAttachments] = useState<boolean>(true);
+  const [isVisibleDropdownMenu] = useState<boolean>(true);
+  const [isVisibleCarousel] = useState<boolean>(true);
   const dispatch = useDispatch();
   const storageFiles = useSelector(TaskFormSlice.getStorageFiles);
   const storageImages = useSelector(TaskFormSlice.getStorageImages);
@@ -69,6 +71,7 @@ const Attachments = ({ taskId }: attachmentsProps) => {
                       storageFileId={storageFileId}
                       taskId={taskId}
                       uploaded={uploaded}
+                      isVisibleDropdownMenu={isVisibleDropdownMenu}
                     />
                   ),
                 )}
@@ -86,6 +89,8 @@ const Attachments = ({ taskId }: attachmentsProps) => {
                       taskId={taskId}
                       carouselImages={carouselImages}
                       uploaded={uploaded}
+                      isVisibleDropdownMenu={isVisibleDropdownMenu}
+                      isVisibleCarousel={isVisibleCarousel}
                     />
                   ),
                 )}
