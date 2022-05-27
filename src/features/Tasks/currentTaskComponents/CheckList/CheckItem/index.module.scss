@@ -23,10 +23,19 @@
     border-color: $success-default;
   }
   .dragElement{
-    margin-right: 10px;
     cursor: pointer;
     opacity: 0;
     transition: .5s all;
+    width: 40px;
+    text-align: center;
+    padding-right: 10px;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @media screen and (max-width: 768px){
+      opacity: 1;
+    }
   }
   &:hover{
     .dragElement{
