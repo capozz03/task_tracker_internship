@@ -60,8 +60,12 @@ const MembersChanger = ({ buttonType }: TProps) => {
 
   const stopPropagation = (e: any) => e.stopPropagation();
   const inputCallback = (e: any) => setValue(e.target.value);
-  const onVisibleChange = (flag: boolean) => setVisible(flag);
   const onMenuClick = () => setVisible(true);
+  const onVisibleChange = (flag: boolean) => {
+    setVisible(flag);
+    if (!flag) setValue('');
+  };
+  const clearSearchValue = () => setValue('');
 
   const onViewChanged = (inView: boolean, entry: IntersectionObserverEntry) => {
     if (inView && entry.isIntersecting) {
@@ -95,7 +99,7 @@ const MembersChanger = ({ buttonType }: TProps) => {
         {
         members.map((m, index) =>
           <Menu.Item key={`${index * index}-${m.user_id}`}>
-            <MemberChangerPopover member={m}>
+            <MemberChangerPopover member={m} afterAddRole={clearSearchValue}>
               <div>
                 <UserAvatar user={{ user_id: m.user_id, name: m.name, logo: m.logo }} color="#FF974A" />
                 <span>
