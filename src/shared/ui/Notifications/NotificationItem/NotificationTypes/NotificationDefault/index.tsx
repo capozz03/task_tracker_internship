@@ -71,6 +71,7 @@ const NotificationRoleAssign = ({ notification }: NotificationProps) => {
             )}
             { event.params.storage_file && event.params.storage_file.type === 'file'
                 && <FilesAttachments
+                  isVisibleDropdownMenu={false}
                   name={event.params.storage_file.name_original}
                   size={event.params.storage_file.size}
                   storageFileId={event.params.storage_file.storage_file_id}
@@ -79,6 +80,8 @@ const NotificationRoleAssign = ({ notification }: NotificationProps) => {
                 /> }
             { event.params.storage_file && event.params.storage_file.type === 'image'
                 && <ImagesAttachments
+                  isVisibleDropdownMenu={false}
+                  isVisibleCarousel={false}
                   name={event.params.storage_file.name_original}
                   storageFileId={event.params.storage_file.storage_file_id}
                   taskId={event.params.task.task_id}
