@@ -49,7 +49,7 @@ const DraggerAttachments = ({ taskId, storageCount }: DraggerAttachmentsProps) =
     <Dragger
       className={style.dragUpload}
       showUploadList={false}
-      multiple
+      accept=".pdf, .txt, .doc, .docx, .avi, .mp4, .wmv, .csv, .xls, .xlsx, .jpeg, .jpg, .png"
       customRequest={uploadFiles}
       beforeUpload={beforeUpload}
     >
