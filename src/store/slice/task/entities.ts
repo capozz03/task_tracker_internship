@@ -104,8 +104,8 @@ export type TTaskCheckListItem = {
   check_list_item_id: string;
   message: string;
   complete: boolean;
-  created: string;
-  updated: string;
+  created?: string;
+  updated?: string;
 };
 
 export type TTaskCheckList = {
