@@ -64,6 +64,10 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory }: TProps) => {
   const searchHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
   };
+  const setDropdownVisible = (flag: boolean) => {
+    setVisible(flag);
+    if (!flag) setSearchValue('');
+  };
 
   useEffect(() => {
     if (taskTags && allTags) {
@@ -131,7 +135,7 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory }: TProps) => {
           overlay={menu}
           trigger={['click']}
           visible={visible}
-          onVisibleChange={setVisible}
+          onVisibleChange={setDropdownVisible}
         >
           <button type="button" className={styles.addButton}>
             + Добавить метку

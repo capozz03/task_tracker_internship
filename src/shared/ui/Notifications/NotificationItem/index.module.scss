@@ -1,0 +1,111 @@
+@import "src/shared/assets/styles/vars";
+
+.wrap{
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 16px;
+  .subscribeToNotifications{
+    background: rgba(255, 194, 138, 0.3);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $colors-orange;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 8px;
+    &:hover{
+      border: 1px solid #0062ff;
+    }
+    &.unsubscribe{
+      background: rgb(241, 237, 234);
+      color: #b8b8c0;
+    }
+  }
+  .notification{
+    border: 1px solid $grey-300;
+    border-radius: 16px;
+    background-color: $grey-0;
+    width: 100%;
+    padding: 16px;
+    &:hover{
+      background-color: $grey-100;
+    }
+    .header{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 13px;
+      .statusAndTime{
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        .status{
+          border: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: transparent;
+          color: $success-default;
+          width: 32px;
+          height: 32px;
+          cursor: pointer;
+          &:hover{
+            background: $grey-0;
+            outline: 1px solid transparentize($success-default, 0.7);
+            border-radius: 8px;
+          }
+          &.mail{
+            color: $main-blue;
+            &:hover{
+              outline-color: transparentize($main-blue, 0.7);
+            }
+          }
+        }
+        .time{
+          font: $h6-medium;
+          color: $grey-700;
+        }
+      }
+    }
+    .title{
+      font: $h6-medium;
+      color: $grey-600;
+      text-align: left;
+      align-self: flex-start;
+    }
+    .userAssigned{
+      display: flex;
+      .avatar{
+        margin-right: 8px;
+      }
+      .nameAndEvent{
+        flex-grow: 1;
+        text-align: left;
+        color: $grey-800;
+        .name{
+          font: $p-medium;
+        }
+        .event{
+          font: $p-regular;
+          text-transform: lowercase;
+        }
+      }
+    }
+  }
+}
+.contentWithMarginTop{
+  margin-top: 16px;
+}
+
+.removeCheckListItem{
+  display: flex;
+  align-items: center;
+  svg{
+    margin-right: 4px;
+  }
+}
