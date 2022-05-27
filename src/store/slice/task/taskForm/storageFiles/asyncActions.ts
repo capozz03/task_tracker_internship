@@ -26,9 +26,23 @@ export const uploadStorageFile = createAsyncThunk(
       });
       const { taskForm } = (await getState()) as any;
       dispatch(getTaskByIdAsync(taskForm.task.task.task_id));
+      alert(
+        `Файл "${data.data.name_original.slice(0, 25)}${
+          data.data.name_original.length > 25 ? '...' : ''
+        }" успешно загружен`,
+        'success',
+      );
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
+      const { taskForm } = (await getState()) as any;
+      const { data } = await storageFilesSlice.getStorageFileDetails({ storageFileId });
+      const { data: task } = await storageFilesSlice.detachStorageFileToTask({
+        taskId: taskForm.task.task.task_id,
+        storageFileId: data.data.storage_file_id,
+        nameOriginal: data.data.name,
+      });
+      dispatch(TaskFormSlice.updateTask(task.data));
       alert(`Не удалось загрузить файл. Ошибка: "${error.message}"`, 'error');
       return rejectWithValue(error);
     }
@@ -58,16 +72,10 @@ export const createStorageFile = createAsyncThunk(
           },
         }),
       );
-      alert(
-        `Файл "${data.data.name_original.slice(0, 25)}${
-          data.data.name_original.length > 25 ? '...' : ''
-        }" успешно загружен`,
-        'success',
-      );
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
-      alert(`Не удалось загрузить файл. Ошибка: "${error.message}"`, 'error');
+      alert(`Не удалось создать место под файл. Ошибка: "${error.message}"`, 'error');
       return rejectWithValue(error);
     }
   },

@@ -49,6 +49,7 @@ const ModalDelete = ({
       footer={null}
       onCancel={handleCancel}
       onOk={handleOk}
+      width={325}
     >
       <h4 className={style.title}>Вы уверены?</h4>
       <p className={style.text}>{warning}</p>

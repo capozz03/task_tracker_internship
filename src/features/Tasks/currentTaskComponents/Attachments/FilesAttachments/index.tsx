@@ -13,6 +13,7 @@ type FilesAttachmentsProps = {
   storageFileId: string;
   taskId: string;
   uploaded: boolean;
+  isVisibleDropdownMenu: boolean;
 };
 
 const FilesAttachments = ({
@@ -21,6 +22,7 @@ const FilesAttachments = ({
   storageFileId,
   taskId,
   uploaded,
+  isVisibleDropdownMenu,
 }: FilesAttachmentsProps) => {
   const fileSize = formatBytes(size, 2);
   const progressBar = useSelector(TaskFormSlice.progressBar);
@@ -36,9 +38,11 @@ const FilesAttachments = ({
   return (
     <div className={style.taskFiles__item} style={styleOfFileItem}>
       <div className={style.dropdown}>
-        <div>
-          <DropdownMenu taskId={taskId} storageFileId={storageFileId} name={name} />
-        </div>
+        {isVisibleDropdownMenu && (
+          <div>
+            <DropdownMenu taskId={taskId} storageFileId={storageFileId} name={name} />
+          </div>
+        )}
       </div>
       <div className={style.taskFiles__inner}>
         <div className={style.taskFiles__icon}>

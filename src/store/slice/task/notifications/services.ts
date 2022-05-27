@@ -10,5 +10,5 @@ export const notificationServices = {
     params,
   }),
   // TODO:: Описать возвращаемый тип данных
-  changeViewedNotification: (data: TChangeViewerRequest) => $apiTask.post('/api/v1.0/subscribe/notifies/viewed-change', data),
+  changeViewedNotification: (data: TChangeViewerRequest) => $apiTask.post<{}>('/api/v1.0/subscribe/notifies/viewed-change', data),
 };

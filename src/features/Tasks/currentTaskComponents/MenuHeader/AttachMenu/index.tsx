@@ -43,7 +43,7 @@ const AttachMenu = () => {
     const isValidFileType = validFileType(file);
     if (!isValidFileType) {
       alert(
-        'Разрешенные форматы: .pdf, .txt, .doc, .docx, .avi, .mp4, .wmv, .csv, .xls, .xlsx, jpeg, png',
+        'Разрешенные форматы: .pdf, .txt, .doc, .docx, .avi, .mp4, .wmv, .csv, .xls, .xlsx, .jpeg, .png',
         'error',
       );
       return false;

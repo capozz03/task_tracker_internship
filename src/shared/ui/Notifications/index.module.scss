@@ -1,0 +1,73 @@
+@import "src/shared/assets/styles/index";
+
+.notifications{
+  position: fixed;
+  top: 80px;
+  right: 30px;
+  max-height: calc(100vh - 85px);
+  background-color: #fff;
+  overflow-y: scroll;
+  z-index: 100;
+  width: 100%;
+  max-width: 460px;
+  padding: 16px;
+  box-shadow: 0 6px 15px rgba(196, 203, 216, 0.25);
+  border-radius: 16px;
+  @media screen and (max-width: 500px){
+    max-width: calc( 100% - 10px);
+    max-height: calc(100vh - 65px);
+    right: 5px;
+    left: 5px;
+    top: 60px;
+  }
+  .header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    .title{
+      display: flex;
+      align-items: center;
+      font: $h4-medium;
+      color: $grey-800;
+      .countNotifications{
+        margin-left: 8px;
+        border-radius: 8px;
+        padding-right: 8px;
+        padding-left: 8px;
+        color: $grey-0;
+        background-color: $success-default;
+        font: $p-medium;
+        display: inline-block;
+      }
+    }
+    .readAllBtn{
+      font: $p-light;
+      text-decoration: underline;
+      color: $main-blue-hover;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+    .readAllText{
+      font: $p-light;
+      color: $grey-400;
+    }
+  }
+  &::-webkit-scrollbar{
+    width: 0;
+  }
+
+  .btnShowMore{
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    padding: 8px;
+    color: $grey-600 ;
+    background-color: $grey-200;
+    cursor: pointer;
+  }
+}
+
+

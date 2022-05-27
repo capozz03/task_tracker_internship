@@ -39,8 +39,6 @@ const CheckItem = ({ item, checklistId }: CheckItemProps) => {
     setNodeRef,
     transform,
     transition,
-    setDraggableNodeRef,
-    setDroppableNodeRef,
   } = useSortable({ id: item.check_list_item_id });
 
   const style = {
@@ -53,8 +51,8 @@ const CheckItem = ({ item, checklistId }: CheckItemProps) => {
       ref={setNodeRef}
       style={style}
     >
-      <span ref={setDroppableNodeRef} {...attributes} {...listeners} className={styles.dragElement}>
-        <span ref={setDraggableNodeRef}><DragIcon /></span>
+      <span {...attributes} {...listeners} className={styles.dragElement}>
+        <DragIcon />
       </span>
       <Checkbox
         onChange={onChange}
@@ -70,11 +68,13 @@ const CheckItem = ({ item, checklistId }: CheckItemProps) => {
           closeEditMessage={closeEditMessage}
         />
       </Checkbox>
-      <CheckboxMenu
-        checkListItemId={item.check_list_item_id}
-        checkListId={checklistId}
-        editItem={editItem}
-      />
+      <div className={styles.checkBoxMenu}>
+        <CheckboxMenu
+          checkListItemId={item.check_list_item_id}
+          checkListId={checklistId}
+          editItem={editItem}
+        />
+      </div>
     </li>);
 };
 

@@ -1,33 +1,31 @@
-@import "src/shared/assets/styles";
+@import 'src/shared/assets/styles';
 
-:global {
-  .ant-modal {
-    margin-top: 0 !important;
+.taskModal {
+  margin-top: 0 !important;
 
-    .ant-modal-content {
-      background: $grey-100;
-      border-radius: 16px !important;
-      height: 100%;
+  :global(.ant-modal-content) {
+    background: $grey-100;
+    border-radius: 16px !important;
+    height: 100% !important;
 
-      .ant-modal-body {
-        padding: 0;
-      }
-
-      @include media-breakpoint-down(lg) {
-        background: $grey-0;
-      }
+    :global(.ant-modal-body) {
+      padding: 0;
     }
 
     @include media-breakpoint-down(lg) {
-      width: 100% !important;
-      height: 100% !important;
-      max-width: unset !important;
-      top: 0 !important;
-      bottom: 0 !important;
-      .ant-modal-close {
-        left: 0;
-        right: unset;
-      }
+      background: $grey-0;
+    }
+  }
+
+  @include media-breakpoint-down(lg) {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: unset !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    :global(.ant-modal-close) {
+      left: 0;
+      right: unset;
     }
   }
 }
@@ -48,7 +46,11 @@
 
     .name {
       display: flex;
+      max-width: 80%;
       width: 100%;
+      @media screen and (max-width: 992px) {
+        max-width: 100%;
+      }
     }
 
     .menu {
@@ -73,7 +75,6 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-
   }
 
   .rightColumn {
@@ -94,7 +95,6 @@
         }
       }
     }
-
   }
 
   @include media-breakpoint-down(lg) {
@@ -116,7 +116,6 @@
         height: 24px;
         margin: 24px 32px 16px;
       }
-
     }
     .rightColumn {
       padding: 0;
