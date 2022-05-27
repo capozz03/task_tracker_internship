@@ -6,9 +6,10 @@
 
 .wrap {
   display: grid;
-  grid-template-areas: "title status datepriority tags users menu"
-                       "filesAndCheckbox status datepriority tags users menu";
-  grid-template-columns: 400px 114px 203px auto 120px 70px;
+  grid-template-areas: "title status date tags users menu"
+                       "filesAndCheckbox status priority tags users menu";
+  grid-template-columns: 400px 114px 203px auto 120px 40px;
+  grid-template-rows: auto auto;
   background: #FFFFFF;
   border-radius: 20px;
   margin-bottom: 8px;
@@ -27,39 +28,37 @@
   }
 
   @media (max-width: 1500px) {
-    grid-template-columns: 350px 114px 203px auto 120px 70px;
+    grid-template-columns: 350px 114px 203px auto 120px 40px;
   }
 
   @media (max-width: 1400px) {
-    grid-template-columns: 300px 114px 120px auto 120px 70px;
+    grid-template-columns: 300px 114px 120px auto 120px 40px;
   }
 
   @media (max-width: 1250px) {
-    grid-template-columns: 250px 114px 120px auto 120px 70px;
+    grid-template-columns: 250px 114px 120px auto 120px 40px;
   }
 
   @media (max-width: 1200px) {
-    grid-template-columns: 250px 114px 120px auto 80px 70px;
+    grid-template-columns: 250px 114px 120px auto 80px 40px;
   }
 
   @media (max-width: 1180px) {
-    gap: 15px;
-    grid-template-columns: auto 100px;
-    grid-template-areas:  "title menu"
-                          "status status"
-                          "datepriority datepriority"
-                          "tags tags"
-                          "users filesAndCheckbox";
+    grid-template-columns: auto auto 40px;
+    grid-template-areas:  "title title menu"
+                          "status status menu"
+                          "date date menu"
+                          "priority priority menu"
+                          "tags tags menu"
+                          "users users menu"
+                          "filesAndCheckbox filesAndCheckbox menu";
+    .cardFilesAndCheckbox {
+      justify-self: flex-end;
+    }
   }
+
   @media (max-width: 400px) {
-    grid-template-columns: auto 40px;
-    gap: 10px;
-    grid-template-areas:  "title menu"
-    "filesAndCheckbox filesAndCheckbox"
-                          "status status"
-                          "datepriority datepriority"
-                          "tags tags"
-                          "users users";
+    grid-template-columns: auto auto 40px;
   }
 }
 
@@ -70,7 +69,12 @@
 .cardFilesAndCheckbox {
   grid-area: filesAndCheckbox;
   display: flex;
+  flex-direction: row;
+  justify-self: flex-start;
 
+  & > *:not(:first-child) {
+    margin-left: 16px;
+  }
 }
 
 
@@ -82,19 +86,13 @@
   align-items: center;
 }
 
-.cardDateAndPriority {
-  grid-area: datepriority;
-  display: flex;
-  flex-wrap: wrap;
-}
-
 .cardDate {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
+  grid-area: date;
+  margin-left: 4.5px;
 }
 
 .cardPriority {
+  grid-area: priority;
   display: flex;
   align-items: center;
 }
@@ -102,15 +100,15 @@
 
 .cardTagsGroup {
   grid-area: tags;
-  flex-grow: 1;
   display: flex;
   align-items: center;
+  flex-grow: 1;
   flex-shrink: 1;
 }
 
 .cardUsers {
   grid-area: users;
-  flex-shrink: 0;
+  max-width: 160px;
 }
 
 .cardMenu {
@@ -122,5 +120,9 @@
   transition: all 0.3s;
   @include media-breakpoint-down(lg) {
     opacity: 1;
+  }
+
+  * {
+    padding: 0;
   }
 }
