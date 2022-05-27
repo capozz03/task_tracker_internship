@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './index.module.scss';
 import { TaskFormSlice } from 'store/slice';
 import PlusIcons from 'shared/ui/icons/PlusIcons';
-import { alert, validFileType } from 'shared';
+import { alert } from 'shared';
 import { RcFile } from 'antd/lib/upload/interface';
 
 const AttachMenu = () => {
@@ -40,14 +40,15 @@ const AttachMenu = () => {
       return false;
     }
 
-    const isValidFileType = validFileType(file);
-    if (!isValidFileType) {
-      alert(
-        'Разрешенные форматы: .pdf, .txt, .doc, .docx, .avi, .mp4, .wmv, .csv, .xls, .xlsx, .jpeg, .png',
-        'error',
-      );
-      return false;
-    }
+    // const isValidFileType = validFileType(file);
+    // if (!isValidFileType) {
+    //   alert(
+    //     'Разрешенные форматы: .pdf,
+    //  .txt, .doc, .docx, .avi, .mp4, .wmv, .csv, .xls, .xlsx, .jpeg, .png',
+    //     'error',
+    //   );
+    //   return false;
+    // }
     return file;
   };
 
@@ -67,7 +68,8 @@ const AttachMenu = () => {
       <Item key="2" onClick={uploadFiles}>
         <Upload
           showUploadList={false}
-          accept=".pdf, .txt, .doc, .docx, .avi, .mp4, .wmv, .csv, .xls, .xlsx, .jpeg, .jpg, .png"
+          // accept=".pdf, .txt, .doc,
+          // .docx, .avi, .mp4, .wmv, .csv, .xls, .xlsx, .jpeg, .jpg, .png"
           customRequest={uploadFiles}
           beforeUpload={beforeUpload}
         >
