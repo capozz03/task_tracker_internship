@@ -1,0 +1,31 @@
+@import 'src/shared/assets/styles';
+
+.button {
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  margin-top: -4px;
+  margin-left: 4px;
+  padding: 0;
+  border: none;
+  background: inherit;
+  cursor: pointer;
+
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  &:hover > .icon > path {
+    fill: $main-blue;
+  }
+}
+
+.dropdownMenu {
+  font: $p-regular;
+  border-radius: 8px !important;
+  .delete {
+    color: $colors-red;
+    border-top: 1px solid $grey-400;
+  }
+}

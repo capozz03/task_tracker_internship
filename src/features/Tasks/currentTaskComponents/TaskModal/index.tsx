@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Collapse, Modal, ModalProps, Spin } from 'antd';
 import styles from './index.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,6 +19,7 @@ import MembersPanel from './MembersPanel';
 import Details from 'features/Task/taskModalComponents/Details';
 import { CollapseHeader, CollapseMembersHeader } from './MembersPanel/MemberPanelHeaders';
 import TaskHistory from 'features/Task/taskModalComponents/History';
+import { alert } from 'shared/ui';
 
 const TaskModal = (props: ModalProps) => {
   const dispatch = useDispatch();
@@ -31,6 +32,8 @@ const TaskModal = (props: ModalProps) => {
   const paginationInCompleted = useSelector(TaskCompletedSlice.getPagination);
   const paginationInFailed = useSelector(TaskFailedSlice.getPagination);
   const filters = useSelector(TaskFilters.getFilters);
+  const formResultRequired = useSelector(TaskFormSlice.getTaskFormStatusTaskFormRequired);
+  const formResult = useSelector(TaskFormSlice.getTaskFormResultForm);
 
   const cancelHandle = () => {
     if (status?.name === 'Создана') {
@@ -72,8 +75,20 @@ const TaskModal = (props: ModalProps) => {
     dispatch(TaskFormSlice.hiddenTaskForm());
   };
 
+  useEffect(() => {
+    if (formResultRequired && !formResult) {
+      alert('Важная информация для ответственных: нужно резюме', 'info');
+    }
+  }, [formResultRequired]);
+
   return (
-    <Modal {...props} onCancel={cancelHandle} width="75%" footer={null}>
+    <Modal
+      {...props}
+      onCancel={cancelHandle}
+      width="75%"
+      footer={null}
+      className={styles.taskModal}
+    >
       <Spin spinning={isLoading}>
         <div className={styles.wrap}>
           <div className={styles.title}>
@@ -108,7 +123,7 @@ const TaskModal = (props: ModalProps) => {
                 header={CollapseHeader({ name: 'Детали', children: '' })}
                 showArrow={false}
               >
-                <Details />
+                {task && <Details taskId={task.task_id} />}
               </Collapse.Panel>
               <Collapse.Panel
                 className={styles.collapseItem}

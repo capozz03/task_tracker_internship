@@ -22,7 +22,7 @@ const Description = ({ description, taskId }: descriptionProps) => {
   const [isExpandDesc, setIsExpandDesc] = useState(true);
   const checkDescriptionIsEmpty = (): string => {
     if (!description) {
-      return 'Введите описание чтобы сделать задачу понятнее';
+      return 'Введите описание, чтобы сделать задачу понятнее';
     }
     return description;
   };

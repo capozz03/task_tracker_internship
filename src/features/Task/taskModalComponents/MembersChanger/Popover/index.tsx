@@ -6,11 +6,13 @@ import styles from '../index.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
 import { TStateData } from 'store/slice/task/taskForm/roles/entities';
-import { RoleMaxAmounts, RolesIds } from 'shared';
+import { alert, RoleMaxAmounts, RolesIds } from 'shared';
 import { addUserRole, removeUserRole } from 'store/slice/task/taskForm';
+import { isAuthor } from 'shared/helpers';
 
 type TProps = {
   member: TUser,
+  afterAddRole: ()=>void,
   children: any
 }
 
@@ -29,7 +31,7 @@ const getMemberRoles = (member: TUser, rolesInTask: TStateData): TMemberRoles =>
   observer: rolesInTask.observers.filter((e) => e.userId === member.user_id).length !== 0,
 });
 
-const MemberChangerPopover = ({ member, children }: TProps) => {
+const MemberChangerPopover = ({ member, afterAddRole, children }: TProps) => {
   const dispatch = useDispatch();
   const currentTaskId = useSelector(TaskFormSlice.getTaskFormId);
   const rolesInTask = useSelector(TaskFormSlice.getRoles);
@@ -58,6 +60,11 @@ const MemberChangerPopover = ({ member, children }: TProps) => {
         roleName,
       }));
     } else {
+      if (rolesInTask && isAuthor(member.user_id, rolesInTask) && roleId === RolesIds.PERFORMER) {
+        alert('Автор задачи не может быть назначен на роль исполнителя!', 'error');
+        return;
+      }
+
       if (rolesInTask && rolesInTask[roleArrayKey].length >= maxOnRole) {
         const amountUsersOnRemove = rolesInTask[roleArrayKey].length - maxOnRole + 1;
         const removedUsers = [];
@@ -88,6 +95,7 @@ const MemberChangerPopover = ({ member, children }: TProps) => {
     newState[roleType] = !roles[roleType];
     setRoles(newState);
     setIsDisabled(true);
+    afterAddRole();
   };
 
   const content = () => (

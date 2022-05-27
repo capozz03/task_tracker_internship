@@ -9,6 +9,9 @@ import { DateStartCategory, DateStopCategory } from './DateCategory';
 import TagsCategory from './TagsCategory';
 import { detailsIcons } from 'shared/ui/icons';
 import styles from './index.module.scss';
+import DetailsResume from './DetailsResume';
+
+type TDetailsProps = { taskId: string };
 
 const {
   DateStartIcon,
@@ -17,11 +20,13 @@ const {
   PriorityIcon,
 } = detailsIcons;
 
-const Details = () => {
+const Details = ({ taskId }: TDetailsProps) => {
   const isSuccessLoadingTask = useSelector(TaskFormSlice.isLoadingStatusSuccess);
   const roles = useSelector(TaskFormSlice.getRoles);
   const tags = useSelector(TaskFormSlice.getTags);
   const status = useSelector(TaskFormSlice.getTaskFormStatusTask);
+  const formResultRequired = useSelector(TaskFormSlice.getTaskFormStatusTaskFormRequired);
+
   const priority = useSelector(TaskFormSlice.getPriority);
   const dateStart = useSelector(TaskFormSlice.getDateStart);
   const dateStop = useSelector(TaskFormSlice.getDateStop);
@@ -60,6 +65,9 @@ const Details = () => {
         status?.name
         && <StatusCategory status={status} currentTaskId={currentTaskId} />
       }
+      {(status?.name === 'Выполнена' || status?.name === 'Не выполнена') && (
+        <DetailsResume taskId={taskId} formResultRequired={formResultRequired} />
+      )}
       <PerformerCategory roles={roles} isAuthorOrResponsible={isAuthorOrResponsible} />
       {
         categoryView.priority

@@ -2,7 +2,7 @@ const fileTypes = [
   'image/jpeg',
   'image/png',
   'image/tiff',
-  'video/x-msvideo',
+  'video/avi',
   'video/mp4',
   'video/x-ms-wmv',
   'text/csv',

@@ -14,6 +14,8 @@ type ImagesAttachmentsProps = {
   taskId: string;
   carouselImages?: TCarouselImages[];
   uploaded: boolean;
+  isVisibleDropdownMenu: boolean;
+  isVisibleCarousel: boolean;
 };
 
 const ImagesAttachments = ({
@@ -22,6 +24,8 @@ const ImagesAttachments = ({
   taskId,
   carouselImages,
   uploaded,
+  isVisibleDropdownMenu,
+  isVisibleCarousel,
 }: ImagesAttachmentsProps) => {
   const [isShowCarousel, setIsShowCarousel] = useState(false);
   const [nameFile, setNameFile] = useState(name);
@@ -35,7 +39,8 @@ const ImagesAttachments = ({
     if (carouselImages) {
       const findClickedObj = carouselImages.find((clickedImg) => clickedImg.id === storageFileId);
       if (findClickedObj) return findClickedObj.idCurrent;
-    } return currentImage;
+    }
+    return currentImage;
   };
 
   const showCarousel = () => {
@@ -69,7 +74,9 @@ const ImagesAttachments = ({
                   e.stopPropagation();
                 }}
               >
-                <DropdownMenu taskId={taskId} storageFileId={storageFileId} name={name} />
+                {isVisibleDropdownMenu && (
+                  <DropdownMenu taskId={taskId} storageFileId={storageFileId} name={name} />
+                )}
               </div>
             </div>
           </div>
@@ -78,23 +85,26 @@ const ImagesAttachments = ({
           <div className={style.taskFiles__name}>{slicedName(name)}</div>
         </div>
       </div>
-      <Modal
-        closable={false}
-        centered
-        onCancel={handleCancel}
-        footer={null}
-        visible={isShowCarousel}
-        className={style.imagesModal}
-      >
-        <CarouselImages
-          carouselImages={carouselImages}
-          name={nameFile}
-          setIsShowCarousel={setIsShowCarousel}
-          currentImage={currentImage}
-          storageFileId={storageFileId}
-          taskId={taskId}
-        />
-      </Modal>
+      {isVisibleCarousel && (
+        <Modal
+          closable={false}
+          centered
+          onCancel={handleCancel}
+          footer={null}
+          visible={isShowCarousel}
+          className={style.imagesModal}
+          maskClosable={false}
+        >
+          <CarouselImages
+            carouselImages={carouselImages}
+            name={nameFile}
+            setIsShowCarousel={setIsShowCarousel}
+            currentImage={currentImage}
+            storageFileId={storageFileId}
+            taskId={taskId}
+          />
+        </Modal>
+      )}
     </>
   );
 };

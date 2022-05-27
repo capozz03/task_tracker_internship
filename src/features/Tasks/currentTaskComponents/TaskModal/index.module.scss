@@ -1,31 +1,28 @@
-@import "src/shared/assets/styles";
+@import 'src/shared/assets/styles';
 
-:global {
-  .ant-modal {
-    .ant-modal-content {
-      background: $grey-100;
-      border-radius: 16px !important;
-      height: 100%;
+.taskModal {
+  @include media-breakpoint-down(lg) {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: unset !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    :global(.ant-modal-close) {
+      left: 0;
+      right: unset;
+    }
+  }
+  :global(.ant-modal-content) {
+    border-radius: 16px !important;
+    height: 100% !important;
+    background: $grey-100;
 
-      .ant-modal-body {
-        padding: 0;
-      }
-
-      @include media-breakpoint-down(lg) {
-        background: $grey-0;
-      }
+    :global(.ant-modal-body) {
+      padding: 0;
     }
 
     @include media-breakpoint-down(lg) {
-      width: 100% !important;
-      height: 100% !important;
-      max-width: unset !important;
-      top: 0 !important;
-      bottom: 0 !important;
-      .ant-modal-close {
-        left: 0;
-        right: unset;
-      }
+      background: $grey-0;
     }
   }
 }
@@ -46,7 +43,11 @@
 
     .name {
       display: flex;
+      max-width: 80%;
       width: 100%;
+      @media screen and (max-width: 992px){
+        max-width: 100%;
+      }
     }
 
     .menu {
@@ -83,7 +84,6 @@
         }
       }
     }
-
   }
 
   @include media-breakpoint-down(lg) {
@@ -104,7 +104,6 @@
         height: 24px;
         margin: 24px 32px 16px;
       }
-      
     }
     .rightColumn {
       padding: 0 16px;

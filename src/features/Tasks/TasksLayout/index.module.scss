@@ -110,7 +110,14 @@ html, body {
         position: absolute;
         top: 23px;
         right: 27px;
-
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        @include media-breakpoint-down($middle-screen-size) {
+          .notification{
+            display: none;
+          }
+        }
       }
 
       .filterAssignedTo {
@@ -171,7 +178,6 @@ html, body {
           display: unset;
           position: unset;
           order: 9;
-          margin-left: 28px;
         }
       }
     }

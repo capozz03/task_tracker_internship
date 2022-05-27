@@ -1,0 +1,1 @@
+export { resumeSliceReducer } from './slice';
