@@ -159,7 +159,10 @@ export type TPagination = {
   per_page: number;
 };
 
+export type TSortType = 'date~DESC' | 'title~ASC';
+
 export type TTasksReducer = {
+  sort?: TSortType,
   status: RequestStatuses;
   error: Error | null;
   tasks: TTask[] | null;
@@ -174,8 +177,6 @@ export type TTasksResponse = {
 export type TTaskItemResponse = {
   data: TTask;
 };
-
-export type TSortType = 'date~DESC' | 'title~ASC';
 
 export type TTaskSearch = {
   sort?: TSortType;

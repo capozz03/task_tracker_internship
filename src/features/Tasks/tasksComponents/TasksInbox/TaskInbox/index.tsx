@@ -33,10 +33,12 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
   };
   const openTask: MouseEventHandler<HTMLElement> = () => {
     dispatch(getTaskByIdAsync(task.task_id));
-    dispatch(SubscribesSlice.getSubscribeAsync({
-      relation_id: task.task_id,
-      relation_type: 'task',
-    }));
+    dispatch(
+      SubscribesSlice.getSubscribeAsync({
+        relation_id: task.task_id,
+        relation_type: 'task',
+      }),
+    );
   };
   return (
     <div
@@ -46,15 +48,17 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
       tabIndex={-1}
       className={classNames([
         styles.innerContent,
-        { [styles.overdue]: moment(task?.exec_stop).diff(now()) < 0 }])}
+        { [styles.overdue]: moment(task?.exec_stop).diff(now()) < 0 },
+      ])}
     >
       <div className={styles.wrap}>
         <div className={styles.cardName}>
           <CardNameText text={task.title} />
         </div>
         <div className={styles.indicators}>
-          { task.storage_files_meta.total !== 0
-            && <CardAttachmentsCount count={task.storage_files_meta.total} /> }
+          {task.storage_files_meta.total !== 0 && (
+            <CardAttachmentsCount count={task.storage_files_meta.total} />
+          )}
           {task.progress && task.progress.total !== 0 && (
             <CardChecklistCount
               checkListTotal={task.progress.total}
@@ -80,9 +84,7 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
         </div>
       </div>
       <div className={styles.cardMenu}>
-        <DropdownMenu
-          task={task}
-        />
+        <DropdownMenu task={task} />
       </div>
     </div>
   );

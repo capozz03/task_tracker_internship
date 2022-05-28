@@ -14,3 +14,5 @@ export const getError = createSelector(getTaskCompletedSliceStore, ({ error }) =
 export const isLoadingStatus = createSelector(getTaskCompletedSliceStore, ({ status }) =>
   isLoadingStatusCheck(status),
 );
+
+export const getSortTasksCompleted = createSelector(getTaskCompletedSliceStore, ({ sort }) => sort);

@@ -52,9 +52,7 @@ const TaskFailed = ({ task }: TaskFailedProps) => {
         <UserAssignedToTask users={task.roles} />
       </div>
       <div className={style.cardMenu}>
-        <DropdownMenu
-          task={task}
-        />
+        <DropdownMenu task={task} />
       </div>
     </div>
   );

@@ -5,9 +5,9 @@ import { TaskFilters, TaskFailedSlice } from 'store/slice';
 import { SortByMobileScreen, SortByPCScreen } from '../SortBy';
 import style from './index.module.scss';
 import Pagination from '../Pagination';
-import { TSortType } from 'store/slice/task/entities';
 import { Spin } from 'antd';
 import TaskFailed from './TaskFailed';
+import { getSortTasksFailed, setSortTasksFailed } from 'store/slice/task/taskFailed';
 
 const TasksFailed = (props: ComponentProps<any>) => {
   const isMobile = useBreakPoint(768);
@@ -16,7 +16,9 @@ const TasksFailed = (props: ComponentProps<any>) => {
   const pagination = useSelector(TaskFailedSlice.getPagination);
   const isLoading = useSelector(TaskFailedSlice.isLoadingStatus);
   const filters = useSelector(TaskFilters.getFilters);
-  const [sortType, setSortType] = useState<TSortType>('date~DESC');
+  const sortType = useSelector(getSortTasksFailed);
+  const setSortTasks = setSortTasksFailed;
+  const [pageSize, setPageSize] = useState(3);
 
   const paginationHandler = (page: number, pageSize: number): void => {
     dispatch(
@@ -27,6 +29,7 @@ const TasksFailed = (props: ComponentProps<any>) => {
         ...filters,
       }),
     );
+    setPageSize(pageSize);
   };
 
   useEffect(() => {
@@ -34,7 +37,7 @@ const TasksFailed = (props: ComponentProps<any>) => {
       TaskFailedSlice.getTasksAsync({
         sort: sortType,
         page: 1,
-        per_page: 3,
+        per_page: pageSize,
         ...filters,
       }),
     );
@@ -49,9 +52,13 @@ const TasksFailed = (props: ComponentProps<any>) => {
           шт.
         </h4>
         {isMobile ? (
-          <SortByMobileScreen disabled={tasks?.length === 0} setSortType={setSortType} />
+          <SortByMobileScreen disabled={tasks?.length === 0} setSortTasks={setSortTasks} />
         ) : (
-          <SortByPCScreen disabled={tasks?.length === 0} setSortType={setSortType} />
+          <SortByPCScreen
+            disabled={tasks?.length === 0}
+            sortType={sortType}
+            setSortTasks={setSortTasks}
+          />
         )}
       </div>
       <Spin size="large" tip="Загрузка" spinning={isLoading}>

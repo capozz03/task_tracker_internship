@@ -6,8 +6,8 @@ import { SortByMobileScreen, SortByPCScreen } from '../SortBy';
 import TaskCompleted from './TaskCompleted';
 import style from './index.module.scss';
 import Pagination from '../Pagination';
-import { TSortType } from 'store/slice/task/entities';
 import { Spin } from 'antd';
+import { getSortTasksCompleted, setSortTasksCompleted } from 'store/slice/task/taskCompleted';
 
 const TasksCompleted = (props: ComponentProps<any>) => {
   const isMobile = useBreakPoint(768);
@@ -16,7 +16,9 @@ const TasksCompleted = (props: ComponentProps<any>) => {
   const pagination = useSelector(TaskCompletedSlice.getPagination);
   const isLoading = useSelector(TaskCompletedSlice.isLoadingStatus);
   const filters = useSelector(TaskFilters.getFilters);
-  const [sortType, setSortType] = useState<TSortType>('date~DESC');
+  const sortType = useSelector(getSortTasksCompleted);
+  const setSortTasks = setSortTasksCompleted;
+  const [pageSize, setPageSize] = useState(3);
 
   const paginationHandler = (page: number, pageSize: number): void => {
     dispatch(
@@ -27,6 +29,7 @@ const TasksCompleted = (props: ComponentProps<any>) => {
         ...filters,
       }),
     );
+    setPageSize(pageSize);
   };
 
   useEffect(() => {
@@ -34,7 +37,7 @@ const TasksCompleted = (props: ComponentProps<any>) => {
       TaskCompletedSlice.getTasksAsync({
         sort: sortType,
         page: 1,
-        per_page: 3,
+        per_page: pageSize,
         ...filters,
       }),
     );
@@ -49,15 +52,21 @@ const TasksCompleted = (props: ComponentProps<any>) => {
           шт.
         </h4>
         {isMobile ? (
-          <SortByMobileScreen disabled={tasks?.length === 0} setSortType={setSortType} />
+          <SortByMobileScreen disabled={tasks?.length === 0} setSortTasks={setSortTasks} />
         ) : (
-          <SortByPCScreen disabled={tasks?.length === 0} setSortType={setSortType} />
+          <SortByPCScreen
+            disabled={tasks?.length === 0}
+            sortType={sortType}
+            setSortTasks={setSortTasks}
+          />
         )}
       </div>
       <Spin size="large" tip="Загрузка" spinning={isLoading}>
-        {tasks && tasks.length !== 0
-          ? tasks.map((task) => <TaskCompleted key={task.task_id} task={task} />)
-          : <p className={style.noTasks}>Нет задач</p>}
+        {tasks && tasks.length !== 0 ? (
+          tasks.map((task) => <TaskCompleted key={task.task_id} task={task} />)
+        ) : (
+          <p className={style.noTasks}>Нет задач</p>
+        )}
       </Spin>
       <div className={style.pagination}>
         {pagination && (

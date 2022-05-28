@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TaskFilters, TaskInWorkSlice } from 'store/slice';
 import NewTask from '../NewTask';
 import { Spin } from 'antd';
-import { TSortType } from 'store/slice/task/entities';
 import { SortByMobileScreen, SortByPCScreen } from '../SortBy';
 import { useBreakPoint } from 'shared';
 
@@ -17,9 +16,11 @@ const TasksInWork = (props: ComponentProps<any>) => {
   const tasks = useSelector(TaskInWorkSlice.getTasks);
   const isLoading = useSelector(TaskInWorkSlice.isLoadingStatus);
   const filters = useSelector(TaskFilters.getFilters);
-  const [sortType, setSortType] = useState<TSortType>('date~DESC');
+  const sortType = useSelector(TaskInWorkSlice.getSortTasksInWork);
+  const setSortTasks = TaskInWorkSlice.setSortTasksInWork;
+  const [pageSize, setPageSize] = useState(3);
 
-  const paginationHandler = (page: number, pageSize: number) => {
+  const paginationHandler = (page: number, pageSize: number): void => {
     dispatch(
       TaskInWorkSlice.getTasksAsync({
         sort: sortType,
@@ -28,6 +29,7 @@ const TasksInWork = (props: ComponentProps<any>) => {
         ...filters,
       }),
     );
+    setPageSize(pageSize);
   };
 
   useEffect(() => {
@@ -35,11 +37,11 @@ const TasksInWork = (props: ComponentProps<any>) => {
       TaskInWorkSlice.getTasksAsync({
         sort: sortType,
         page: 1,
-        per_page: 3,
+        per_page: pageSize,
         ...filters,
       }),
     );
-  }, [filters]);
+  }, [sortType, filters]);
 
   return (
     <div className={styles.tasks_group} {...props}>
@@ -51,9 +53,13 @@ const TasksInWork = (props: ComponentProps<any>) => {
         </h4>
         <div className={styles.sort}>
           {isMobile ? (
-            <SortByMobileScreen disabled={tasks?.length === 0} setSortType={setSortType} />
+            <SortByMobileScreen disabled={tasks?.length === 0} setSortTasks={setSortTasks} />
           ) : (
-            <SortByPCScreen disabled={tasks?.length === 0} setSortType={setSortType} />
+            <SortByPCScreen
+              disabled={tasks?.length === 0}
+              sortType={sortType}
+              setSortTasks={setSortTasks}
+            />
           )}
         </div>
       </div>
