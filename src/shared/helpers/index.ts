@@ -18,3 +18,4 @@ export { useBreakPoint, useDebounce } from './hooks';
 export { convertRolesToObject, formatDate } from './convert';
 export { isAuthor, isObserver, isPerformer, isResponsible } from './userRoleChecker';
 export { isArrayOfStrings } from './typeGuards';
+export { beforeUploadWrapper, uploadFilesWrapper, acceptedFiles } from './checkBeforeUpload';
