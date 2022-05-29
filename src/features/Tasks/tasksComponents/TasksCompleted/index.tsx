@@ -33,8 +33,8 @@ const TasksCompleted = (props: ComponentProps<any>) => {
     dispatch(
       TaskCompletedSlice.getTasksAsync({
         sort: sortType,
-        page: 1,
-        per_page: 3,
+        per_page: pagination!.per_page,
+        page: pagination!.page_current,
         ...filters,
       }),
     );
