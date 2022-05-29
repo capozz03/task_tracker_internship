@@ -40,7 +40,7 @@ const TaskFailed = ({ task }: TaskFailedProps) => {
       <div className={style.cardStatus}>
         <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
       </div>
-      <div className={style.cardTagsGroupt}>
+      <div className={style.cardTagsGroup}>
         <TagsGroup tags={task.tags} />
       </div>
       <div className={style.cardProgress}>
