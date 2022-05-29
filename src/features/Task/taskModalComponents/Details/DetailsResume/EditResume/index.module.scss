@@ -46,6 +46,13 @@
 
 .modalResume {
   height: 400px !important;
+  :global(.ant-modal-content) {
+    border-radius: 16px !important;
+  }
+  :global(.ant-modal-body) {
+    border-radius: 16px !important;
+    padding: 0;
+  }
   .innerModal {
     font: $p-regular;
     color: $grey-800;

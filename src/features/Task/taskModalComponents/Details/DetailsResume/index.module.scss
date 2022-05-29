@@ -23,6 +23,9 @@
   .icon {
     color: $grey-800;
     text-align: center;
+    &:hover {
+      color: $main-blue-hover;
+    }
   }
 }
 
@@ -44,6 +47,7 @@
   box-shadow: none !important;
   background-color: transparent !important;
   bottom: 10px !important;
+  border: none !important;
 }
 
 .modalResume {
