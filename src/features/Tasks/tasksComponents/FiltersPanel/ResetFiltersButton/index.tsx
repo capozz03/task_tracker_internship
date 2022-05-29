@@ -11,7 +11,7 @@ const ResetFiltersButton = () => {
     dispatch(TaskFilters.resetFilters());
   };
   return (
-    <Button type="default" block onClick={onClick} hidden={!isVisible} className={styles.resetFilters}>
+    <Button type="default" block onClick={onClick} hidden={!isVisible}>
       <span className={styles.text}>Очистить фильтры</span>
     </Button>
   );
