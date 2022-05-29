@@ -29,6 +29,7 @@ const AttachMenu = () => {
   };
 
   const beforeUpload = (file: RcFile) => {
+    console.log(file.type);
     if (storageCount && storageCount >= 15) {
       alert('Максимальное кол-во файлов 15', 'error');
       return false;
