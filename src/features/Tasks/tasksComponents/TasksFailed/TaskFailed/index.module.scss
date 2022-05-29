@@ -29,8 +29,8 @@
   }
 
   @media (max-width: 1180px) {
-    grid-template-columns: auto auto 40px;
-    grid-template-areas:  "title title menu"
+    grid-template-columns: 80% auto 40px;
+    grid-template-areas:  "title . menu"
                           "status status menu"
                           "progress progress menu"
                           "tags tags menu"
