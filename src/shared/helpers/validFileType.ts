@@ -1,3 +1,6 @@
+import { RcFile } from 'antd/lib/upload';
+import { acceptedFiles } from './checkBeforeUpload';
+
 const fileTypes = [
   'image/jpeg',
   'image/png',
@@ -14,8 +17,6 @@ const fileTypes = [
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 ];
 
-export const validFileType = (file: File) => fileTypes.includes(file.type);
-
 export const slicedName = (name: string) => {
   const fileExtension = name.split('.')[1];
   const fileName = name.split('.')[0];
@@ -23,5 +24,13 @@ export const slicedName = (name: string) => {
   if (slicedName.length < fileName.length) {
     slicedName += `...${fileExtension}`;
     return slicedName;
-  } return name;
+  }
+  return name;
+};
+
+export const validFileType = (file: RcFile) => {
+  const typeOfFile = fileTypes.includes(file.type);
+  const fileExtension = file.name.split('.')[1].includes(acceptedFiles);
+  const isValid = typeOfFile || fileExtension;
+  return isValid;
 };
