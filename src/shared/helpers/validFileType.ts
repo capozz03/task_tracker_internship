@@ -1,5 +1,5 @@
 import { RcFile } from 'antd/lib/upload';
-import { acceptedFiles } from './checkBeforeUpload';
+import { acceptedFilesCopy } from './checkBeforeUpload';
 
 // const fileTypes = [
 //   'image/jpeg',
@@ -31,6 +31,7 @@ export const slicedName = (name: string) => {
 export const validFileType = (file: RcFile) => {
   // const typeOfFile = fileTypes.includes(file.type);
   // console.log(file.name.split('.')[1]);
-  const isValidFileExtension = file.name.split('.')[1].includes(acceptedFiles);
+  const isValidFileExtension = file.name.split('.')[1].includes(acceptedFilesCopy);
+  console.log(isValidFileExtension);
   return isValidFileExtension;
 };

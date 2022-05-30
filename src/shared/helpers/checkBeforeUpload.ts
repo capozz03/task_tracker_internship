@@ -4,6 +4,7 @@ import { alert, validFileType } from 'shared';
 import { Dispatch } from 'react';
 
 export const acceptedFiles = '.pdf, .txt, .doc, .docx, .avi, .mp4, .wmv, .csv, .xls, .xlsx, .jpeg, .jpg, .png';
+export const acceptedFilesCopy = 'pdf, txt, doc, docx, avi, mp4, wmv, csv, xls, xlsx, jpeg, jpg, png';
 
 export const uploadFilesWrapper = (dispatch: Dispatch<any>, taskId: string) => {
   const uploadFilesInner = async (options: any) => {
