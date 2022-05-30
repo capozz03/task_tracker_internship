@@ -24,6 +24,7 @@ export const uploadFilesWrapper = (dispatch: Dispatch<any>, taskId: string) => {
 export const beforeUploadWrapper = (storageCount: number | undefined) => {
   const beforeUploadInner = (file: RcFile) => {
     console.log(file.type);
+    console.log(file.name.split('.')[1]);
     if (storageCount && storageCount >= 15) {
       alert('Максимальное кол-во файлов 15', 'error');
       return false;
