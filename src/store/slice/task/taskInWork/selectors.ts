@@ -13,3 +13,5 @@ export const getError = createSelector(getTaskInWorkSliceStore, ({ error }) => e
 export const isLoadingStatus = createSelector(getTaskInWorkSliceStore, ({ status }) =>
   isLoadingStatusCheck(status),
 );
+
+export const getSortTasksInWork = createSelector(getTaskInWorkSliceStore, ({ sort }) => sort);

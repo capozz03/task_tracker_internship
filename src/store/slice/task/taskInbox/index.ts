@@ -6,5 +6,5 @@ export {
   changeStatusTaskAsync,
 } from './asyncActions';
 export type { TTasksReducer, TTask } from '../entities';
-export { taskInboxReducer } from './slice';
-export { getPagination, getTasks, getStatus, getError, isLoadingStatus } from './selectors';
+export { taskInboxReducer, setSortTasksInbox } from './slice';
+export { getPagination, getTasks, getStatus, getError, getSortTasksInbox, isLoadingStatus } from './selectors';

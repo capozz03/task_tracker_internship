@@ -2,8 +2,11 @@
 
 .modalDelete {
   :global(.ant-modal-content) {
-    width: 324px;
     border-radius: 16px !important;
+  }
+  :global(.ant-modal-body) {
+    border-radius: 16px !important;
+    padding: 0;
   }
   .title {
     font: $h4;

@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatuses } from 'shared';
 import { getTasksAsync } from './asyncActions';
-import { TTask, TTasksReducer, TTasksResponse } from '../entities';
+import { TSortType, TTask, TTasksReducer, TTasksResponse } from '../entities';
 
 const initialState = {
+  sort: 'date~DESC',
   tasks: null,
   pagination: {
     items_count: 1,
@@ -24,6 +25,9 @@ const taskInWorkSlice = createSlice({
       state.tasks = state.tasks!.map((task) =>
         (task.task_id === payload.task_id ? payload : task));
       return state;
+    },
+    setSortTasksInWork(state, { payload }: PayloadAction<TSortType | undefined>) {
+      state.sort = payload;
     },
   },
   extraReducers: {
@@ -47,5 +51,5 @@ const taskInWorkSlice = createSlice({
   },
 });
 
-export const { taskUpdate } = taskInWorkSlice.actions;
+export const { taskUpdate, setSortTasksInWork } = taskInWorkSlice.actions;
 export const taskInWorkReducer = taskInWorkSlice.reducer;

@@ -13,3 +13,5 @@ export const getError = createSelector(getTaskInboxSliceStore, ({ error }) => er
 export const isLoadingStatus = createSelector(getTaskInboxSliceStore, ({ status }) =>
   isLoadingStatusCheck(status),
 );
+
+export const getSortTasksInbox = createSelector(getTaskInboxSliceStore, ({ sort }) => sort);

@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatuses } from 'shared';
 import { getTasksAsync } from './asyncActions';
-import { TTasksReducer, TTasksResponse } from '../entities';
+import { TSortType, TTasksReducer, TTasksResponse } from '../entities';
 
 const initialState = {
+  sort: 'date~DESC',
   tasks: null,
   pagination: {
     items_count: 1,
@@ -19,7 +20,11 @@ const initialState = {
 const taskFailedSlice = createSlice({
   name: 'taskFailedSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    setSortTasksFailed(state, { payload }: PayloadAction<TSortType | undefined>) {
+      state.sort = payload;
+    },
+  },
   extraReducers: {
     [getTasksAsync.pending.type]: (state) => ({
       ...state,
@@ -41,4 +46,5 @@ const taskFailedSlice = createSlice({
   },
 });
 
+export const { setSortTasksFailed } = taskFailedSlice.actions;
 export const taskFailedReducer = taskFailedSlice.reducer;

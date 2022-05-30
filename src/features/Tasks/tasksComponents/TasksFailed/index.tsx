@@ -1,24 +1,25 @@
-import React, { ComponentProps, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
 import { TaskFilters, TaskFailedSlice } from 'store/slice';
 import { SortByMobileScreen, SortByPCScreen } from '../SortBy';
 import style from './index.module.scss';
 import Pagination from '../Pagination';
-import { TSortType } from 'store/slice/task/entities';
 import { Spin } from 'antd';
 import TaskFailed from './TaskFailed';
+import { getSortTasksFailed, setSortTasksFailed } from 'store/slice/task/taskFailed';
 
-const TasksFailed = (props: ComponentProps<any>) => {
+const TasksFailed: FC = (props) => {
   const isMobile = useBreakPoint(768);
   const dispatch = useDispatch();
   const tasks = useSelector(TaskFailedSlice.getTasks);
   const pagination = useSelector(TaskFailedSlice.getPagination);
   const isLoading = useSelector(TaskFailedSlice.isLoadingStatus);
   const filters = useSelector(TaskFilters.getFilters);
-  const [sortType, setSortType] = useState<TSortType>('date~DESC');
+  const sortType = useSelector(getSortTasksFailed);
+  const setSortTasks = setSortTasksFailed;
 
-  const paginationHandler = (page: number, pageSize: number): void => {
+  const paginationHandler = (page: number, pageSize: number) => {
     dispatch(
       TaskFailedSlice.getTasksAsync({
         sort: sortType,
@@ -48,9 +49,13 @@ const TasksFailed = (props: ComponentProps<any>) => {
           <span className={style.totalCount}>{pagination && pagination.items_total}</span>
         </h4>
         {isMobile ? (
-          <SortByMobileScreen disabled={tasks?.length === 0} setSortType={setSortType} />
+          <SortByMobileScreen disabled={tasks?.length === 0} setSortTasks={setSortTasks} />
         ) : (
-          <SortByPCScreen disabled={tasks?.length === 0} setSortType={setSortType} />
+          <SortByPCScreen
+            disabled={tasks?.length === 0}
+            sortType={sortType}
+            setSortTasks={setSortTasks}
+          />
         )}
       </div>
       <Spin size="large" tip="Загрузка" spinning={isLoading}>

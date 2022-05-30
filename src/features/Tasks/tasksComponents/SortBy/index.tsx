@@ -1,21 +1,35 @@
 import React, { useState } from 'react';
-import { Select, Menu, Dropdown } from 'antd';
+import { Select, Menu, Dropdown, MenuProps } from 'antd';
 import style from './index.module.scss';
 import Icon, { CaretDownOutlined } from '@ant-design/icons';
 import { TSortType } from 'store/slice/task/entities';
 import { IconShape } from 'shared/ui/icons/TasksIcons';
 import classnames from 'classnames';
+import { useDispatch } from 'react-redux';
+import { ActionCreatorWithOptionalPayload } from '@reduxjs/toolkit';
 
-type SetSortTypeProps = {
-  setSortType: React.Dispatch<React.SetStateAction<TSortType>>;
+type SetSortTypePropsPC = {
   disabled: boolean;
+  sortType: TSortType | undefined;
+  setSortTasks: ActionCreatorWithOptionalPayload<TSortType | undefined, string>;
 };
 
-export const SortByPCScreen = ({ setSortType, disabled }: SetSortTypeProps) => {
-  const { Option } = Select;
+type SetSortTypePropsMobile = {
+  disabled: boolean;
+  setSortTasks: ActionCreatorWithOptionalPayload<TSortType | undefined, string>;
+};
 
-  const sortHandler = (value: TSortType): void => {
-    setSortType(value);
+const { Item } = Menu;
+const { Option } = Select;
+
+export const SortByPCScreen = ({
+  disabled,
+  sortType,
+  setSortTasks,
+}: SetSortTypePropsPC) => {
+  const dispatch = useDispatch();
+  const sortHandler = (value: TSortType) => {
+    dispatch(setSortTasks(value));
   };
 
   return (
@@ -27,7 +41,7 @@ export const SortByPCScreen = ({ setSortType, disabled }: SetSortTypeProps) => {
           <CaretDownOutlined className="ant-select-suffix" style={{ color: '#92929D' }} />
         }
         disabled={disabled}
-        defaultValue="date~DESC"
+        defaultValue={sortType}
         bordered={false}
         dropdownMatchSelectWidth={false}
         dropdownStyle={{ borderRadius: '8px' }}
@@ -40,33 +54,41 @@ export const SortByPCScreen = ({ setSortType, disabled }: SetSortTypeProps) => {
   );
 };
 
-export const SortByMobileScreen = ({ setSortType, disabled }: SetSortTypeProps) => {
-  const { Item } = Menu;
+export const SortByMobileScreen = ({ disabled, setSortTasks }: SetSortTypePropsMobile) => {
+  const dispatch = useDispatch();
   const [isActiveSort, setIsActiveSort] = useState({
     isDate: true,
     isTitle: false,
   });
-  const sortHandler = ({ key }: any): void => {
-    setSortType(key);
+  const sortHandler: MenuProps['onClick'] = ({ key }) => {
     if (key === 'date~DESC') {
       setIsActiveSort({
         isDate: true,
         isTitle: false,
       });
-    } else {
+      return dispatch(setSortTasks(key));
+    }
+    if (key === 'title~ASC') {
       setIsActiveSort({
         isDate: false,
         isTitle: true,
       });
+      return dispatch(setSortTasks(key));
     }
   };
 
   const menu = (
     <Menu className={style.dropdown} onClick={sortHandler}>
-      <Item key="date~DESC" className={classnames([style.dropdownItem, isActiveSort.isDate && style.activeSort])}>
+      <Item
+        key="date~DESC"
+        className={classnames([style.dropdownItem, isActiveSort.isDate && style.activeSort])}
+      >
         <div>Упорядочить по дате создания</div>
       </Item>
-      <Item key="title~ASC" className={classnames([style.dropdownItem, isActiveSort.isTitle && style.activeSort])}>
+      <Item
+        key="title~ASC"
+        className={classnames([style.dropdownItem, isActiveSort.isTitle && style.activeSort])}
+      >
         <div>Упорядочить по наименованию</div>
       </Item>
     </Menu>
