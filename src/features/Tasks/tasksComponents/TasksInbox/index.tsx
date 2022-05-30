@@ -1,4 +1,4 @@
-import React, { ComponentProps, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
 import { TaskFilters, TaskInboxSlice } from 'store/slice';
@@ -10,7 +10,7 @@ import Pagination from '../Pagination';
 import { Spin } from 'antd';
 import { getSortTasksInbox, setSortTasksInbox } from 'store/slice/task/taskInbox';
 
-const TasksInbox = (props: ComponentProps<any>) => {
+const TasksInbox: FC = (props) => {
   const isMobile = useBreakPoint(768);
   const dispatch = useDispatch();
   const tasks = useSelector(TaskInboxSlice.getTasks);

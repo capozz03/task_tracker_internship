@@ -1,4 +1,4 @@
-import React, { ComponentProps, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
 import { TaskFilters, TaskCompletedSlice } from 'store/slice';
@@ -9,7 +9,7 @@ import Pagination from '../Pagination';
 import { Spin } from 'antd';
 import { getSortTasksCompleted, setSortTasksCompleted } from 'store/slice/task/taskCompleted';
 
-const TasksCompleted = (props: ComponentProps<any>) => {
+const TasksCompleted: FC = (props) => {
   const isMobile = useBreakPoint(768);
   const dispatch = useDispatch();
   const tasks = useSelector(TaskCompletedSlice.getTasks);

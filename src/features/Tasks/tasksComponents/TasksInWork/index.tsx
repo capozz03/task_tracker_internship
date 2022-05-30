@@ -1,4 +1,4 @@
-import React, { ComponentProps, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import TaskInWork from './TaskInWork';
 import styles from './index.module.scss';
 import Pagination from '../Pagination';
@@ -9,7 +9,7 @@ import { Spin } from 'antd';
 import { SortByMobileScreen, SortByPCScreen } from '../SortBy';
 import { useBreakPoint } from 'shared';
 
-const TasksInWork = (props: ComponentProps<any>) => {
+const TasksInWork: FC = (props) => {
   const dispatch = useDispatch();
   const isMobile = useBreakPoint(768);
   const pagination = useSelector(TaskInWorkSlice.getPagination);

@@ -1,4 +1,4 @@
-import React, { ComponentProps, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
 import { TaskFilters, TaskFailedSlice } from 'store/slice';
@@ -9,7 +9,7 @@ import { Spin } from 'antd';
 import TaskFailed from './TaskFailed';
 import { getSortTasksFailed, setSortTasksFailed } from 'store/slice/task/taskFailed';
 
-const TasksFailed = (props: ComponentProps<any>) => {
+const TasksFailed: FC = (props) => {
   const isMobile = useBreakPoint(768);
   const dispatch = useDispatch();
   const tasks = useSelector(TaskFailedSlice.getTasks);
