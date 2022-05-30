@@ -4,4 +4,21 @@
   border: 1px solid $grey-300 !important;
   border-radius: 8px !important;
   height: 40px;
+  padding: 4px 8px !important;
+
+  :global(.ant-input) {
+    font-size: 13px;
+    margin: 0 4px;
+  }
+}
+
+:global(.ant-input-prefix) {
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+:global(.ant-input-suffix) {
+  margin: 0 !important;
 }

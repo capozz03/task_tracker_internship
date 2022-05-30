@@ -1,21 +1,12 @@
 @import 'src/shared/assets/styles';
 
 .taskModal {
-  @include media-breakpoint-down(lg) {
-    width: 100% !important;
-    height: 100% !important;
-    max-width: unset !important;
-    top: 0 !important;
-    bottom: 0 !important;
-    :global(.ant-modal-close) {
-      left: 0;
-      right: unset;
-    }
-  }
+  margin-top: 0 !important;
+
   :global(.ant-modal-content) {
+    background: $grey-100;
     border-radius: 16px !important;
     height: 100% !important;
-    background: $grey-100;
 
     :global(.ant-modal-body) {
       padding: 0;
@@ -25,11 +16,23 @@
       background: $grey-0;
     }
   }
+
+  @include media-breakpoint-down(lg) {
+    width: 100% !important;
+    height: auto !important;
+    max-width: unset !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    :global(.ant-modal-close) {
+      left: 0;
+      right: unset;
+    }
+  }
 }
 
 .wrap {
   display: grid;
-  grid-template-columns: 60% auto;
+  grid-template-columns: 60% 40%;
 
   .title {
     background: $grey-0;
@@ -45,7 +48,7 @@
       display: flex;
       max-width: 80%;
       width: 100%;
-      @media screen and (max-width: 992px){
+      @media screen and (max-width: 992px) {
         max-width: 100%;
       }
     }
@@ -56,9 +59,18 @@
     }
   }
 
+  .description {
+    margin: 16px 0;
+  }
+
+  .actions {
+    display: none;
+  }
+
   .leftColumn {
     padding: 0 24px;
     border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
     background: $grey-0;
     grid-column: 1;
     display: flex;
@@ -74,6 +86,7 @@
 
     .collapse {
       width: 100%;
+      margin-bottom: 16px;
 
       .collapseItem {
         border-bottom: 0;
@@ -91,6 +104,7 @@
       border-radius: 16px 16px;
       grid-row: 1;
       padding: 0 16px;
+      margin: 16px 0;
       flex-direction: column;
 
       .name {
@@ -105,9 +119,13 @@
       }
     }
     .rightColumn {
-      padding: 0 16px;
+      padding: 0;
       grid-row: 2;
       grid-column: 1;
+
+      .collapse {
+        margin-bottom: 0;
+      }
     }
     .leftColumn {
       padding: 0 16px;

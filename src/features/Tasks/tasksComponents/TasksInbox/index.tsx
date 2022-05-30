@@ -35,8 +35,8 @@ const TasksInbox = (props: ComponentProps<any>) => {
     dispatch(
       TaskInboxSlice.getTasksAsync({
         sort: sortType,
-        page: 1,
-        per_page: 3,
+        per_page: pagination!.per_page,
+        page: pagination!.page_current,
         ...filters,
       }),
     );
@@ -48,7 +48,6 @@ const TasksInbox = (props: ComponentProps<any>) => {
         <h4 className={styles.title}>
           Входящие
           <span className={styles.totalCount}>{pagination && pagination.items_total}</span>
-          шт.
         </h4>
         <div className={styles.sort}>
           {isMobile ? (
