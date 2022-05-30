@@ -42,46 +42,44 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
   };
   return (
     <div
+      className={classNames([
+        styles.wrap,
+        { [styles.overdue]: moment(task?.exec_stop).diff(now()) < 0 },
+      ])}
       role="button"
       onClick={openTask}
       onKeyDown={() => {}}
       tabIndex={-1}
-      className={classNames([
-        styles.innerContent,
-        { [styles.overdue]: moment(task?.exec_stop).diff(now()) < 0 },
-      ])}
     >
-      <div className={styles.wrap}>
-        <div className={styles.cardName}>
-          <CardNameText text={task.title} />
-        </div>
-        <div className={styles.indicators}>
-          {task.storage_files_meta.total !== 0 && (
-            <CardAttachmentsCount count={task.storage_files_meta.total} />
-          )}
-          {task.progress && task.progress.total !== 0 && (
-            <CardChecklistCount
-              checkListTotal={task.progress.total}
-              checkListChecked={task.progress.completed}
-            />
-          )}
-        </div>
+      <div className={styles.cardName}>
+        <CardNameText text={task.title} />
+      </div>
+      <div className={styles.cardFilesAndCheckbox}>
+        {task.storage_files_meta.total !== 0 && (
+          <CardAttachmentsCount count={task.storage_files_meta.total} />
+        )}
+        {task.progress && task.progress.total !== 0 && (
+          <CardChecklistCount
+            checkListTotal={task.progress.total}
+            checkListChecked={task.progress.completed}
+          />
+        )}
+      </div>
 
-        <div className={styles.cardStatus}>
-          <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
-        </div>
-        <div className={styles.dateAndStatus}>
-          <div className={styles.cardDate}>
-            <DateWithIconClock date={task.exec_stop} />
-          </div>
-          {task.priority && <PriorityStatus type={task.priority.name} />}
-        </div>
-        <div className={styles.cardTagsGroupt}>
-          <TagsGroup tags={task.tags} />
-        </div>
-        <div className={styles.cardUsers}>
-          <UserAssignedToTask users={task.roles} />
-        </div>
+      <div className={styles.cardStatus}>
+        <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
+      </div>
+      <div className={styles.cardDate}>
+        <DateWithIconClock date={task.exec_stop} />
+      </div>
+      <div className={styles.cardPriority}>
+        {task.priority && <PriorityStatus type={task.priority.name} />}
+      </div>
+      <div className={styles.cardTagsGroup}>
+        <TagsGroup tags={task.tags} />
+      </div>
+      <div className={styles.cardUsers}>
+        <UserAssignedToTask users={task.roles} />
       </div>
       <div className={styles.cardMenu}>
         <DropdownMenu task={task} />

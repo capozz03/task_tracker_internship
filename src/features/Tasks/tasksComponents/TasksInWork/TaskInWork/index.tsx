@@ -65,16 +65,15 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
           />
         )}
       </div>
+
       <div className={styles.cardStatus}>
         <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
       </div>
-      <div className={styles.cardDateAndPriority}>
-        <div className={styles.cardDate}>
-          <DateWithIconClock date={task.exec_stop} />
-        </div>
-        <div className={styles.cardPriority}>
-          {task.priority && <PriorityStatus type={task.priority.name} />}
-        </div>
+      <div className={styles.cardDate}>
+        <DateWithIconClock date={task.exec_stop} />
+      </div>
+      <div className={styles.cardPriority}>
+        {task.priority && <PriorityStatus type={task.priority.name} />}
       </div>
       <div className={styles.cardTagsGroup}>
         <TagsGroup tags={task.tags} />

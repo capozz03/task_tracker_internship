@@ -1,4 +1,4 @@
-import React, { ComponentProps, useEffect, useState } from 'react';
+import React, { ComponentProps, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
 import { TaskFilters, TaskInboxSlice } from 'store/slice';
@@ -19,7 +19,6 @@ const TasksInbox = (props: ComponentProps<any>) => {
   const filters = useSelector(TaskFilters.getFilters);
   const sortType = useSelector(getSortTasksInbox);
   const setSortTasks = setSortTasksInbox;
-  const [pageSize, setPageSize] = useState(3);
 
   const paginationHandler = (page: number, pageSize: number) => {
     dispatch(
@@ -30,15 +29,14 @@ const TasksInbox = (props: ComponentProps<any>) => {
         ...filters,
       }),
     );
-    setPageSize(pageSize);
   };
 
   useEffect(() => {
     dispatch(
       TaskInboxSlice.getTasksAsync({
         sort: sortType,
-        page: 1,
-        per_page: pageSize,
+        per_page: pagination!.per_page,
+        page: pagination!.page_current,
         ...filters,
       }),
     );
@@ -50,7 +48,6 @@ const TasksInbox = (props: ComponentProps<any>) => {
         <h4 className={styles.title}>
           Входящие
           <span className={styles.totalCount}>{pagination && pagination.items_total}</span>
-          шт.
         </h4>
         <div className={styles.sort}>
           {isMobile ? (

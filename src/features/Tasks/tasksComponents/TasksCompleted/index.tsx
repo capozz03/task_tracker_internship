@@ -1,4 +1,4 @@
-import React, { ComponentProps, useEffect, useState } from 'react';
+import React, { ComponentProps, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
 import { TaskFilters, TaskCompletedSlice } from 'store/slice';
@@ -18,7 +18,6 @@ const TasksCompleted = (props: ComponentProps<any>) => {
   const filters = useSelector(TaskFilters.getFilters);
   const sortType = useSelector(getSortTasksCompleted);
   const setSortTasks = setSortTasksCompleted;
-  const [pageSize, setPageSize] = useState(3);
 
   const paginationHandler = (page: number, pageSize: number) => {
     dispatch(
@@ -29,15 +28,14 @@ const TasksCompleted = (props: ComponentProps<any>) => {
         ...filters,
       }),
     );
-    setPageSize(pageSize);
   };
 
   useEffect(() => {
     dispatch(
       TaskCompletedSlice.getTasksAsync({
         sort: sortType,
-        page: 1,
-        per_page: pageSize,
+        per_page: pagination!.per_page,
+        page: pagination!.page_current,
         ...filters,
       }),
     );
@@ -49,7 +47,6 @@ const TasksCompleted = (props: ComponentProps<any>) => {
         <h4 className={style.title}>
           Завершено
           <span className={style.totalCount}>{pagination && pagination.items_total}</span>
-          шт.
         </h4>
         {isMobile ? (
           <SortByMobileScreen disabled={tasks?.length === 0} setSortTasks={setSortTasks} />
