@@ -34,7 +34,7 @@ export const validFileType = (file: RcFile) => {
   console.log(file.name);
   console.log('Имя файла', file.name.split('.')[0]);
   console.log('Расширение файла', file.name.split('.')[1]);
-  const fileExtension = file.name.split('.')[1].includes(acceptedFilesForCheckExtension);
+  const fileExtension = acceptedFilesForCheckExtension.includes(file.name.split('.')[1]);
   console.log('Включает ли расширение файлов строку с разрешенными', fileExtension);
   console.log('Проверка MIME типов', typeOfFile);
   const isValid = typeOfFile || fileExtension;
