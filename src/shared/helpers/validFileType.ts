@@ -1,21 +1,21 @@
 import { RcFile } from 'antd/lib/upload';
 import { acceptedFiles } from './checkBeforeUpload';
 
-const fileTypes = [
-  'image/jpeg',
-  'image/png',
-  'image/tiff',
-  'video/avi',
-  'video/mp4',
-  'video/x-ms-wmv',
-  'text/csv',
-  'text/plain',
-  'application/msword',
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-  'application/pdf',
-  'application/vnd.ms-excel',
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-];
+// const fileTypes = [
+//   'image/jpeg',
+//   'image/png',
+//   'image/tiff',
+//   'video/avi',
+//   'video/mp4',
+//   'video/x-ms-wmv',
+//   'text/csv',
+//   'text/plain',
+//   'application/msword',
+//   'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+//   'application/pdf',
+//   'application/vnd.ms-excel',
+//   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+// ];
 
 export const slicedName = (name: string) => {
   const fileExtension = name.split('.')[1];
@@ -29,9 +29,8 @@ export const slicedName = (name: string) => {
 };
 
 export const validFileType = (file: RcFile) => {
-  const typeOfFile = fileTypes.includes(file.type);
-  console.log(file.name.split('.')[1]);
-  const fileExtension = file.name.split('.')[1].includes(acceptedFiles);
-  const isValid = typeOfFile || fileExtension;
-  return isValid;
+  // const typeOfFile = fileTypes.includes(file.type);
+  // console.log(file.name.split('.')[1]);
+  const isValidFileExtension = file.name.split('.')[1].includes(acceptedFiles);
+  return isValidFileExtension;
 };
