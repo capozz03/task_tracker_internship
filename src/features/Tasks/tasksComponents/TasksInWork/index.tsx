@@ -20,7 +20,7 @@ const TasksInWork = (props: ComponentProps<any>) => {
   const setSortTasks = TaskInWorkSlice.setSortTasksInWork;
   const [pageSize, setPageSize] = useState(3);
 
-  const paginationHandler = (page: number, pageSize: number): void => {
+  const paginationHandler = (page: number, pageSize: number) => {
     dispatch(
       TaskInWorkSlice.getTasksAsync({
         sort: sortType,

@@ -20,7 +20,7 @@ const TasksFailed = (props: ComponentProps<any>) => {
   const setSortTasks = setSortTasksFailed;
   const [pageSize, setPageSize] = useState(3);
 
-  const paginationHandler = (page: number, pageSize: number): void => {
+  const paginationHandler = (page: number, pageSize: number) => {
     dispatch(
       TaskFailedSlice.getTasksAsync({
         sort: sortType,

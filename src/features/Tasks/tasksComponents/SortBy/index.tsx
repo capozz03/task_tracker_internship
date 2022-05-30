@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Select, Menu, Dropdown } from 'antd';
+import { Select, Menu, Dropdown, MenuProps } from 'antd';
 import style from './index.module.scss';
 import Icon, { CaretDownOutlined } from '@ant-design/icons';
 import { TSortType } from 'store/slice/task/entities';
@@ -28,7 +28,7 @@ export const SortByPCScreen = ({
   setSortTasks,
 }: SetSortTypePropsPC) => {
   const dispatch = useDispatch();
-  const sortHandler = (value: TSortType): void => {
+  const sortHandler = (value: TSortType) => {
     dispatch(setSortTasks(value));
   };
 
@@ -60,18 +60,20 @@ export const SortByMobileScreen = ({ disabled, setSortTasks }: SetSortTypePropsM
     isDate: true,
     isTitle: false,
   });
-  const sortHandler = ({ key }: any): void => {
-    dispatch(setSortTasks(key));
+  const sortHandler: MenuProps['onClick'] = ({ key }) => {
     if (key === 'date~DESC') {
       setIsActiveSort({
         isDate: true,
         isTitle: false,
       });
-    } else {
+      return dispatch(setSortTasks(key));
+    }
+    if (key === 'title~ASC') {
       setIsActiveSort({
         isDate: false,
         isTitle: true,
       });
+      return dispatch(setSortTasks(key));
     }
   };
 

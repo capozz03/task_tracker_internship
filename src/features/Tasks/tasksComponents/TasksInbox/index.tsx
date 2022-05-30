@@ -21,7 +21,7 @@ const TasksInbox = (props: ComponentProps<any>) => {
   const setSortTasks = setSortTasksInbox;
   const [pageSize, setPageSize] = useState(3);
 
-  const paginationHandler = (page: number, pageSize: number): void => {
+  const paginationHandler = (page: number, pageSize: number) => {
     dispatch(
       TaskInboxSlice.getTasksAsync({
         sort: sortType,
