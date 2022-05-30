@@ -32,7 +32,7 @@ const createItemForChecklist = ({ checklist }: createItemForChecklistProps) => {
     const titleText = title.replaceAll(' ', '');
     // setTitle(titleText);
     if (checklist.items && checklist.items?.length >= 20) {
-      alert('Нельзя добавить более 20 элементов чеклиста', 'error');
+      alert('Нельзя добавить более 20 пунктов чеклиста', 'error');
     } else if (titleText.length !== 0) {
       dispatch(TaskFormSlice.createItemForChecklist({
         title,
