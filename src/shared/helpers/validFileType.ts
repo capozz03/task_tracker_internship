@@ -30,6 +30,7 @@ export const slicedName = (name: string) => {
 
 export const validFileType = (file: RcFile) => {
   const typeOfFile = fileTypes.includes(file.type);
+  console.log(file.name.split('.')[1]);
   const fileExtension = file.name.split('.')[1].includes(acceptedFiles);
   const isValid = typeOfFile || fileExtension;
   return isValid;
