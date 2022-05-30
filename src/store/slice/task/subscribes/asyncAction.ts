@@ -35,9 +35,10 @@ export const addSubscribe = createAsyncThunk(
 
 export const removeSubscribe = createAsyncThunk(
   'subscribeSlice/removeSubscribe',
-  async (subscribeID: string, { rejectWithValue }) => {
+  async (taskId: string, { rejectWithValue }) => {
     try {
-      const { data } = await subscribeServices.removeSubscribe(subscribeID);
+      const { data: subscribe } = await subscribeServices.getSubscribe({ relation_id: taskId, relation_type: 'task' });
+      const { data } = await subscribeServices.removeSubscribe(subscribe.data[0].subscribe_id);
       alert('Вы отписаны от уведомлений по задаче', 'info');
       return data;
     } catch (rejectedValueOrSerializedError) {

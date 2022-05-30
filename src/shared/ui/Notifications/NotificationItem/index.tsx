@@ -41,7 +41,7 @@ const NotificationItem = ({ notification }: { notification: TNotification }) => 
   };
   return (
     <div className={styles.wrap}>
-      <SubscribeEye />
+      <SubscribeEye taskId={notification.history_command.relations[0].relation_id} />
       <div role="button" onKeyDown={(e) => e.preventDefault()} tabIndex={-1} onClick={showTaskHandle} className={styles.notification}>
         <HeaderNotificationsArea notification={notification} />
         <div>
