@@ -5,9 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { HistoryLabelIcon } from 'shared/ui/icons';
 import { TaskFormSlice } from 'store/slice';
 import { Spin } from 'antd';
-import { UserAvatar } from 'features/Tasks/tasksComponents';
-import { formatDateOnTaskHistoryView } from 'shared/helpers/convert';
 import styles from './index.module.scss';
+import HistoryUnit from './HistoryUnit';
 
 const TaskHistory = () => {
   const dispatch = useDispatch();
@@ -16,21 +15,19 @@ const TaskHistory = () => {
   const pagination = useSelector(TaskFormSlice.getHistoryPagination);
   const currentTaskId = useSelector(TaskFormSlice.getTaskFormId);
 
-  useEffect(() => {
-    dispatch(TaskFormSlice.resetTaskHistory());
-  }, [currentTaskId]);
+  const loadHistory = () => {
+    const { page_current: current, per_page: limit } = pagination;
+    if ((current < pagination.page_total || current === 0) && currentTaskId) {
+      dispatch(TaskFormSlice.getTaskHistoryAsync({
+        taskId: currentTaskId,
+        page: current + 1,
+        limit,
+      }));
+    }
+  };
 
   const onViewChanged = (inView: boolean, entry: IntersectionObserverEntry) => {
-    if (inView && entry.isIntersecting) {
-      const { page_current: current, per_page: limit } = pagination;
-      if ((current < pagination.page_total || current === 0) && currentTaskId) {
-        dispatch(TaskFormSlice.getTaskHistoryAsync({
-          taskId: currentTaskId,
-          page: current + 1,
-          limit,
-        }));
-      }
-    }
+    if (inView && entry.isIntersecting) loadHistory();
   };
 
   const observerElement = () => (
@@ -44,6 +41,14 @@ const TaskHistory = () => {
     </InView>
   );
 
+  useEffect(() => {
+    dispatch(TaskFormSlice.resetTaskHistory());
+  }, [currentTaskId]);
+
+  useEffect(() => {
+    if (history.length === 0) loadHistory();
+  }, [history]);
+
   return (
     <div className={styles.historyWrapper}>
       <div className={styles.header}>
@@ -53,16 +58,7 @@ const TaskHistory = () => {
       <ul className={styles.historyList}>
         {
           history?.map((unit) => (
-            <li className={styles.historyItem} key={unit.history_command_id}>
-              <div className={styles.action}>
-                <UserAvatar user={unit.user} color="#FFC28A" />
-                <p className={styles.actionUserName}>{unit.user.name}</p>
-                <p className={styles.actionDescription}>{unit.command_name.toLowerCase()}</p>
-              </div>
-              <span className={styles.actionTime}>
-                {formatDateOnTaskHistoryView(unit.created)}
-              </span>
-            </li>
+            <HistoryUnit unit={unit} key={unit.created} />
           ))
         }
         {

@@ -2,7 +2,7 @@ import { createAsyncThunk, miniSerializeError } from '@reduxjs/toolkit';
 import { taskService } from './taskInboxService';
 import { TTaskSearch, TTasksReducer, TTaskStatusChange } from '../entities';
 import { alert } from 'shared/ui';
-import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice, TaskFailedSlice } from 'store/slice';
+import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice, TaskFailedSlice, TaskFormSlice } from 'store/slice';
 import { TFiltersSlice } from '../taskFilters/slice';
 import { TaskStatuses } from 'shared';
 
@@ -79,6 +79,7 @@ export const changeStatusTaskAsync = createAsyncThunk(
         );
       }
       alert('Статус задачи изменен', 'success');
+      dispatch(TaskFormSlice.resetTaskHistory());
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
       alert(`Статус не изменен. Ошибка: "${error.message}"`, 'error');

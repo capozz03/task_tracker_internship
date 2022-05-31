@@ -30,6 +30,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
+    flex-wrap: wrap;
     gap: 22px;
     list-style-type: none;
 
@@ -39,7 +40,7 @@
         justify-content: space-between;
         align-items: center;
 
-        div {
+        .action {
             display: flex;
             justify-content: flex-start;
             align-items: center;

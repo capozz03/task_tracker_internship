@@ -12,6 +12,7 @@ export const addUserRole = createAsyncThunk(
       const { data } = await rolesService.addUserRole(props);
       alert(`Пользователь "${props.userName}" назначен на роль "${props.roleName}"`, 'success');
       dispatch(TaskFormSlice.updateTask(data.data));
+      dispatch(TaskFormSlice.resetTaskHistory());
       return convertRolesToObject(data.data.roles);
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
@@ -28,6 +29,7 @@ export const removeUserRole = createAsyncThunk(
       const { data } = await rolesService.removeUserRole(props);
       alert(`Пользователь "${props.userName}" снят с роли "${props.roleName}"`, 'success');
       dispatch(TaskFormSlice.updateTask(data.data));
+      dispatch(TaskFormSlice.resetTaskHistory());
       return convertRolesToObject(data.data.roles);
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
