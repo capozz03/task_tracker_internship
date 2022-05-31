@@ -5,6 +5,7 @@ import styles from './index.module.scss';
 import { TaskFormSlice } from 'store/slice';
 import PlusIcons from 'shared/ui/icons/PlusIcons';
 import { acceptedFiles, alert, beforeUploadWrapper, uploadFilesWrapper } from 'shared';
+import Tooltip from 'features/Tasks/tasksComponents/Tooltip';
 
 type AttachMenuProps = {
   taskId: string;
@@ -46,12 +47,14 @@ const AttachMenu = ({ taskId }: AttachMenuProps) => {
   );
 
   return (
-    <Dropdown.Button
-      className={styles.dropdownButton}
-      overlay={menu}
-      trigger={['click']}
-      icon={<PlusIcons />}
-    />
+    <Tooltip title="Добавить чек-лист или вложение">
+      <Dropdown.Button
+        className={styles.dropdownButton}
+        overlay={menu}
+        trigger={['click']}
+        icon={<PlusIcons />}
+      />
+    </Tooltip>
   );
 };
 
