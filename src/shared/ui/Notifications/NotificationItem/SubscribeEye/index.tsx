@@ -17,7 +17,7 @@ const SubscribeEye = ({ taskId }: SubscribeEyeProps) => {
     if (e.key === 'n') {
       setSubscribes(!subscribes);
       if (subscribes) {
-        dispatch(SubscribesSlice.removeSubscribe(taskId));
+        dispatch(SubscribesSlice.removeSubscribeThroughTaskId(taskId));
       } else {
         dispatch(SubscribesSlice.addSubscribe({
           relation_type: 'task',

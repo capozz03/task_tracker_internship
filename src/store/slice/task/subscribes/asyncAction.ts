@@ -35,6 +35,21 @@ export const addSubscribe = createAsyncThunk(
 
 export const removeSubscribe = createAsyncThunk(
   'subscribeSlice/removeSubscribe',
+  async (subscribeId: string, { rejectWithValue }) => {
+    try {
+      const { data } = await subscribeServices.removeSubscribe(subscribeId);
+      alert('Вы отписаны от уведомлений по задаче', 'info');
+      return data;
+    } catch (rejectedValueOrSerializedError) {
+      const error = miniSerializeError(rejectedValueOrSerializedError);
+      alert('Ошибка при удаление подписки', 'error');
+      return rejectWithValue(error);
+    }
+  },
+);
+
+export const removeSubscribeThroughTaskId = createAsyncThunk(
+  'subscribeSlice/removeSubscribe',
   async (taskId: string, { rejectWithValue }) => {
     try {
       const { data: subscribe } = await subscribeServices.getSubscribe({ relation_id: taskId, relation_type: 'task' });
