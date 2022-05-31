@@ -16,9 +16,19 @@
 .dropdownButton{
   font: $p-regular;
   border-radius: 8px !important;
+  :global(.ant-btn:first-child){
+    display: none;
+  }
 
   :global(.ant-btn){
     border: none !important;
     box-shadow: none !important;
+    color: $grey-600;
+    &:hover{
+      color: $main-blue-hover;
+    }
+    &:focus{
+      color: $main-blue-hover;
+    }
   }
 }
