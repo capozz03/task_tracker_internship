@@ -35,7 +35,7 @@ const TasksInWork: FC = (props) => {
       TaskInWorkSlice.getTasksAsync({
         sort: sortType,
         per_page: pagination!.per_page,
-        page: pagination!.page_current,
+        page: 1,
         ...filters,
       }),
     );
