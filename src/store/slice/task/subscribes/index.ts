@@ -1,4 +1,4 @@
-export { getSubscribeAsync, addSubscribe, removeSubscribe } from './asyncAction';
+export { getSubscribeAsync, addSubscribe, removeSubscribe, removeSubscribeThroughTaskId } from './asyncAction';
 export { subscribeReducer } from './slice';
 export { getSubscribesSelector,
   getPaginationSelector,

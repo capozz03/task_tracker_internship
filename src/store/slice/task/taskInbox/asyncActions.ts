@@ -108,7 +108,10 @@ export const createNewTaskAsync = createAsyncThunk(
           ...taskFilters.filters,
         }),
       );
-      alert(`Задача "${title.slice(0, 25)}${title.length > 25 ? '...' : ''}" успешно создана`, 'success');
+      alert(
+        `Задача "${title.slice(0, 25)}${title.length > 25 ? '...' : ''}" успешно создана`,
+        'success',
+      );
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
       alert(`Ошибка при создании задачи "${error.message}"`, 'error');

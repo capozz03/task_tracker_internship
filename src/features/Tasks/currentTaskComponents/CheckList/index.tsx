@@ -10,14 +10,13 @@ import {
   closestCenter,
   DndContext,
   DragEndEvent,
-  KeyboardSensor,
-  PointerSensor,
+  MouseSensor,
+  TouchSensor,
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
 import {
   SortableContext,
-  sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { useDispatch, useSelector } from 'react-redux';
@@ -64,11 +63,8 @@ const Checklist = ({ checklist }: ChecklistProps) => {
   const checklistIsLoadingStatus = useSelector(TaskFormSlice.checklistIsLoadingStatus);
 
   const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-      scrollBehavior: 'smooth',
-    }),
+    useSensor(MouseSensor),
+    useSensor(TouchSensor),
   );
   return (
     <div className={styles.checklist}>

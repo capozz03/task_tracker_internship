@@ -1,4 +1,4 @@
-import React, { ComponentProps, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import TaskInWork from './TaskInWork';
 import styles from './index.module.scss';
 import Pagination from '../Pagination';
@@ -6,18 +6,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TaskFilters, TaskInWorkSlice } from 'store/slice';
 import NewTask from '../NewTask';
 import { Spin } from 'antd';
-import { TSortType } from 'store/slice/task/entities';
 import { SortByMobileScreen, SortByPCScreen } from '../SortBy';
 import { useBreakPoint } from 'shared';
 
-const TasksInWork = (props: ComponentProps<any>) => {
+const TasksInWork: FC = (props) => {
   const dispatch = useDispatch();
   const isMobile = useBreakPoint(768);
   const pagination = useSelector(TaskInWorkSlice.getPagination);
   const tasks = useSelector(TaskInWorkSlice.getTasks);
   const isLoading = useSelector(TaskInWorkSlice.isLoadingStatus);
   const filters = useSelector(TaskFilters.getFilters);
-  const [sortType, setSortType] = useState<TSortType>('date~DESC');
+  const sortType = useSelector(TaskInWorkSlice.getSortTasksInWork);
+  const setSortTasks = TaskInWorkSlice.setSortTasksInWork;
 
   const paginationHandler = (page: number, pageSize: number) => {
     dispatch(
@@ -34,12 +34,12 @@ const TasksInWork = (props: ComponentProps<any>) => {
     dispatch(
       TaskInWorkSlice.getTasksAsync({
         sort: sortType,
-        page: 1,
-        per_page: 3,
+        per_page: pagination!.per_page,
+        page: pagination!.page_current,
         ...filters,
       }),
     );
-  }, [filters]);
+  }, [sortType, filters]);
 
   return (
     <div className={styles.tasks_group} {...props}>
@@ -47,13 +47,16 @@ const TasksInWork = (props: ComponentProps<any>) => {
         <h4 className={styles.title}>
           В работе
           <span className={styles.totalCount}>{pagination && pagination.items_total}</span>
-          шт.
         </h4>
         <div className={styles.sort}>
           {isMobile ? (
-            <SortByMobileScreen disabled={tasks?.length === 0} setSortType={setSortType} />
+            <SortByMobileScreen disabled={tasks?.length === 0} setSortTasks={setSortTasks} />
           ) : (
-            <SortByPCScreen disabled={tasks?.length === 0} setSortType={setSortType} />
+            <SortByPCScreen
+              disabled={tasks?.length === 0}
+              sortType={sortType}
+              setSortTasks={setSortTasks}
+            />
           )}
         </div>
       </div>

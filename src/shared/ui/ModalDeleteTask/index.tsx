@@ -47,6 +47,7 @@ const ModalDeleteTask = () => {
       centered
       visible={isVisibleModal}
       footer={null}
+      width={325}
       onCancel={cancelClick}
       onOk={okClick}
     >

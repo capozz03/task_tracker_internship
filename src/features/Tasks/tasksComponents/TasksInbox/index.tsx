@@ -1,4 +1,4 @@
-import React, { ComponentProps, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
 import { TaskFilters, TaskInboxSlice } from 'store/slice';
@@ -8,17 +8,17 @@ import { TaskStatuses } from 'shared/helpers/enums';
 import styles from './index.module.scss';
 import Pagination from '../Pagination';
 import { Spin } from 'antd';
+import { getSortTasksInbox, setSortTasksInbox } from 'store/slice/task/taskInbox';
 
-type TSortType = 'date~DESC' | 'title~ASC';
-
-const TasksInbox = (props: ComponentProps<any>) => {
+const TasksInbox: FC = (props) => {
   const isMobile = useBreakPoint(768);
   const dispatch = useDispatch();
   const tasks = useSelector(TaskInboxSlice.getTasks);
   const pagination = useSelector(TaskInboxSlice.getPagination);
   const isLoading = useSelector(TaskInboxSlice.isLoadingStatus);
   const filters = useSelector(TaskFilters.getFilters);
-  const [sortType, setSortType] = useState<TSortType>('date~DESC');
+  const sortType = useSelector(getSortTasksInbox);
+  const setSortTasks = setSortTasksInbox;
 
   const paginationHandler = (page: number, pageSize: number) => {
     dispatch(
@@ -35,8 +35,8 @@ const TasksInbox = (props: ComponentProps<any>) => {
     dispatch(
       TaskInboxSlice.getTasksAsync({
         sort: sortType,
-        page: 1,
-        per_page: 3,
+        per_page: pagination!.per_page,
+        page: pagination!.page_current,
         ...filters,
       }),
     );
@@ -48,20 +48,25 @@ const TasksInbox = (props: ComponentProps<any>) => {
         <h4 className={styles.title}>
           Входящие
           <span className={styles.totalCount}>{pagination && pagination.items_total}</span>
-          шт.
         </h4>
         <div className={styles.sort}>
           {isMobile ? (
-            <SortByMobileScreen disabled={tasks?.length === 0} setSortType={setSortType} />
+            <SortByMobileScreen disabled={tasks?.length === 0} setSortTasks={setSortTasks} />
           ) : (
-            <SortByPCScreen disabled={tasks?.length === 0} setSortType={setSortType} />
+            <SortByPCScreen
+              disabled={tasks?.length === 0}
+              sortType={sortType}
+              setSortTasks={setSortTasks}
+            />
           )}
         </div>
       </div>
       <Spin size="large" tip="Загрузка" spinning={isLoading}>
-        {tasks && tasks.length !== 0
-          ? tasks.map((task) => <TaskInbox key={task.task_id} task={task} />)
-          : <p className={styles.noTasks}>Нет задач</p>}
+        {tasks && tasks.length !== 0 ? (
+          tasks.map((task) => <TaskInbox key={task.task_id} task={task} />)
+        ) : (
+          <p className={styles.noTasks}>Нет задач</p>
+        )}
       </Spin>
       <div className={styles.footer}>
         <div className={styles.createTask}>

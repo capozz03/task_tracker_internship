@@ -4,52 +4,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './index.module.scss';
 import { TaskFormSlice } from 'store/slice';
 import PlusIcons from 'shared/ui/icons/PlusIcons';
-import { alert, validFileType } from 'shared';
-import { RcFile } from 'antd/lib/upload/interface';
+import { acceptedFiles, alert, beforeUploadWrapper, uploadFilesWrapper } from 'shared';
+import Tooltip from 'features/Tasks/tasksComponents/Tooltip';
 
-const AttachMenu = () => {
+type AttachMenuProps = {
+  taskId: string;
+};
+
+const AttachMenu = ({ taskId }: AttachMenuProps) => {
   const dispatch = useDispatch();
   const { Item } = Menu;
-
-  const checklists = useSelector(TaskFormSlice.getCheckLists);
   const storageCount = useSelector(TaskFormSlice.getStorageCount);
-  const task = useSelector(TaskFormSlice.getTask);
+  const checklists = useSelector(TaskFormSlice.getCheckLists);
 
-  const uploadFiles = async (options: any) => {
-    const { file } = await options;
-    const fileData = new FormData();
-    fileData.append('file', file);
-    dispatch(
-      TaskFormSlice.createStorageFile({
-        nameOriginal: file.name,
-        file: fileData,
-        taskId: task?.task_id,
-      }),
-    );
-  };
-
-  const beforeUpload = (file: RcFile) => {
-    if (storageCount && storageCount >= 15) {
-      alert('Максимальное кол-во файлов 15', 'error');
-      return false;
-    }
-
-    const sizeFileBytes = file.size;
-    if (sizeFileBytes > 52428800) {
-      alert('Максимальный размер файла 50мб', 'error');
-      return false;
-    }
-
-    const isValidFileType = validFileType(file);
-    if (!isValidFileType) {
-      alert(
-        'Разрешенные форматы: .pdf, .txt, .doc, .docx, .avi, .mp4, .wmv, .csv, .xls, .xlsx, .jpeg, .png',
-        'error',
-      );
-      return false;
-    }
-    return file;
-  };
+  const uploadFiles = uploadFilesWrapper(dispatch, taskId);
+  const beforeUpload = beforeUploadWrapper(storageCount);
 
   const checklistHandle = () => {
     if (checklists && checklists.length >= 3) {
@@ -67,7 +36,7 @@ const AttachMenu = () => {
       <Item key="2" onClick={uploadFiles}>
         <Upload
           showUploadList={false}
-          accept=".pdf, .txt, .doc, .docx, .avi, .mp4, .wmv, .csv, .xls, .xlsx, .jpeg, .jpg, .png"
+          accept={acceptedFiles}
           customRequest={uploadFiles}
           beforeUpload={beforeUpload}
         >
@@ -78,12 +47,14 @@ const AttachMenu = () => {
   );
 
   return (
-    <Dropdown.Button
-      className={styles.dropdownButton}
-      overlay={menu}
-      trigger={['click']}
-      icon={<PlusIcons />}
-    />
+    <Tooltip title="Добавить чек-лист или вложение">
+      <Dropdown.Button
+        className={styles.dropdownButton}
+        overlay={menu}
+        trigger={['click']}
+        icon={<PlusIcons />}
+      />
+    </Tooltip>
   );
 };
 

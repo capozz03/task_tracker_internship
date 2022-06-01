@@ -28,15 +28,21 @@ const ProgressFilter = () => {
   }, [storeMinProgress]);
 
   return (
-    <Slider
-      className={styles.slider}
-      min={0}
-      max={100}
-      step={10}
-      value={minProgress}
-      onChange={onChange}
-      tipFormatter={formatter}
-    />
+    <div>
+      <Slider
+        className={styles.slider}
+        min={0}
+        max={100}
+        step={10}
+        value={minProgress}
+        onChange={onChange}
+        tipFormatter={formatter}
+      />
+      <span className={styles.title}>
+        {minProgress}
+        %+
+      </span>
+    </div>
   );
 };
 

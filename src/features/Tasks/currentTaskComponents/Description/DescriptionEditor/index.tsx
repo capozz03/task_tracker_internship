@@ -25,12 +25,28 @@ const DescriptionEditor = ({
   const config = {
     readonly: false,
     placeholder: 'Начните писать...',
+    tabIndex: 1,
+    buttons: ['bold', 'italic', 'underline', 'fontsize', 'link', 'image', 'brush', 'left', 'center', 'right'],
+    removeButtons: [
+      'ul',
+      'ol',
+      'eraser',
+      'paragraph',
+      'fullsize',
+      'copyformat',
+      'hr',
+      'table',
+      'font',
+      'video',
+      'file',
+    ],
     askBeforePasteFromWord: false,
     askBeforePasteHTML: false,
     enableDragAndDropFileToEditor: true,
     uploader: { insertImageAsBase64URI: true },
     toolbarAdaptive: true,
     toolbarSticky: true,
+    statusbar: false,
   };
 
   const configRef = useRef(config);
@@ -72,7 +88,7 @@ const DescriptionEditor = ({
         ref={editor}
         value={content}
         config={configRef.current}
-        onBlur={handleSetContext}
+        onBlur={(newContent) => setContent(newContent)}
         onChange={handleSetContext}
       />
       <div className={style.wrapBtn}>

@@ -68,6 +68,7 @@ export const duplicateTaskAsync = createAsyncThunk(
       if (taskStatusId === created) {
         dispatch(
           TaskInboxSlice.getTasksAsync({
+            sort: taskInbox.sort,
             per_page: stateOfDispatch.pagination?.per_page,
             page: stateOfDispatch.pagination?.page_current,
             ...taskFilters.filters,
@@ -76,6 +77,7 @@ export const duplicateTaskAsync = createAsyncThunk(
       } else if (taskStatusId === inWork) {
         dispatch(
           TaskInWorkSlice.getTasksAsync({
+            sort: taskInWork.sort,
             per_page: stateOfDispatch.pagination?.per_page,
             page: stateOfDispatch.pagination?.page_current,
             ...taskFilters.filters,
@@ -84,6 +86,7 @@ export const duplicateTaskAsync = createAsyncThunk(
       } else if (taskStatusId === completed) {
         dispatch(
           TaskCompletedSlice.getTasksAsync({
+            sort: taskCompleted.sort,
             per_page: stateOfDispatch.pagination?.per_page,
             page: stateOfDispatch.pagination?.page_current,
             ...taskFilters.filters,
@@ -92,6 +95,7 @@ export const duplicateTaskAsync = createAsyncThunk(
       } else if (taskStatusId === notImplemented) {
         dispatch(
           TaskFailedSlice.getTasksAsync({
+            sort: taskFailed.sort,
             per_page: stateOfDispatch.pagination?.per_page,
             page: stateOfDispatch.pagination?.page_current,
             ...taskFilters.filters,
@@ -128,6 +132,7 @@ export const deleteTaskAsync = createAsyncThunk(
       if (taskStatusId === created) {
         dispatch(
           TaskInboxSlice.getTasksAsync({
+            sort: taskInbox.sort,
             per_page: stateOfDispatch.pagination?.per_page,
             page: stateOfDispatch.pagination?.page_current,
             ...taskFilters.filters,
@@ -136,6 +141,7 @@ export const deleteTaskAsync = createAsyncThunk(
       } else if (taskStatusId === inWork) {
         dispatch(
           TaskInWorkSlice.getTasksAsync({
+            sort: taskInWork.sort,
             per_page: stateOfDispatch.pagination?.per_page,
             page: stateOfDispatch.pagination?.page_current,
             ...taskFilters.filters,
@@ -144,6 +150,7 @@ export const deleteTaskAsync = createAsyncThunk(
       } else if (taskStatusId === completed) {
         dispatch(
           TaskCompletedSlice.getTasksAsync({
+            sort: taskCompleted.sort,
             per_page: stateOfDispatch.pagination?.per_page,
             page: stateOfDispatch.pagination?.page_current,
             ...taskFilters.filters,
@@ -152,6 +159,7 @@ export const deleteTaskAsync = createAsyncThunk(
       } else if (taskStatusId === notImplemented) {
         dispatch(
           TaskFailedSlice.getTasksAsync({
+            sort: taskFailed.sort,
             per_page: stateOfDispatch.pagination?.per_page,
             page: stateOfDispatch.pagination?.page_current,
             ...taskFilters.filters,

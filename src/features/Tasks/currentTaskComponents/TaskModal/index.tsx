@@ -35,10 +35,16 @@ const TaskModal = (props: ModalProps) => {
   const formResultRequired = useSelector(TaskFormSlice.getTaskFormStatusTaskFormRequired);
   const formResult = useSelector(TaskFormSlice.getTaskFormResultForm);
 
+  const sortTypeInbox = useSelector(TaskInboxSlice.getSortTasksInbox);
+  const sortTypeInWork = useSelector(TaskInWorkSlice.getSortTasksInWork);
+  const sortTypeCompleted = useSelector(TaskCompletedSlice.getSortTasksCompleted);
+  const sortTypeFailed = useSelector(TaskFailedSlice.getSortTasksFailed);
+
   const cancelHandle = () => {
     if (status?.name === 'Создана') {
       dispatch(
         TaskInboxSlice.getTasksAsync({
+          sort: sortTypeInbox,
           per_page: paginationInbox!.per_page,
           page: paginationInbox!.page_current,
           ...filters,
@@ -48,6 +54,7 @@ const TaskModal = (props: ModalProps) => {
     if (status?.name === 'В работе') {
       dispatch(
         TaskInWorkSlice.getTasksAsync({
+          sort: sortTypeInWork,
           per_page: paginationInWork!.per_page,
           page: paginationInWork!.page_current,
           ...filters,
@@ -57,6 +64,7 @@ const TaskModal = (props: ModalProps) => {
     if (status?.name === 'Выполнена') {
       dispatch(
         TaskCompletedSlice.getTasksAsync({
+          sort: sortTypeCompleted,
           per_page: paginationInCompleted!.per_page,
           page: paginationInCompleted!.page_current,
           ...filters,
@@ -66,6 +74,7 @@ const TaskModal = (props: ModalProps) => {
     if (status?.name === 'Не выполнена') {
       dispatch(
         TaskFailedSlice.getTasksAsync({
+          sort: sortTypeFailed,
           per_page: paginationInFailed!.per_page,
           page: paginationInFailed!.page_current,
           ...filters,

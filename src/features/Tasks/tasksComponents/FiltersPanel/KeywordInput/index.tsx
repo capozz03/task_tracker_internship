@@ -31,7 +31,7 @@ const SearchInput = () => {
       value={searchTerm}
       onChange={onChange}
       prefix={<SearchIcon />}
-      placeholder="Поиск по названию и описанию"
+      placeholder="По названию и описанию"
     />
   );
 };

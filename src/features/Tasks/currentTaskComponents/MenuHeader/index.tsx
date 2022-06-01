@@ -11,12 +11,9 @@ const MenuHeader = () => {
 
   return (
     <div className={styles.wrap}>
-      <AttachMenu />
+      {task && <AttachMenu taskId={task.task_id} />}
       <Subscribes />
-      {
-        task
-        && <DropdownMenu task={task} />
-      }
+      {task && <DropdownMenu task={task} />}
     </div>
   );
 };
