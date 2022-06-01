@@ -10,9 +10,6 @@
 .taskStatus {
   color: $grey-0 !important;
   border-radius: 16px !important;
-  &:hover {
-    opacity: 0.9;
-  }
   :global {
     .ant-select-selection-item {
       color: $grey-0 !important;
