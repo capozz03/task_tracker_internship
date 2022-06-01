@@ -33,37 +33,4 @@
     flex-wrap: wrap;
     gap: 22px;
     list-style-type: none;
-
-    & > .historyItem {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        .action {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 8px;
-        }
-
-        p {
-            margin: 0;
-        }
-
-        .actionUserName {
-            font: $p-medium;
-            color: $grey-900;
-        }
-
-        .actionDescription {
-            font: $p-regular;
-            color: $grey-900;
-        }
-
-        .actionTime {
-            font: $h6-regular;
-            color: $grey-600;
-        }
-    }
 }

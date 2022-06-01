@@ -1,0 +1,47 @@
+@import "src/shared/assets/styles";
+
+.historyItem {
+    width: 100%;
+    position: relative;
+    padding-left: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+
+    @include media-breakpoint-down(lg) {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .action {
+        display: inline-flex;
+
+        .actionTitle {
+            color: $grey-900;
+
+            .actionUserName {
+                margin-right: 8px;
+                font: $p-medium;
+                white-space: nowrap;
+            }
+
+            .actionDescription {
+                font: $p-regular;
+            }
+        }
+    
+        & > div:first-child {
+        position: absolute;
+        left: 5px;
+        top: 5px;
+        }
+    }
+
+    .actionTime {
+        min-width: 130px;
+        font: $h6-regular;
+        color: $grey-600;
+        text-align: right;
+    }
+}

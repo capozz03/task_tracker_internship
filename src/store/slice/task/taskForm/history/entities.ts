@@ -65,7 +65,13 @@ export type THistoryUnit = {
     task_role?: {
       task_role_id: string,
       name: string,
-    }
+    },
+    form_result?: Array<
+      {
+        value: string,
+        field_name: 'resume' | 'comment',
+      }
+    >,
   },
   relations: [
     {
