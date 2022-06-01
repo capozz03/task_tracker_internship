@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Dropdown, Menu } from 'antd';
+import { Dropdown, Menu, Tooltip } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { CommonSlice, TaskFormSlice } from 'store/slice';
 import { TTask } from 'store/slice/task/taskForm';
@@ -63,9 +63,11 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
       overlay={menu}
       trigger={['click']}
     >
-      <button type="button" className={styles.button}>
-        <DropdownMoreButton className={styles.icon} />
-      </button>
+      <Tooltip title="Действия с задачей">
+        <button type="button" className={styles.button}>
+          <DropdownMoreButton className={styles.icon} />
+        </button>
+      </Tooltip>
     </Dropdown>
   );
 };
