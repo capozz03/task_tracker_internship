@@ -27,6 +27,7 @@ const TaskStatus = ({ ...props }: SelectProps) => {
   return (
     <Select
       className={style.taskStatus}
+      defaultValue={currentStatus}
       value={currentStatus}
       bordered={false}
       showArrow={false}

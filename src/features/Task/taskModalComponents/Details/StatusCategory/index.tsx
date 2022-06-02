@@ -3,8 +3,8 @@ import DetailCategory from 'features/Task/taskModalComponents/Details/DetailCate
 import { TaskStatus } from 'features/Tasks/tasksComponents';
 import { TStatus } from 'store/slice/task/entities';
 import { TaskStatuses } from 'shared';
-import { useDispatch, useSelector } from 'react-redux';
-import { TaskCompletedSlice, TaskFailedSlice, TaskInWorkSlice, TaskInboxSlice, TaskFormSlice } from 'store/slice';
+import { useDispatch } from 'react-redux';
+import { TaskCompletedSlice, TaskFailedSlice, TaskInWorkSlice, TaskInboxSlice } from 'store/slice';
 
 type TProps = {
   status: TStatus;
@@ -13,7 +13,6 @@ type TProps = {
 
 const StatusCategory = ({ status, currentTaskId }: TProps) => {
   const dispatch = useDispatch();
-  const newStatus = useSelector(TaskFormSlice.getTaskFormStatusTask);
 
   const statusChanger = (prevStatusId: string, taskId: string, newStatusId: string) => {
     const requestParams = { task_id: taskId, task_status_id: newStatusId };
@@ -39,12 +38,6 @@ const StatusCategory = ({ status, currentTaskId }: TProps) => {
   const statusChangeHandler = (value: string) => (
     statusChanger(status?.task_status_id || '', currentTaskId || '', value)
   );
-
-  // useEffect(() => {
-  //   statusChangeHandler(status?.task_status_id);
-  // }, [status?.task_status_id]);
-  console.log('status name', status.name);
-  console.log('new status = ', newStatus);
 
   return (
     <DetailCategory name="Статус" type="details">

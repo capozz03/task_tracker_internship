@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { taskService } from './taskFailedService';
 import { TTaskSearch, TTasksReducer, TTaskStatusChange } from '../entities';
-import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice, TaskFailedSlice } from 'store/slice';
+import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice, TaskFailedSlice, TaskFormSlice } from 'store/slice';
 import { TFiltersSlice } from '../taskFilters/slice';
 import { TaskStatuses } from 'shared';
 import { setFormResult } from '../taskForm';
@@ -36,6 +36,7 @@ export const changeStatusTaskAsync = createAsyncThunk(
           ...taskFilters.filters,
         }),
       );
+      dispatch(TaskFormSlice.setStatusTaskForm(data.data.status));
       const state = getState() as any;
       if (data.data.status?.name === 'Создана') {
         const paginationInbox = state.taskInbox?.pagination;
