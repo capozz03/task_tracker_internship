@@ -35,6 +35,7 @@ const TaskStatus = ({ ...props }: SelectProps) => {
       style={{ backgroundColor: `${color}` }}
       onChange={props.onChange}
       onClick={onClick}
+      disabled={props.disabled}
     >
       {taskStatuses.map(({ status, taskStatusId }) => (
         <Option key={taskStatusId} value={taskStatusId} className={style.taskStatusItem}>

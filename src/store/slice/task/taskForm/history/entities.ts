@@ -1,3 +1,4 @@
+import { TStorageFiles } from 'store/slice/task/entities';
 import { RequestStatuses } from 'shared';
 import { TCommandCode } from 'store/slice/task/history/entities';
 
@@ -39,9 +40,7 @@ export type THistoryUnit = {
       task_status_id: string,
       name: string,
     },
-    storage_file?: {
-      name_original: string,
-    }
+    storage_file?: TStorageFiles,
     message?: string,
     check_list?: {
       check_list_id: string,

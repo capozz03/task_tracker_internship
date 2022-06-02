@@ -14,6 +14,7 @@ export * as searchIcons from './SearchIcons';
 export * as detailsIcons from './DetailsIcons';
 export * as alertIcons from './AlertIcons';
 export * as attachmentsIcons from './AttachmentsIcons';
+export * as historyIcons from './TaskHistory';
 export {
   PencilIcon,
   PlusIcons,
