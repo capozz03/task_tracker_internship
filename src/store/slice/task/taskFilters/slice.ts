@@ -57,6 +57,7 @@ const filtersSlice = createSlice({
     resetFilters(state) {
       state.filters = {
         ...initialState.filters,
+        assigned_to_me: state.filters.assigned_to_me,
       };
     },
   },
