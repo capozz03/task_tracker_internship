@@ -21,6 +21,7 @@ import { CollapseHeader, CollapseMembersHeader } from './MembersPanel/MemberPane
 import { alert } from 'shared/ui';
 
 const TaskModal = (props: ModalProps) => {
+  const { visible } = props;
   const dispatch = useDispatch();
   const task = useSelector(TaskFormSlice.getTask);
   const roles = useSelector(TaskFormSlice.getRoles);
@@ -84,10 +85,10 @@ const TaskModal = (props: ModalProps) => {
   };
 
   useEffect(() => {
-    if (formResultRequired && !formResult) {
+    if (visible && formResultRequired && !(formResult && formResult.length)) {
       alert('Важная информация для ответственных: нужно резюме', 'info');
     }
-  }, [formResultRequired]);
+  }, [formResult]);
 
   return (
     <Modal

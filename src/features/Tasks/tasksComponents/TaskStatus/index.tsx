@@ -15,9 +15,10 @@ const TaskStatus = ({ ...props }: SelectProps) => {
     });
   };
   const currentStatus = taskStatuses.find((el) => el.status === props.defaultValue)!.taskStatusId;
+
   useEffect(() => {
     changeTaskStatus(currentStatus);
-  }, []);
+  }, [props.defaultValue]);
 
   const onClick: MouseEventHandler<HTMLElement> = (e) => {
     e.stopPropagation();
@@ -26,7 +27,7 @@ const TaskStatus = ({ ...props }: SelectProps) => {
   return (
     <Select
       className={style.taskStatus}
-      defaultValue={currentStatus}
+      value={currentStatus}
       bordered={false}
       showArrow={false}
       dropdownMatchSelectWidth={false}

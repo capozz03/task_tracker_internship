@@ -4,6 +4,7 @@ import { TTaskSearch, TTasksReducer, TTaskStatusChange } from '../entities';
 import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice, TaskFailedSlice } from 'store/slice';
 import { TFiltersSlice } from '../taskFilters/slice';
 import { TaskStatuses } from 'shared';
+import { setFormResult } from '../taskForm';
 
 const statusId = TaskStatuses.FAILED;
 
@@ -63,6 +64,14 @@ export const changeStatusTaskAsync = createAsyncThunk(
             per_page: paginationInCompleted!.per_page,
             page: paginationInCompleted!.page_current,
             ...taskFilters.filters,
+          }),
+        );
+        dispatch(
+          setFormResult({
+            form_result: {
+              taskId: params.task_id,
+              formResult: [],
+            },
           }),
         );
       }

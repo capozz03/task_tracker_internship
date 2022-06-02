@@ -7,7 +7,6 @@ export type TFormResultChangeResponse = {
 export type TFormResultChangeProps = {
   form_result: {
     taskId: string;
-    resume: string;
     formResult: TFormResult[];
   };
 };
