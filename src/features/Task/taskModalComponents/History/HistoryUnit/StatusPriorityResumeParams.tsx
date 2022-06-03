@@ -63,13 +63,19 @@ function getStatusPriorityResumeParams(unit: THistoryUnit): TParams {
           <div className={styles.Resume}>
             <p className={styles.Title}>Резюме: </p>
             <p className={styles.Content}>
-              { unit.params.form_result?.filter((field) => field.field_name === 'resume')[0].value }
+              {
+                unit.params.form_result && !!unit.params.form_result.length
+                && unit.params.form_result?.filter((field) => field.field_name === 'resume')[0].value
+              }
             </p>
           </div>
           <div className={styles.Comment}>
             <p className={styles.Title}>Комментарий: </p>
             <p className={styles.Content}>
-              { unit.params.form_result?.filter((field) => field.field_name === 'comment')[0].value }
+              {
+                unit.params.form_result && !!unit.params.form_result.length
+                && unit.params.form_result?.filter((field) => field.field_name === 'comment')[0].value
+              }
             </p>
           </div>
         </div>
