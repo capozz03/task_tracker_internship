@@ -57,7 +57,7 @@ const NotificationRoleAssign = ({ notification }: NotificationProps) => {
           <div className={styles.contentWithMarginTop}>
             { event.params.tag && <Tag tag={event.params.tag} /> }
             { event.params.priority && <PriorityStatus type={event.params.priority.name} /> }
-            { event.params.form_result && event.params.form_result[0].field_name === 'resume' && (
+            { event.params.form_result && event.params.form_result[0]?.field_name === 'resume' && (
               <>
                 <div>
                   Резюме:
