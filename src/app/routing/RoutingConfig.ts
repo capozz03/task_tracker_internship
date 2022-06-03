@@ -1,5 +1,4 @@
-import { AuthPage, TaskPage, TasksPage } from 'pages';
-import { MainPage } from 'pages/MainPage';
+import { AuthPage, TasksPage } from 'pages';
 import { routes } from 'shared';
 /* global JSX */
 
@@ -19,25 +18,13 @@ type RoutingConfigType = {
 export const RoutingConfig: RoutingConfigType = [
   {
     path: routes.main,
-    element: MainPage,
+    element: TasksPage,
     private: true,
     children: [],
   },
   {
     path: routes.auth,
     element: AuthPage,
-    children: [],
-  },
-  {
-    path: routes.task,
-    element: TaskPage,
-    private: true,
-    children: [],
-  },
-  {
-    path: routes.tasks,
-    element: TasksPage,
-    private: true,
     children: [],
   },
 ];

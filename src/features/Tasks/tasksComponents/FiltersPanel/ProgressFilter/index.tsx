@@ -40,7 +40,8 @@ const ProgressFilter = () => {
       />
       <span className={styles.title}>
         {minProgress}
-        %+
+        %
+        {minProgress < 100 && '+'}
       </span>
     </div>
   );

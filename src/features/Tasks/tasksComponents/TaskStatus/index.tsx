@@ -5,12 +5,14 @@ import { taskStatuses } from './constants';
 
 const TaskStatus = ({ ...props }: SelectProps) => {
   const [color, setColor] = useState<string>('#50B5FF');
+  const [statusId, setStatusId] = useState(props.defaultValue);
   const { Option } = Select;
 
   const changeTaskStatus = (e: string) => {
     Object.values(taskStatuses).forEach(({ color, taskStatusId }) => {
       if (e === taskStatusId) {
         setColor(color);
+        setStatusId(taskStatusId);
       }
     });
   };
@@ -22,6 +24,22 @@ const TaskStatus = ({ ...props }: SelectProps) => {
 
   const onClick: MouseEventHandler<HTMLElement> = (e) => {
     e.stopPropagation();
+  };
+
+  const onMouseEnter: MouseEventHandler<HTMLElement> = () => {
+    Object.values(taskStatuses).forEach(({ hoverColor, taskStatusId }) => {
+      if (statusId === taskStatusId) {
+        setColor(hoverColor);
+      }
+    });
+  };
+
+  const onMouseLeave: MouseEventHandler<HTMLElement> = () => {
+    Object.values(taskStatuses).forEach(({ color, taskStatusId }) => {
+      if (statusId === taskStatusId) {
+        setColor(color);
+      }
+    });
   };
 
   return (
@@ -37,6 +55,8 @@ const TaskStatus = ({ ...props }: SelectProps) => {
       style={{ backgroundColor: `${color}` }}
       onChange={props.onChange}
       onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       {taskStatuses.map(({ status, taskStatusId }) => (
         <Option key={taskStatusId} value={taskStatusId} className={style.taskStatusItem}>

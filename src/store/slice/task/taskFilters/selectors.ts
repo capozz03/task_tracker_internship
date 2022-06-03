@@ -13,7 +13,9 @@ export const getIsFiltersMenuShow = createSelector(
   ({ isFiltersMenuShow }) => isFiltersMenuShow,
 );
 export const getIsFiltersResetButtonShow = createSelector(getFiltersSliceStore, ({ filters }) =>
-  Object.values(filters).some((value) => !!value),
+  Object.entries(filters)
+    .filter(([key]) => key !== 'assigned_to_me')
+    .some(([, value]) => !!value),
 );
 export const getFiltersCount = createSelector(getFiltersSliceStore, ({ filters }) =>
   Object.values(filters).reduce((prev: number, current) => {

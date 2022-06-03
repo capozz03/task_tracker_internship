@@ -2,6 +2,7 @@
 
 .taskModal {
   margin-top: 0 !important;
+  top: 0 !important;
 
   :global(.ant-modal-content) {
     background: $grey-100;
