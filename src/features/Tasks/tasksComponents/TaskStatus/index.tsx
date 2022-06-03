@@ -55,6 +55,7 @@ const TaskStatus = ({ ...props }: SelectProps) => {
       onClick={onClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
     >
       {taskStatuses.map(({ status, taskStatusId }) => (
         <Option key={taskStatusId} value={taskStatusId} className={style.taskStatusItem}>

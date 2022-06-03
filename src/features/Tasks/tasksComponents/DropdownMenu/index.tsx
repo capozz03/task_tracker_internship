@@ -74,6 +74,7 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
     >
       <Dropdown.Button
         className={style.dropdownButton}
+        getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}
         overlay={menu}
         icon={<EllipsisOutlined className={style.dropdownIcon} />}
         destroyPopupOnHide

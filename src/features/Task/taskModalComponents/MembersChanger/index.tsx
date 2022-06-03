@@ -117,6 +117,7 @@ const MembersChanger = ({ buttonType }: TProps) => {
 
   return (
     <Dropdown
+      getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
       overlay={menu}
       trigger={['click']}
       visible={visible}

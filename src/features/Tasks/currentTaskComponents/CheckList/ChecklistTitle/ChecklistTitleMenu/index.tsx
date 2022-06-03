@@ -39,6 +39,7 @@ const ChecklistTitleMenu = ({ checkList, editItem }: CheckboxMenuProps) => {
       className={styles.dropdownButton}
       overlay={menu}
       trigger={['click']}
+      getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
       icon={<EllipsisOutlined className={styles.dropdownIcon} />}
     />
   );

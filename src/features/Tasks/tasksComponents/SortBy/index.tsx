@@ -36,6 +36,7 @@ export const SortByPCScreen = ({
     <div className={style.sortByWrapper}>
       <div className={style.sortByItemTitle}>Упорядочить по:</div>
       <Select
+        getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}
         className={style.sortByItemSelect}
         suffixIcon={
           <CaretDownOutlined className="ant-select-suffix" style={{ color: '#92929D' }} />
@@ -96,7 +97,7 @@ export const SortByMobileScreen = ({ disabled, setSortTasks }: SetSortTypePropsM
 
   return (
     <div className={style.sortByWrapper}>
-      <Dropdown disabled={disabled} overlay={menu} trigger={['click']} placement="bottomRight">
+      <Dropdown disabled={disabled} overlay={menu} trigger={['click']} placement="bottomRight" getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}>
         <Icon component={IconShape} />
       </Dropdown>
     </div>

@@ -66,6 +66,7 @@ const ContributorsFilter = () => {
         dropdownClassName={styles.contributorsSelectDropdown}
         mode="multiple"
         placeholder="Выберите ..."
+        getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}
         showArrow
         filterOption={false}
         notFoundContent={notFoundContent}
