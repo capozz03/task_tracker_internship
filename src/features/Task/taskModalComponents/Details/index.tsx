@@ -129,18 +129,18 @@ const Details = ({ taskId }: TDetailsProps) => {
           )
         }
         {
-          !categoryView.priority
-          && (
-            <button type="button" onClick={setStateButton('priority', true)} className={styles.button}>
-              <PriorityIcon />
-            </button>
-          )
-        }
-        {
           !categoryView.tags
           && (
             <button type="button" onClick={setStateButton('tags', true)} className={styles.button}>
               <TagsIcon />
+            </button>
+          )
+        }
+        {
+          !categoryView.priority
+          && (
+            <button type="button" onClick={setStateButton('priority', true)} className={styles.button}>
+              <PriorityIcon />
             </button>
           )
         }
