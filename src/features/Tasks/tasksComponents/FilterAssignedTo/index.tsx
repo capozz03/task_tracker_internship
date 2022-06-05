@@ -4,7 +4,13 @@ import styles from './index.module.scss';
 import { assignedButtons } from './constants';
 import { IconAll, IconMy } from './icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { TaskFilters, TaskInboxSlice, TaskInWorkSlice, TaskCompletedSlice } from 'store/slice';
+import {
+  TaskFilters,
+  TaskInboxSlice,
+  TaskInWorkSlice,
+  TaskCompletedSlice,
+  TaskFailedSlice,
+} from 'store/slice';
 
 const FilterAssigned = () => {
   const dispatch = useDispatch();
@@ -12,18 +18,28 @@ const FilterAssigned = () => {
   const taskInbox = useSelector(TaskInboxSlice.getTasks);
   const taskInWork = useSelector(TaskInWorkSlice.getTasks);
   const taskCompleted = useSelector(TaskCompletedSlice.getTasks);
+  const taskFailed = useSelector(TaskFailedSlice.getTasks);
   let countTasks = 0;
-  if (taskInbox?.length !== undefined
+  if (
+    taskInbox?.length !== undefined
     && taskInWork?.length !== undefined
-    && taskCompleted?.length !== undefined) {
-    countTasks = taskInbox.length + taskInWork.length + taskCompleted.length;
+    && taskCompleted?.length !== undefined
+    && taskFailed?.length !== undefined
+  ) {
+    countTasks = taskInbox.length + taskInWork.length + taskCompleted.length + taskFailed.length;
   }
   const onChange = (e: RadioChangeEvent) => {
     dispatch(TaskFilters.setFilterAssignedTo(e.target.value));
   };
 
   return (
-    <Radio.Group disabled={countTasks === 0 && value === assignedButtons[0].value} value={value} optionType="button" buttonStyle="outline" onChange={onChange}>
+    <Radio.Group
+      disabled={countTasks === 0 && value === assignedButtons[0].value}
+      value={value}
+      optionType="button"
+      buttonStyle="outline"
+      onChange={onChange}
+    >
       <Radio.Button value={assignedButtons[0].value}>
         <span className={styles.wrapper}>
           <IconAll />
