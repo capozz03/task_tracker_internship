@@ -24,9 +24,21 @@ const DescriptionEditor = ({
 
   const config = {
     readonly: false,
+    language: 'ru',
     placeholder: 'Начните писать...',
     tabIndex: 1,
-    buttons: ['bold', 'italic', 'underline', 'fontsize', 'link', 'image', 'brush', 'left', 'center', 'right'],
+    buttons: [
+      'bold',
+      'italic',
+      'underline',
+      'fontsize',
+      'link',
+      'image',
+      'brush',
+      'left',
+      'center',
+      'right',
+    ],
     removeButtons: [
       'ul',
       'ol',
