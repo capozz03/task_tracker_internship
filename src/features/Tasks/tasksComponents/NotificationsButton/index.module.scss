@@ -1,0 +1,18 @@
+@import "src/shared/assets/styles";
+
+.button {
+  display: flex;
+  width: 18px;
+  height: 21px;
+  position: relative;
+
+  &.active .notification {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    right: 0;
+    top: 0;
+    border-radius: 50%;
+    background: $error-default;
+  }
+}

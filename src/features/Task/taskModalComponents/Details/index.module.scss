@@ -1,0 +1,30 @@
+@import "src/shared/assets/styles";
+
+.buttonsWrapper {
+    height: 20px;
+    padding: 5px;
+    padding-left: 30px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 20px;
+}
+
+.button {
+    width: 20px;
+    margin: 0;
+    padding: 0;
+    height: 20px;
+    border: none;
+    background: inherit;
+    cursor: pointer;
+
+    & > svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    &:hover > svg > path {
+        fill: $grey-700;
+    }
+}

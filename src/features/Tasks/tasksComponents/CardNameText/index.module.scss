@@ -1,0 +1,26 @@
+@import "../../../../shared/assets/styles/index";
+
+.text {
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+  color: $grey-900;
+  font: $h5;
+  max-width: 100%;
+  max-height: 60px;
+  @include media-breakpoint-down(sm) {
+    max-height: 80px;
+    -webkit-line-clamp: 3;
+  }
+  @include media-breakpoint-down(xsplus) {
+    max-height: 100px;
+    -webkit-line-clamp: 3;
+  }
+  @include media-breakpoint-down(xs) {
+    max-height: 120px;
+    -webkit-line-clamp: 3;
+  }
+}

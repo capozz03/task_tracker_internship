@@ -1,0 +1,25 @@
+@import 'shared/assets/styles';
+
+.sortByWrapper {
+  .sortByItemTitle {
+    display: inline-block;
+    font: $p-light;
+    color: $grey-600;
+  }
+  .sortByItemSelect {
+    display: inline-block;
+    font: $p-medium;
+    color: $grey-800;
+  }
+}
+
+.dropdown {
+  border-radius: 8px !important;
+  .dropdownItem:hover {
+    background-color: #0062ff0d;
+  }
+}
+
+.activeSort {
+  background-color: #0062ff0d;
+}

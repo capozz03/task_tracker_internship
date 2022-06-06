@@ -1,0 +1,25 @@
+@import "src/shared/assets/styles/vars";
+
+.title{
+  display: flex;
+  color: $grey-900;
+  font: $p-medium;
+  align-items: center;
+  margin-bottom: 20px;
+  .titleText{
+    margin-left: 18px;
+    flex-grow: 1;
+  }
+  .checklistTitleMenu{
+    opacity: 0;
+    @media screen and (max-width: 1024px){
+      opacity: 1;
+    }
+  }
+  &:hover{
+    .checklistTitleMenu{
+      opacity: 1;
+    }
+  }
+
+}

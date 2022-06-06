@@ -1,0 +1,56 @@
+@import 'src/shared/assets/styles';
+
+.text {
+  font: $p-medium;
+}
+
+:global(.ant-radio-group) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0;
+  height: 36px;
+}
+
+:global(.ant-radio-button-wrapper) {
+  background: transparent !important;
+  height: 100% !important;
+  color: $grey-800 !important;
+  border: 0 !important;
+  text-align: center;
+  transition: background 1s, border 1s, filter 1s;
+
+  &:not(:last-child) {
+    margin-right: 16px !important;
+  }
+
+  &::before {
+    background-color: transparent !important;
+  }
+
+  &:focus-within {
+    box-shadow: 0 0 !important;
+  }
+
+  svg {
+    margin: auto 8px auto 0;
+  }
+
+  .wrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+}
+
+:global(.ant-radio-button){
+  border: 0 solid $grey-0;
+}
+
+:global(.ant-radio-button-checked) {
+  filter: drop-shadow(0px 1px 4px rgba($grey-800, 0.1));
+  background: $grey-0;
+  border-radius: 8px;
+  border: 1px solid $grey-300;
+  transition: 300ms ;
+}

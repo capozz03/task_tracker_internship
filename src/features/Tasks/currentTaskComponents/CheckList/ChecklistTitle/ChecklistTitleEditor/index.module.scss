@@ -1,0 +1,58 @@
+@import "src/shared/assets/styles/vars";
+
+.title{
+  padding: 0 60px 0 0;
+  width: 100%;
+}
+.btnEdit{
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  bottom: -5px;
+  margin-left: 4px;
+}
+
+.textarea{
+  border: 0;
+  width: 100%;
+  resize: none;
+  height: auto;
+  outline: none;
+  border: none;
+  margin: 0;
+  border-bottom: 1px solid $main-blue;
+  padding: 5px 65px 5px 5px;
+  &:focus{
+    outline: none;
+    border-bottom: 1px solid $main-blue;
+  }
+}
+
+.formEdit{
+  position: relative;
+}
+
+.btnGroup{
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  color: $grey-600 !important;
+  button{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+}
+
+.hidden{
+  display: none;
+}
+
+.visible{
+  display: block;
+  width: 100%;
+}

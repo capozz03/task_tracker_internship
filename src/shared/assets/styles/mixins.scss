@@ -1,0 +1,32 @@
+@mixin media-breakpoint-down($size) {
+  @if $size == xxl {
+    @media (max-width: 1400px) {
+      @content;
+    }
+  } @else if $size == xl {
+    @media (max-width: 1024px) {
+      @content;
+    }
+  } @else if $size == lg {
+    @media (max-width: 992px) {
+      @content;
+    }
+  } @else if $size == md {
+    @media (max-width: 768px) {
+      @content;
+    }
+  } @else if $size == sm {
+    @media (max-width: 576px) {
+      @content;
+    }
+  }
+    @else if $size == xsplus {
+      @media (max-width: 400px) {
+        @content;
+      }
+  } @else if $size == xs {
+    @media (max-width: 360px) {
+      @content;
+    }
+  }
+}

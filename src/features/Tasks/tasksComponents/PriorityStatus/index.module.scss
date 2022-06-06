@@ -1,0 +1,37 @@
+@import 'src/shared/assets/styles/vars';
+
+.priorityStatus {
+  font: $p-regular;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .high {
+    background-color: $colors-red;
+  }
+
+  .normal {
+    background-color: $colors-yellow;
+  }
+
+  .low {
+    background-color: $colors-salad;
+  }
+
+  .white {
+    background-color: $grey-600;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin: 0 8px;
+  }
+
+  .text {
+    font: $p-roboto-regular;
+    color: $grey-600;
+  }
+}

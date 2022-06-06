@@ -1,0 +1,64 @@
+@import "src/shared/assets/styles";
+
+:global(.ant-row.ant-form-item) {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 0;
+}
+
+:global(label.ant-form-item-required) {
+    height: auto !important;
+    font: $p-regular !important;
+    line-height: 24px;
+    color: #797988 !important;
+    
+    &::before, &::after {
+        content: "" !important;
+        margin: 0 !important;
+    }
+}
+
+.input {
+    width: 100%;
+    height: 48px;
+    margin-top: 8px;
+    background-color: $grey-0;
+    border: 1px solid #7C7C8A;
+    border-radius: 8px;
+}
+
+:global(.ant-col.ant-form-item-control) {
+    align-self: stretch;
+}
+
+:global(.ant-btn.ant-btn-primary) {
+    width: 100%;
+    height: 48px;
+    margin-top: 40px;
+    padding: 8px 16px;
+    background-color: $main-blue;
+    border-radius: 8px;
+
+    & > span {
+        font: $p-medium;
+        color: $grey-0;
+    }
+}
+
+.formWrapper {
+    width: 424px;
+    margin: 10px;
+    padding: 56px;
+
+    background-color: $grey-0;
+    border-radius: 16px;
+    box-shadow: 0 8px 56px rgba($grey-900, 0.04);
+}
+
+.formTitle {
+    margin-bottom: 40px;
+    font: $h2;
+    color: $grey-900;
+}

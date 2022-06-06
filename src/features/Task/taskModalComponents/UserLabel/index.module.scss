@@ -1,0 +1,60 @@
+@import "src/shared/assets/styles";
+
+.label {
+    min-height: 30px;
+    padding: 0 10px;
+    box-sizing: border-box;
+
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+
+    border-radius: 16px;
+    border: 1px solid $grey-300;
+    background-color: $grey-200;
+}
+
+.label:hover {
+    background-color: $grey-300;
+    cursor: pointer;
+}
+
+.label > div {
+    width: 20px;
+    height: 20px;
+}
+
+.label > p {
+    margin: 0;
+    padding: 3px 0;
+    display: inline-block;
+    font: $p-roboto-regular;
+    color: $grey-800;
+}
+
+.button {
+    width: 16px;
+    height: 100%;
+    margin: 0 2px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background: inherit;
+}
+
+.button > svg {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.button > svg > path {
+    fill: $grey-600 !important;
+}
+
+.button:hover > svg > path {
+    fill: $main-blue !important;
+}

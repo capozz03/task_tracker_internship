@@ -1,0 +1,61 @@
+@import 'src/shared/assets/styles';
+
+.headerDescription {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+  flex-direction: row;
+  height: 24px;
+}
+
+.iconDescription {
+  margin-right: 16px;
+}
+
+.description {
+  font: $h5;
+  margin-right: 16px;
+}
+
+.changeButton {
+  background: $grey-200 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  & > span {
+    font: $h6-regular !important;
+    color: $grey-600 !important;
+  }
+  &:hover {
+    background: $main-blue-hover !important;
+    & > span {
+      color: $grey-0 !important;
+    }
+  }
+}
+
+.placeholderDecription {
+  margin-top: 16px;
+  & > .descriptionPreview {
+    color: $grey-600;
+  }
+}
+
+.desc {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-x: auto;
+  text-overflow: ellipsis;
+}
+
+.expanded {
+  -webkit-line-clamp: 2;
+  overflow-x: hidden;
+}
+
+.expandBtn {
+  font: $p-regular;
+  color: $main-blue !important;
+  cursor: pointer;
+}

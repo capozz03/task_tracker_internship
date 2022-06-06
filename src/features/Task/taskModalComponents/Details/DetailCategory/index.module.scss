@@ -1,0 +1,72 @@
+@import "src/shared/assets/styles";
+
+.category {
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.category:hover .removeButton {
+    display: block;
+}
+
+.titleWrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    min-width: 120px;
+    margin: 0;
+    padding: 0 0 0 30px;
+}
+
+.title {
+    display: inline-block;
+    margin: 7px 0;
+    font: $p-regular;
+}
+
+.titleDetails {
+    color: $grey-800;
+}
+
+.titleMembers {
+    color: $grey-700;
+}
+
+.removeButton {
+    width: 17px;
+    height: 17px;
+    margin-left: 7px;
+    padding: 0;
+    padding-top: 8px;
+    border: none;
+    background: inherit;
+    cursor: pointer;
+    display: none;
+
+    @include media-breakpoint-down(lg) {
+        display: block;
+    }
+
+    & > svg {
+        width: 17px;
+        height: 17px;
+    }
+
+    &:hover > svg > path {
+        fill: rgba($colors-red, 0.8);
+    }
+}
+
+.labels {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 8px;
+}

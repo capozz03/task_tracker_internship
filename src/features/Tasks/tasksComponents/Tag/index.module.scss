@@ -1,0 +1,31 @@
+@import "src/shared/assets/styles/vars";
+
+.mark{
+  border-radius: 16px;
+  //padding: 4px 17px;
+  padding-left: 17px;
+  padding-right: 17px;
+  height: 28px;
+  font: $h6-medium;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btnDelete{
+  background-color: transparent;
+  border: none;
+  outline: none;
+  position: relative;
+  left: 8px;
+  height: 14px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.btnDelete:hover{
+
+}
+
+.btnDelete:active{
+
+}

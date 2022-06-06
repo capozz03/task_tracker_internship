@@ -1,0 +1,19 @@
+@import "src/shared/assets/styles/vars";
+
+.markGroup{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  position: relative;
+  span{
+    margin-right: 4px;
+    margin-bottom: 4px;
+    margin-top: 4px;
+  }
+}
+
+.others{
+  font: $h6-medium;
+  color: $grey-900;
+}

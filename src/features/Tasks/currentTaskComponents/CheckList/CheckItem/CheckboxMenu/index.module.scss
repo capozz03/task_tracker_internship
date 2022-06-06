@@ -1,0 +1,21 @@
+@import "src/shared/assets/styles/vars";
+
+
+.dropdownMenu{
+  color: $grey-500;
+  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  border-radius: 8px !important;
+
+}
+.dropdownButton{
+  font: $p-regular;
+  border-radius: 8px !important;
+
+  :global(.ant-btn){
+    border: none !important;
+    box-shadow: none !important;
+  }
+}

@@ -1,0 +1,23 @@
+@import "src/shared/assets/styles/vars";
+
+.input{
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font: $p-regular;
+  color: $grey-800;
+  padding: 15px 29px 15px 30px;
+  max-width: 294px;
+  background-image: url("/shared/assets/images/icons/check.svg");
+  background-repeat: no-repeat;
+  background-position: left center;
+  position: relative;
+  border-bottom: 1px solid $grey-500;
+  &::placeholder{
+    color: $grey-500;
+  }
+  @media screen and (max-width: 500px) {
+    max-width: 100%;
+    width: 100%;
+  }
+}

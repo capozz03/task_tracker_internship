@@ -1,0 +1,14 @@
+export * as MainSlice from './main';
+export * as TaskInWorkSlice from './task/taskInWork';
+export * as TaskCompletedSlice from './task/taskCompleted';
+export * as TaskInboxSlice from './task/taskInbox';
+export * as TaskFailedSlice from './task/taskFailed';
+export * as UserSlice from './user';
+export * as UsersSlice from './users';
+export * as CommonSlice from './task/commonActions';
+export * as TaskFormSlice from './task/taskForm';
+export * as TaskFilters from './task/taskFilters';
+export * as TagsSlice from './task/tags';
+export * as HistorySlice from './task/history';
+export * as NotificationsSlice from './task/notifications';
+export * as SubscribesSlice from './task/subscribes';

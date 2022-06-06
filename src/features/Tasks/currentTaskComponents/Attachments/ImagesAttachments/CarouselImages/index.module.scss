@@ -1,0 +1,68 @@
+@import 'src/shared/assets/styles';
+
+.carouselWrapper {
+  width: 100%;
+}
+
+.contentStyle {
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+}
+.carouselGallery {
+  :global(.carousel img) {
+    border-radius: 8px;
+    height: 100%;
+    width: auto;
+    margin: 0 auto;
+  }
+  :global(.carousel .thumb) {
+    text-align: center;
+    border-radius: 8px;
+    border: 2px solid transparent !important;
+    padding: 0;
+    img {
+      border: 2px solid transparent !important;
+      border-radius: 8px;
+      width: 80px;
+    }
+    &:hover {
+      border: 2px solid #0062ff !important;
+      border-radius: 8px;
+      padding: 0;
+    }
+  }
+  :global(.carousel .thumbs) {
+    text-align: center;
+    padding: 0;
+  }
+  :global(.carousel .thumb.selected) {
+    border: 2px solid #0062ff !important;
+    border-radius: 8px;
+    padding: 0;
+  }
+  :global(.carousel *) {
+    max-height: 50vh;
+    @media (max-width: 768px) {
+      max-height: 35vh;
+    }
+  }
+}
+
+.gallery_previous,
+.gallery_next {
+  position: absolute !important;
+  top: 30%;
+  z-index: 1;
+}
+
+.gallery_next {
+  right: 0;
+}
+
+.gallery_previous {
+  left: 0;
+}
