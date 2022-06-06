@@ -18,7 +18,7 @@ export type TRolesUnit = {
   userId: string | number;
   userName: string;
   logo: string | undefined;
-  created: string;
+  created?: string;
 }
 
 export type TStateData = {
