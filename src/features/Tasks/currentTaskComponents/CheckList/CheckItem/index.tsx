@@ -73,6 +73,7 @@ const CheckItem = ({ item, checklistId }: CheckItemProps) => {
           checkListItemId={item.check_list_item_id}
           checkListId={checklistId}
           editItem={editItem}
+          className={styles.checkboxMenu}
         />
       </div>
     </li>);

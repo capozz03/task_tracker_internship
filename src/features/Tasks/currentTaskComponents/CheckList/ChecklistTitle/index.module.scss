@@ -10,4 +10,16 @@
     margin-left: 18px;
     flex-grow: 1;
   }
+  .checklistTitleMenu{
+    opacity: 0;
+    @media screen and (max-width: 1024px){
+      opacity: 1;
+    }
+  }
+  &:hover{
+    .checklistTitleMenu{
+      opacity: 1;
+    }
+  }
+
 }
