@@ -1,53 +1,85 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Tag from 'features/Tasks/tasksComponents/Tag';
 import { TTagsTask } from 'store/slice/task/entities';
 import styles from './index.module.scss';
+import { useDispatch } from 'react-redux';
+import { TaskFormSlice } from 'store/slice';
+import TagsChanger from '../TagsChanger';
+import { Tooltip } from 'antd';
 
 type TagsGroupProps = {
-  tags: TTagsTask[]
+  tags: TTagsTask[],
+  taskId: string,
 }
 
-type OtherProps = {
-  count: number
-}
+const TagsGroup = ({ tags, taskId }:TagsGroupProps) => {
+  const dispatch = useDispatch();
+  const [showAll, setShowAll] = useState(false);
 
-const Other = ({ count }: OtherProps) => (
-  <span className={styles.others}>
-    {`+${count}`}
-  </span>
-);
+  const removeTag = (tagId: string) => () => {
+    dispatch(TaskFormSlice.removeTagToTask({ taskId, tagId }));
+  };
 
-const TagsGroup = ({ tags }:TagsGroupProps) => {
-  const wrap = useRef<HTMLDivElement | null>(null);
-  const [countElement, setCountElement] = useState(0);
+  const onClickShowAll = (e: any) => {
+    setShowAll(true);
+    e.stopPropagation();
+  };
 
-  useEffect(() => {
-    const trackingHeightWrapper = () => {
-      setCountElement(() => (
-        wrap.current!.offsetHeight < 70 && wrap.current!.offsetWidth > 170 ? 3 : 2
-      ));
-    };
-    window.addEventListener('resize', trackingHeightWrapper);
-    return () => {
-      window.removeEventListener('resize', trackingHeightWrapper);
-    };
-  }, []);
-
-  useEffect(() => {
-    setCountElement(wrap.current!.offsetHeight < 70 && wrap.current!.offsetWidth > 170 ? 3 : 2);
-  }, [wrap.current, window]);
   return (
-    <div ref={wrap} className={styles.markGroup}>
-      {tags.slice(0, countElement - 1).map((tag) => (
-        <Tag tag={tag.task_tag} key={tag.task_tag.task_tag_id} />
-      ))}
-      <div>
-        {tags.slice(countElement, countElement + 1).map((tag) => (
-          <Tag tag={tag.task_tag} key={tag.task_tag.task_tag_id} />
-        ))}
-        { tags.length - countElement > 0 && <Other count={tags.length - countElement} /> }
+    <div className={styles.wrap}>
+      <div className={styles.markGroup}>
+        {
+          tags.slice(0, 2).map((tag) => (
+            <Tag
+              tag={tag.task_tag}
+              key={tag.task_tag.task_tag_id}
+              deleteHandle={removeTag(tag.task_tag.task_tag_id)}
+            />
+          ))
+        }
+        {
+          !showAll
+            ? (
+              <div className={styles.lastTag}>
+                { tags.length > 2
+                && (<Tag
+                  tag={tags[2].task_tag}
+                  deleteHandle={removeTag(tags[2].task_tag.task_tag_id)}
+                />)}
+                {
+                tags.length > 3
+                && (
+                <Tooltip title="Показать все">
+                  <button type="button" className={styles.othersButton} onClick={onClickShowAll}>
+                    {`+${tags.length - 3}`}
+                  </button>
+                </Tooltip>)
+              }
+                <span className={styles.addButtonWrapper}>
+                  <TagsChanger taskTags={tags} currentTaskId={taskId} />
+                </span>
+              </div>
+            )
+            : (
+              <>
+                {
+                  tags.slice(2).map((tag) => (
+                    <Tag
+                      tag={tag.task_tag}
+                      key={tag.task_tag.task_tag_id}
+                      deleteHandle={removeTag(tag.task_tag.task_tag_id)}
+                    />
+                  ))
+                }
+                <span className={styles.addButtonWrapper}>
+                  <TagsChanger taskTags={tags} currentTaskId={taskId} />
+                </span>
+              </>
+            )
+        }
       </div>
-    </div>);
+    </div>
+  );
 };
 
 export default TagsGroup;

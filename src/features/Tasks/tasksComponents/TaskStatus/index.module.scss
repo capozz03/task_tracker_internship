@@ -17,6 +17,10 @@
   }
   span {
     font-weight: 700;
+
+    &[title] {
+      pointer-events: none;
+    }
   }
 }
 

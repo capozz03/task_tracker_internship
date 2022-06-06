@@ -8,24 +8,32 @@ type TagProps = {
   deleteHandle?: () => void,
 }
 
-const Tag: FC<TagProps> = ({ tag, deleteHandle }) => (
-  <span
-    className={styles.mark}
-    style={{
-      border: `1px solid ${tag.color}`,
-      backgroundColor: `${tag.color}0D`,
-      color: `${tag.color}`,
-    }}
-  >
-    { tag.name }
-    {
-        deleteHandle && (
-          <button onClick={deleteHandle} type="button" className={styles.btnDelete}>
-            <XIcon />
-          </button>
-        )
-      }
+const Tag: FC<TagProps> = ({ tag, deleteHandle }) => {
+  const onClick = (e: any) => {
+    if (deleteHandle) deleteHandle();
+    e.stopPropagation();
+  };
 
-  </span>);
+  return (
+    <span
+      className={styles.mark}
+      style={{
+        border: `1px solid ${tag.color}`,
+        backgroundColor: `${tag.color}0D`,
+        color: `${tag.color}`,
+      }}
+    >
+      { tag.name }
+      {
+          deleteHandle && (
+            <button onClick={onClick} type="button" className={styles.btnDelete}>
+              <XIcon />
+            </button>
+          )
+        }
+
+    </span>
+  );
+};
 
 export default Tag;

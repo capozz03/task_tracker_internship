@@ -50,7 +50,7 @@ const TaskFailed = ({ task }: TaskFailedProps) => {
         <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
       </div>
       <div className={style.cardTagsGroup}>
-        <TagsGroup tags={task.tags} />
+        <TagsGroup tags={task.tags} taskId={task.task_id} />
       </div>
       <div className={style.cardProgress}>
         {task.progress && <Progress percent={task.progress.percent} size="small" strokeColor="#3DD598" />}

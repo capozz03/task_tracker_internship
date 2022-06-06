@@ -76,7 +76,7 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
         {task.priority && <PriorityStatus type={task.priority.name} />}
       </div>
       <div className={styles.cardTagsGroup}>
-        <TagsGroup tags={task.tags} />
+        <TagsGroup tags={task.tags} taskId={task.task_id} />
       </div>
       <div className={styles.cardUsers}>
         <UserAssignedToTask users={task.roles} />

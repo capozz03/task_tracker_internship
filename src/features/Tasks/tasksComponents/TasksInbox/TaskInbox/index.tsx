@@ -6,7 +6,6 @@ import { changeStatusTaskAsync } from 'store/slice/task/taskInbox/asyncActions';
 import TaskStatus from '../../TaskStatus';
 import DateWithIconClock from '../../DateWithIconClock';
 import TagsGroup from '../../TagsGroup';
-import PriorityStatus from '../../PriorityStatus';
 import UserAssignedToTask from '../../UserAssignedToTask';
 import DropdownMenu from 'features/Tasks/tasksComponents/DropdownMenu';
 import CardNameText from '../../CardNameText';
@@ -16,6 +15,7 @@ import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 import classNames from 'classnames';
 import moment, { now } from 'moment';
 import { SubscribesSlice } from 'store/slice';
+import PriorityChanger from '../../PriorityChanger';
 
 type TaskInboxProps = {
   task: TTask;
@@ -67,16 +67,16 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
       </div>
 
       <div className={styles.cardStatus}>
-        <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
+        <TaskStatus defaultValue={task.status.name} onChange={statusHandler} tooltip="Изменить статус" />
       </div>
       <div className={styles.cardDate}>
         <DateWithIconClock date={task.exec_stop} />
       </div>
       <div className={styles.cardPriority}>
-        {task.priority && <PriorityStatus type={task.priority.name} />}
+        <PriorityChanger priority={task.priority} currentTaskId={task.task_id} tooltip="Изменить приоритет" />
       </div>
       <div className={styles.cardTagsGroup}>
-        <TagsGroup tags={task.tags} />
+        <TagsGroup tags={task.tags} taskId={task.task_id} />
       </div>
       <div className={styles.cardUsers}>
         <UserAssignedToTask users={task.roles} />

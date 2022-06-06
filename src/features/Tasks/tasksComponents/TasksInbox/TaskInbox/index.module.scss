@@ -70,12 +70,14 @@
 }
 
 .cardDate {
+  min-width: 110px;
   grid-area: date;
   margin-left: 4.5px;
   align-self: center;
 }
 
 .cardPriority {
+  min-width: 120px;
   grid-area: priority;
   align-self: center;
 }
@@ -87,6 +89,7 @@
   align-items: center;
   flex-grow: 1;
   flex-shrink: 1;
+  cursor: pointer;
 }
 
 .cardUsers {
