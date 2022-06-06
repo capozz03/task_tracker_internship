@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Dropdown, Menu } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './index.module.scss';
 import { TaskFormSlice } from 'store/slice';
-import { EllipsisOutlined } from '@ant-design/icons';
 import { TTaskCheckList } from 'store/slice/task/entities';
+import classNames from 'classnames';
+import DropdownMoreButton from 'shared/ui/icons/DropdownMoreButton';
 
 type CheckboxMenuProps = {
   checkList: TTaskCheckList,
   editItem: () => void,
+  className?: string
 }
 
-const ChecklistTitleMenu = ({ checkList, editItem }: CheckboxMenuProps) => {
+const ChecklistTitleMenu: FC<CheckboxMenuProps> = ({ checkList, editItem, className }) => {
   const { Item } = Menu;
   const dispatch = useDispatch();
   const taskId = useSelector(TaskFormSlice.getTaskFormId);
@@ -39,8 +41,10 @@ const ChecklistTitleMenu = ({ checkList, editItem }: CheckboxMenuProps) => {
       className={styles.dropdownButton}
       overlay={menu}
       trigger={['click']}
+      icon={<DropdownMoreButton
+        className={classNames([styles.dropdownIcon, className])}
+      />}
       getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
-      icon={<EllipsisOutlined className={styles.dropdownIcon} />}
     />
   );
 };

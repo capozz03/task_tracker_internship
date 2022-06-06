@@ -47,7 +47,7 @@ const AttachMenu = ({ taskId }: AttachMenuProps) => {
   );
 
   return (
-    <Tooltip title="Добавить чек-лист или вложение">
+    <Tooltip title="Добавить чек-лист или вложение" placement="left">
       <Dropdown.Button
         getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
         className={styles.dropdownButton}

@@ -22,7 +22,7 @@ const AuthForm = () => {
 
   useEffect(() => {
     if (token) {
-      navigate('/tasks');
+      navigate('/');
       toast.dismiss();
     }
   }, [token]);
