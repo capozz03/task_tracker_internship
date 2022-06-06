@@ -28,7 +28,13 @@ const ChecklistTitle = ({ checkList }: ChecklistTitleProps) => {
           isEditing={isEditTitle}
         />
       </span>
-      <ChecklistTitleMenu checkList={checkList} editItem={editItem} />
+
+      <ChecklistTitleMenu
+        checkList={checkList}
+        editItem={editItem}
+        className={styles.checklistTitleMenu}
+      />
+
     </div>
   );
 };
