@@ -40,7 +40,7 @@ const UserAvatarMenu = () => {
   return (
     <Dropdown overlay={menu} trigger={['click']} overlayClassName={styles.dropdown}>
       <div className={styles.wrapper}>
-        <UserAvatar user={info || { user_id: '0', name: 'Unknown User' }} color="#FFC542" />
+        <UserAvatar positionTooltip="left" user={info || { user_id: '0', name: 'Unknown User' }} color="#FFC542" />
         <CaretDownOutlined className={styles.icon} />
       </div>
     </Dropdown>
