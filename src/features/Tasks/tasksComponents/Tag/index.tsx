@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styles from './index.module.scss';
 import { TTag } from 'store/slice/task/entities';
 import XIcon from 'shared/ui/icons/XIcon';
@@ -8,8 +8,8 @@ type TagProps = {
   deleteHandle?: () => void,
 }
 
-const Tag: FC<TagProps> = ({ tag, deleteHandle }) => {
-  const onClick = (e: any) => {
+const Tag = ({ tag, deleteHandle }: TagProps) => {
+  const onClick = (e: React.MouseEvent<HTMLElement>) => {
     if (deleteHandle) deleteHandle();
     e.stopPropagation();
   };

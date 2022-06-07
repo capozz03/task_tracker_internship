@@ -45,7 +45,7 @@ const PriorityChanger = ({ priority, currentTaskId, tooltip }: TProps) => {
     priorityChanger(currentTaskId || '', newPriorityName);
   };
 
-  const stopPropagation = (e: any) => e.stopPropagation();
+  const stopPropagation = (e: React.MouseEvent<HTMLElement>) => e.stopPropagation();
 
   return (
     <Tooltip title={tooltip || ''}>

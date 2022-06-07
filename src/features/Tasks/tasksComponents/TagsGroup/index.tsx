@@ -12,7 +12,7 @@ type TagsGroupProps = {
   taskId: string,
 }
 
-const TagsGroup = ({ tags, taskId }:TagsGroupProps) => {
+const TagsGroup = ({ tags, taskId }: TagsGroupProps) => {
   const dispatch = useDispatch();
   const [showAll, setShowAll] = useState(false);
 
@@ -20,7 +20,7 @@ const TagsGroup = ({ tags, taskId }:TagsGroupProps) => {
     dispatch(TaskFormSlice.removeTagToTask({ taskId, tagId }));
   };
 
-  const onClickShowAll = (e: any) => {
+  const onClickShowAll = (e: React.MouseEvent<HTMLElement>) => {
     setShowAll(true);
     e.stopPropagation();
   };

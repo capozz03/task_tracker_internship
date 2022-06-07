@@ -21,7 +21,7 @@ const DateChanger = ({ dateStartISO, dateStopISO, taskId }: TProps) => {
   const [start, setStart] = useState(dateStartISO ? moment(dateStartISO) : null);
   const [stop, setStop] = useState(dateStopISO ? moment(dateStopISO) : null);
 
-  const stopPropagation = (e: any) => e.stopPropagation();
+  const stopPropagation = (e: React.MouseEvent<HTMLElement>) => e.stopPropagation();
   const formatValue = (value: Moment) => formatDate(value, false);
 
   const onChangeStart = (date: Moment | null) => {
