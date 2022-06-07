@@ -21,14 +21,15 @@ const UserAssignedToTask = ({ users }: UserAssignedToTaskProps) => {
   const wrap = useRef<HTMLDivElement | null>(null);
   const [countElement, setCountElement] = useState(0);
   const [visible, setVisible] = useState(false);
-  const [list] = useState<TUsersLists>({
+  const [width, setWidth] = useState(0);
+
+  const list: TUsersLists = {
     author: users.find((user) => user.task_role.is_author),
     performer: users.find((user) => user.task_role.name === 'Исполнитель'),
     responsible: users.find((user) => user.task_role.name === 'Ответственный'),
     observers: users.filter((user) => user.task_role.name === 'Наблюдатель'),
-  });
+  };
 
-  const [width, setWidth] = useState(0);
   const colors = ['#FFC542', '#A461D8', '#A4E3FE', '#FC5A5A', '#A461D8', '#FF9AD5', '#50B5FF'];
   let usersNew: TRoles[] = [];
   usersNew = uniqBy(users, (e) => e.assign_user.user_id);
@@ -97,7 +98,7 @@ const UserAssignedToTask = ({ users }: UserAssignedToTaskProps) => {
             />
           </>
         )}
-      { !!list.observers && list.observers.length
+      { !!list.observers && !!list.observers.length
           && (
             <>
               <h4>Наблюдатели:</h4>

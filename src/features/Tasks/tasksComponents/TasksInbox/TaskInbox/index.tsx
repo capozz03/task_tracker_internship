@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { TTask } from 'store/slice/task/entities';
 import { changeStatusTaskAsync } from 'store/slice/task/taskInbox/asyncActions';
 import TaskStatus from '../../TaskStatus';
-import DateWithIconClock from '../../DateWithIconClock';
 import TagsGroup from '../../TagsGroup';
 import UserAssignedToTask from '../../UserAssignedToTask';
 import DropdownMenu from 'features/Tasks/tasksComponents/DropdownMenu';
@@ -16,6 +15,7 @@ import classNames from 'classnames';
 import moment, { now } from 'moment';
 import { SubscribesSlice } from 'store/slice';
 import PriorityChanger from '../../PriorityChanger';
+import DateChanger from '../../DateChanger';
 
 type TaskInboxProps = {
   task: TTask;
@@ -70,7 +70,11 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
         <TaskStatus defaultValue={task.status.name} onChange={statusHandler} tooltip="Изменить статус" />
       </div>
       <div className={styles.cardDate}>
-        <DateWithIconClock date={task.exec_stop} />
+        <DateChanger
+          dateStartISO={task.exec_start}
+          dateStopISO={task.exec_stop}
+          taskId={task.task_id}
+        />
       </div>
       <div className={styles.cardPriority}>
         <PriorityChanger priority={task.priority} currentTaskId={task.task_id} tooltip="Изменить приоритет" />

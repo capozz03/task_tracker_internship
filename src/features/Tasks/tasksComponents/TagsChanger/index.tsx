@@ -94,7 +94,7 @@ const TagsChanger = ({ currentTaskId, taskTags }: TProps) => {
       <Menu className={styles.itemsWrapper} onClick={stopPropagation}>
         {
           isLoading
-            ? <Spin />
+            ? <Spin className={styles.spin} />
             : tags.map((tag) => (
               <Menu.Item
                 key={tag.task_tag_id}

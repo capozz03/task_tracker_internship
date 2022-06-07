@@ -7,15 +7,15 @@ import {
   CardAttachmentsCount,
   CardChecklistCount,
   CardNameText,
-  DateWithIconClock,
   DropdownMenu,
-  PriorityStatus,
   TagsGroup,
   TaskStatus,
   UserAssignedToTask,
 } from 'features/Tasks/tasksComponents';
 import classNames from 'classnames';
 import moment, { now } from 'moment';
+import PriorityChanger from '../../PriorityChanger';
+import DateChanger from '../../DateChanger';
 
 type TaskInWorkProps = {
   task: TTask;
@@ -70,10 +70,14 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
         <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
       </div>
       <div className={styles.cardDate}>
-        <DateWithIconClock date={task.exec_stop} />
+        <DateChanger
+          dateStartISO={task.exec_start}
+          dateStopISO={task.exec_stop}
+          taskId={task.task_id}
+        />
       </div>
       <div className={styles.cardPriority}>
-        {task.priority && <PriorityStatus type={task.priority.name} />}
+        <PriorityChanger priority={task.priority} currentTaskId={task.task_id} tooltip="Изменить приоритет" />
       </div>
       <div className={styles.cardTagsGroup}>
         <TagsGroup tags={task.tags} taskId={task.task_id} />

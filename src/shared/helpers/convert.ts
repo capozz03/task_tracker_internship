@@ -41,8 +41,12 @@ export const convertRolesToObject = (rolesData: TRoles[]) => {
   return roles;
 };
 
-export const formatDate = (value: Moment) => {
-  const arr = value.locale('ru').format('DD MMMM YYYY HH:mm').split(' ');
+export const formatDate = (value: Moment, withTime: boolean = true) => {
+  let arr;
+
+  if (withTime) arr = value.locale('ru').format('DD MMMM YYYY HH:mm').split(' ');
+  else arr = value.locale('ru').format('DD MMMM YYYY').split(' ');
+
   arr[1] = arr[1].toLowerCase().slice(0, 3);
   return arr.join(' ');
 };
