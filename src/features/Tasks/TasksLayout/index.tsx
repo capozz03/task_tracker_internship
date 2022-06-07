@@ -43,7 +43,14 @@ const TasksLayout = () => {
         </Sider>
         <Layout className={styles.main}>
           <Header className={styles.header}>
-            <div className={styles.text}>Задачи</div>
+            <div className={styles.text}>
+              Задачи
+              <div className={styles.filterToggleWrap}>
+                <FilterToggleButton
+                  filtersCount={filtersCount}
+                />
+              </div>
+            </div>
             <div className={styles.profile}>
               <div className={styles.notification}>
                 <NotificationBell />
@@ -67,12 +74,12 @@ const TasksLayout = () => {
             <TasksInWork />
             <TasksCompleted />
             <TasksFailed />
+            { isVisibleNotifications && <Notifications /> }
           </Content>
         </Layout>
       </Layout>
       <TaskModal visible={isVisibleForm} />
       <ModalDeleteTask />
-      { isVisibleNotifications && <Notifications /> }
     </>
   );
 };
