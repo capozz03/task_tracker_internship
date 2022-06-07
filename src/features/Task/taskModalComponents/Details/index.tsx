@@ -10,6 +10,7 @@ import TagsCategory from './TagsCategory';
 import { detailsIcons } from 'shared/ui/icons';
 import styles from './index.module.scss';
 import DetailsResume from './DetailsResume';
+import Tooltip from 'features/Tasks/tasksComponents/Tooltip';
 
 type TDetailsProps = { taskId: string };
 
@@ -115,33 +116,41 @@ const Details = ({ taskId }: TDetailsProps) => {
         {
           !categoryView.dateStop
           && (
-            <button type="button" onClick={setStateButton('dateStop', true)} className={styles.button}>
-              <DateStopIcon />
-            </button>
+            <Tooltip title="Срок">
+              <button type="button" onClick={setStateButton('dateStop', true)} className={styles.button}>
+                <DateStopIcon />
+              </button>
+            </Tooltip>
           )
         }
         {
           !categoryView.dateStart
           && (
-            <button type="button" onClick={setStateButton('dateStart', true)} className={styles.button}>
-              <DateStartIcon />
-            </button>
-          )
-        }
-        {
-          !categoryView.tags
-          && (
-            <button type="button" onClick={setStateButton('tags', true)} className={styles.button}>
-              <TagsIcon />
-            </button>
+            <Tooltip title="Начало">
+              <button type="button" onClick={setStateButton('dateStart', true)} className={styles.button}>
+                <DateStartIcon />
+              </button>
+            </Tooltip>
           )
         }
         {
           !categoryView.priority
           && (
-            <button type="button" onClick={setStateButton('priority', true)} className={styles.button}>
-              <PriorityIcon />
-            </button>
+            <Tooltip title="Приоритет">
+              <button type="button" onClick={setStateButton('priority', true)} className={styles.button}>
+                <PriorityIcon />
+              </button>
+            </Tooltip>
+          )
+        }
+        {
+          !categoryView.tags
+          && (
+            <Tooltip title="Метки">
+              <button type="button" onClick={setStateButton('tags', true)} className={styles.button}>
+                <TagsIcon />
+              </button>
+            </Tooltip>
           )
         }
       </div>
