@@ -41,6 +41,10 @@
         cursor: pointer;
         visibility: hidden;
 
+        @media (max-width: 1260px) {
+            visibility: visible;
+        }
+
         svg {
             width: 16px;
             height: 16px;
