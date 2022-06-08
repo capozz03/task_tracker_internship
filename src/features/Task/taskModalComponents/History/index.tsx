@@ -17,7 +17,7 @@ const TaskHistory = () => {
   const currentTaskId = useSelector(TaskFormSlice.getTaskFormId);
 
   const isMobile = useBreakPoint(1400);
-  const [showHistory, setShowHistory] = useState<boolean>(true);
+  const [showHistory, setShowHistory] = useState(true);
 
   const showChange = () => setShowHistory((prev) => !prev);
 

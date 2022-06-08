@@ -135,6 +135,10 @@
     color: $grey-800;
     background: $grey-100;
     border-radius: 6px;
+
+    &.deleted {
+        text-decoration: line-through;
+    }
 }
 
 .DatesContainer {
