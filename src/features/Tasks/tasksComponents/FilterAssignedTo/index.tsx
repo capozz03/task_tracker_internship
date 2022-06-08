@@ -41,8 +41,8 @@ const FilterAssigned = () => {
       onChange={onChange}
     >
       {assignedButtons.map((options, index) => (
-        <Tooltip title={options.tooltip}>
-          <Radio.Button value={index} key={options.label}>
+        <Tooltip title={options.tooltip} key={options.label}>
+          <Radio.Button value={index}>
             <span className={styles.wrapper}>
               {options.icon}
               <span className={styles.text}>{options.label}</span>
