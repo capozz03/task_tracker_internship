@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import styles from './index.module.scss';
 import { TNotification } from 'store/slice/task/notifications/entities';
 import { useDispatch } from 'react-redux';
@@ -25,7 +25,8 @@ const NotificationItem = ({ notification }: { notification: TNotification }) => 
     }
   };
   const Notifications = definesTypeNotificationComponent();
-  const showTaskHandle = () => {
+  const showTaskHandle: MouseEventHandler<HTMLDivElement> = (event) => {
+    event.stopPropagation();
     dispatch(TaskFormSlice.getTaskByIdAsync(notification.history_command.params.task_to?.task_id
       || notification.history_command.relations[0].relation_id));
     dispatch(SubscribesSlice.getSubscribeAsync({
