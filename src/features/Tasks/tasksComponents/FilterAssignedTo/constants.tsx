@@ -18,7 +18,7 @@ export const assignedButtons: FilterAssignedButtonType[] = [
     tooltip: 'Назначен на любую роль',
   },
   {
-    label: 'Назначенные мне',
+    label: 'Исполняю',
     payload: { role_id_for_me: [RolesIds.PERFORMER] },
     icon: <IconMy />,
     tooltip: 'Исполнитель',
