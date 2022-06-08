@@ -6,6 +6,7 @@ import { Dropdown, Menu } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
 import UserAvatar from 'features/Tasks/tasksComponents/UserAvatar';
 import styles from './index.module.scss';
+import { TaskFilters } from 'store/slice';
 
 const UserAvatarMenu = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const UserAvatarMenu = () => {
   }, []);
 
   const logoutAction = () => {
+    dispatch(TaskFilters.resetFilters());
     dispatch(logoutUser());
     navigate('/auth');
   };
@@ -38,7 +40,7 @@ const UserAvatarMenu = () => {
   return (
     <Dropdown overlay={menu} trigger={['click']} overlayClassName={styles.dropdown}>
       <div className={styles.wrapper}>
-        <UserAvatar user={info || { user_id: '0', name: 'Unknown User' }} color="#FFC542" />
+        <UserAvatar positionTooltip="left" user={info || { user_id: '0', name: 'Unknown User' }} color="#FFC542" />
         <CaretDownOutlined className={styles.icon} />
       </div>
     </Dropdown>

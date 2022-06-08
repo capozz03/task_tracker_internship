@@ -55,7 +55,7 @@ export const alert = (text: string, type: TAlertType = 'info', buttons: Array<TA
       progressClassName: classNames(styles.progress, toastStyle[type].progressClass),
       icon: toastStyle[type].icon,
 
-      autoClose: 10000,
+      autoClose: 6000,
       closeButton: icons.alertIcons.AlertCloseButtonIcon,
     });
 };

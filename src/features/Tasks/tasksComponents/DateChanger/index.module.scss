@@ -1,0 +1,71 @@
+@import "src/shared/assets/styles";
+
+.wrapper {
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+
+    & > span {
+        display: block;
+        min-width: 14px !important;
+        min-height: 14px !important;
+
+        path {
+            fill: $main-blue;
+        }
+    }
+
+    &:hover {
+        .removeButton {
+            visibility: visible;
+        }
+    }
+}
+
+.pickerWrapper {
+    display: flex;
+    align-items: center;
+
+    .removeButton {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+        border: none;
+        background: inherit;
+        cursor: pointer;
+        visibility: hidden;
+
+        @media (max-width: 1260px) {
+            visibility: visible;
+        }
+
+        svg {
+            width: 16px;
+            height: 16px;
+
+            path {
+                fill: $grey-500;
+            }
+        }
+    }
+}
+
+.picker {
+    padding: 0 !important;
+    border: none !important;
+    display: flex;
+    flex-direction: column;
+    
+    input {
+        max-width: 100px;
+        font: $p-regular !important;
+        color: $grey-600 !important;
+        cursor: pointer;
+    }
+}
