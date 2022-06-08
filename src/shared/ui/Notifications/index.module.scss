@@ -13,6 +13,7 @@
   padding: 16px;
   box-shadow: 0 6px 15px rgba(196, 203, 216, 0.25);
   border-radius: 16px;
+  transition: .2s linear;
   @media screen and (max-width: 500px){
     max-width: calc( 100% - 10px);
     max-height: calc(100vh - 65px);

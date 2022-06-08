@@ -28,11 +28,25 @@
     }
   }
 
-  @media (max-width: 1350px) {
+  @media (max-width: 1375px) {
     grid-template-columns: 20% max-content max-content max-content auto 80px 40px;
+    column-gap: 10px;
   }
 
-  @media (max-width: 1180px) {
+  @media (max-width: 1260px) {
+    grid-template-columns: 110px 170px auto 40px;
+    grid-template-areas:  "title title title menu"
+                          "status date priority menu"
+                          "tags tags tags menu"
+                          "users users users filesAndCheckbox";
+    column-gap: 20px;
+    row-gap: 10px;
+    .cardStatus {
+      margin: 10px 0;
+    }
+  }
+
+  @media (max-width: 780px) {
     grid-template-columns: 80% auto 40px;
     grid-template-areas:  "title . menu"
                           "status status menu"
@@ -40,10 +54,13 @@
                           "priority priority menu"
                           "tags tags menu"
                           "users users menu"
-                          "filesAndCheckbox filesAndCheckbox menu";
+                          "filesAndCheckbox filesAndCheckbox filesAndCheckbox";
     column-gap: 10px;
     .cardFilesAndCheckbox {
       justify-self: flex-end;
+    }
+    .cardStatus {
+      margin: 0;
     }
   }
 }
@@ -70,12 +87,14 @@
 }
 
 .cardDate {
+  min-width: 110px;
   grid-area: date;
   margin-left: 4.5px;
   align-self: center;
 }
 
 .cardPriority {
+  min-width: 120px;
   grid-area: priority;
   align-self: center;
 }
@@ -87,6 +106,7 @@
   align-items: center;
   flex-grow: 1;
   flex-shrink: 1;
+  cursor: pointer;
 }
 
 .cardUsers {

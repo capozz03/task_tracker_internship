@@ -3,7 +3,8 @@
 .dropdownButton > button {
   color: $grey-700;
   background: transparent;
-  border-color: $grey-500 !important;
+  border-radius: 50% !important;
+  border-color: $grey-400 !important;
   outline: none;
   box-shadow: none;
   .dropdownIcon {

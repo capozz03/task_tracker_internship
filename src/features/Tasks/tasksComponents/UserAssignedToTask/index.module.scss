@@ -1,6 +1,6 @@
 @import "src/shared/assets/styles/vars";
 
-.users{
+.users {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -9,12 +9,12 @@
   width: 100%;
 }
 
-.users > *{
+.users > * {
   flex-grow: 0;
   flex-shrink: 0;
 }
 
-.others{
+.othersButton {
   border-radius: 50%;
   border: 1px solid $grey-300;
   color: $grey-700;
@@ -24,4 +24,39 @@
   align-items: center;
   width: 32px;
   height: 32px;
+  cursor: pointer;
+
+  &:hover {
+    color: $main-blue;
+    background-color: $grey-0;
+  }
+}
+
+.userlist {
+  min-width: 230px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 5px;
+  background: $grey-0;
+  border-radius: 16px;
+  box-shadow: 0px 8px 40px rgba(23, 31, 70, 0.08);
+
+  h4 {
+    margin: 0;
+    margin-top: 5px;
+    padding: 0;
+    font: $p-medium;
+    color: $grey-800;
+  }
+
+  & > div {
+    margin-left: 5px;
+
+    &:last-child {
+      margin-bottom: 5px;
+    }
+  }
 }

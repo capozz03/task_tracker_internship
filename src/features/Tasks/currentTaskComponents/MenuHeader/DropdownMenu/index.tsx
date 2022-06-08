@@ -26,7 +26,7 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
   };
 
   const duplicateRejectedHandle = () => {
-    alert(`Ошибка создания дубля задачи "${task.title.slice(0, 25)}${task.title.length > 25 ? '...' : ''}"`, 'error');
+    alert(`Ошибка копирования задачи "${task.title.slice(0, 25)}${task.title.length > 25 ? '...' : ''}"`, 'error');
   };
 
   const duplicateHandle = () => {
@@ -47,12 +47,31 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
     dispatch(CommonSlice.showModalForDeleteTask(task));
   };
 
+  const duplicateAndEditHandle = async () => {
+    if (task.task_id) {
+      dispatch(
+        CommonSlice.duplicateTaskAsync({
+          data: {
+            taskId: task.task_id,
+            taskStatusId: task.status.task_status_id,
+          },
+          resolvedHandle: duplicateResolvedHandle,
+          rejectedHandle: duplicateRejectedHandle,
+          openTask: true,
+        }),
+      );
+    }
+  };
+
   const menu = (
     <Menu className={styles.dropdownMenu}>
       <Item key="1" onClick={duplicateHandle}>
         Дублировать задачу
       </Item>
-      <Item key="2" onClick={deleteTaskHandle} className={styles.delete}>
+      <Item key="2" onClick={duplicateAndEditHandle}>
+        Дублировать и редактировать задачу
+      </Item>
+      <Item key="3" onClick={deleteTaskHandle} className={styles.delete}>
         Удалить задачу
       </Item>
     </Menu>

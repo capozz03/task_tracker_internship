@@ -2,27 +2,45 @@
 
 .category {
   margin-bottom: 10px;
+  padding-left: 22px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
+
+  @include media-breakpoint-down(xxl) {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  @include media-breakpoint-down(lg) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  @include media-breakpoint-down(sm) {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
 }
 
 .titleDetails {
   display: flex;
-  min-width: 150px;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+  min-width: 120px;
   margin: 0;
-  margin-top: 5px;
   padding: 0;
-  padding-left: 30px;
   .title {
+    margin: 7px 0;
     font: $p-regular;
-    color: $grey-800;
-    margin-right: 5px;
+    color: $grey-900;
   }
   .icon {
-    color: $grey-800;
+    font-size: 15px;
     text-align: center;
+    color: $grey-600;
     &:hover {
       color: $main-blue-hover;
     }
@@ -32,8 +50,8 @@
 .labels {
   font: $p-regular;
   color: $grey-700;
-  margin-top: 5px;
   width: 100%;
+  margin-top: 7px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -44,9 +62,11 @@
 }
 
 .dropdownButton {
+  width: 20px !important;
+  height: 20px !important;
+  margin-bottom: 2px !important;
   box-shadow: none !important;
   background-color: transparent !important;
-  bottom: 10px !important;
   border: none !important;
 }
 
