@@ -63,9 +63,6 @@
     }
   }
   @include media-breakpoint-down('md'){
-    .text{
-      font-size: small;
-    }
     .wrapper {
       flex-direction: column;
       justify-content: center;
