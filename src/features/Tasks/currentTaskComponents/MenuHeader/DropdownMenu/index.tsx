@@ -81,6 +81,7 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
     <Dropdown
       overlay={menu}
       trigger={['click']}
+      getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
     >
       <Tooltip title="Действия с задачей">
         <button type="button" className={styles.button}>

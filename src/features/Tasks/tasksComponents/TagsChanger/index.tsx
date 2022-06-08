@@ -119,6 +119,7 @@ const TagsChanger = ({ currentTaskId, taskTags }: TProps) => {
       trigger={['click']}
       visible={visible}
       onVisibleChange={setDropdownVisible}
+      getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}
     >
       <Tooltip title="Добавить метку">
         <button type="button" className={styles.addButton} onClick={stopPropagation}>

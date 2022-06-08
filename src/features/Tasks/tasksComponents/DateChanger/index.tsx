@@ -84,6 +84,7 @@ const DateChanger = ({ dateStartISO, dateStopISO, taskId }: TProps) => {
               value={start}
               onChange={onChangeStart}
               disabledDate={disabledForStart}
+              getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}
             />
           </Tooltip>
           {
@@ -110,6 +111,7 @@ const DateChanger = ({ dateStartISO, dateStopISO, taskId }: TProps) => {
               value={stop}
               onChange={onChangeStop}
               disabledDate={disabledForStop}
+              getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}
             />
           </Tooltip>
           {
