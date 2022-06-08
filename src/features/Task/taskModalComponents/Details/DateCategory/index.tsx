@@ -59,6 +59,7 @@ export const DateStartCategory = ({
       <div className={styles.wrapper}>
         <DatePickerIcon />
         <DatePicker
+          getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
           className={styles.datepicker}
           locale={locale}
           allowClear={false}
@@ -124,6 +125,7 @@ export const DateStopCategory = ({
       <div className={styles.wrapper}>
         <DatePickerIcon />
         <DatePicker
+          getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
           className={styles.datepicker}
           locale={locale}
           allowClear={false}

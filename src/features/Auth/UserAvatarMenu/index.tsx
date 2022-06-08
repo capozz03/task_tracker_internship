@@ -38,7 +38,7 @@ const UserAvatarMenu = () => {
   );
 
   return (
-    <Dropdown overlay={menu} trigger={['click']} overlayClassName={styles.dropdown}>
+    <Dropdown overlay={menu} trigger={['click']} overlayClassName={styles.dropdown} getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}>
       <div className={styles.wrapper}>
         <UserAvatar positionTooltip="left" user={info || { user_id: '0', name: 'Unknown User' }} color="#FFC542" />
         <CaretDownOutlined className={styles.icon} />

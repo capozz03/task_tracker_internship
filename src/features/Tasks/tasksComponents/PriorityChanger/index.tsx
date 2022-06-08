@@ -56,6 +56,7 @@ const PriorityChanger = ({ priority, currentTaskId, tooltip }: TProps) => {
         value={priority?.name || null}
         onChange={priorityChangeHandler}
         onClick={stopPropagation}
+        getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}
       >
         <Option className={styles.selectItem} value={null}>
           <PriorityStatus type={null} />

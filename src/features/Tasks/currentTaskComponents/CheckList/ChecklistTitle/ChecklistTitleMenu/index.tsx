@@ -44,6 +44,7 @@ const ChecklistTitleMenu: FC<CheckboxMenuProps> = ({ checkList, editItem, classN
       icon={<DropdownMoreButton
         className={classNames([styles.dropdownIcon, className])}
       />}
+      getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
     />
   );
 };
