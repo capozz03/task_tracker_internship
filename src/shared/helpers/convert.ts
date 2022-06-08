@@ -1,4 +1,4 @@
-import { Moment } from 'moment';
+import moment, { Moment } from 'moment';
 import { TRoles } from 'store/slice/task/entities';
 import { TRolesUnit, TStateData } from 'store/slice/task/taskForm/roles/entities';
 import { RolesIds } from './enums';
@@ -41,8 +41,12 @@ export const convertRolesToObject = (rolesData: TRoles[]) => {
   return roles;
 };
 
-export const formatDate = (value: Moment) => {
-  const arr = value.locale('ru').format('DD MMMM YYYY HH:mm').split(' ');
-  arr[1] = arr[1].toLowerCase().slice(0, 3);
-  return arr.join(' ');
+export const formatDate = (value: Moment, withTime: boolean = true) => {
+  moment.updateLocale('ru', {
+    monthsShort: ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'],
+  });
+
+  if (withTime) return value.locale('ru').format('DD MMM YYYY HH:mm');
+
+  return value.locale('ru').format('DD MMM YYYY');
 };
