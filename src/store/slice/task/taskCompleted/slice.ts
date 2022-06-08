@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatuses } from 'shared';
 import { getTasksAsync } from './asyncActions';
-import { TSortType, TTasksReducer, TTasksResponse } from '../entities';
+import { TSortType, TTask, TTasksReducer, TTasksResponse } from '../entities';
 
 const initialState = {
   sort: 'date~DESC',
@@ -23,6 +23,11 @@ const taskCompletedSlice = createSlice({
   reducers: {
     setSortTasksCompleted(state, { payload }: PayloadAction<TSortType | undefined>) {
       state.sort = payload;
+    },
+    taskUpdate(state, { payload }: PayloadAction<TTask>) {
+      state.tasks = state.tasks!.map((task) =>
+        (task.task_id === payload.task_id ? payload : task));
+      return state;
     },
   },
   extraReducers: {
@@ -46,5 +51,5 @@ const taskCompletedSlice = createSlice({
   },
 });
 
-export const { setSortTasksCompleted } = taskCompletedSlice.actions;
+export const { setSortTasksCompleted, taskUpdate } = taskCompletedSlice.actions;
 export const taskCompletedReducer = taskCompletedSlice.reducer;

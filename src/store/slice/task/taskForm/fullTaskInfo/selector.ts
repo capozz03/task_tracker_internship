@@ -25,3 +25,18 @@ export const isLoadingStatusSuccess = createSelector(getTaskInformation, ({ stat
 
 export const getTaskFormId = createSelector(getTaskInformation, ({ task }) => task?.task_id);
 export const getTaskFormPriority = createSelector(getTaskInformation, ({ task }) => task?.priority);
+
+export const getDescriptionStatusCheck = createSelector(
+  getTaskForm,
+  ({ description }) => description.status,
+);
+
+export const getTitleStatusCheck = createSelector(
+  getTaskForm,
+  ({ title }) => title.status,
+);
+
+export const getStorageStatusCheck = createSelector(
+  getTaskForm,
+  ({ storageFile }) => storageFile.data.status,
+);

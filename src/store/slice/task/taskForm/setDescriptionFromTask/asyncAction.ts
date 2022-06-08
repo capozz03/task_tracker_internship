@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setDescription } from './service';
-import { TaskFormSlice, TaskInWorkSlice } from 'store/slice';
+import { TaskCompletedSlice, TaskFailedSlice, TaskFormSlice, TaskInboxSlice, TaskInWorkSlice } from 'store/slice';
 
 type changeDescriptionTaskProps = {
   data: {
@@ -22,15 +22,16 @@ export const setDescriptionAsync = createAsyncThunk(
       successHandle();
       dispatch(TaskFormSlice.setDescriptionFromTaskForm(data.data.description));
       if (data.data.status.name === 'Создана') {
-        // dispatch();
-        console.log('Создана');
+        dispatch(TaskInboxSlice.taskUpdate(data.data));
       }
       if (data.data.status.name === 'В работе') {
         dispatch(TaskInWorkSlice.taskUpdate(data.data));
       }
-      if (data.data.status.name === 'Выполнена' || data.data.status.name === 'Не выполнена') {
-        // dispatch();
-        console.log('Выполнена');
+      if (data.data.status.name === 'Выполнена') {
+        dispatch(TaskCompletedSlice.taskUpdate(data.data));
+      }
+      if (data.data.status.name === 'Не выполнена') {
+        dispatch(TaskFailedSlice.taskUpdate(data.data));
       }
       return data;
     } catch (error) {

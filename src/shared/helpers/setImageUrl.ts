@@ -18,7 +18,7 @@ export const setCarouselImages = (
   const result = storageImages && storageImages.map(
     ({ storage_file_id: storageFileId, name_original: nameOriginal }, index) => {
       const url = setImageUrl(storageFileId);
-      return <TCarouselImages>{
+      return {
         idCurrent: index,
         id: storageFileId,
         name: nameOriginal,

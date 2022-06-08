@@ -7,10 +7,13 @@ import { taskFormRolesReducer } from './roles/slice';
 import { taskFormTagsReducer } from './tags/slice';
 import { StorageFilesReducer } from './storageFiles';
 import { resumeSliceReducer } from './resume';
+import { descriptionReducer } from './setDescriptionFromTask';
+import { titleReducer } from './setTitleFromTask/slice';
 
 export { getTaskByIdAsync } from './getTaskById';
 export type { TTasksReducer, TTask } from 'store/slice/task/entities';
 export { setTitleAsync } from './setTitleFromTask';
+
 export {
   changeCheckListTitle,
   changeItemForChecklist,
@@ -34,6 +37,9 @@ export {
   getTaskFormStatusTask,
   getTaskFormId,
   getTaskFormPriority,
+  getDescriptionStatusCheck,
+  getTitleStatusCheck,
+  getStorageStatusCheck,
 } from './fullTaskInfo/selector';
 
 export {
@@ -113,6 +119,8 @@ export { getPriority, isLoadingPriorityStatus } from './priority/selector';
 export const taskFormReducer = combineReducers({
   storageFile: StorageFilesReducer,
   checkList: ChecklistReducer,
+  description: descriptionReducer,
+  title: titleReducer,
   task: taskFormDataReducer,
   roles: taskFormRolesReducer,
   resume: resumeSliceReducer,
