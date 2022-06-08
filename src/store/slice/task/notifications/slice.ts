@@ -34,14 +34,16 @@ const notificationSlice = createSlice({
   initialState,
   reducers: {
     nextPage(state) {
-      state.pagination.page_current += 1;
-      return state;
+      if (state.pagination.page_total > state.pagination.page_current) {
+        state.pagination.page_current += 1;
+      }
     },
     showNotification(state) {
       state.isVisible = true;
     },
     hiddenNotification(state) {
       state.isVisible = false;
+      state.pagination.page_current = 1;
     },
     clearNotifications(state) {
       state = initialState;

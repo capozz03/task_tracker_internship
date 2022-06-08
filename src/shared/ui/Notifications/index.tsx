@@ -23,11 +23,8 @@ const Notifications = () => {
       }));
     }
   };
-  const backgroundPlaceClickHandle: MouseEventHandler<HTMLDivElement> = (event) => {
-    event.stopPropagation();
-    event.preventDefault();
-    console.log(event);
-    // dispatch(NotificationsSlice.hiddenNotification());
+  const backgroundPlaceClickHandle: MouseEventHandler<HTMLDivElement> = () => {
+    dispatch(NotificationsSlice.hiddenNotification());
   };
   const backgroundPlaceKeyHandle: KeyboardEventHandler<HTMLDivElement> = (event) => {
     if (event.key === 'Escape') {
@@ -53,7 +50,16 @@ const Notifications = () => {
       onClick={backgroundPlaceClickHandle}
       className={styles.backgroundPlace}
     >
-      <div className={styles.notifications} style={{ right: isSidebarShow ? '275px' : '30px' }}>
+      <div
+        className={styles.notifications}
+        style={{ right: isSidebarShow ? '275px' : '30px' }}
+        role="button"
+        tabIndex={-1}
+        onKeyDown={backgroundPlaceKeyHandle}
+        onClick={(event) => {
+          event.stopPropagation();
+        }}
+      >
         <header className={styles.header}>
           <div className={styles.title}>
             Уведомления
@@ -87,7 +93,9 @@ const Notifications = () => {
         </Spin>
         <footer>
           {
-            (pagination.items_total !== 0 && pagination.items_total > 10)
+            (pagination.items_total !== 0
+              && pagination.items_total > 10
+              && pagination.page_current !== pagination.page_total)
               && <button type="button" onClick={showMoreHandle} className={styles.btnShowMore}>Показать больше</button>
           }
         </footer>
