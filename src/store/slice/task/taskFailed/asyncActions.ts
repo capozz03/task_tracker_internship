@@ -86,6 +86,7 @@ export const changeStatusTaskAsync = createAsyncThunk(
           }),
         );
       }
+      dispatch(TaskFormSlice.resetTaskHistory());
     } catch (error) {
       return rejectWithValue(error);
     }

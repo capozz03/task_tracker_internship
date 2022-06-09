@@ -82,6 +82,7 @@ const TagsFilter = () => {
           onFocus={focusHandle}
           onSearch={handleSearch}
           placeholder="Поиск ..."
+          getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}
         >
           {
             isLoading

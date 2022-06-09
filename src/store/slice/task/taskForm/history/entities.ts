@@ -1,8 +1,10 @@
+import { TStorageFiles } from 'store/slice/task/entities';
 import { RequestStatuses } from 'shared';
+import { TCommandCode } from 'store/slice/task/history/entities';
 
 export type THistoryUnit = {
   history_command_id: string,
-  command_code: string,
+  command_code: TCommandCode,
   command_name: string,
   created: string,
   user: {
@@ -38,9 +40,7 @@ export type THistoryUnit = {
       task_status_id: string,
       name: string,
     },
-    storage_file?: {
-      name_original: string,
-    }
+    storage_file?: TStorageFiles,
     message?: string,
     check_list?: {
       check_list_id: string,
@@ -64,7 +64,13 @@ export type THistoryUnit = {
     task_role?: {
       task_role_id: string,
       name: string,
-    }
+    },
+    form_result?: Array<
+      {
+        value: string,
+        field_name: 'resume' | 'comment',
+      }
+    >,
   },
   relations: [
     {
@@ -78,8 +84,25 @@ export type THistoryUnit = {
   ]
 };
 
+export type TStateData = {
+  pagination: {
+    items_count: number,
+    items_total: number,
+    per_page: number,
+    page_current: number,
+    page_total: number
+  },
+  data: THistoryUnit[];
+};
+
 export type TState = {
-  data: THistoryUnit[] | null;
+  data: TStateData;
   status: RequestStatuses;
   error: Error | null;
 };
+
+export type TTaskHistoryProps = {
+  taskId: string;
+  page: number;
+  limit: number;
+}

@@ -50,6 +50,7 @@ const PriorityCategory = ({ priority, currentTaskId, hiddenCategory }: TProps) =
   return (
     <DetailCategory name="Приоритет" type="details">
       <Select
+        getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
         className={styles.select}
         bordered={false}
         showArrow={false}

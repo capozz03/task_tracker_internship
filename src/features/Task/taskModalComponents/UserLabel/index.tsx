@@ -10,9 +10,9 @@ import styles from './index.module.scss';
 
 type TProps = {
   user: TRolesUnit,
-  canRemove: boolean;
-  roleId: RolesIds;
-  roleName: string;
+  canRemove?: boolean;
+  roleId?: RolesIds;
+  roleName?: string;
 }
 
 const UserLabel = ({ user, roleId, roleName, canRemove = false }: TProps) => {
@@ -20,13 +20,15 @@ const UserLabel = ({ user, roleId, roleName, canRemove = false }: TProps) => {
   const currentTaskId = useSelector(TaskFormSlice.getTaskFormId);
 
   const onRemoveClick = () => {
-    dispatch(removeUserRole({
-      userId: user.userId,
-      userName: user.userName,
-      taskId: currentTaskId,
-      roleId,
-      roleName,
-    }));
+    if (roleId && roleName) {
+      dispatch(removeUserRole({
+        userId: user.userId,
+        userName: user.userName,
+        taskId: currentTaskId,
+        roleId,
+        roleName,
+      }));
+    }
   };
 
   return (

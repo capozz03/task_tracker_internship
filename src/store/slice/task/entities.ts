@@ -117,10 +117,10 @@ export type TTaskCheckList = {
 };
 
 export type TSwapItemInChecklist = {
-  checkListId: string,
-  checkListItemIdOne: number,
-  checkListItemIdTwo: number,
-}
+  checkListId: string;
+  checkListItemIdOne: number;
+  checkListItemIdTwo: number;
+};
 
 export type TFormResult = {
   field_name: string;
@@ -162,7 +162,7 @@ export type TPagination = {
 export type TSortType = 'date~DESC' | 'title~ASC';
 
 export type TTasksReducer = {
-  sort?: TSortType,
+  sort?: TSortType;
   status: RequestStatuses;
   error: Error | null;
   tasks: TTask[] | null;
@@ -186,7 +186,7 @@ export type TTaskSearch = {
   storage_files_gte?: number | null;
   tag_id?: string[] | null;
   role_id?: string[];
-  role_id_for_me?: string[];
+  role_id_for_me?: string[] | null;
   priority_id?: string[] | null;
   status_id?: string[];
   progress_gte?: number | null;
@@ -212,11 +212,10 @@ export type TTaskWithRelation = {
   };
 };
 
-export type TFilterAssignedToReducer = {
-  status: RequestStatuses;
-  error: Error | null;
-  filterAssignedTo: string | null;
-}
+export type TFilterAssignedTo = {
+  assigned_to_me?: boolean;
+  role_id_for_me?: string[];
+};
 
 export type TTaskWithRelationStorage = {
   data: TTask,

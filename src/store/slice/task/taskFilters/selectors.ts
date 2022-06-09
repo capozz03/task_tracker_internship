@@ -2,6 +2,7 @@
 import { TState } from 'store/configureStore';
 import { createSelector } from '@reduxjs/toolkit';
 import { isArray } from 'lodash';
+import { exceptions } from './slice';
 
 const getFiltersSliceStore = (state: TState) => state.taskFilters;
 
@@ -14,16 +15,18 @@ export const getIsFiltersMenuShow = createSelector(
 );
 export const getIsFiltersResetButtonShow = createSelector(getFiltersSliceStore, ({ filters }) =>
   Object.entries(filters)
-    .filter(([key]) => key !== 'assigned_to_me')
+    .filter(([key]) => !exceptions.includes(key))
     .some(([, value]) => !!value),
 );
 export const getFiltersCount = createSelector(getFiltersSliceStore, ({ filters }) =>
-  Object.values(filters).reduce((prev: number, current) => {
-    if (isArray(current)) {
-      return prev + current.length;
-    }
-    if (current) {
-      return prev + 1;
+  Object.entries(filters).reduce((prev: number, [key, value]) => {
+    if (!exceptions.includes(key)) {
+      if (isArray(value)) {
+        return prev + value.length;
+      }
+      if (value) {
+        return prev + 1;
+      }
     }
     return prev;
   }, 0),
@@ -32,7 +35,14 @@ export const getFiltersCount = createSelector(getFiltersSliceStore, ({ filters }
 // Logic
 export const getFilterAssignedTo = createSelector(
   getFilters,
-  ({ assigned_to_me }) => !!assigned_to_me,
+  ({ assigned_to_me, role_id_for_me }) => ({
+    assigned_to_me: !!assigned_to_me,
+    role_id_for_me: role_id_for_me || [],
+  }),
+);
+export const getFilterAssignedToIndex = createSelector(
+  getFiltersSliceStore,
+  ({ assignedToFilterIndex }) => assignedToFilterIndex,
 );
 export const getFilterKeyword = createSelector(getFilters, ({ search }) => search || '');
 export const getFilterAssignUserIDArray = createSelector(

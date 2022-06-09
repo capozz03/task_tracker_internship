@@ -5,8 +5,9 @@
   //padding: 4px 17px;
   padding-left: 17px;
   padding-right: 17px;
-  height: 28px;
+  height: 24px;
   font: $h6-medium;
+  white-space: nowrap;
   display: inline-flex;
   align-items: center;
 }
@@ -20,12 +21,4 @@
   height: 14px;
   padding: 0;
   cursor: pointer;
-}
-
-.btnDelete:hover{
-
-}
-
-.btnDelete:active{
-
 }

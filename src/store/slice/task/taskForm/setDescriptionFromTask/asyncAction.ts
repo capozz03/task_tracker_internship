@@ -32,6 +32,7 @@ export const setDescriptionAsync = createAsyncThunk(
         // dispatch();
         console.log('Выполнена');
       }
+      dispatch(TaskFormSlice.resetTaskHistory());
       return data;
     } catch (error) {
       errorHandle();

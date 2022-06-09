@@ -11,11 +11,12 @@
 }
 
 :global(.ant-btn-primary) {
-  background: $main-blue;
-  color: $grey-0;
-  font: $p-medium;
+  background: $main-blue !important;
+  color: $grey-0 !important;
+  font: $p-medium !important;
+  border-radius: 8px !important;
   &:hover, &:active, &:focus {
-    background: $main-blue-hover;
+    background: $main-blue-hover !important;
   }
 }
 

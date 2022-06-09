@@ -40,6 +40,7 @@ const CheckboxMenu = ({ checkListItemId, checkListId, editItem, className }: Che
       overlay={menu}
       trigger={['click']}
       icon={<DropdownMoreButton className={styles.dropdownIcon} />}
+      getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
     />
   );
 };
