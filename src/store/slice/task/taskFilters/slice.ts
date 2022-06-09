@@ -1,8 +1,10 @@
 import { RequestStatuses } from 'shared';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TTaskSearch, TTag } from '../entities';
+import { assignedButtons } from '../../../../features/Tasks/tasksComponents/FilterAssignedTo/constants';
 
 export type TFiltersSlice = {
+  assignedToFilterIndex: number;
   filters: TTaskSearch;
   isFiltersMenuShow: boolean;
   isFiltersResetButtonShow: boolean;
@@ -10,9 +12,13 @@ export type TFiltersSlice = {
   error: Error | null;
 };
 
+export const exceptions = ['assigned_to_me', 'role_id_for_me'];
+
 const initialState = {
+  assignedToFilterIndex: 0,
   filters: {
-    assigned_to_me: null,
+    assigned_to_me: true,
+    role_id_for_me: null,
     search: null,
     assign_user_id: null,
     storage_files_gte: null,
@@ -33,8 +39,12 @@ const filtersSlice = createSlice({
     setIsFiltersMenuShow(state, { payload }: PayloadAction<boolean>) {
       state.isFiltersMenuShow = payload;
     },
-    setFilterAssignedTo(state, { payload }: PayloadAction<boolean>) {
-      state.filters.assigned_to_me = payload || null;
+    setFilterAssignedTo(state, { payload }: PayloadAction<number>) {
+      state.assignedToFilterIndex = payload;
+      state.filters.assigned_to_me = assignedButtons[payload].payload.assigned_to_me || null;
+      state.filters.role_id_for_me = assignedButtons[payload].payload.role_id_for_me?.length
+        ? assignedButtons[payload].payload.role_id_for_me
+        : null;
     },
     setFilterKeyword(state, { payload }: PayloadAction<string>) {
       state.filters.search = payload || null;
@@ -58,6 +68,7 @@ const filtersSlice = createSlice({
       state.filters = {
         ...initialState.filters,
         assigned_to_me: state.filters.assigned_to_me,
+        role_id_for_me: state.filters.role_id_for_me,
       };
     },
   },

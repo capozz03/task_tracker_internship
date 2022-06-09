@@ -2,26 +2,33 @@
 
 .text {
   font: $p-medium;
+  overflow-x: hidden;
+  width: max-content;
+  color: $grey-800;
+  transition: color 0.5s;
 }
 
 :global(.ant-radio-group) {
-  display: flex;
+  display: flex !important;
+  flex-wrap: nowrap;
   flex-direction: row;
   align-items: center;
   padding: 0;
-  height: 36px;
+  @include media-breakpoint-down('sm') {
+    justify-content: space-around;
+  }
 }
 
 :global(.ant-radio-button-wrapper) {
   background: transparent !important;
-  height: 100% !important;
-  color: $grey-800 !important;
+  padding: 6px 12px !important;
+  height: unset !important;
   border: 0 !important;
   text-align: center;
-  transition: background 1s, border 1s, filter 1s;
+  transition: all 1s;
 
   &:not(:last-child) {
-    margin-right: 16px !important;
+    margin-right: 4px;
   }
 
   &::before {
@@ -41,9 +48,32 @@
     display: flex;
     align-items: center;
   }
+
+  @include media-breakpoint-down('lg') {
+    &:not(:global(.ant-radio-button-wrapper-checked)) {
+      .text {
+        width: 0;
+        height: 0;
+        color: $grey-0;
+      }
+
+      svg {
+        margin-right: 0;
+      }
+    }
+  }
+  @include media-breakpoint-down('md'){
+    .wrapper {
+      flex-direction: column;
+      justify-content: center;
+    }
+    svg {
+      margin: auto;
+    }
+  }
 }
 
-:global(.ant-radio-button){
+:global(.ant-radio-button) {
   border: 0 solid $grey-0;
 }
 
@@ -52,5 +82,5 @@
   background: $grey-0;
   border-radius: 8px;
   border: 1px solid $grey-300;
-  transition: 300ms ;
+  transition: 300ms;
 }

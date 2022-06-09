@@ -43,38 +43,23 @@ const TasksLayout = () => {
         </Sider>
         <Layout className={styles.main}>
           <Header className={styles.header}>
-            <div className={styles.text}>
-              Задачи
-              <div className={styles.filterToggleWrap}>
-                <FilterToggleButton
-                  filtersCount={filtersCount}
-                />
-              </div>
+            <div className={styles.filterToggle}>
+              <FilterToggleButton filtersCount={filtersCount} onClick={changeSidebarVisibility} />
             </div>
-            <div className={styles.profile}>
-              <div className={styles.notification}>
-                <NotificationBell />
-              </div>
-              <UserAvatarMenu />
-            </div>
-            <div className={styles.tools}>
-              <FilterToggleButton
-                filtersCount={filtersCount}
-                onClick={changeSidebarVisibility}
-              />
+            <div className={styles.notification}>
               <NotificationBell />
             </div>
-            <span className={styles.filterAssignedTo}>
-              <FilterAssignedTo />
-            </span>
+            <div className={styles.profile}>
+              <UserAvatarMenu />
+            </div>
           </Header>
           <Content className={styles.content}>
-            <span className={styles.headerText}>Задачи</span>
+            <FilterAssignedTo />
             <TasksInbox />
             <TasksInWork />
             <TasksCompleted />
             <TasksFailed />
-            { isVisibleNotifications && <Notifications /> }
+            {isVisibleNotifications && <Notifications />}
           </Content>
         </Layout>
       </Layout>

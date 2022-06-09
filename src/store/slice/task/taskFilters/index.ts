@@ -17,6 +17,7 @@ export {
   getIsFiltersResetButtonShow,
   getFiltersCount,
   getFilterAssignedTo,
+  getFilterAssignedToIndex,
   getFilterKeyword,
   getFilterAssignUserIDArray,
   getFilterAttachmentsGTE,
