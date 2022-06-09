@@ -1,10 +1,9 @@
 import { createAsyncThunk, miniSerializeError } from '@reduxjs/toolkit';
-import { TaskFailedSlice, TaskFormSlice } from 'store/slice';
+import { TaskFormSlice, TaskCompletedSlice } from 'store/slice';
 import { getTaskByIdAsync } from '../getTaskById/getTaskByIdAsyncAction';
 import { TFormResultChangeProps } from './entities';
 import { formResultChangeService } from './services';
 import { alert } from 'shared/ui';
-import { TaskFormSlice, TaskCompletedSlice } from 'store/slice';
 import { TaskStatuses } from 'shared';
 
 const statusIdFailed = TaskStatuses.FAILED;
