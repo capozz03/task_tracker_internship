@@ -96,7 +96,7 @@ const TaskModal = (props: ModalProps) => {
   };
 
   useEffect(() => {
-    if (visible && formResultRequired && !(formResult && formResult.length)) {
+    if (visible && formResultRequired && !(formResult?.length)) {
       alert('Важная информация для ответственных: нужно резюме', 'info');
     }
   }, [formResult]);
