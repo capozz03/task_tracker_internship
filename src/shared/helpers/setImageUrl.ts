@@ -15,16 +15,17 @@ export const setImageUrl = (storageFileId: string) => {
 export const setCarouselImages = (
   storageImages: TStorageFiles[] | undefined,
 ): TCarouselImages[] | undefined => {
-  const result = storageImages && storageImages.map(
-    ({ storage_file_id: storageFileId, name_original: nameOriginal }, index) => {
-      const url = setImageUrl(storageFileId);
-      return {
-        idCurrent: index,
-        id: storageFileId,
-        name: nameOriginal,
-        img: url,
-      };
-    },
-  );
-  return result;
+  if (storageImages) {
+    const result = storageImages.map(
+      ({ storage_file_id: storageFileId, name_original: nameOriginal }, index) => {
+        const url = setImageUrl(storageFileId);
+        const res = { id: storageFileId, name: nameOriginal, img: url };
+        return {
+          idCurrent: index,
+          ...res,
+        };
+      },
+    );
+    return result;
+  }
 };
