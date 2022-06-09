@@ -14,7 +14,7 @@ type CarouselImagesProps = {
   setIsShowCarousel: React.Dispatch<React.SetStateAction<boolean>>;
   name: string;
   currentImage: number;
-  setCurrentImage: any;
+  setCurrentImage: React.Dispatch<React.SetStateAction<number>>;
   storageFileId: string;
   taskId: string;
 };

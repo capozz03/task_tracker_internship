@@ -5,6 +5,7 @@ import style from './index.module.scss';
 import { useDispatch } from 'react-redux';
 import { setDescriptionAsync } from 'store/slice/task/taskForm/setDescriptionFromTask/asyncAction';
 import { alert } from 'shared/ui';
+import { buttons, buttonsMD, buttonsSM, buttonsXS, removeButtons } from './configConstants';
 
 type DescriptionEditorProps = {
   setIsVisibleEditor: React.Dispatch<React.SetStateAction<boolean>>;
@@ -26,60 +27,11 @@ const DescriptionEditor = ({
     readonly: false,
     placeholder: 'Начните писать...',
     tabIndex: 1,
-    buttons: ['bold', 'italic', 'underline', 'fontsize', 'link', 'image', 'brush', 'align'],
-    buttonsMD: [
-      'bold', 'italic', 'underline',
-      '|',
-      'fontsize',
-      '---',
-      'image',
-      '|',
-      'link',
-      '\n',
-      'brush', 'align',
-      '|',
-      'undo', 'redo',
-    ],
-    buttonsSM: [
-      'bold', 'italic', 'underline',
-      '|',
-      'fontsize', 'brush',
-      '---',
-      'image',
-      '\n',
-      'link',
-      '|',
-      'align',
-      '|',
-      'undo', 'redo',
-    ],
-
-    buttonsXS: [
-      'bold', 'italic', 'underline', 'brush',
-      '|',
-      'fontsize',
-      '---',
-      'image',
-      '\n',
-      'link',
-      '|',
-      'align',
-      '|',
-      'undo', 'redo',
-    ],
-    removeButtons: [
-      'ul',
-      'ol',
-      'eraser',
-      'paragraph',
-      'fullsize',
-      'copyformat',
-      'hr',
-      'table',
-      'font',
-      'video',
-      'file',
-    ],
+    buttons,
+    buttonsMD,
+    buttonsSM,
+    buttonsXS,
+    removeButtons,
     askBeforePasteFromWord: false,
     askBeforePasteHTML: false,
     enableDragAndDropFileToEditor: true,

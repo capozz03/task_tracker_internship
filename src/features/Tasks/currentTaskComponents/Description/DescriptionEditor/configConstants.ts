@@ -1,0 +1,78 @@
+export const buttons = [
+  'bold',
+  'italic',
+  'underline',
+  'fontsize',
+  'link',
+  'image',
+  'brush',
+  'align',
+];
+
+export const buttonsMD = [
+  'bold',
+  'italic',
+  'underline',
+  '|',
+  'fontsize',
+  '---',
+  'image',
+  '|',
+  'link',
+  '\n',
+  'brush',
+  'align',
+  '|',
+  'undo',
+  'redo',
+];
+
+export const buttonsSM = [
+  'bold',
+  'italic',
+  'underline',
+  '|',
+  'fontsize',
+  'brush',
+  '---',
+  'image',
+  '\n',
+  'link',
+  '|',
+  'align',
+  '|',
+  'undo',
+  'redo',
+];
+
+export const buttonsXS = [
+  'bold',
+  'italic',
+  'underline',
+  'brush',
+  '|',
+  'fontsize',
+  '---',
+  'image',
+  '\n',
+  'link',
+  '|',
+  'align',
+  '|',
+  'undo',
+  'redo',
+];
+
+export const removeButtons = [
+  'ul',
+  'ol',
+  'eraser',
+  'paragraph',
+  'fullsize',
+  'copyformat',
+  'hr',
+  'table',
+  'font',
+  'video',
+  'file',
+];
