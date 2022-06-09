@@ -9,14 +9,17 @@ import { detailsIcons } from 'shared/ui/icons';
 import styles from './index.module.scss';
 import { AlertWarningIcon } from 'shared/ui/icons/AlertIcons';
 import { alert } from 'shared';
-import { formatDate } from 'shared/helpers';
+import { formatDate, TaskStatuses } from 'shared/helpers';
+import { TStatus } from 'store/slice/task/entities';
 
-type TProps = {
+type TPropsDateStart = {
   currentTaskId: string | undefined;
   startDateISO: string | null | undefined;
   stopDateISO: string | null | undefined;
   hiddenCategory: ()=>void;
 };
+
+type TPropsDateStop = TPropsDateStart & { status?: TStatus };
 
 const { DatePickerIcon } = detailsIcons;
 
@@ -24,7 +27,7 @@ export const DateStartCategory = ({
   startDateISO,
   stopDateISO,
   currentTaskId,
-  hiddenCategory }: TProps,
+  hiddenCategory }: TPropsDateStart,
 ) => {
   const dispatch = useDispatch();
   const [pickerValue, setPickerValue] = useState<Moment | undefined>(
@@ -78,12 +81,15 @@ export const DateStopCategory = ({
   startDateISO,
   stopDateISO,
   currentTaskId,
-  hiddenCategory }: TProps,
+  hiddenCategory,
+  status }: TPropsDateStop,
 ) => {
   const dispatch = useDispatch();
   const [pickerValue, setPickerValue] = useState<Moment | undefined>(
     stopDateISO ? moment(stopDateISO) : undefined);
-  const overdue = stopDateISO ? moment().utc().toISOString() > stopDateISO : false;
+  const overdue = status?.task_status_id !== TaskStatuses.COMPLETED
+                  && status?.task_status_id !== TaskStatuses.FAILED
+                  && (stopDateISO ? moment().utc().toISOString() > stopDateISO : false);
   const tooltip = startDateISO
     ? 'Сперва удалите дату начала'
     : 'Удалить срок выполнения';
