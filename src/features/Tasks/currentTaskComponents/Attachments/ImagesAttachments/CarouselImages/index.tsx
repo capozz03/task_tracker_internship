@@ -14,6 +14,7 @@ type CarouselImagesProps = {
   setIsShowCarousel: React.Dispatch<React.SetStateAction<boolean>>;
   name: string;
   currentImage: number;
+  setCurrentImage: any;
   storageFileId: string;
   taskId: string;
 };
@@ -23,10 +24,10 @@ const CarouselImages = ({
   setIsShowCarousel,
   name,
   currentImage,
+  setCurrentImage,
   storageFileId,
   taskId,
 }: CarouselImagesProps) => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(currentImage);
   const [fileProperties, setFileProperties] = useState({
     file_id: storageFileId,
     file_name: name,
@@ -50,20 +51,20 @@ const CarouselImages = ({
 
   const nextImgButton = () => {
     if (carouselImages) {
-      if (currentImageIndex >= carouselImages.length - 1) {
-        setCurrentImageIndex(0);
+      if (currentImage >= carouselImages.length - 1) {
+        setCurrentImage(0);
       } else {
-        setCurrentImageIndex((currentImageIndex: number) => currentImageIndex + 1);
+        setCurrentImage((currentImageIndex: number) => currentImageIndex + 1);
       }
     }
   };
 
   const prevImgButton = () => {
     if (carouselImages) {
-      if (currentImageIndex <= 0) {
-        setCurrentImageIndex(carouselImages.length - 1);
+      if (currentImage <= 0) {
+        setCurrentImage(carouselImages.length - 1);
       } else {
-        setCurrentImageIndex((currentImageIndex: number) => currentImageIndex - 1);
+        setCurrentImage((currentImageIndex: number) => currentImageIndex - 1);
       }
     }
   };
@@ -75,7 +76,6 @@ const CarouselImages = ({
         storageFileId={fileProperties.file_id}
         closeModal={closeModal}
         setIsVisibleModal={setIsVisibleModal}
-        setIsShowCarousel={setIsShowCarousel}
       />
       <div className={style.carouselWrapper}>
         {!mobileCarousel && (
@@ -84,7 +84,7 @@ const CarouselImages = ({
           </Button>
         )}
         <Carousel
-          selectedItem={currentImageIndex}
+          selectedItem={currentImage}
           showStatus={false}
           showIndicators={false}
           showArrows={false}
@@ -96,7 +96,7 @@ const CarouselImages = ({
           className={style.carouselGallery}
         >
           {carouselImages?.map(({ img }) => (
-            <div className={style.contentStyle} key={currentImageIndex}>
+            <div className={style.contentStyle} key={currentImage}>
               <img src={img} alt="img" />
             </div>
           ))}

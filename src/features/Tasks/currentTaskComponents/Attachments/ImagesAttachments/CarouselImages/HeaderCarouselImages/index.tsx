@@ -10,7 +10,7 @@ type HeaderCarouselImagesProps = {
   storageFileId: string;
   closeModal: () => void;
   setIsVisibleModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsShowCarousel: React.Dispatch<React.SetStateAction<boolean>>;
+  // setIsShowCarousel: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const HeaderCarouselImages = ({
@@ -18,7 +18,7 @@ const HeaderCarouselImages = ({
   storageFileId,
   closeModal,
   setIsVisibleModal,
-  setIsShowCarousel,
+  // setIsShowCarousel,
 }: HeaderCarouselImagesProps) => {
   const dispatch = useDispatch();
   const downloadAttachment = (): void => {
@@ -27,7 +27,7 @@ const HeaderCarouselImages = ({
 
   const deleteAttachment = (): void => {
     setIsVisibleModal(true);
-    setIsShowCarousel(false);
+    // setIsShowCarousel(false);
   };
   return (
     <div className={style.headerCarousel}>
