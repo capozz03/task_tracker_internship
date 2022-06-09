@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DatePicker, Tooltip } from 'antd';
 import styles from './index.module.scss';
 import { ClockCircleOutlined } from '@ant-design/icons';
@@ -20,6 +20,11 @@ const DateChanger = ({ dateStartISO, dateStopISO, taskId }: TProps) => {
   const dispatch = useDispatch();
   const [start, setStart] = useState(dateStartISO ? moment(dateStartISO) : null);
   const [stop, setStop] = useState(dateStopISO ? moment(dateStopISO) : null);
+
+  useEffect(() => {
+    setStart(dateStartISO ? moment(dateStartISO) : null);
+    setStop(dateStopISO ? moment(dateStopISO) : null);
+  }, [dateStartISO, dateStopISO]);
 
   const stopPropagation = (e: React.MouseEvent<HTMLElement>) => e.stopPropagation();
   const formatValue = (value: Moment) => formatDate(value, false);

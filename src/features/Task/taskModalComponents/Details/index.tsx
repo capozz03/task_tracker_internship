@@ -98,6 +98,7 @@ const Details = ({ taskId }: TDetailsProps) => {
             stopDateISO={dateStop}
             currentTaskId={currentTaskId}
             hiddenCategory={setStateButton('dateStop', false)}
+            status={status}
           />
         )
       }
