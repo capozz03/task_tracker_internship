@@ -9,7 +9,7 @@ const NotificationBell = () => {
   const dispatch = useDispatch();
   const pagination = useSelector(NotificationsSlice.getPaginationSelector);
   const toggleVisibleNotificationHandle = () => {
-    dispatch(NotificationsSlice.toggleVisible());
+    dispatch(NotificationsSlice.showNotification());
   };
   useEffect(() => {
     dispatch(NotificationsSlice.getNotificationsAsync({

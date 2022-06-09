@@ -34,12 +34,16 @@ const notificationSlice = createSlice({
   initialState,
   reducers: {
     nextPage(state) {
-      state.pagination.page_current += 1;
-      return state;
+      if (state.pagination.page_total > state.pagination.page_current) {
+        state.pagination.page_current += 1;
+      }
     },
-    toggleVisible(state) {
-      state.isVisible = !state.isVisible;
-      return state;
+    showNotification(state) {
+      state.isVisible = true;
+    },
+    hiddenNotification(state) {
+      state.isVisible = false;
+      state.pagination.page_current = 1;
     },
     clearNotifications(state) {
       state = initialState;
@@ -106,6 +110,7 @@ const notificationSlice = createSlice({
 export const {
   toggleReadStatus,
   clearNotifications,
-  toggleVisible,
+  showNotification,
+  hiddenNotification,
   nextPage } = notificationSlice.actions;
 export const notificationReducer = notificationSlice.reducer;

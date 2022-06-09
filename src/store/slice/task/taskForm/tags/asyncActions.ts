@@ -12,6 +12,7 @@ export const addTagToTask = createAsyncThunk(
       const { data } = await tagsService.addTagToTask(props);
       alert('Метка добавлена', 'success');
       dispatch(TaskFormSlice.updateTask(data.data));
+      dispatch(TaskFormSlice.resetTaskHistory());
 
       const state = getState();
       updateTaskLists({
@@ -42,6 +43,7 @@ export const removeTagToTask = createAsyncThunk(
       const { data } = await tagsService.removeTagToTask(props);
       alert('Метка удалена', 'success');
       dispatch(TaskFormSlice.updateTask(data.data));
+      dispatch(TaskFormSlice.resetTaskHistory());
 
       const state = getState();
       updateTaskLists({

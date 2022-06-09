@@ -26,6 +26,7 @@ export const createCheckList = createAsyncThunk(
       });
       dispatch(TaskFormSlice.updateTask(task.data));
       dispatch(TaskFormSlice.hiddenFormCreateChecklist());
+      dispatch(TaskFormSlice.resetTaskHistory());
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
@@ -48,11 +49,12 @@ type changeCheckListTitleAsyncProps = {
 export const changeCheckListTitle = createAsyncThunk(
   'checkList/changeCheckListTitle',
   async ({ data, successHandle, errorHandle }: changeCheckListTitleAsyncProps,
-    { rejectWithValue }) => {
+    { rejectWithValue, dispatch }) => {
     try {
       const { data: task } = await checkListService.changeChecklistTitle(data);
       alert('Название чеклиста успешно изменено', 'success');
       successHandle();
+      dispatch(TaskFormSlice.resetTaskHistory());
       return task;
     } catch (rejectedValueOrSerializedError) {
       errorHandle();
@@ -73,6 +75,7 @@ export const createItemForChecklist = createAsyncThunk(
         checkListId: props.checkListId,
         checklistItem: data.data,
       }));
+      dispatch(TaskFormSlice.resetTaskHistory());
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
@@ -93,10 +96,11 @@ export const changeItemForChecklist = createAsyncThunk(
   'checkList/changeItemForChecklist',
   async (
     { data, successHandle, errorHandle }: changeItemForChecklistAsyncProps,
-    { rejectWithValue }) => {
+    { rejectWithValue, dispatch }) => {
     try {
       const { data: item } = await checkListService.changeItemForChecklist(data);
       successHandle();
+      dispatch(TaskFormSlice.resetTaskHistory());
       return item;
     } catch (rejectedValueOrSerializedError) {
       errorHandle();
@@ -114,6 +118,7 @@ export const changeStatusItemForChecklist = createAsyncThunk(
     try {
       const { data } = await checkListService.changeStatusItemForChecklist(props);
       dispatch(TaskFormSlice.changeStatusItemForChecklistTaskForm(props));
+      dispatch(TaskFormSlice.resetTaskHistory());
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
@@ -143,6 +148,7 @@ export const deleteItemForChecklist = createAsyncThunk(
         checkListId: props.checkListId,
         checklistItem: data.data,
       }));
+      dispatch(TaskFormSlice.resetTaskHistory());
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
@@ -159,6 +165,7 @@ export const changePositionItemForChecklist = createAsyncThunk(
     try {
       const { data } = await checkListService.changePositionItemForChecklist(props);
       dispatch(TaskFormSlice.updateCheckList(data.data));
+      dispatch(TaskFormSlice.resetTaskHistory());
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
@@ -189,6 +196,7 @@ export const detachChecklist = createAsyncThunk(
           dispatch(TaskFormSlice.updateTask(data.data));
         },
       }]);
+      dispatch(TaskFormSlice.resetTaskHistory());
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);

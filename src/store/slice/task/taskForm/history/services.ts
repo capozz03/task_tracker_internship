@@ -1,5 +1,5 @@
 import { $apiTask, clientCookies } from 'shared';
-// import {  } from './entities';
+import { TTaskHistoryProps, TStateData } from './entities';
 
 $apiTask.interceptors.request.use((config) => ({
   ...config,
@@ -9,13 +9,17 @@ $apiTask.interceptors.request.use((config) => ({
   },
 }));
 
-// export const historyService = {
-//   getHistoryOnTask: async ({ userId, roleId, taskId }: TRolesChangeProps) =>
-//     $apiTask.post<TRolesChangeResponse>(
-//       `api/v1.0/task/tasks/${taskId}/role-assign`,
-//       {
-//         assign_user_id: userId,
-//         task_role_id: roleId,
-//       },
-//     ),
-// };
+export const historyService = {
+  getHistoryOnTask: async ({ taskId, page, limit }: TTaskHistoryProps) =>
+    $apiTask.get<TStateData>(
+      'api/v1.0/history/commands',
+      {
+        params: {
+          relation_type: 'task',
+          relation_id: taskId,
+          per_page: limit,
+          page,
+        },
+      },
+    ),
+};
