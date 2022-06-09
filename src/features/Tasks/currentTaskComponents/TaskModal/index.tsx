@@ -20,6 +20,7 @@ import Details from 'features/Task/taskModalComponents/Details';
 import { CollapseHeader, CollapseMembersHeader } from './MembersPanel/MemberPanelHeaders';
 import TaskHistory from 'features/Task/taskModalComponents/History';
 import { alert } from 'shared/ui';
+import { isLoadingStatusCheck } from 'shared/helpers';
 
 const TaskModal = (props: ModalProps) => {
   const { visible } = props;
@@ -41,48 +42,57 @@ const TaskModal = (props: ModalProps) => {
   const sortTypeCompleted = useSelector(TaskCompletedSlice.getSortTasksCompleted);
   const sortTypeFailed = useSelector(TaskFailedSlice.getSortTasksFailed);
 
+  const descriptionStatus = useSelector(TaskFormSlice.getDescriptionStatusCheck);
+  const titleStatus = useSelector(TaskFormSlice.getTitleStatusCheck);
+  const storageFilesStatus = useSelector(TaskFormSlice.getStorageStatusCheck);
+
+  const loadingStatus = isLoadingStatusCheck(descriptionStatus)
+    || isLoadingStatusCheck(titleStatus) || isLoadingStatusCheck(storageFilesStatus);
+
   const cancelHandle = () => {
-    if (status?.name === 'Создана') {
-      dispatch(
-        TaskInboxSlice.getTasksAsync({
-          sort: sortTypeInbox,
-          per_page: paginationInbox!.per_page,
-          page: paginationInbox!.page_current,
-          ...filters,
-        }),
-      );
+    if (!loadingStatus) {
+      if (status?.name === 'Создана') {
+        dispatch(
+          TaskInboxSlice.getTasksAsync({
+            sort: sortTypeInbox,
+            per_page: paginationInbox!.per_page,
+            page: paginationInbox!.page_current,
+            ...filters,
+          }),
+        );
+      }
+      if (status?.name === 'В работе') {
+        dispatch(
+          TaskInWorkSlice.getTasksAsync({
+            sort: sortTypeInWork,
+            per_page: paginationInWork!.per_page,
+            page: paginationInWork!.page_current,
+            ...filters,
+          }),
+        );
+      }
+      if (status?.name === 'Выполнена') {
+        dispatch(
+          TaskCompletedSlice.getTasksAsync({
+            sort: sortTypeCompleted,
+            per_page: paginationInCompleted!.per_page,
+            page: paginationInCompleted!.page_current,
+            ...filters,
+          }),
+        );
+      }
+      if (status?.name === 'Не выполнена') {
+        dispatch(
+          TaskFailedSlice.getTasksAsync({
+            sort: sortTypeFailed,
+            per_page: paginationInFailed!.per_page,
+            page: paginationInFailed!.page_current,
+            ...filters,
+          }),
+        );
+      }
+      dispatch(TaskFormSlice.hiddenTaskForm());
     }
-    if (status?.name === 'В работе') {
-      dispatch(
-        TaskInWorkSlice.getTasksAsync({
-          sort: sortTypeInWork,
-          per_page: paginationInWork!.per_page,
-          page: paginationInWork!.page_current,
-          ...filters,
-        }),
-      );
-    }
-    if (status?.name === 'Выполнена') {
-      dispatch(
-        TaskCompletedSlice.getTasksAsync({
-          sort: sortTypeCompleted,
-          per_page: paginationInCompleted!.per_page,
-          page: paginationInCompleted!.page_current,
-          ...filters,
-        }),
-      );
-    }
-    if (status?.name === 'Не выполнена') {
-      dispatch(
-        TaskFailedSlice.getTasksAsync({
-          sort: sortTypeFailed,
-          per_page: paginationInFailed!.per_page,
-          page: paginationInFailed!.page_current,
-          ...filters,
-        }),
-      );
-    }
-    dispatch(TaskFormSlice.hiddenTaskForm());
   };
 
   useEffect(() => {

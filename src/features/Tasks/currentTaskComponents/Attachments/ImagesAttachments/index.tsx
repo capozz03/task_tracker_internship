@@ -100,6 +100,7 @@ const ImagesAttachments = ({
             name={nameFile}
             setIsShowCarousel={setIsShowCarousel}
             currentImage={currentImage}
+            setCurrentImage={setCurrentImage}
             storageFileId={storageFileId}
             taskId={taskId}
           />

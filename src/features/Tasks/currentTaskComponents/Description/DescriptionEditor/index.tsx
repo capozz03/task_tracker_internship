@@ -5,6 +5,7 @@ import style from './index.module.scss';
 import { useDispatch } from 'react-redux';
 import { setDescriptionAsync } from 'store/slice/task/taskForm/setDescriptionFromTask/asyncAction';
 import { alert } from 'shared/ui';
+import { buttons, buttonsMD, buttonsSM, buttonsXS, removeButtons } from './configConstants';
 
 type DescriptionEditorProps = {
   setIsVisibleEditor: React.Dispatch<React.SetStateAction<boolean>>;
@@ -27,31 +28,11 @@ const DescriptionEditor = ({
     language: 'ru',
     placeholder: 'Начните писать...',
     tabIndex: 1,
-    buttons: [
-      'bold',
-      'italic',
-      'underline',
-      'fontsize',
-      'link',
-      'image',
-      'brush',
-      'left',
-      'center',
-      'right',
-    ],
-    removeButtons: [
-      'ul',
-      'ol',
-      'eraser',
-      'paragraph',
-      'fullsize',
-      'copyformat',
-      'hr',
-      'table',
-      'font',
-      'video',
-      'file',
-    ],
+    buttons,
+    buttonsMD,
+    buttonsSM,
+    buttonsXS,
+    removeButtons,
     askBeforePasteFromWord: false,
     askBeforePasteHTML: false,
     enableDragAndDropFileToEditor: true,
