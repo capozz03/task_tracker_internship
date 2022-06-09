@@ -59,12 +59,12 @@ const TasksLayout = () => {
             <TasksInWork />
             <TasksCompleted />
             <TasksFailed />
+            {isVisibleNotifications && <Notifications />}
           </Content>
         </Layout>
       </Layout>
       <TaskModal visible={isVisibleForm} />
       <ModalDeleteTask />
-      {isVisibleNotifications && <Notifications />}
     </>
   );
 };
