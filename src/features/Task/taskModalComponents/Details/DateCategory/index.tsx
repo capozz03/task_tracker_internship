@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import DetailCategory from 'features/Task/taskModalComponents/Details/DetailCategory';
 import { DatePicker, Tooltip } from 'antd';
@@ -60,13 +61,12 @@ export const DateStartCategory = ({
   return (
     <DetailCategory name="Начало" type="details" removeHandler={removeCategory} tooltip="Удалить дату начала">
       <div className={styles.wrapper}>
-        <DatePickerIcon />
         <DatePicker
           getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
           className={styles.datepicker}
           locale={locale}
           allowClear={false}
-          suffixIcon={null}
+          suffixIcon={<DatePickerIcon />}
           value={pickerValue}
           onChange={onChangeDateHandler}
           format={formatDate}
@@ -129,13 +129,12 @@ export const DateStopCategory = ({
   return (
     <DetailCategory name="Срок" type="details" removeHandler={removeCategory} tooltip={tooltip}>
       <div className={styles.wrapper}>
-        <DatePickerIcon />
         <DatePicker
           getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
           className={styles.datepicker}
           locale={locale}
           allowClear={false}
-          suffixIcon={null}
+          suffixIcon={<DatePickerIcon />}
           value={pickerValue}
           onChange={onChangeDateHandler}
           format={formatDate}
