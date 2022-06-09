@@ -14,9 +14,6 @@ export const changeTaskDateStart = createAsyncThunk(
       if (props.datetimeISO) alert('Дата начала установлена', 'success');
       else alert('Дата начала удалена', 'success');
 
-      dispatch(TaskFormSlice.updateTask(data.data));
-      dispatch(TaskFormSlice.resetTaskHistory());
-
       const state = getState();
       updateTaskLists({
         dispatch,
@@ -29,6 +26,9 @@ export const changeTaskDateStart = createAsyncThunk(
           TaskFailedSlice,
         },
       });
+
+      dispatch(TaskFormSlice.updateTask(data.data));
+      dispatch(TaskFormSlice.resetTaskHistory());
 
       return data.data.exec_start;
     } catch (rejectedValueOrSerializedError) {
