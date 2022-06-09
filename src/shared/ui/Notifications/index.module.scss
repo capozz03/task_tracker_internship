@@ -1,13 +1,24 @@
 @import "src/shared/assets/styles/index";
-
+.backgroundPlace{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 998;
+  height: 100vh;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
 .notifications{
   position: fixed;
+  z-index: 999;
   top: 80px;
   right: 30px;
   max-height: calc(100vh - 85px);
   background-color: #fff;
   overflow-y: scroll;
-  z-index: 100;
   width: 100%;
   max-width: 460px;
   padding: 16px;
