@@ -1,22 +1,21 @@
 import React from 'react';
+import { Select, Tooltip } from 'antd';
 import { useDispatch } from 'react-redux';
-import { TaskFormSlice } from 'store/slice';
 import { TaskPriorities } from 'shared';
-import { Select } from 'antd';
-import DetailCategory from 'features/Task/taskModalComponents/Details/DetailCategory';
-import { TPriorityStateData } from 'store/slice/task/taskForm/priority/entities';
-import { PriorityStatus } from 'features/Tasks/tasksComponents';
+import { TaskFormSlice } from 'store/slice';
+import { TPriority } from 'store/slice/task/entities';
+import PriorityStatus from '../PriorityStatus';
 import styles from './index.module.scss';
 
 type TProps = {
-  priority: TPriorityStateData | null;
-  currentTaskId: string | undefined;
-  hiddenCategory: ()=>void;
+  priority: TPriority | null;
+  currentTaskId: string;
+  tooltip?: string;
 };
 
 const { Option } = Select;
 
-const PriorityCategory = ({ priority, currentTaskId, hiddenCategory }: TProps) => {
+const PriorityChanger = ({ priority, currentTaskId, tooltip }: TProps) => {
   const dispatch = useDispatch();
 
   const priorityChanger = (taskId: string, value: string | null) => {
@@ -44,18 +43,20 @@ const PriorityCategory = ({ priority, currentTaskId, hiddenCategory }: TProps) =
 
   const priorityChangeHandler = (newPriorityName: string | null) => {
     priorityChanger(currentTaskId || '', newPriorityName);
-    if (!newPriorityName) hiddenCategory();
   };
 
+  const stopPropagation = (e: React.MouseEvent<HTMLElement>) => e.stopPropagation();
+
   return (
-    <DetailCategory name="Приоритет" type="details">
+    <Tooltip title={tooltip || ''}>
       <Select
-        getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
         className={styles.select}
         bordered={false}
         showArrow={false}
         value={priority?.name || null}
         onChange={priorityChangeHandler}
+        onClick={stopPropagation}
+        getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}
       >
         <Option className={styles.selectItem} value={null}>
           <PriorityStatus type={null} />
@@ -70,8 +71,8 @@ const PriorityCategory = ({ priority, currentTaskId, hiddenCategory }: TProps) =
           <PriorityStatus type="Низкий" />
         </Option>
       </Select>
-    </DetailCategory>
+    </Tooltip>
   );
 };
 
-export default PriorityCategory;
+export default PriorityChanger;

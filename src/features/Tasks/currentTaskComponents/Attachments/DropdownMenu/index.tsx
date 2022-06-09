@@ -42,6 +42,7 @@ const DropdownMenu = ({ taskId, storageFileId, name }: DropdownMenuProps) => {
   return (
     <>
       <Dropdown.Button
+        getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
         className={style.dropdownButton}
         overlay={menu}
         icon={<Icon className={style.dropdownIcon} component={MoreVerticalIcon} />}

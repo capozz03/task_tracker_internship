@@ -1,9 +1,11 @@
 import React, { MouseEventHandler, useEffect, useState } from 'react';
-import { Select, SelectProps } from 'antd';
+import { Select, SelectProps, Tooltip } from 'antd';
 import style from './index.module.scss';
 import { taskStatuses } from './constants';
 
-const TaskStatus = ({ ...props }: SelectProps) => {
+type TProps = SelectProps & { tooltip?: string };
+
+const TaskStatus = ({ ...props }: TProps) => {
   const [color, setColor] = useState<string>('#50B5FF');
   const [statusId, setStatusId] = useState(props.defaultValue);
   const { Option } = Select;
@@ -42,26 +44,29 @@ const TaskStatus = ({ ...props }: SelectProps) => {
   };
 
   return (
-    <Select
-      className={style.taskStatus}
-      defaultValue={currentStatus}
-      bordered={false}
-      showArrow={false}
-      dropdownMatchSelectWidth={false}
-      dropdownStyle={{ borderRadius: '8px' }}
-      onSelect={changeTaskStatus}
-      style={{ backgroundColor: `${color}` }}
-      onChange={props.onChange}
-      onClick={onClick}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-    >
-      {taskStatuses.map(({ status, taskStatusId }) => (
-        <Option key={taskStatusId} value={taskStatusId} className={style.taskStatusItem}>
-          {status}
-        </Option>
-      ))}
-    </Select>
+    <Tooltip title={props.tooltip || ''}>
+      <Select
+        className={style.taskStatus}
+        defaultValue={currentStatus}
+        bordered={false}
+        showArrow={false}
+        dropdownMatchSelectWidth={false}
+        dropdownStyle={{ borderRadius: '8px' }}
+        onSelect={changeTaskStatus}
+        style={{ backgroundColor: `${color}` }}
+        onChange={props.onChange}
+        onClick={onClick}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
+      >
+        {taskStatuses.map(({ status, taskStatusId }) => (
+          <Option key={taskStatusId} value={taskStatusId} className={style.taskStatusItem}>
+            {status}
+          </Option>
+        ))}
+      </Select>
+    </Tooltip>
   );
 };
 

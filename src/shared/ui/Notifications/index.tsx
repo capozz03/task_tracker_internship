@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NotificationsSlice } from 'store/slice';
+import { NotificationsSlice, TaskFilters } from 'store/slice';
 import styles from './index.module.scss';
 import NotificationItem from './NotificationItem';
 import { Spin } from 'antd';
 
+const { getIsFiltersMenuShow } = TaskFilters;
+
 const Notifications = () => {
   const dispatch = useDispatch();
+  const isSidebarShow = useSelector(getIsFiltersMenuShow);
   const notifications = useSelector(NotificationsSlice.getNotificationsSelector);
   const pagination = useSelector(NotificationsSlice.getPaginationSelector);
   const isLoading = useSelector(NotificationsSlice.isLoading);
@@ -30,7 +33,7 @@ const Notifications = () => {
     }));
   }, []);
   return (
-    <div className={styles.notifications}>
+    <div className={styles.notifications} style={{ right: isSidebarShow ? '275px' : '30px' }}>
       <header className={styles.header}>
         <div className={styles.title}>
           Уведомления

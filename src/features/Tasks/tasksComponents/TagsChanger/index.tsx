@@ -1,18 +1,16 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { TTag, TTagsTask } from 'store/slice/task/entities';
-import DetailCategory from 'features/Task/taskModalComponents/Details/DetailCategory';
 import { Checkbox, Tag } from 'features/Tasks/tasksComponents';
 import { useDispatch, useSelector } from 'react-redux';
 import { TagsSlice, TaskFormSlice } from 'store/slice';
 import styles from './index.module.scss';
-import { Dropdown, Input, Menu, Spin } from 'antd';
+import { Dropdown, Input, Menu, Spin, Tooltip } from 'antd';
 import { alert, useDebounce } from 'shared';
-import { searchIcons } from 'shared/ui/icons';
+import { PencilIcon, searchIcons } from 'shared/ui/icons';
 
 type TProps = {
   currentTaskId: string | undefined;
-  taskTags: TTagsTask[] | null;
-  hiddenCategory: ()=>void;
+  taskTags: TTagsTask[];
 };
 
 type TTagUnit = TTag & {
@@ -21,7 +19,7 @@ type TTagUnit = TTag & {
 
 const { SearchInputIcon } = searchIcons;
 
-const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory }: TProps) => {
+const TagsChanger = ({ currentTaskId, taskTags }: TProps) => {
   const dispatch = useDispatch();
   const isLoading = useSelector(TagsSlice.isLoadingTags);
   const allTags = useSelector(TagsSlice.getTagsSelector);
@@ -50,13 +48,7 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory }: TProps) => {
       } else {
         onTagRemove(tagId, currentTaskId);
       }
-    }
-  };
-
-  const removeCategory = () => {
-    if (taskTags && currentTaskId) {
-      taskTags.forEach((tag) => onTagRemove(tag.task_tag.task_tag_id, currentTaskId));
-      hiddenCategory();
+      setSearchValue('');
     }
   };
 
@@ -91,15 +83,18 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory }: TProps) => {
   const menu = (
     <div
       className={styles.menu}
+      onClick={stopPropagation}
+      role="button"
+      aria-hidden="true"
     >
       <div className={styles.inputWrapper}>
         <SearchInputIcon />
         <Input value={searchValue} onChange={searchHandler} placeholder="Найти метку..." onClick={stopPropagation} />
       </div>
-      <Menu className={styles.itemsWrapper}>
+      <Menu className={styles.itemsWrapper} onClick={stopPropagation}>
         {
           isLoading
-            ? <Spin />
+            ? <Spin className={styles.spin} />
             : tags.map((tag) => (
               <Menu.Item
                 key={tag.task_tag_id}
@@ -107,6 +102,7 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory }: TProps) => {
                 <Checkbox
                   checked={tag.checked}
                   onChange={onTagChangeStateHandler(tag.task_tag_id)}
+                  onClick={stopPropagation}
                 >
                   <Tag tag={tag} />
                 </Checkbox>
@@ -118,33 +114,21 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory }: TProps) => {
   );
 
   return (
-    <DetailCategory name="Метки" type="details" removeHandler={removeCategory} tooltip="Убрать все метки">
-      <div className={styles.wrapper}>
-        <div className={styles.tags}>
-          {
-            taskTags && taskTags.map((tag) => (
-              <Tag
-                tag={tag.task_tag}
-                key={tag.task_to_tag_id}
-                deleteHandle={onTagChangeStateHandler(tag.task_tag.task_tag_id)}
-              />
-            ))
-          }
-        </div>
-        <Dropdown
-          getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
-          overlay={menu}
-          trigger={['click']}
-          visible={visible}
-          onVisibleChange={setDropdownVisible}
-        >
-          <button type="button" className={styles.addButton}>
-            + Добавить метку
-          </button>
-        </Dropdown>
-      </div>
-    </DetailCategory>
+    <Dropdown
+      overlay={menu}
+      trigger={['click']}
+      visible={visible}
+      onVisibleChange={setDropdownVisible}
+      getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}
+    >
+      <Tooltip title="Добавить метку">
+        <button type="button" className={styles.addButton} onClick={stopPropagation}>
+          <PencilIcon />
+          { !taskTags.length && 'Без метки' }
+        </button>
+      </Tooltip>
+    </Dropdown>
   );
 };
 
-export default TagsCategory;
+export default TagsChanger;

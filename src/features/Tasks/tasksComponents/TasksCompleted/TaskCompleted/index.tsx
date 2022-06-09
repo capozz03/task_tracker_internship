@@ -50,7 +50,7 @@ const TaskCompleted = ({ task }: TaskCompletedProps) => {
         <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
       </div>
       <div className={style.cardTagsGroup}>
-        <TagsGroup tags={task.tags} />
+        <TagsGroup tags={task.tags} taskId={task.task_id} />
       </div>
       <div className={style.cardProgress}>
         {task.progress && (
