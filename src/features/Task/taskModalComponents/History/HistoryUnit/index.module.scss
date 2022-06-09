@@ -1,0 +1,272 @@
+@import "src/shared/assets/styles";
+
+.historyItem {
+    width: 100%;
+    position: relative;
+    margin-bottom: 5px;
+    padding-left: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+
+    @include media-breakpoint-down(xxl) {
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 15px;
+    }
+
+    .action {
+        margin-top: 6px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+        @include media-breakpoint-down(xxl) {
+            margin-top: 0;
+        }
+
+        .actionTitle {
+            margin-bottom: 0;
+            color: $grey-900;
+
+            .actionUserName {
+                margin-right: 6px;
+                font: $p-medium;
+                white-space: nowrap;
+            }
+
+            .actionDescription {
+                font: $p-regular;
+            }
+
+            @include media-breakpoint-down(xxl) {
+                margin-bottom: 5px;
+            }
+        }
+
+        .actionDetails {
+            margin-left: 5px;
+        }
+    
+        & > div:first-child {
+        position: absolute;
+        left: 5px;
+        top: 5px;
+        }
+    }
+
+    .actionTime {
+        min-width: 130px;
+        margin-top: 12px;
+        font: $h6-regular;
+        color: $grey-600;
+        text-align: right;
+
+        @include media-breakpoint-down(xxl) {
+            margin: 0;
+            text-align: left;
+        }
+    }
+}
+
+.RolesContainer,
+.TagContainer,
+.DatesContainer,
+.ResumeContainer,
+.StatusContainer,
+.PriorityContainer,
+.FilesContainer,
+.ChecklistContainer {
+    padding: 10px;
+    background: rgba($grey-100, 0.5);
+    border-radius: 10px;
+}
+
+.RolesContainer {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    & > div:first-child {
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+    }
+
+    p {
+        margin: 0;
+        font: $h6-bold;
+        color: $grey-600;
+    }
+
+    .RolesName {
+        margin-right: 5px;
+        margin-bottom: 5px;
+        color: $grey-900;
+    }
+
+    .RolesDesc {
+        margin: 0;
+        padding: 0;
+        min-height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        font: $h6-regular;
+        
+        svg {
+            margin: 0;
+            padding: 0;
+            width: 14px;
+            height: 14px;
+            opacity: 0.7;
+            margin-right: 3px;
+        }
+    }
+}
+
+.GeneralSpan {
+    margin: 0 5px;
+    padding: 3px 5px;
+    font: $p-medium;
+    color: $grey-800;
+    background: $grey-100;
+    border-radius: 6px;
+
+    &.deleted {
+        text-decoration: line-through;
+    }
+}
+
+.DatesContainer {
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    svg {
+        margin-top: -2px;
+        margin-right: 7px;
+    }
+
+    .DatesDate {
+        font: $p-medium;
+        color: $grey-800;
+    }
+}
+
+.StatusContainer {
+    margin-top: 10px;
+
+    .Status {
+        display: block;
+        padding: 8px 16px;
+        font: $h6-bold;
+        text-transform: uppercase;
+        color: $grey-0;
+        border-radius: 16px;
+    }
+}
+
+.FilesContainer {
+    margin-top: 10px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-bottom: 0;
+}
+
+.TagContainer {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+
+    svg {
+        width: 22px;
+        height: 22px;
+        opacity: 0.7;
+    }
+}
+
+.PriorityContainer {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+
+    .PriorityRound {
+        margin: 5px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+    }
+
+    .PriorityText {
+        font: $p-regular;
+        color: $grey-700;
+    }
+}
+
+.ChecklistContainer {
+    margin-top: 10px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+
+    label > span {
+        padding: 0 !important;
+    }
+
+    svg {
+        width: 16px;
+        height: 16px;
+
+        path {
+            fill: $grey-500;
+        }
+    }
+
+    span {
+        font: $p-medium;
+        color: $grey-800;
+    }
+}
+
+.ResumeContainer {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
+
+    p {
+        margin: 0;
+        padding: 0;
+    }
+
+    .Resume,
+    .Comment {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+        .Title {
+            min-width: 110px;
+            font: $p-medium;
+        }
+
+        .Content {
+            width: 100%;
+            font: $p-regular;
+            line-height: 24px;
+        }
+    }
+}

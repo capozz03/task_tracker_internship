@@ -3,13 +3,31 @@
 .sortByWrapper {
   .sortByItemTitle {
     display: inline-block;
-    font: $p-light;
-    color: $grey-600;
+    font: $p-light !important;
+    color: $grey-600 !important;
   }
+
+  :global(.ant-select-selector) {
+    padding-left: 6px !important;
+  }
+
   .sortByItemSelect {
     display: inline-block;
     font: $p-medium;
     color: $grey-800;
+
+    input, span {
+      font: $p-medium !important;
+      color: $grey-800 !important;
+
+      svg {
+        margin-top: 2px;
+
+        path {
+          fill: $grey-600 !important;
+        }
+      }
+    }
   }
 }
 

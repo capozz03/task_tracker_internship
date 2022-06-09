@@ -18,6 +18,7 @@ import Description from 'features/Tasks/currentTaskComponents/Description';
 import MembersPanel from './MembersPanel';
 import Details from 'features/Task/taskModalComponents/Details';
 import { CollapseHeader, CollapseMembersHeader } from './MembersPanel/MemberPanelHeaders';
+import TaskHistory from 'features/Task/taskModalComponents/History';
 import { alert } from 'shared/ui';
 import { isLoadingStatusCheck } from 'shared/helpers';
 
@@ -127,7 +128,7 @@ const TaskModal = (props: ModalProps) => {
             <div className={styles.attachments}>
               {task && <Attachments taskId={task.task_id} />}
             </div>
-            <div className={styles.actions}>actions</div>
+            <TaskHistory />
           </div>
           <div className={styles.rightColumn}>
             <Collapse

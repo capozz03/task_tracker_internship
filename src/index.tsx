@@ -7,13 +7,19 @@ import { store } from 'store';
 import App from './app/App';
 import reportWebVitals from './reportWebVitals';
 import { ToastContainer } from 'react-toastify';
+import { ConfigProvider } from 'antd';
+import ruRU from 'antd/lib/locale/ru_RU';
 
 ReactDOM.render(
   <React.StrictMode>
     <AppErrorBoundary>
       <Provider store={store}>
         <BrowserRouter>
-          <App />
+          <ConfigProvider
+            locale={ruRU}
+          >
+            <App />
+          </ConfigProvider>
         </BrowserRouter>
       </Provider>
       <ToastContainer />

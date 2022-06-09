@@ -1,18 +1,30 @@
 @import "src/shared/assets/styles/index";
-
+.backgroundPlace{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 998;
+  height: 100vh;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
 .notifications{
   position: fixed;
+  z-index: 999;
   top: 80px;
   right: 30px;
   max-height: calc(100vh - 85px);
   background-color: #fff;
   overflow-y: scroll;
-  z-index: 100;
   width: 100%;
   max-width: 460px;
   padding: 16px;
   box-shadow: 0 6px 15px rgba(196, 203, 216, 0.25);
   border-radius: 16px;
+  transition: .2s linear;
   @media screen and (max-width: 500px){
     max-width: calc( 100% - 10px);
     max-height: calc(100vh - 65px);

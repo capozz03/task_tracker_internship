@@ -13,13 +13,16 @@
   background: transparent;
 
   &.active {
-    background: $grey-200 !important;
-    color: $grey-700 !important;
+    @include media-breakpoint-down('lg') {
+      background: $grey-200 !important;
+      color: $grey-700 !important;
 
-    svg {
-      color: $main-blue;
-      path{
-        fill: currentColor;
+      svg {
+        color: $main-blue;
+
+        path {
+          fill: currentColor;
+        }
       }
     }
   }

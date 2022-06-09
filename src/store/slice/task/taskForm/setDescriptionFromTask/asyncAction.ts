@@ -33,6 +33,7 @@ export const setDescriptionAsync = createAsyncThunk(
       if (data.data.status.name === 'Не выполнена') {
         dispatch(TaskFailedSlice.taskUpdate(data.data));
       }
+      dispatch(TaskFormSlice.resetTaskHistory());
       return data;
     } catch (error) {
       errorHandle();

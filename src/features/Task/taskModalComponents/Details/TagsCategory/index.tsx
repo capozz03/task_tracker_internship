@@ -132,6 +132,7 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory }: TProps) => {
           }
         </div>
         <Dropdown
+          getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
           overlay={menu}
           trigger={['click']}
           visible={visible}
