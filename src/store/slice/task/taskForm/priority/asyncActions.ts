@@ -26,6 +26,7 @@ export const changeTaskPriority = createAsyncThunk(
       });
 
       dispatch(TaskFormSlice.updateTask(data.data));
+      dispatch(TaskFormSlice.resetTaskHistory());
       return data.data.priority;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);

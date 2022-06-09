@@ -50,3 +50,18 @@ export const formatDate = (value: Moment, withTime: boolean = true) => {
 
   return value.locale('ru').format('DD MMM YYYY');
 };
+
+export const formatDateOnTaskHistoryView = (value: string) => {
+  const answer = formatDate(moment(value));
+  const now = +moment().format('YYYYMMDD');
+  const date = +moment(value).format('YYYYMMDD');
+
+  switch (now - date) {
+    case 0:
+      return `Сегодня, ${answer.slice(-5)}`;
+    case 1:
+      return `Вчера, ${answer.slice(-5)}`;
+    default:
+      return answer;
+  }
+};

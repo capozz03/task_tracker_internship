@@ -1,0 +1,62 @@
+@import "src/shared/assets/styles";
+
+.historyWrapper {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.header {
+    height: 40px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 16px;
+
+    & > svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    & > h5 {
+        margin: 0;
+        font: $h5;
+        color: $grey-900;
+    }
+
+    & > button {
+        height: 24px;
+        margin: 0;
+        padding: 0 8px;
+        font: $h6-regular;
+        color: $grey-600;
+        text-transform: lowercase;
+        background: $grey-200;
+        border: none;
+        border-radius: 8px;
+        transition: all 0.1s linear;
+        cursor: pointer;
+
+        &:hover {
+            color: $grey-0;
+            background: $main-blue;
+        }
+    }
+}
+
+.historyList {
+    width: 100%;
+    padding: 20px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 22px;
+    list-style-type: none;
+
+    &.historyHidden {
+        @include media-breakpoint-down(xxl) {
+            display: none;
+        }
+    }
+}

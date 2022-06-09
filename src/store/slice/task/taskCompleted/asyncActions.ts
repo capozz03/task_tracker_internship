@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { taskService } from './taskCompletedService';
 import { TTaskSearch, TTasksReducer, TTaskStatusChange } from '../entities';
-import { TaskInWorkSlice, TaskInboxSlice, TaskFailedSlice, TaskCompletedSlice } from 'store/slice';
+import { TaskInWorkSlice, TaskInboxSlice, TaskFailedSlice, TaskCompletedSlice, TaskFormSlice } from 'store/slice';
 import { TFiltersSlice } from '../taskFilters/slice';
 import { TaskStatuses } from 'shared';
 
@@ -76,6 +76,7 @@ export const changeStatusTaskAsync = createAsyncThunk(
           }),
         );
       }
+      dispatch(TaskFormSlice.resetTaskHistory());
     } catch (error) {
       return rejectWithValue(error);
     }
