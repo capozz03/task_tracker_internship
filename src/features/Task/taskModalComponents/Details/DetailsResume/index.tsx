@@ -19,8 +19,8 @@ const DetailsResume = ({ taskId, formResultRequired }: TDetailsResumeProps) => {
   const resume = useSelector(TaskFormSlice.getFormResultResume);
   const comment = useSelector(TaskFormSlice.getFormResultComment);
 
-  const resumeValue = formResult ? resume?.value : 'Требуется резюме';
-  const commentValue = formResult ? comment?.value : 'нет комментария';
+  const resumeValue = (formResult && formResult.length) ? resume?.value : 'Требуется резюме';
+  const commentValue = (formResult && formResult.length) ? comment?.value : 'нет комментария';
 
   const showModal = () => {
     setIsModalVisible(true);

@@ -4,6 +4,7 @@ import { TTaskSearch, TTasksReducer, TTaskStatusChange } from '../entities';
 import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice, TaskFailedSlice, TaskFormSlice } from 'store/slice';
 import { TFiltersSlice } from '../taskFilters/slice';
 import { TaskStatuses } from 'shared';
+import { setFormResult } from '../taskForm';
 
 const statusId = TaskStatuses.FAILED;
 
@@ -35,6 +36,7 @@ export const changeStatusTaskAsync = createAsyncThunk(
           ...taskFilters.filters,
         }),
       );
+      dispatch(TaskFormSlice.setStatusTaskForm(data.data.status));
       const state = getState() as any;
       if (data.data.status?.name === 'Создана') {
         const paginationInbox = state.taskInbox?.pagination;
@@ -63,6 +65,14 @@ export const changeStatusTaskAsync = createAsyncThunk(
             per_page: paginationInCompleted!.per_page,
             page: paginationInCompleted!.page_current,
             ...taskFilters.filters,
+          }),
+        );
+        dispatch(
+          setFormResult({
+            form_result: {
+              taskId: params.task_id,
+              formResult: [],
+            },
           }),
         );
       }

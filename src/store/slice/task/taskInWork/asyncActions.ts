@@ -5,6 +5,7 @@ import { alert } from 'shared/ui';
 import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice, TaskFailedSlice, TaskFormSlice } from 'store/slice';
 import { TFiltersSlice } from '../taskFilters/slice';
 import { TaskStatuses } from 'shared';
+import { setFormResult } from '../taskForm';
 
 export const created = TaskStatuses.CREATED;
 export const inWork = TaskStatuses.IN_WORK;
@@ -41,6 +42,7 @@ export const changeStatusTaskAsync = createAsyncThunk(
           ...taskFilters.filters,
         }),
       );
+      dispatch(TaskFormSlice.setStatusTaskForm(data.data.status));
       const state = getState() as any;
       if (data.data.status?.name === 'Создана') {
         const paginationInbox = state.taskInbox?.pagination;
@@ -71,6 +73,14 @@ export const changeStatusTaskAsync = createAsyncThunk(
             ...taskFilters.filters,
           }),
         );
+        dispatch(
+          setFormResult({
+            form_result: {
+              taskId: params.task_id,
+              formResult: [],
+            },
+          }),
+        );
       }
       if (data.data.status?.name === 'Не выполнена') {
         const paginationInFailed = state.taskFailed?.pagination;
@@ -79,6 +89,14 @@ export const changeStatusTaskAsync = createAsyncThunk(
             per_page: paginationInFailed!.per_page,
             page: paginationInFailed!.page_current,
             ...taskFilters.filters,
+          }),
+        );
+        dispatch(
+          setFormResult({
+            form_result: {
+              taskId: params.task_id,
+              formResult: [],
+            },
           }),
         );
       }

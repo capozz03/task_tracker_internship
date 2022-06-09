@@ -59,7 +59,6 @@ const Details = ({ taskId }: TDetailsProps) => {
 
   const isAuthorOrResponsible = isAuthor(currentUserId, roles)
     || isResponsible(currentUserId, roles);
-
   return (
     <>
       {

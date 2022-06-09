@@ -23,6 +23,7 @@ import { alert } from 'shared/ui';
 import { isLoadingStatusCheck } from 'shared/helpers';
 
 const TaskModal = (props: ModalProps) => {
+  const { visible } = props;
   const dispatch = useDispatch();
   const task = useSelector(TaskFormSlice.getTask);
   const roles = useSelector(TaskFormSlice.getRoles);
@@ -95,10 +96,10 @@ const TaskModal = (props: ModalProps) => {
   };
 
   useEffect(() => {
-    if (formResultRequired && !formResult) {
+    if (visible && formResultRequired && !(formResult?.length)) {
       alert('Важная информация для ответственных: нужно резюме', 'info');
     }
-  }, [formResultRequired]);
+  }, [formResult]);
 
   return (
     <Modal

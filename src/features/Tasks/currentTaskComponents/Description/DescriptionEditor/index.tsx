@@ -25,6 +25,7 @@ const DescriptionEditor = ({
 
   const config = {
     readonly: false,
+    language: 'ru',
     placeholder: 'Начните писать...',
     tabIndex: 1,
     buttons,

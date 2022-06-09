@@ -35,6 +35,7 @@ export const changeStatusTaskAsync = createAsyncThunk(
           ...taskFilters.filters,
         }),
       );
+      dispatch(TaskFormSlice.setStatusTaskForm(data.data.status));
       const state = getState() as any;
       if (data.data.status?.name === 'Создана') {
         const paginationInbox = state.taskInbox?.pagination;

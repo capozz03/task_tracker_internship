@@ -19,9 +19,10 @@ const TaskStatus = ({ ...props }: TProps) => {
     });
   };
   const currentStatus = taskStatuses.find((el) => el.status === props.defaultValue)!.taskStatusId;
+
   useEffect(() => {
     changeTaskStatus(currentStatus);
-  }, []);
+  }, [props.defaultValue]);
 
   const onClick: MouseEventHandler<HTMLElement> = (e) => {
     e.stopPropagation();

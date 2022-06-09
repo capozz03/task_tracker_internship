@@ -76,6 +76,7 @@ export {
   setDescriptionFromTaskForm,
   updateCheckList,
   swapItemInChecklist,
+  setStatusTaskForm,
 } from './fullTaskInfo/slice';
 
 export { taskFormRolesReducer, taskFormRolesSelector, setRoles } from './roles/slice';

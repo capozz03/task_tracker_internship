@@ -42,7 +42,6 @@ const EditResume = ({ taskId, isModalVisible, setIsModalVisible }: EditResumePro
       setFormResult({
         form_result: {
           taskId,
-          resume: formResultResume,
           formResult: [
             { field_name: 'resume', value: formResultResume },
             { field_name: 'comment', value: formResultComment },
