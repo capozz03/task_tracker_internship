@@ -34,7 +34,9 @@ const HistoryUnitDetails = ({ type, unit, roleType = 'add', tagType = 'add' }: T
       return (
         <div className={styles.ChecklistContainer}>
           { unit.params.message ? <CheckboxIcon /> : <BlockIcon /> }
-          { unit.params.message || 'Удаленный пункт' }
+          <span className={styles.text}>
+            { unit.params.message || 'Удаленный пункт' }
+          </span>
         </div>
       );
 
@@ -46,7 +48,9 @@ const HistoryUnitDetails = ({ type, unit, roleType = 'add', tagType = 'add' }: T
               ? <Checkbox checked={unit.params.complete} />
               : <BlockIcon />
           }
-          { unit.params.check_list_item?.message || 'Удаленный пункт' }
+          <span className={styles.text}>
+            { unit.params.check_list_item?.message || 'Удаленный пункт' }
+          </span>
         </div>
       );
 
@@ -58,7 +62,9 @@ const HistoryUnitDetails = ({ type, unit, roleType = 'add', tagType = 'add' }: T
               ? <CheckboxIcon />
               : <BlockIcon />
           }
-          { unit.params.check_list_item?.message || 'Удаленный пункт' }
+          <span className={styles.text}>
+            { unit.params.check_list_item?.message || 'Удаленный пункт' }
+          </span>
         </div>
       );
 

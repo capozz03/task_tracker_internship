@@ -17,6 +17,7 @@
     }
 
     .action {
+        width: calc(100% - 160px);
         margin-top: 6px;
         display: flex;
         flex-direction: column;
@@ -25,11 +26,14 @@
 
         @include media-breakpoint-down(xxl) {
             margin-top: 0;
+            width: 100%;
         }
 
         .actionTitle {
+            width: 100%;
             margin-bottom: 0;
             color: $grey-900;
+            word-wrap: break-word;
 
             .actionUserName {
                 margin-right: 6px;
@@ -47,13 +51,14 @@
         }
 
         .actionDetails {
+            width: 100%;
             margin-left: 5px;
         }
     
         & > div:first-child {
-        position: absolute;
-        left: 5px;
-        top: 5px;
+            position: absolute;
+            left: 5px;
+            top: 5px;
         }
     }
 
@@ -86,7 +91,7 @@
 
 .RolesContainer {
     margin-top: 15px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: flex-start;
 
@@ -129,6 +134,7 @@
 }
 
 .GeneralSpan {
+    display: inline;
     margin: 0 5px;
     padding: 3px 5px;
     font: $p-medium;
@@ -143,7 +149,7 @@
 
 .DatesContainer {
     margin-top: 15px;
-    display: flex;
+    display: inline-flex;
     justify-content: flex-start;
     align-items: center;
 
@@ -159,10 +165,11 @@
 }
 
 .StatusContainer {
+    display: inline-block;
     margin-top: 10px;
 
     .Status {
-        display: block;
+        display: inline-block;
         padding: 8px 16px;
         font: $h6-bold;
         text-transform: uppercase;
@@ -172,6 +179,7 @@
 }
 
 .FilesContainer {
+    display: inline-block;
     margin-top: 10px;
     padding: 5px;
     padding-left: 10px;
@@ -180,7 +188,7 @@
 
 .TagContainer {
     margin-top: 10px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: flex-start;
     gap: 10px;
@@ -213,12 +221,18 @@
 }
 
 .ChecklistContainer {
+    width: auto;
+    max-width: 100%;
     margin-top: 10px;
-    
     display: flex;
+    flex-wrap: nowrap;
     align-items: center;
-    justify-content: flex-start;
     gap: 10px;
+    
+    .text {
+        max-width: calc(100% - 30px);
+        word-wrap: break-word;
+    }
 
     label > span {
         padding: 0 !important;
@@ -231,11 +245,6 @@
         path {
             fill: $grey-500;
         }
-    }
-
-    span {
-        font: $p-medium;
-        color: $grey-800;
     }
 }
 
