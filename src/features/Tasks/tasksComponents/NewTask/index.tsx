@@ -55,6 +55,7 @@ const NewTask = ({ taskStatusId }: { taskStatusId: string }) => {
   const toggleVisibleForm = () => {
     setIsActive((prev) => !prev);
     setIsVisibleTooltip(false);
+    setNameTask('');
   };
 
   return (
