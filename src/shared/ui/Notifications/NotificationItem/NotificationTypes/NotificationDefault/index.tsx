@@ -1,6 +1,7 @@
 import React from 'react';
 import { TNotification } from 'store/slice/task/notifications/entities';
 import styles from 'shared/ui/Notifications/NotificationItem/index.module.scss';
+import stylesDefault from './index.module.scss';
 import { PriorityStatus, UserAvatar } from 'features/Tasks/tasksComponents';
 import moment from 'moment';
 import Tag from 'features/Tasks/tasksComponents/Tag';
@@ -28,7 +29,7 @@ const NotificationRoleAssign = ({ notification }: NotificationProps) => {
           <div className={styles.event}>
             { event.command_name }
           </div>
-          <div>
+          <div className={stylesDefault.titleEvent}>
             <strong>
               { event.params.title
                 || event.params.status?.name }
