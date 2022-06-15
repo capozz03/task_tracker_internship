@@ -42,6 +42,7 @@ const StatusCategory = ({ status, currentTaskId }: TProps) => {
   return (
     <DetailCategory name="Статус" type="details">
       <TaskStatus
+        modal
         defaultValue={status.name}
         onChange={statusChangeHandler}
       />

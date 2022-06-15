@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import styles from './index.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { SubscribesSlice, TaskFormSlice } from 'store/slice';
-import Tooltip from 'features/Tasks/tasksComponents/Tooltip';
+import Tooltip from 'features/Tasks/tasksComponents/TooltipForModal';
 
 const Subscribes = () => {
   const dispatch = useDispatch();

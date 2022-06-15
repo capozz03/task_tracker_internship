@@ -137,6 +137,7 @@ const UserAssignedToTask = ({ users }: UserAssignedToTaskProps) => {
             trigger={['hover', 'click']}
             visible={visible}
             onVisibleChange={setVisible}
+            getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}
           >
             <button type="button" className={classes.othersButton} onClick={stopPropagation}>
               {`+${users.length - countElement}`}

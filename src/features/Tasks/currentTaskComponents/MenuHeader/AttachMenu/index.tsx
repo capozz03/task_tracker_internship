@@ -5,7 +5,7 @@ import styles from './index.module.scss';
 import { TaskFormSlice } from 'store/slice';
 import PlusIcons from 'shared/ui/icons/PlusIcons';
 import { acceptedFiles, alert, beforeUploadWrapper, uploadFilesWrapper } from 'shared';
-import Tooltip from 'features/Tasks/tasksComponents/Tooltip';
+import Tooltip from 'features/Tasks/tasksComponents/TooltipForModal';
 
 type AttachMenuProps = {
   taskId: string;
@@ -47,7 +47,7 @@ const AttachMenu = ({ taskId }: AttachMenuProps) => {
   );
 
   return (
-    <Tooltip title="Добавить чек-лист или вложение" placement="left">
+    <Tooltip title="Добавить чек-лист или вложение" placement="left" getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}>
       <Dropdown.Button
         getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
         className={styles.dropdownButton}
