@@ -13,6 +13,8 @@ const MenuHeader = () => {
     duplicate: checkPermission('duplicate.task', task?.roles),
     duplicateEdit: checkPermission('duplicate/edit.task', task?.roles),
     delete: checkPermission('delete.task', task?.roles),
+    addChecklist: checkPermission('add/change/remove.checklist', task?.roles),
+    addFile: checkPermission('add/remove.file', task?.roles),
   });
 
   useEffect(() => {
@@ -20,12 +22,17 @@ const MenuHeader = () => {
       duplicate: checkPermission('duplicate.task', task?.roles),
       duplicateEdit: checkPermission('duplicate/edit.task', task?.roles),
       delete: checkPermission('delete.task', task?.roles),
+      addChecklist: checkPermission('add/change/remove.checklist', task?.roles),
+      addFile: checkPermission('add/remove.file', task?.roles),
     });
   }, [task?.roles]);
 
   return (
     <div className={styles.wrap}>
-      {task && <AttachMenu taskId={task.task_id} />}
+      {
+        task && (can.addChecklist || can.addFile)
+        && <AttachMenu taskId={task.task_id} />
+      }
       <Subscribes />
       {
         task && (can.duplicate || can.duplicateEdit || can.delete)

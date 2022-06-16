@@ -18,6 +18,10 @@
             fill: $colors-red;
         }
     }
+
+    :global(.ant-picker-input > input[disabled]) {
+        color: $grey-900 !important;
+    }
 }
 
 .datepicker {

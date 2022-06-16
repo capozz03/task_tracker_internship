@@ -8,7 +8,7 @@ import { TaskFormSlice } from 'store/slice';
 import { TStateData } from 'store/slice/task/taskForm/roles/entities';
 import { alert, RoleMaxAmounts, RolesIds } from 'shared';
 import { addUserRole, removeUserRole } from 'store/slice/task/taskForm';
-import { hasRole } from 'shared/helpers';
+import { checkPermission, hasRole } from 'shared/helpers';
 
 type TProps = {
   member: TUser,
@@ -41,7 +41,21 @@ const MemberChangerPopover = ({ member, afterAddRole, children }: TProps) => {
   const [roles, setRoles] = useState<TMemberRoles>({
     observer: false, performer: false, responsible: false });
 
-  const isAuthor = hasRole('author', rolesArray, member.user_id);
+  const [isAuthor, setIsAuthor] = useState(hasRole('author', rolesArray, member.user_id));
+  const [can, setCan] = useState({
+    changeResponsible: checkPermission('change.responsible', rolesArray),
+    changeObserver: checkPermission('change.observer', rolesArray),
+    changePerformer: checkPermission('change.performer', rolesArray),
+  });
+
+  useEffect(() => {
+    setCan({
+      changeResponsible: checkPermission('change.responsible', rolesArray),
+      changeObserver: checkPermission('change.observer', rolesArray),
+      changePerformer: checkPermission('change.performer', rolesArray),
+    });
+    setIsAuthor(hasRole('author', rolesArray, member.user_id));
+  }, [rolesArray]);
 
   useEffect(() => {
     if (rolesInTask !== null) setRoles(getMemberRoles(member, rolesInTask));
@@ -103,45 +117,60 @@ const MemberChangerPopover = ({ member, afterAddRole, children }: TProps) => {
 
   const content = () => (
     <div className={styles.popupCheckboxes}>
-      <Checkbox
-        onChange={() => onChangeUserRole(
-          RolesIds.OBSERVER,
-          'Наблюдатель',
-          'observer',
-          'observers',
-          RoleMaxAmounts.OBSERVER,
-        )}
-        checked={roles.observer}
-        disabled={isDisabled}
-      >
-        Наблюдатель
-      </Checkbox>
-      <Checkbox
-        onChange={() => onChangeUserRole(
-          RolesIds.PERFORMER,
-          'Исполнитель',
-          'performer',
-          'performers',
-          RoleMaxAmounts.PERFORMER,
-        )}
-        checked={roles.performer}
-        disabled={isDisabled}
-      >
-        Исполнитель
-      </Checkbox>
-      <Checkbox
-        onChange={() => onChangeUserRole(
-          RolesIds.RESPONSIBLE,
-          'Ответственный',
-          'responsible',
-          'responsible',
-          RoleMaxAmounts.RESPONSIBLE,
-        )}
-        checked={roles.responsible}
-        disabled={isDisabled}
-      >
-        Ответственный
-      </Checkbox>
+      {
+        can.changeObserver
+        && (
+          <Checkbox
+            onChange={() => onChangeUserRole(
+              RolesIds.OBSERVER,
+              'Наблюдатель',
+              'observer',
+              'observers',
+              RoleMaxAmounts.OBSERVER,
+            )}
+            checked={roles.observer}
+            disabled={isDisabled}
+          >
+            Наблюдатель
+          </Checkbox>
+        )
+      }
+      {
+        can.changePerformer
+        && (
+          <Checkbox
+            onChange={() => onChangeUserRole(
+              RolesIds.PERFORMER,
+              'Исполнитель',
+              'performer',
+              'performers',
+              RoleMaxAmounts.PERFORMER,
+            )}
+            checked={roles.performer}
+            disabled={isDisabled}
+          >
+            Исполнитель
+          </Checkbox>
+        )
+      }
+      {
+        can.changeResponsible
+        && (
+          <Checkbox
+            onChange={() => onChangeUserRole(
+              RolesIds.RESPONSIBLE,
+              'Ответственный',
+              'responsible',
+              'responsible',
+              RoleMaxAmounts.RESPONSIBLE,
+            )}
+            checked={roles.responsible}
+            disabled={isDisabled}
+          >
+            Ответственный
+          </Checkbox>
+        )
+      }
     </div>
   );
 

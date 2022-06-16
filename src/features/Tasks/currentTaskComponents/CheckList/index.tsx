@@ -24,9 +24,13 @@ import { Spin } from 'antd';
 
 type ChecklistProps = {
   checklist: TTaskCheckList;
+  permissions: {
+    changeChecklist: boolean,
+    changeCheckbox: boolean,
+  }
 }
 
-const Checklist = ({ checklist }: ChecklistProps) => {
+const Checklist = ({ checklist, permissions }: ChecklistProps) => {
   const dispatch = useDispatch();
   const completed = checklist.items?.filter((item) => item.complete).length;
   const countElement: number = checklist.items ? checklist.items?.length : 0;
@@ -68,7 +72,7 @@ const Checklist = ({ checklist }: ChecklistProps) => {
   );
   return (
     <div className={styles.checklist}>
-      <ChecklistTitle checkList={checklist} />
+      <ChecklistTitle checkList={checklist} canChange={permissions.changeChecklist} />
       <ChecklistProgress percent={percent} />
       <Spin spinning={checklistIsLoadingStatus}>
         {
@@ -89,6 +93,7 @@ const Checklist = ({ checklist }: ChecklistProps) => {
                       checklistId={checklist.check_list_id}
                       key={item.check_list_item_id}
                       item={item}
+                      canChange={permissions.changeCheckbox}
                     />))
                 }
               </SortableContext>
@@ -98,7 +103,10 @@ const Checklist = ({ checklist }: ChecklistProps) => {
         )
       }
       </Spin>
-      <NewItem checklist={checklist} />
+      {
+        permissions.changeCheckbox
+        && <NewItem checklist={checklist} />
+      }
     </div>
   );
 };

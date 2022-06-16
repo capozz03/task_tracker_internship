@@ -3,23 +3,36 @@ import { DatePicker, Tooltip } from 'antd';
 import styles from './index.module.scss';
 import { ClockCircleOutlined } from '@ant-design/icons';
 import locale from 'antd/es/date-picker/locale/ru_RU';
-import { formatDate } from 'shared/helpers';
+import { checkPermission, formatDate } from 'shared/helpers';
 import { CancelIcons } from 'shared/ui/icons';
 import moment, { Moment } from 'moment';
 import { useDispatch } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
 import { alert } from 'shared';
+import { TRoles } from 'store/slice/task/entities';
 
 type TProps = {
   dateStartISO: string | null | undefined;
   dateStopISO: string | null | undefined;
   taskId: string;
+  roles: TRoles[],
 };
 
-const DateChanger = ({ dateStartISO, dateStopISO, taskId }: TProps) => {
+const DateChanger = ({ dateStartISO, dateStopISO, taskId, roles }: TProps) => {
   const dispatch = useDispatch();
   const [start, setStart] = useState(dateStartISO ? moment(dateStartISO) : null);
   const [stop, setStop] = useState(dateStopISO ? moment(dateStopISO) : null);
+  const [can, setCan] = useState({
+    changeDateStart: checkPermission('change.dateStart', roles),
+    changeDateStop: checkPermission('change.dateStop', roles),
+  });
+
+  useEffect(() => {
+    setCan({
+      changeDateStart: checkPermission('change.dateStart', roles),
+      changeDateStop: checkPermission('change.dateStop', roles),
+    });
+  }, [roles]);
 
   useEffect(() => {
     setStart(dateStartISO ? moment(dateStartISO) : null);
@@ -77,7 +90,7 @@ const DateChanger = ({ dateStartISO, dateStopISO, taskId }: TProps) => {
       <ClockCircleOutlined className={styles.icon} />
       <div>
         <div className={styles.pickerWrapper}>
-          <Tooltip title="Изменить дату начала">
+          <Tooltip title={can.changeDateStart ? 'Изменить дату начала' : ''}>
             <DatePicker
               className={styles.picker}
               bordered={false}
@@ -90,10 +103,11 @@ const DateChanger = ({ dateStartISO, dateStopISO, taskId }: TProps) => {
               onChange={onChangeStart}
               disabledDate={disabledForStart}
               getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}
+              disabled={!can.changeDateStart}
             />
           </Tooltip>
           {
-            start
+            start && can.changeDateStart
             && (
               <Tooltip title="Удалить дату начала">
                 <button type="button" className={styles.removeButton} onClick={removeDate('start')}>
@@ -104,7 +118,7 @@ const DateChanger = ({ dateStartISO, dateStopISO, taskId }: TProps) => {
           }
         </div>
         <div className={styles.pickerWrapper}>
-          <Tooltip title="Изменить срок выполнения">
+          <Tooltip title={can.changeDateStop ? 'Изменить срок выполнения' : ''}>
             <DatePicker
               className={styles.picker}
               bordered={false}
@@ -117,10 +131,11 @@ const DateChanger = ({ dateStartISO, dateStopISO, taskId }: TProps) => {
               onChange={onChangeStop}
               disabledDate={disabledForStop}
               getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}
+              disabled={!can.changeDateStop}
             />
           </Tooltip>
           {
-            stop
+            stop && can.changeDateStop
             && (
               <Tooltip title={start ? 'Сперва удалите дату начала' : 'Удалить срок выполнения'}>
                 <button type="button" className={styles.removeButton} onClick={removeDate('stop')}>

@@ -13,6 +13,7 @@ type TProps = {
   currentTaskId: string | undefined;
   taskTags: TTagsTask[] | null;
   hiddenCategory: ()=>void;
+  isDisabled?: boolean;
 };
 
 type TTagUnit = TTag & {
@@ -21,7 +22,7 @@ type TTagUnit = TTag & {
 
 const { SearchInputIcon } = searchIcons;
 
-const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory }: TProps) => {
+const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory, isDisabled = false }: TProps) => {
   const dispatch = useDispatch();
   const isLoading = useSelector(TagsSlice.isLoadingTags);
   const allTags = useSelector(TagsSlice.getTagsSelector);
@@ -118,7 +119,12 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory }: TProps) => {
   );
 
   return (
-    <DetailCategory name="Метки" type="details" removeHandler={removeCategory} tooltip="Убрать все метки">
+    <DetailCategory
+      name="Метки"
+      type="details"
+      removeHandler={isDisabled ? undefined : removeCategory}
+      tooltip="Убрать все метки"
+    >
       <div className={styles.wrapper}>
         <div className={styles.tags}>
           {
@@ -126,22 +132,31 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory }: TProps) => {
               <Tag
                 tag={tag.task_tag}
                 key={tag.task_to_tag_id}
-                deleteHandle={onTagChangeStateHandler(tag.task_tag.task_tag_id)}
+                deleteHandle={
+                  isDisabled
+                    ? undefined
+                    : onTagChangeStateHandler(tag.task_tag.task_tag_id)
+                }
               />
             ))
           }
         </div>
-        <Dropdown
-          getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
-          overlay={menu}
-          trigger={['click']}
-          visible={visible}
-          onVisibleChange={setDropdownVisible}
-        >
-          <button type="button" className={styles.addButton}>
-            + Добавить метку
-          </button>
-        </Dropdown>
+        {
+          !isDisabled
+          && (
+            <Dropdown
+              getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
+              overlay={menu}
+              trigger={['click']}
+              visible={visible}
+              onVisibleChange={setDropdownVisible}
+            >
+              <button type="button" className={styles.addButton}>
+                + Добавить метку
+              </button>
+            </Dropdown>
+          )
+        }
       </div>
     </DetailCategory>
   );

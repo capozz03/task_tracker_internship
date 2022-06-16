@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DetailCategory from 'features/Task/taskModalComponents/Details/DetailCategory';
 import MembersChanger from 'features/Task/taskModalComponents/MembersChanger';
 import UserLabel from 'features/Task/taskModalComponents/UserLabel';
@@ -9,7 +9,19 @@ import { checkPermission, RolesIds } from 'shared/helpers';
 const MembersPanel = () => {
   const roles = useSelector(TaskFormSlice.getRoles);
   const rolesArray = useSelector(TaskFormSlice.getTaskFormRoles);
-  const canRemove = checkPermission('change.tag', rolesArray);
+  const [can, setCan] = useState({
+    changeResponsible: checkPermission('change.responsible', rolesArray),
+    changeObserver: checkPermission('change.observer', rolesArray),
+    changePerformer: checkPermission('change.performer', rolesArray),
+  });
+
+  useEffect(() => {
+    setCan({
+      changeResponsible: checkPermission('change.responsible', rolesArray),
+      changeObserver: checkPermission('change.observer', rolesArray),
+      changePerformer: checkPermission('change.performer', rolesArray),
+    });
+  }, [rolesArray]);
 
   return (
     <>
@@ -38,7 +50,7 @@ const MembersPanel = () => {
                   user={member}
                   roleId={RolesIds.OBSERVER}
                   roleName="Наблюдатель"
-                  canRemove={canRemove}
+                  canRemove={can.changeObserver}
                 />
               ))
             }
@@ -56,14 +68,17 @@ const MembersPanel = () => {
                   user={member}
                   roleId={RolesIds.RESPONSIBLE}
                   roleName="Ответственный"
-                  canRemove={canRemove}
+                  canRemove={can.changeResponsible}
                 />
               ))
             }
           </DetailCategory>
         )
       }
-      <MembersChanger buttonType="blue" />
+      {
+        (can.changeObserver || can.changePerformer || can.changeResponsible)
+        && <MembersChanger buttonType="blue" />
+      }
     </>
   );
 };

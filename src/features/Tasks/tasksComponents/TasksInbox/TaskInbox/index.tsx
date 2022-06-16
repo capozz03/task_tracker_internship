@@ -92,13 +92,19 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
           dateStartISO={task.exec_start}
           dateStopISO={task.exec_stop}
           taskId={task.task_id}
+          roles={task.roles}
         />
       </div>
       <div className={styles.cardPriority}>
-        <PriorityChanger priority={task.priority} currentTaskId={task.task_id} tooltip="Изменить приоритет" />
+        <PriorityChanger
+          priority={task.priority}
+          currentTaskId={task.task_id}
+          tooltip="Изменить приоритет"
+          roles={task.roles}
+        />
       </div>
       <div className={styles.cardTagsGroup}>
-        <TagsGroup tags={task.tags} taskId={task.task_id} />
+        <TagsGroup tags={task.tags} taskId={task.task_id} roles={task.roles} />
       </div>
       <div className={styles.cardUsers}>
         <UserAssignedToTask users={task.roles} />

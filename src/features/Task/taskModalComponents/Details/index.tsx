@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { checkPermission } from 'shared/helpers';
 import { TaskFormSlice } from 'store/slice';
 import PerformerCategory from './PerformerCategory';
 import StatusCategory from './StatusCategory';
@@ -11,6 +10,7 @@ import { detailsIcons } from 'shared/ui/icons';
 import styles from './index.module.scss';
 import DetailsResume from './DetailsResume';
 import Tooltip from 'features/Tasks/tasksComponents/TooltipForModal';
+import { checkPermission } from 'shared/helpers';
 
 type TDetailsProps = { taskId: string };
 
@@ -26,9 +26,8 @@ const Details = ({ taskId }: TDetailsProps) => {
   const roles = useSelector(TaskFormSlice.getRoles);
   const tags = useSelector(TaskFormSlice.getTags);
   const status = useSelector(TaskFormSlice.getTaskFormStatusTask);
-  const rolesArray = useSelector(TaskFormSlice.getTaskFormRoles);
   const formResultRequired = useSelector(TaskFormSlice.getTaskFormStatusTaskFormRequired);
-
+  const rolesArray = useSelector(TaskFormSlice.getTaskFormRoles);
   const priority = useSelector(TaskFormSlice.getPriority);
   const dateStart = useSelector(TaskFormSlice.getDateStart);
   const dateStop = useSelector(TaskFormSlice.getDateStop);
@@ -40,6 +39,24 @@ const Details = ({ taskId }: TDetailsProps) => {
     tags: tags ? tags.length !== 0 : false,
     priority: !!priority,
   });
+
+  const [can, setCan] = useState({
+    changeDateStart: checkPermission('change.dateStart', rolesArray),
+    changeDateStop: checkPermission('change.dateStop', rolesArray),
+    changePriority: checkPermission('change.priority', rolesArray),
+    changeTags: checkPermission('change.tag', rolesArray),
+    changeResume: checkPermission('add/remove.resume', rolesArray),
+  });
+
+  useEffect(() => {
+    setCan({
+      changeDateStart: checkPermission('change.dateStart', rolesArray),
+      changeDateStop: checkPermission('change.dateStop', rolesArray),
+      changePriority: checkPermission('change.priority', rolesArray),
+      changeTags: checkPermission('change.tag', rolesArray),
+      changeResume: checkPermission('add/remove.resume', rolesArray),
+    });
+  }, [rolesArray]);
 
   useEffect(() => {
     setCategoryView({
@@ -57,17 +74,20 @@ const Details = ({ taskId }: TDetailsProps) => {
     setCategoryView({ ...categoryView, [argName]: flag });
   };
 
-  const isAuthorOrResponsible = checkPermission('change.performer', rolesArray);
   return (
     <>
       {
         status?.name
         && <StatusCategory status={status} currentTaskId={currentTaskId} />
       }
-      {(status?.name === 'Выполнена' || status?.name === 'Не выполнена') && (
-        <DetailsResume taskId={taskId} formResultRequired={formResultRequired} />
+      { (status?.name === 'Выполнена' || status?.name === 'Не выполнена') && (
+        <DetailsResume
+          taskId={taskId}
+          formResultRequired={formResultRequired}
+          canChange={can.changeResume}
+        />
       )}
-      <PerformerCategory roles={roles} isAuthorOrResponsible={isAuthorOrResponsible} />
+      <PerformerCategory roles={roles} />
       {
         categoryView.priority
         && (
@@ -75,6 +95,7 @@ const Details = ({ taskId }: TDetailsProps) => {
             priority={priority}
             currentTaskId={currentTaskId}
             hiddenCategory={setStateButton('priority', false)}
+            isDisabled={!can.changePriority}
           />
         )
       }
@@ -86,6 +107,7 @@ const Details = ({ taskId }: TDetailsProps) => {
             stopDateISO={dateStop}
             currentTaskId={currentTaskId}
             hiddenCategory={setStateButton('dateStart', false)}
+            isDisabled={!can.changeDateStart}
           />
         )
       }
@@ -97,6 +119,7 @@ const Details = ({ taskId }: TDetailsProps) => {
             stopDateISO={dateStop}
             currentTaskId={currentTaskId}
             hiddenCategory={setStateButton('dateStop', false)}
+            isDisabled={!can.changeDateStop}
             status={status}
           />
         )
@@ -108,12 +131,13 @@ const Details = ({ taskId }: TDetailsProps) => {
             currentTaskId={currentTaskId}
             taskTags={tags}
             hiddenCategory={setStateButton('tags', false)}
+            isDisabled={!can.changeTags}
           />
         )
       }
       <div className={styles.buttonsWrapper}>
         {
-          !categoryView.dateStop
+          can.changeDateStop && !categoryView.dateStop
           && (
             <Tooltip title="Срок">
               <button type="button" onClick={setStateButton('dateStop', true)} className={styles.button}>
@@ -123,7 +147,7 @@ const Details = ({ taskId }: TDetailsProps) => {
           )
         }
         {
-          !categoryView.dateStart
+          can.changeDateStart && !categoryView.dateStart
           && (
             <Tooltip title="Начало">
               <button type="button" onClick={setStateButton('dateStart', true)} className={styles.button}>
@@ -133,7 +157,7 @@ const Details = ({ taskId }: TDetailsProps) => {
           )
         }
         {
-          !categoryView.priority
+          can.changePriority && !categoryView.priority
           && (
             <Tooltip title="Приоритет">
               <button type="button" onClick={setStateButton('priority', true)} className={styles.button}>
@@ -143,7 +167,7 @@ const Details = ({ taskId }: TDetailsProps) => {
           )
         }
         {
-          !categoryView.tags
+          can.changeTags && !categoryView.tags
           && (
             <Tooltip title="Метки">
               <button type="button" onClick={setStateButton('tags', true)} className={styles.button}>
