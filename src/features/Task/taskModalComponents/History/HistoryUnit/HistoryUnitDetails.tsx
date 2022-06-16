@@ -172,9 +172,9 @@ const HistoryUnitDetails = ({ type, unit, roleType = 'add', tagType = 'add' }: T
             <p className={styles.Title}>Резюме: </p>
             <p className={styles.Content}>
               {
-                unit.params.form_result && !!unit.params.form_result.length
-                && (unit.params.form_result?.filter((field) => field.field_name === 'resume')[0]?.value
-                || 'Не найдено')
+                (unit.params.form_result && !!unit.params.form_result.length
+                && unit.params.form_result?.filter((field) => field.field_name === 'resume')[0]?.value)
+                || <span className={styles.notFound}>Не найдено</span>
               }
             </p>
           </div>
@@ -182,9 +182,9 @@ const HistoryUnitDetails = ({ type, unit, roleType = 'add', tagType = 'add' }: T
             <p className={styles.Title}>Комментарий: </p>
             <p className={styles.Content}>
               {
-                unit.params.form_result && !!unit.params.form_result.length
-                && (unit.params.form_result?.filter((field) => field.field_name === 'comment')[0]?.value
-                || 'Не найдено')
+                (unit.params.form_result && !!unit.params.form_result.length
+                && unit.params.form_result?.filter((field) => field.field_name === 'comment')[0]?.value)
+                || <span className={styles.notFound}>Не найдено</span>
               }
             </p>
           </div>
