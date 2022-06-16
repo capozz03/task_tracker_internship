@@ -1,9 +1,9 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, miniSerializeError } from '@reduxjs/toolkit';
 import { taskService } from './taskCompletedService';
 import { TTaskSearch, TTasksReducer, TTaskStatusChange } from '../entities';
 import { TaskInWorkSlice, TaskInboxSlice, TaskFailedSlice, TaskCompletedSlice, TaskFormSlice } from 'store/slice';
 import { TFiltersSlice } from '../taskFilters/slice';
-import { TaskStatuses } from 'shared';
+import { TaskStatuses, alert } from 'shared';
 
 const statusId = TaskStatuses.COMPLETED;
 
@@ -85,9 +85,12 @@ export const changeStatusTaskAsync = createAsyncThunk(
           }),
         );
       }
+      alert('Статус задачи изменен', 'success');
       dispatch(TaskFormSlice.resetTaskHistory());
       dispatch(TaskFormSlice.updateTask(data.data));
-    } catch (error) {
+    } catch (rejectedValueOrSerializedError) {
+      const error = miniSerializeError(rejectedValueOrSerializedError);
+      alert(`Статус не изменен. Ошибка: "${error.message}"`, 'error');
       return rejectWithValue(error);
     }
   },

@@ -4,7 +4,6 @@ export const buttons = [
   'underline',
   'fontsize',
   'link',
-  'image',
   'brush',
   'align',
 ];
@@ -16,7 +15,6 @@ export const buttonsMD = [
   '|',
   'fontsize',
   '---',
-  'image',
   '|',
   'link',
   '\n',
@@ -35,7 +33,6 @@ export const buttonsSM = [
   'fontsize',
   'brush',
   '---',
-  'image',
   '\n',
   'link',
   '|',
@@ -53,7 +50,6 @@ export const buttonsXS = [
   '|',
   'fontsize',
   '---',
-  'image',
   '\n',
   'link',
   '|',
@@ -75,4 +71,5 @@ export const removeButtons = [
   'font',
   'video',
   'file',
+  'image',
 ];
