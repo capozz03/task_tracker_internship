@@ -1,7 +1,7 @@
 import { RequestStatuses } from 'shared';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TTaskSearch, TTag } from '../entities';
-import { assignedButtons } from '../../../../features/Tasks/tasksComponents/FilterAssignedTo/constants';
+import { assignedButtons } from 'features/Tasks/tasksComponents/FilterAssignedTo/constants';
 
 export type TFiltersSlice = {
   assignedToFilterIndex: number;
