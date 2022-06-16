@@ -173,7 +173,8 @@ const HistoryUnitDetails = ({ type, unit, roleType = 'add', tagType = 'add' }: T
             <p className={styles.Content}>
               {
                 unit.params.form_result && !!unit.params.form_result.length
-                && unit.params.form_result?.filter((field) => field.field_name === 'resume')[0].value
+                && (unit.params.form_result?.filter((field) => field.field_name === 'resume')[0]?.value
+                || 'Не найдено')
               }
             </p>
           </div>
@@ -182,7 +183,8 @@ const HistoryUnitDetails = ({ type, unit, roleType = 'add', tagType = 'add' }: T
             <p className={styles.Content}>
               {
                 unit.params.form_result && !!unit.params.form_result.length
-                && unit.params.form_result?.filter((field) => field.field_name === 'comment')[0].value
+                && (unit.params.form_result?.filter((field) => field.field_name === 'comment')[0]?.value
+                || 'Не найдено')
               }
             </p>
           </div>
