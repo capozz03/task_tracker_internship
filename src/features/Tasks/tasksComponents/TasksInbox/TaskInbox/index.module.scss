@@ -38,7 +38,7 @@
     grid-template-areas:  "title title title menu"
                           "status date priority menu"
                           "tags tags tags menu"
-                          "users users users filesAndCheckbox";
+                          "users users filesAndCheckbox filesAndCheckbox";
     column-gap: 20px;
     row-gap: 10px;
     .cardStatus {
