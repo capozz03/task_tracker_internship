@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { isAuthor, isResponsible } from 'shared/helpers';
-import { TaskFormSlice, UserSlice } from 'store/slice';
+import { checkPermission } from 'shared/helpers';
+import { TaskFormSlice } from 'store/slice';
 import PerformerCategory from './PerformerCategory';
 import StatusCategory from './StatusCategory';
 import PriorityCategory from './PriorityCategory';
@@ -26,13 +26,13 @@ const Details = ({ taskId }: TDetailsProps) => {
   const roles = useSelector(TaskFormSlice.getRoles);
   const tags = useSelector(TaskFormSlice.getTags);
   const status = useSelector(TaskFormSlice.getTaskFormStatusTask);
+  const rolesArray = useSelector(TaskFormSlice.getTaskFormRoles);
   const formResultRequired = useSelector(TaskFormSlice.getTaskFormStatusTaskFormRequired);
 
   const priority = useSelector(TaskFormSlice.getPriority);
   const dateStart = useSelector(TaskFormSlice.getDateStart);
   const dateStop = useSelector(TaskFormSlice.getDateStop);
   const currentTaskId = useSelector(TaskFormSlice.getTaskFormId);
-  const currentUserId = useSelector(UserSlice.userId);
 
   const [categoryView, setCategoryView] = useState({
     dateStart: !!dateStart,
@@ -57,8 +57,7 @@ const Details = ({ taskId }: TDetailsProps) => {
     setCategoryView({ ...categoryView, [argName]: flag });
   };
 
-  const isAuthorOrResponsible = isAuthor(currentUserId, roles)
-    || isResponsible(currentUserId, roles);
+  const isAuthorOrResponsible = checkPermission('change.performer', rolesArray);
   return (
     <>
       {

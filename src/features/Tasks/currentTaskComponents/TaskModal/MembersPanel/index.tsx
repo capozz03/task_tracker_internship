@@ -3,15 +3,13 @@ import DetailCategory from 'features/Task/taskModalComponents/Details/DetailCate
 import MembersChanger from 'features/Task/taskModalComponents/MembersChanger';
 import UserLabel from 'features/Task/taskModalComponents/UserLabel';
 import { useSelector } from 'react-redux';
-import { TaskFormSlice, UserSlice } from 'store/slice';
-import { isAuthor, isResponsible, RolesIds } from 'shared/helpers';
+import { TaskFormSlice } from 'store/slice';
+import { checkPermission, RolesIds } from 'shared/helpers';
 
 const MembersPanel = () => {
   const roles = useSelector(TaskFormSlice.getRoles);
-  const currentUserId = useSelector(UserSlice.userId);
-
-  const isAuthorOrResponsible = isAuthor(currentUserId, roles)
-    || isResponsible(currentUserId, roles);
+  const rolesArray = useSelector(TaskFormSlice.getTaskFormRoles);
+  const canRemove = checkPermission('change.tag', rolesArray);
 
   return (
     <>
@@ -40,7 +38,7 @@ const MembersPanel = () => {
                   user={member}
                   roleId={RolesIds.OBSERVER}
                   roleName="Наблюдатель"
-                  canRemove={isAuthorOrResponsible}
+                  canRemove={canRemove}
                 />
               ))
             }
@@ -58,19 +56,14 @@ const MembersPanel = () => {
                   user={member}
                   roleId={RolesIds.RESPONSIBLE}
                   roleName="Ответственный"
-                  canRemove={isAuthorOrResponsible}
+                  canRemove={canRemove}
                 />
               ))
             }
           </DetailCategory>
         )
       }
-      {
-        isAuthorOrResponsible
-        && (
-          <MembersChanger buttonType="blue" />
-        )
-      }
+      <MembersChanger buttonType="blue" />
     </>
   );
 };

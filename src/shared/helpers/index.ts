@@ -16,7 +16,7 @@ export { setImageUrl, setCarouselImages } from './setImageUrl';
 export type { TCarouselImages } from './setImageUrl';
 export { useBreakPoint, useDebounce } from './hooks';
 export { convertRolesToObject, formatDate } from './convert';
-export { isAuthor, isObserver, isPerformer, isResponsible } from './userRoleChecker';
 export { isArrayOfStrings } from './typeGuards';
 export { beforeUploadWrapper, uploadFilesWrapper, acceptedFiles } from './checkBeforeUpload';
 export { updateTaskLists } from './updateTaskLists';
+export { checkPermission, hasRole } from './permissions';

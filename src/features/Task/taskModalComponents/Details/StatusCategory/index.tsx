@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DetailCategory from 'features/Task/taskModalComponents/Details/DetailCategory';
 import { TaskStatus } from 'features/Tasks/tasksComponents';
 import { TStatus } from 'store/slice/task/entities';
 import { TaskStatuses } from 'shared';
-import { useDispatch } from 'react-redux';
-import { TaskCompletedSlice, TaskFailedSlice, TaskInWorkSlice, TaskInboxSlice } from 'store/slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { TaskCompletedSlice, TaskFailedSlice, TaskInWorkSlice, TaskInboxSlice, TaskFormSlice } from 'store/slice';
+import { checkPermission } from 'shared/helpers';
 
 type TProps = {
   status: TStatus;
@@ -13,6 +14,16 @@ type TProps = {
 
 const StatusCategory = ({ status, currentTaskId }: TProps) => {
   const dispatch = useDispatch();
+  const roles = useSelector(TaskFormSlice.getTaskFormRoles);
+  const [can, setCan] = useState({
+    change: checkPermission('change.status', roles),
+  });
+
+  useEffect(() => {
+    setCan({
+      change: checkPermission('change.status', roles),
+    });
+  }, [roles]);
 
   const statusChanger = (prevStatusId: string, taskId: string, newStatusId: string) => {
     const requestParams = { task_id: taskId, task_status_id: newStatusId };
@@ -44,6 +55,7 @@ const StatusCategory = ({ status, currentTaskId }: TProps) => {
       <TaskStatus
         defaultValue={status.name}
         onChange={statusChangeHandler}
+        isDisabled={!can.change}
       />
     </DetailCategory>
   );

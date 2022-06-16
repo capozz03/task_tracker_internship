@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dropdown, Menu } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
 import style from './index.module.scss';
@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { CommonSlice } from 'store/slice';
 import { getTaskByIdAsync, TTask } from 'store/slice/task/taskForm';
 import { alert } from 'shared';
+import { checkPermission } from 'shared/helpers';
 
 type DropdownMenuProps = {
   task: TTask;
@@ -14,6 +15,19 @@ type DropdownMenuProps = {
 const DropdownMenu = ({ task }: DropdownMenuProps) => {
   const { Item } = Menu;
   const dispatch = useDispatch();
+  const [can, setCan] = useState({
+    duplicate: checkPermission('duplicate.task', task.roles),
+    duplicateEdit: checkPermission('duplicate/edit.task', task.roles),
+    delete: checkPermission('delete.task', task.roles),
+  });
+
+  useEffect(() => {
+    setCan({
+      duplicate: checkPermission('duplicate.task', task.roles),
+      duplicateEdit: checkPermission('duplicate/edit.task', task.roles),
+      delete: checkPermission('delete.task', task.roles),
+    });
+  }, [task.roles]);
 
   const openTask = () => {
     if (task.task_id) {
@@ -70,15 +84,30 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
       <Item key="1" onClick={openTask}>
         Открыть задачу
       </Item>
-      <Item key="2" onClick={duplicateHandle}>
-        Дублировать задачу
-      </Item>
-      <Item key="3" onClick={duplicateAndEditHandle}>
-        Дублировать и редактировать задачу
-      </Item>
-      <Item key="4" onClick={deleteTaskHandle} className={style.delete}>
-        Удалить задачу
-      </Item>
+      {
+        can.duplicate
+        && (
+          <Item key="2" onClick={duplicateHandle}>
+            Дублировать задачу
+          </Item>
+        )
+      }
+      {
+        can.duplicateEdit
+        && (
+          <Item key="3" onClick={duplicateAndEditHandle}>
+            Дублировать и редактировать задачу
+          </Item>
+        )
+      }
+      {
+        can.delete
+        && (
+        <Item key="4" onClick={deleteTaskHandle} className={style.delete}>
+          Удалить задачу
+        </Item>
+        )
+      }
     </Menu>
   );
 

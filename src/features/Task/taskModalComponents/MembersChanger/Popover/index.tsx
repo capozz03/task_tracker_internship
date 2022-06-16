@@ -8,7 +8,7 @@ import { TaskFormSlice } from 'store/slice';
 import { TStateData } from 'store/slice/task/taskForm/roles/entities';
 import { alert, RoleMaxAmounts, RolesIds } from 'shared';
 import { addUserRole, removeUserRole } from 'store/slice/task/taskForm';
-import { isAuthor } from 'shared/helpers';
+import { hasRole } from 'shared/helpers';
 
 type TProps = {
   member: TUser,
@@ -35,10 +35,13 @@ const MemberChangerPopover = ({ member, afterAddRole, children }: TProps) => {
   const dispatch = useDispatch();
   const currentTaskId = useSelector(TaskFormSlice.getTaskFormId);
   const rolesInTask = useSelector(TaskFormSlice.getRoles);
+  const rolesArray = useSelector(TaskFormSlice.getTaskFormRoles);
 
   const [isDisabled, setIsDisabled] = useState(false);
   const [roles, setRoles] = useState<TMemberRoles>({
     observer: false, performer: false, responsible: false });
+
+  const isAuthor = hasRole('author', rolesArray, member.user_id);
 
   useEffect(() => {
     if (rolesInTask !== null) setRoles(getMemberRoles(member, rolesInTask));
@@ -60,7 +63,7 @@ const MemberChangerPopover = ({ member, afterAddRole, children }: TProps) => {
         roleName,
       }));
     } else {
-      if (rolesInTask && isAuthor(member.user_id, rolesInTask) && roleId === RolesIds.PERFORMER) {
+      if (rolesInTask && isAuthor && roleId === RolesIds.PERFORMER) {
         alert('Автор задачи не может быть назначен на роль исполнителя!', 'error');
         return;
       }
