@@ -10,7 +10,7 @@ import TagsCategory from './TagsCategory';
 import { detailsIcons } from 'shared/ui/icons';
 import styles from './index.module.scss';
 import DetailsResume from './DetailsResume';
-import Tooltip from 'features/Tasks/tasksComponents/Tooltip';
+import Tooltip from 'features/Tasks/tasksComponents/TooltipForModal';
 
 type TDetailsProps = { taskId: string };
 

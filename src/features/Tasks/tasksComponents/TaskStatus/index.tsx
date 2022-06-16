@@ -3,7 +3,7 @@ import { Select, SelectProps, Tooltip } from 'antd';
 import style from './index.module.scss';
 import { taskStatuses } from './constants';
 
-type TProps = SelectProps & { tooltip?: string, isDisabled?: boolean };
+type TProps = SelectProps & { tooltip?: string, isDisabled?: boolean, modal?: true };
 
 const TaskStatus = ({ ...props }: TProps) => {
   const [color, setColor] = useState<string>('#50B5FF');
@@ -44,6 +44,13 @@ const TaskStatus = ({ ...props }: TProps) => {
     });
   };
 
+  const definingArea = () => {
+    if (props.modal) {
+      return document.querySelector('.ant-modal-wrap') as HTMLElement;
+    }
+    return document.querySelector('.ant-layout') as HTMLElement;
+  };
+
   return (
     <Tooltip title={props.tooltip || ''}>
       <Select
@@ -59,8 +66,8 @@ const TaskStatus = ({ ...props }: TProps) => {
         onClick={onClick}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
-        getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}
         disabled={props.isDisabled}
+        getPopupContainer={definingArea}
       >
         {taskStatuses.map(({ status, taskStatusId }) => (
           <Option key={taskStatusId} value={taskStatusId} className={style.taskStatusItem}>

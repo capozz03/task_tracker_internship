@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tooltip } from 'antd';
+import Tooltip from 'features/Tasks/tasksComponents/TooltipForModal';
 import classNames from 'classnames';
 import { CancelIcons } from 'shared/ui/icons';
 import styles from './index.module.scss';

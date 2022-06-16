@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dropdown, Menu, Tooltip } from 'antd';
+import { Dropdown, Menu } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { CommonSlice, TaskFormSlice } from 'store/slice';
 import { TTask } from 'store/slice/task/taskForm';
@@ -7,6 +7,7 @@ import { DropdownMoreButton } from 'shared/ui/icons';
 import { alert } from 'shared';
 import styles from './index.module.scss';
 import { checkPermission } from 'shared/helpers';
+import Tooltip from 'features/Tasks/tasksComponents/TooltipForModal';
 
 type DropdownMenuProps = {
   task: TTask;

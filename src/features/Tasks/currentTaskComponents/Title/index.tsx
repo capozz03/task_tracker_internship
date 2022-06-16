@@ -11,7 +11,7 @@ import styles from 'features/Tasks/currentTaskComponents/Title/index.module.scss
 import PencilIcon from 'shared/ui/icons/PencilIcon';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTitleAsync } from 'store/slice/task/taskForm';
-import { Tooltip } from 'antd';
+import Tooltip from 'features/Tasks/tasksComponents/TooltipForModal';
 import PlusIcons from 'shared/ui/icons/PlusIcons';
 import CancelIcons from 'shared/ui/icons/CancelIcons';
 import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
