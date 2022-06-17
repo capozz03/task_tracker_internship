@@ -78,6 +78,7 @@ const TasksInbox: FC = (props) => {
               current={pagination.page_current}
               onChange={paginationHandler}
               total={pagination.items_total}
+              pageSize={pagination!.per_page}
             />
           )}
         </div>
