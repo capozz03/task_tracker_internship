@@ -2,10 +2,11 @@ import React, { useRef } from 'react';
 import JoditEditor from 'jodit-react';
 import Button from 'features/Tasks/tasksComponents/Button';
 import style from './index.module.scss';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setDescriptionAsync } from 'store/slice/task/taskForm/setDescriptionFromTask/asyncAction';
 import { alert } from 'shared/ui';
 import { buttons, buttonsMD, buttonsSM, buttonsXS, removeButtons } from './configConstants';
+import { TaskFormSlice } from 'store/slice';
 
 type DescriptionEditorProps = {
   setIsVisibleEditor: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,6 +23,7 @@ const DescriptionEditor = ({
 }: DescriptionEditorProps) => {
   const editor = useRef(null);
   const dispatch = useDispatch();
+  const description = useSelector(TaskFormSlice.getTaskFormDescription);
 
   const config = {
     readonly: false,
@@ -50,7 +52,11 @@ const DescriptionEditor = ({
 
   const handleVisibleEditor = (): void => {
     setIsVisibleEditor(false);
-    setContent('');
+    if (!description) {
+      setContent('');
+    } else {
+      setContent(description);
+    }
   };
 
   const saveSuccess = () => {

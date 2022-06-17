@@ -33,6 +33,7 @@ export {
   getTaskFormStatus,
   getTaskFormRoles,
   getTaskFormTitle,
+  getTaskFormDescription,
   isLoadingStatus,
   isLoadingStatusSuccess,
   getTaskFormStatusTask,

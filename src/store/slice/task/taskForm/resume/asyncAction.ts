@@ -1,6 +1,5 @@
 import { createAsyncThunk, miniSerializeError } from '@reduxjs/toolkit';
 import { TaskFormSlice, TaskCompletedSlice } from 'store/slice';
-import { getTaskByIdAsync } from '../getTaskById/getTaskByIdAsyncAction';
 import { TFormResultChangeProps } from './entities';
 import { formResultChangeService } from './services';
 import { alert } from 'shared/ui';
@@ -23,7 +22,7 @@ export const setFormResult = createAsyncThunk(
           task_status_id: statusIdFailed,
         }));
       }
-      dispatch(getTaskByIdAsync(taskId));
+      dispatch(TaskFormSlice.updateTask(data.data));
       dispatch(TaskFormSlice.resetTaskHistory());
       return data;
     } catch (rejectedValueOrSerializedError) {
