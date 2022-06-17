@@ -2,6 +2,7 @@
 
 .contributorsSelectWrap {
   display: flex;
+  flex-direction: column;
 
   .contributorsSelect {
     width: 100%;
@@ -12,6 +13,17 @@
       border-left: none !important;
       border-bottom: 1px solid $grey-300 !important;
       border-radius: 0 !important;
+    }
+
+    :global(.ant-select-selection-overflow-item-rest) {
+      :global(.ant-select-selection-item) {
+        background-color: transparent;
+        border-color: transparent;
+
+        .placeholder {
+          color: $grey-500;
+        }
+      }
     }
   }
 }
@@ -32,4 +44,32 @@
   display: flex;
   justify-content: center;
   cursor: default;
+}
+
+.selectedList {
+  display: flex;
+  flex-direction: column;
+
+  .selectedItem {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 0;
+    border-bottom: 1px solid $grey-200;
+
+    .avatar {
+      flex-shrink: 0;
+    }
+
+    .name {
+      color: $grey-700;
+      flex-grow: 1;
+    }
+
+    .deselect {
+      border: none;
+      background-color: transparent;
+      color: $grey-500;
+    }
+  }
 }

@@ -48,7 +48,8 @@ const TaskModal = (props: ModalProps) => {
   const storageFilesStatus = useSelector(TaskFormSlice.getStorageStatusCheck);
 
   const loadingStatus = isLoadingStatusCheck(descriptionStatus)
-    || isLoadingStatusCheck(titleStatus) || isLoadingStatusCheck(storageFilesStatus);
+  || isLoadingStatusCheck(titleStatus)
+  || isLoadingStatusCheck(storageFilesStatus);
 
   const cancelHandle = () => {
     if (!loadingStatus) {

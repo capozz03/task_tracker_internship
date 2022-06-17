@@ -7,7 +7,7 @@ import { TaskFilters, TaskInWorkSlice } from 'store/slice';
 import NewTask from '../NewTask';
 import { Spin } from 'antd';
 import { SortByMobileScreen, SortByPCScreen } from '../SortBy';
-import { useBreakPoint } from 'shared';
+import { TaskStatuses, useBreakPoint } from 'shared';
 
 const TasksInWork: FC = (props) => {
   const dispatch = useDispatch();
@@ -68,17 +68,20 @@ const TasksInWork: FC = (props) => {
             <p className={styles.noTasks}>Нет задач</p>
           )}
         </Spin>
-        <div>
-          <NewTask taskStatusId="372d63ff-3ae3-4be2-a606-38940d7f8c8f" />
-        </div>
-        <div className={styles.pagination}>
-          {pagination && (
-            <Pagination
-              current={pagination.page_current}
-              onChange={paginationHandler}
-              total={pagination.items_total}
-            />
-          )}
+        <div className={styles.footer}>
+          <div className={styles.createTask}>
+            <NewTask taskStatusId={TaskStatuses.IN_WORK} />
+          </div>
+          <div className={styles.pagination}>
+            {pagination && (
+              <Pagination
+                current={pagination.page_current}
+                onChange={paginationHandler}
+                total={pagination.items_total}
+                pageSize={pagination!.per_page}
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>
