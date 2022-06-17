@@ -1,5 +1,5 @@
 import { Progress } from 'antd';
-import React, { MouseEventHandler, useEffect, useState } from 'react';
+import React, { MouseEventHandler } from 'react';
 import { useDispatch } from 'react-redux';
 import { TaskFailedSlice } from 'store/slice';
 import DropdownMenu from '../../DropdownMenu';
@@ -11,7 +11,7 @@ import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 import CardNameText from '../../CardNameText';
 import CardAttachmentsCount from '../../CardAttachmentsCount';
 import CardChecklistCount from '../../CardChecklistCount';
-import { checkPermission } from 'shared/helpers';
+import { usePermissions } from 'shared/helpers';
 
 type TaskFailedProps = {
   task: TaskFailedSlice.TTask;
@@ -19,15 +19,10 @@ type TaskFailedProps = {
 
 const TaskFailed = ({ task }: TaskFailedProps) => {
   const dispatch = useDispatch();
-  const [can, setCan] = useState({
-    change: checkPermission('change.status', task.roles),
-  });
-
-  useEffect(() => {
-    setCan({
-      change: checkPermission('change.status', task.roles),
-    });
-  }, [task.roles]);
+  const can = usePermissions(
+    ['change.status'],
+    task.roles,
+  );
 
   const statusHandler = (value: string) => {
     dispatch(
@@ -61,8 +56,8 @@ const TaskFailed = ({ task }: TaskFailedProps) => {
         <TaskStatus
           defaultValue={task.status.name}
           onChange={statusHandler}
-          tooltip={can.change ? 'Изменить статус' : ''}
-          isDisabled={!can.change}
+          tooltip={can['change.status'] ? 'Изменить статус' : ''}
+          isDisabled={!can['change.status']}
         />
       </div>
       <div className={style.cardTagsGroup}>

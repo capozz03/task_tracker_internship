@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ClipIcon } from 'shared/ui/icons';
 import style from './index.module.scss';
 import Button from 'features/Tasks/tasksComponents/Button';
@@ -8,7 +8,7 @@ import FilesAttachments from './FilesAttachments';
 import ImagesAttachments from './ImagesAttachments';
 import { setCarouselImages, useBreakPoint } from 'shared';
 import DraggerAttachments from './DraggerAttachments';
-import { checkPermission } from 'shared/helpers';
+import { usePermissions } from 'shared/helpers';
 
 type attachmentsProps = {
   taskId: string;
@@ -25,15 +25,10 @@ const Attachments = ({ taskId }: attachmentsProps) => {
   const [isVisibleAttachments, setIsVisibleAttachments] = useState<boolean>(true);
   const [isVisibleDropdownMenu] = useState<boolean>(true);
   const [isVisibleCarousel] = useState<boolean>(true);
-  const [can, setCan] = useState({
-    change: checkPermission('add/remove.file', roles),
-  });
-
-  useEffect(() => {
-    setCan({
-      change: checkPermission('add/remove.file', roles),
-    });
-  }, [roles]);
+  const can = usePermissions(
+    ['add/remove.file'],
+    roles,
+  );
 
   const isShowAttachments = (): boolean => {
     const isVisibleStorageFiles = useSelector(TaskFormSlice.isVisibleStorageFiles);
@@ -84,11 +79,11 @@ const Attachments = ({ taskId }: attachmentsProps) => {
                       taskId={taskId}
                       uploaded={uploaded}
                       isVisibleDropdownMenu={isVisibleDropdownMenu}
-                      canChange={can.change}
+                      canChange={can['add/remove.file']}
                     />
                   ),
                 )}
-                { can.change && isShowDraggerAttachments && (
+                { can['add/remove.file'] && isShowDraggerAttachments && (
                   <DraggerAttachments taskId={taskId} storageCount={storageCount} />
                 )}
               </div>
@@ -104,7 +99,7 @@ const Attachments = ({ taskId }: attachmentsProps) => {
                       uploaded={uploaded}
                       isVisibleDropdownMenu={isVisibleDropdownMenu}
                       isVisibleCarousel={isVisibleCarousel}
-                      canChange={can.change}
+                      canChange={can['add/remove.file']}
                     />
                   ),
                 )}

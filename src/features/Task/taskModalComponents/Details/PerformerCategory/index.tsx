@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import MembersChanger from 'features/Task/taskModalComponents/MembersChanger';
 import DetailCategory from 'features/Task/taskModalComponents/Details/DetailCategory';
 import UserLabel from 'features/Task/taskModalComponents/UserLabel';
 import { TStateData } from 'store/slice/task/taskForm/roles/entities';
 import { RolesIds } from 'shared';
-import styles from './index.module.scss';
-import { checkPermission } from 'shared/helpers';
 import { TaskFormSlice } from 'store/slice';
+import { usePermissions } from 'shared/helpers';
+import styles from './index.module.scss';
 
 type TProps = {
   roles: TStateData | null;
@@ -15,22 +15,13 @@ type TProps = {
 
 const PerformerCategory = ({ roles }: TProps) => {
   const rolesArray = useSelector(TaskFormSlice.getTaskFormRoles);
-  const [can, setCan] = useState({
-    changeResponsible: checkPermission('change.responsible', rolesArray),
-    changeObserver: checkPermission('change.observer', rolesArray),
-    changePerformer: checkPermission('change.performer', rolesArray),
-  });
-
-  useEffect(() => {
-    setCan({
-      changeResponsible: checkPermission('change.responsible', rolesArray),
-      changeObserver: checkPermission('change.observer', rolesArray),
-      changePerformer: checkPermission('change.performer', rolesArray),
-    });
-  }, [rolesArray]);
+  const can = usePermissions(
+    ['change.responsible', 'change.observer', 'change.performer'],
+    rolesArray,
+  );
 
   const performerContent = () => (
-    (can.changeObserver || can.changePerformer || can.changeResponsible)
+    (can['change.observer'] || can['change.performer'] || can['change.responsible'])
       ? <MembersChanger buttonType="gray" />
       : <p className={styles.notPerformer}>Без исполнителя</p>
   );
@@ -46,7 +37,7 @@ const PerformerCategory = ({ roles }: TProps) => {
                 user={member}
                 roleId={RolesIds.PERFORMER}
                 roleName="Исполнитель"
-                canRemove={can.changePerformer}
+                canRemove={can['change.performer']}
               />
             ))
           )

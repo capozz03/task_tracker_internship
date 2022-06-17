@@ -8,7 +8,7 @@ import { TaskFormSlice } from 'store/slice';
 import { TStateData } from 'store/slice/task/taskForm/roles/entities';
 import { alert, RoleMaxAmounts, RolesIds } from 'shared';
 import { addUserRole, removeUserRole } from 'store/slice/task/taskForm';
-import { checkPermission, hasRole } from 'shared/helpers';
+import { hasRole, usePermissions } from 'shared/helpers';
 
 type TProps = {
   member: TUser,
@@ -42,18 +42,12 @@ const MemberChangerPopover = ({ member, afterAddRole, children }: TProps) => {
     observer: false, performer: false, responsible: false });
 
   const [isAuthor, setIsAuthor] = useState(hasRole('author', rolesArray, member.user_id));
-  const [can, setCan] = useState({
-    changeResponsible: checkPermission('change.responsible', rolesArray),
-    changeObserver: checkPermission('change.observer', rolesArray),
-    changePerformer: checkPermission('change.performer', rolesArray),
-  });
+  const can = usePermissions(
+    ['change.responsible', 'change.observer', 'change.performer'],
+    rolesArray,
+  );
 
   useEffect(() => {
-    setCan({
-      changeResponsible: checkPermission('change.responsible', rolesArray),
-      changeObserver: checkPermission('change.observer', rolesArray),
-      changePerformer: checkPermission('change.performer', rolesArray),
-    });
     setIsAuthor(hasRole('author', rolesArray, member.user_id));
   }, [rolesArray]);
 
@@ -118,7 +112,7 @@ const MemberChangerPopover = ({ member, afterAddRole, children }: TProps) => {
   const content = () => (
     <div className={styles.popupCheckboxes}>
       {
-        can.changeObserver
+        can['change.observer']
         && (
           <Checkbox
             onChange={() => onChangeUserRole(
@@ -136,7 +130,7 @@ const MemberChangerPopover = ({ member, afterAddRole, children }: TProps) => {
         )
       }
       {
-        can.changePerformer
+        can['change.performer']
         && (
           <Checkbox
             onChange={() => onChangeUserRole(
@@ -154,7 +148,7 @@ const MemberChangerPopover = ({ member, afterAddRole, children }: TProps) => {
         )
       }
       {
-        can.changeResponsible
+        can['change.responsible']
         && (
           <Checkbox
             onChange={() => onChangeUserRole(

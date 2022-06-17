@@ -10,7 +10,7 @@ import { detailsIcons } from 'shared/ui/icons';
 import styles from './index.module.scss';
 import DetailsResume from './DetailsResume';
 import Tooltip from 'features/Tasks/tasksComponents/TooltipForModal';
-import { checkPermission } from 'shared/helpers';
+import { usePermissions } from 'shared/helpers';
 
 type TDetailsProps = { taskId: string };
 
@@ -40,23 +40,10 @@ const Details = ({ taskId }: TDetailsProps) => {
     priority: !!priority,
   });
 
-  const [can, setCan] = useState({
-    changeDateStart: checkPermission('change.dateStart', rolesArray),
-    changeDateStop: checkPermission('change.dateStop', rolesArray),
-    changePriority: checkPermission('change.priority', rolesArray),
-    changeTags: checkPermission('change.tag', rolesArray),
-    changeResume: checkPermission('add/remove.resume', rolesArray),
-  });
-
-  useEffect(() => {
-    setCan({
-      changeDateStart: checkPermission('change.dateStart', rolesArray),
-      changeDateStop: checkPermission('change.dateStop', rolesArray),
-      changePriority: checkPermission('change.priority', rolesArray),
-      changeTags: checkPermission('change.tag', rolesArray),
-      changeResume: checkPermission('add/remove.resume', rolesArray),
-    });
-  }, [rolesArray]);
+  const can = usePermissions(
+    ['change.dateStart', 'change.dateStop', 'change.priority', 'change.tag', 'add/remove.resume'],
+    rolesArray,
+  );
 
   useEffect(() => {
     setCategoryView({
@@ -84,7 +71,7 @@ const Details = ({ taskId }: TDetailsProps) => {
         <DetailsResume
           taskId={taskId}
           formResultRequired={formResultRequired}
-          canChange={can.changeResume}
+          canChange={can['add/remove.resume']}
         />
       )}
       <PerformerCategory roles={roles} />
@@ -95,7 +82,7 @@ const Details = ({ taskId }: TDetailsProps) => {
             priority={priority}
             currentTaskId={currentTaskId}
             hiddenCategory={setStateButton('priority', false)}
-            isDisabled={!can.changePriority}
+            isDisabled={!can['change.priority']}
           />
         )
       }
@@ -107,7 +94,7 @@ const Details = ({ taskId }: TDetailsProps) => {
             stopDateISO={dateStop}
             currentTaskId={currentTaskId}
             hiddenCategory={setStateButton('dateStart', false)}
-            isDisabled={!can.changeDateStart}
+            isDisabled={!can['change.dateStart']}
           />
         )
       }
@@ -119,7 +106,7 @@ const Details = ({ taskId }: TDetailsProps) => {
             stopDateISO={dateStop}
             currentTaskId={currentTaskId}
             hiddenCategory={setStateButton('dateStop', false)}
-            isDisabled={!can.changeDateStop}
+            isDisabled={!can['change.dateStop']}
             status={status}
           />
         )
@@ -131,13 +118,13 @@ const Details = ({ taskId }: TDetailsProps) => {
             currentTaskId={currentTaskId}
             taskTags={tags}
             hiddenCategory={setStateButton('tags', false)}
-            isDisabled={!can.changeTags}
+            isDisabled={!can['change.tag']}
           />
         )
       }
       <div className={styles.buttonsWrapper}>
         {
-          can.changeDateStop && !categoryView.dateStop
+          can['change.dateStop'] && !categoryView.dateStop
           && (
             <Tooltip title="Срок">
               <button type="button" onClick={setStateButton('dateStop', true)} className={styles.button}>
@@ -147,7 +134,7 @@ const Details = ({ taskId }: TDetailsProps) => {
           )
         }
         {
-          can.changeDateStart && !categoryView.dateStart
+          can['change.dateStart'] && !categoryView.dateStart
           && (
             <Tooltip title="Начало">
               <button type="button" onClick={setStateButton('dateStart', true)} className={styles.button}>
@@ -157,7 +144,7 @@ const Details = ({ taskId }: TDetailsProps) => {
           )
         }
         {
-          can.changePriority && !categoryView.priority
+          can['change.priority'] && !categoryView.priority
           && (
             <Tooltip title="Приоритет">
               <button type="button" onClick={setStateButton('priority', true)} className={styles.button}>
@@ -167,7 +154,7 @@ const Details = ({ taskId }: TDetailsProps) => {
           )
         }
         {
-          can.changeTags && !categoryView.tags
+          can['change.tag'] && !categoryView.tags
           && (
             <Tooltip title="Метки">
               <button type="button" onClick={setStateButton('tags', true)} className={styles.button}>

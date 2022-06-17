@@ -1,41 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import AttachMenu from './AttachMenu';
 import Subscribes from './Subscribes';
 import DropdownMenu from './DropdownMenu';
 import styles from './index.module.scss';
 import { useSelector } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
-import { checkPermission } from 'shared/helpers';
+import { usePermissions } from 'shared/helpers';
 
 const MenuHeader = () => {
   const task = useSelector(TaskFormSlice.getTask);
-  const [can, setCan] = useState({
-    duplicate: checkPermission('duplicate.task', task?.roles),
-    duplicateEdit: checkPermission('duplicate/edit.task', task?.roles),
-    delete: checkPermission('delete.task', task?.roles),
-    addChecklist: checkPermission('add/change/remove.checklist', task?.roles),
-    addFile: checkPermission('add/remove.file', task?.roles),
-  });
-
-  useEffect(() => {
-    setCan({
-      duplicate: checkPermission('duplicate.task', task?.roles),
-      duplicateEdit: checkPermission('duplicate/edit.task', task?.roles),
-      delete: checkPermission('delete.task', task?.roles),
-      addChecklist: checkPermission('add/change/remove.checklist', task?.roles),
-      addFile: checkPermission('add/remove.file', task?.roles),
-    });
-  }, [task?.roles]);
+  const can = usePermissions(
+    ['duplicate.task', 'duplicate/edit.task', 'delete.task', 'add/change/remove.checklist', 'add/remove.file'],
+    task?.roles,
+  );
 
   return (
     <div className={styles.wrap}>
       {
-        task && (can.addChecklist || can.addFile)
+        task && (can['add/change/remove.checklist'] || can['add/remove.file'])
         && <AttachMenu taskId={task.task_id} />
       }
       <Subscribes />
       {
-        task && (can.duplicate || can.duplicateEdit || can.delete)
+        task && (can['duplicate.task'] || can['duplicate/edit.task'] || can['delete.task'])
         && (
           <DropdownMenu task={task} />
         )

@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useEffect, useState } from 'react';
+import React, { MouseEventHandler } from 'react';
 import styles from './index.module.scss';
 import { useDispatch } from 'react-redux';
 import { TTask } from 'store/slice/task/entities';
@@ -16,7 +16,7 @@ import moment, { now } from 'moment';
 import { SubscribesSlice } from 'store/slice';
 import PriorityChanger from '../../PriorityChanger';
 import DateChanger from '../../DateChanger';
-import { checkPermission } from 'shared/helpers';
+import { usePermissions } from 'shared/helpers';
 
 type TaskInboxProps = {
   task: TTask;
@@ -24,15 +24,10 @@ type TaskInboxProps = {
 
 const TaskInbox = ({ task }: TaskInboxProps) => {
   const dispatch = useDispatch();
-  const [can, setCan] = useState({
-    change: checkPermission('change.status', task.roles),
-  });
-
-  useEffect(() => {
-    setCan({
-      change: checkPermission('change.status', task.roles),
-    });
-  }, [task.roles]);
+  const can = usePermissions(
+    ['change.status'],
+    task.roles,
+  );
 
   const statusHandler = (value: string) => {
     dispatch(
@@ -83,8 +78,8 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
         <TaskStatus
           defaultValue={task.status.name}
           onChange={statusHandler}
-          tooltip={can.change ? 'Изменить статус' : ''}
-          isDisabled={!can.change}
+          tooltip={can['change.status'] ? 'Изменить статус' : ''}
+          isDisabled={!can['change.status']}
         />
       </div>
       <div className={styles.cardDate}>

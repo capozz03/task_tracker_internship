@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Dropdown, Menu } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { CommonSlice, TaskFormSlice } from 'store/slice';
@@ -6,7 +6,7 @@ import { TTask } from 'store/slice/task/taskForm';
 import { DropdownMoreButton } from 'shared/ui/icons';
 import { alert } from 'shared';
 import styles from './index.module.scss';
-import { checkPermission } from 'shared/helpers';
+import { usePermissions } from 'shared/helpers';
 import Tooltip from 'features/Tasks/tasksComponents/TooltipForModal';
 
 type DropdownMenuProps = {
@@ -17,19 +17,10 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
   const { Item } = Menu;
   const dispatch = useDispatch();
   const startDelete = useSelector(CommonSlice.isLoadingCommonActionTask);
-  const [can, setCan] = useState({
-    duplicate: checkPermission('duplicate.task', task.roles),
-    duplicateEdit: checkPermission('duplicate/edit.task', task.roles),
-    delete: checkPermission('delete.task', task.roles),
-  });
-
-  useEffect(() => {
-    setCan({
-      duplicate: checkPermission('duplicate.task', task.roles),
-      duplicateEdit: checkPermission('duplicate/edit.task', task.roles),
-      delete: checkPermission('delete.task', task.roles),
-    });
-  }, [task.roles]);
+  const can = usePermissions(
+    ['duplicate.task', 'duplicate/edit.task', 'delete.task'],
+    task.roles,
+  );
 
   useEffect(() => {
     if (startDelete) dispatch(TaskFormSlice.hiddenTaskForm());
@@ -81,7 +72,7 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
   const menu = (
     <Menu className={styles.dropdownMenu}>
       {
-        can.duplicate
+        can['duplicate.task']
         && (
         <Item key="1" onClick={duplicateHandle}>
           Дублировать задачу
@@ -89,7 +80,7 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
         )
       }
       {
-        can.duplicateEdit
+        can['duplicate/edit.task']
         && (
         <Item key="2" onClick={duplicateAndEditHandle}>
           Дублировать и редактировать задачу
@@ -97,7 +88,7 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
         )
       }
       {
-        can.delete
+        can['delete.task']
         && (
         <Item key="3" onClick={deleteTaskHandle} className={styles.delete}>
           Удалить задачу

@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import Button from 'features/Tasks/tasksComponents/Button';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { checkPermission } from 'shared/helpers';
+import { usePermissions } from 'shared/helpers';
 import { IconDescription } from 'shared/ui/icons/TasksIcons';
 import { TaskFormSlice } from 'store/slice';
 import DescriptionEditor from './DescriptionEditor';
@@ -22,15 +22,10 @@ const Description = ({ description, taskId }: descriptionProps) => {
   const [stringLength, setStringLength] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
   const roles = useSelector(TaskFormSlice.getTaskFormRoles);
-  const [can, setCan] = useState({
-    edit: checkPermission('change.description', roles),
-  });
-
-  useEffect(() => {
-    setCan({
-      edit: checkPermission('change.description', roles),
-    });
-  }, [roles]);
+  const can = usePermissions(
+    ['change.description'],
+    roles,
+  );
 
   const [isExpandDesc, setIsExpandDesc] = useState(true);
   const checkDescriptionIsEmpty = (): string => {
@@ -86,7 +81,7 @@ const Description = ({ description, taskId }: descriptionProps) => {
         </div>
         <h5 className={style.description}>Описание</h5>
         {
-          can.edit
+          can['change.description']
           && (
             <Button className={style.changeButton} onClick={descriptionEditor} type="default">
               Изменить

@@ -15,10 +15,10 @@ import classNames from 'classnames';
 type CheckItemProps = {
   item: TTaskCheckListItem,
   checklistId: string,
-  canChange: boolean,
+  canChange?: boolean,
 }
 
-const CheckItem = ({ item, checklistId, canChange }: CheckItemProps) => {
+const CheckItem = ({ item, checklistId, canChange = false }: CheckItemProps) => {
   const dispatch = useDispatch();
   const onChange = (e: CheckboxChangeEvent) => {
     dispatch(TaskFormSlice.changeStatusItemForChecklist({

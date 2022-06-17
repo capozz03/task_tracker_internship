@@ -7,10 +7,10 @@ import { TTaskCheckList } from 'store/slice/task/entities';
 
 type ChecklistTitleProps = {
   checkList: TTaskCheckList,
-  canChange: boolean,
+  canChange?: boolean,
 }
 
-const ChecklistTitle = ({ checkList, canChange }: ChecklistTitleProps) => {
+const ChecklistTitle = ({ checkList, canChange = false }: ChecklistTitleProps) => {
   const [isEditTitle, setIsEditTitle] = useState(false);
   const editItem = () => {
     setIsEditTitle(true);

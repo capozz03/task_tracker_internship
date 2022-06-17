@@ -8,3 +8,8 @@ export type TConditions = {
 };
 
 export type TPermission = keyof typeof rolesMatrix;
+
+export type TCan = {
+  // eslint-disable-next-line no-unused-vars
+  [Property in keyof typeof rolesMatrix]?: boolean;
+}

@@ -1,27 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import DetailCategory from 'features/Task/taskModalComponents/Details/DetailCategory';
 import MembersChanger from 'features/Task/taskModalComponents/MembersChanger';
 import UserLabel from 'features/Task/taskModalComponents/UserLabel';
 import { useSelector } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
-import { checkPermission, RolesIds } from 'shared/helpers';
+import { RolesIds, usePermissions } from 'shared/helpers';
 
 const MembersPanel = () => {
   const roles = useSelector(TaskFormSlice.getRoles);
   const rolesArray = useSelector(TaskFormSlice.getTaskFormRoles);
-  const [can, setCan] = useState({
-    changeResponsible: checkPermission('change.responsible', rolesArray),
-    changeObserver: checkPermission('change.observer', rolesArray),
-    changePerformer: checkPermission('change.performer', rolesArray),
-  });
-
-  useEffect(() => {
-    setCan({
-      changeResponsible: checkPermission('change.responsible', rolesArray),
-      changeObserver: checkPermission('change.observer', rolesArray),
-      changePerformer: checkPermission('change.performer', rolesArray),
-    });
-  }, [rolesArray]);
+  const can = usePermissions(
+    ['change.responsible', 'change.observer', 'change.performer'],
+    rolesArray,
+  );
 
   return (
     <>
@@ -50,7 +41,7 @@ const MembersPanel = () => {
                   user={member}
                   roleId={RolesIds.OBSERVER}
                   roleName="Наблюдатель"
-                  canRemove={can.changeObserver}
+                  canRemove={can['change.observer']}
                 />
               ))
             }
@@ -68,7 +59,7 @@ const MembersPanel = () => {
                   user={member}
                   roleId={RolesIds.RESPONSIBLE}
                   roleName="Ответственный"
-                  canRemove={can.changeResponsible}
+                  canRemove={can['change.responsible']}
                 />
               ))
             }
@@ -76,7 +67,7 @@ const MembersPanel = () => {
         )
       }
       {
-        (can.changeObserver || can.changePerformer || can.changeResponsible)
+        (can['change.observer'] || can['change.performer'] || can['change.responsible'])
         && <MembersChanger buttonType="blue" />
       }
     </>

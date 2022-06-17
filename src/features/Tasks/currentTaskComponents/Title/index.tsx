@@ -17,7 +17,7 @@ import CancelIcons from 'shared/ui/icons/CancelIcons';
 import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
 import { alert } from 'shared/ui';
 import { TaskFormSlice } from 'store/slice';
-import { checkPermission } from 'shared/helpers';
+import { usePermissions } from 'shared/helpers';
 
 type titleProps = {
   title: string,
@@ -34,15 +34,10 @@ const Title = ({ title, taskId }: titleProps) => {
   const [isVisibleFullText, setIsVisibleFullText] = useState(true);
   const textArea = useRef<HTMLTextAreaElement>(null);
   const titleTaskRef = useRef<HTMLDivElement>(null);
-  const [can, setCan] = useState({
-    edit: checkPermission('change.title', roles),
-  });
-
-  useEffect(() => {
-    setCan({
-      edit: checkPermission('change.title', roles),
-    });
-  }, [roles]);
+  const can = usePermissions(
+    ['change.title'],
+    roles,
+  );
 
   const calculationHeight = () => {
     if (textArea.current!.scrollHeight > textArea.current!.offsetHeight) {
@@ -128,7 +123,7 @@ const Title = ({ title, taskId }: titleProps) => {
               : titleTask
           }
           {
-            can.edit
+            can['change.title']
             && (
               <button type="button" id="changeBtn" className={styles.btnEdit} onClick={handleEditor}>
                 <PencilIcon color="#B5B5BE" />
