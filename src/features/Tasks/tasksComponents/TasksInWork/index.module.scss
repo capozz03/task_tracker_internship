@@ -29,9 +29,20 @@
   height: auto;
 }
 
-.pagination {
+.footer {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .createTask {
+    margin-right: 16px;
+  }
+
+  .pagination {
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-end;
+  }
 }
 
 .totalCount {

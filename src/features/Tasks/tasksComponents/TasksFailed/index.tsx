@@ -48,15 +48,17 @@ const TasksFailed: FC = (props) => {
           Не выполнено
           <span className={style.totalCount}>{pagination && pagination.items_total}</span>
         </h4>
-        {isMobile ? (
-          <SortByMobileScreen disabled={tasks?.length === 0} setSortTasks={setSortTasks} />
-        ) : (
-          <SortByPCScreen
-            disabled={tasks?.length === 0}
-            sortType={sortType}
-            setSortTasks={setSortTasks}
-          />
-        )}
+        <div className={style.sort}>
+          {isMobile ? (
+            <SortByMobileScreen disabled={tasks?.length === 0} setSortTasks={setSortTasks} />
+          ) : (
+            <SortByPCScreen
+              disabled={tasks?.length === 0}
+              sortType={sortType}
+              setSortTasks={setSortTasks}
+            />
+          )}
+        </div>
       </div>
       <Spin size="large" tip="Загрузка" spinning={isLoading}>
         {tasks && tasks.length !== 0 ? (

@@ -8,6 +8,10 @@ const getTaskInformation = createSelector(getTaskForm, ({ task }) => task);
 
 export const getTask = createSelector(getTaskInformation, ({ task }) => task);
 export const getTaskFormTitle = createSelector(getTaskInformation, ({ task }) => task?.title);
+export const getTaskFormDescription = createSelector(
+  getTaskInformation,
+  ({ task }) => task?.description,
+);
 export const getTaskFormRoles = createSelector(getTaskInformation, ({ task }) => task?.roles);
 export const getTaskFormStatusTask = createSelector(getTaskInformation, ({ task }) => task?.status);
 export const getTaskFormStatus = createSelector(getTaskInformation, ({ status }) => status);
@@ -31,10 +35,7 @@ export const getDescriptionStatusCheck = createSelector(
   ({ description }) => description.status,
 );
 
-export const getTitleStatusCheck = createSelector(
-  getTaskForm,
-  ({ title }) => title.status,
-);
+export const getTitleStatusCheck = createSelector(getTaskForm, ({ title }) => title.status);
 
 export const getStorageStatusCheck = createSelector(
   getTaskForm,

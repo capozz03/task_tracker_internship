@@ -113,7 +113,7 @@ export const changeStatusTaskAsync = createAsyncThunk(
       dispatch(TaskFormSlice.updateTask(data.data));
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
-      alert(`Статус не изминен. Ошибка: "${error.message}"`, 'error');
+      alert(`Статус не изменен. Ошибка: "${error.message}"`, 'error');
       return rejectWithValue(error);
     }
   },

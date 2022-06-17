@@ -1,4 +1,4 @@
-import { TTaskFormReducer } from 'store/slice/task/taskForm/fullTaskInfo/initialState';
+import { initialStateTask, TTaskFormReducer } from 'store/slice/task/taskForm/fullTaskInfo/initialState';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { changeStatusItemForChecklistProps } from '../checkList/entities';
 import { TStatus, TSwapItemInChecklist, TTask, TTaskCheckList, TTaskCheckListItem } from 'store/slice/task/entities';
@@ -16,7 +16,7 @@ export const taskFormActions = {
   },
   hiddenTaskForm: (state: TTaskFormReducer) => {
     state.isVisibleForm = false;
-    state.task = null;
+    state.task = initialStateTask;
     return state;
   },
   setTitleFromTaskForm: (state: TTaskFormReducer, { payload: title }: PayloadAction<string>) => {
