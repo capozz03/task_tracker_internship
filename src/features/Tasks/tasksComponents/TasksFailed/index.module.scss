@@ -5,17 +5,37 @@
   border-radius: 16px;
   padding: 16px 8px;
   background-color: $grey-100;
+  position: relative;
+  :global(.ant-collapse-header){
+    position: absolute !important;
+    left: 15px;
+    top: 8px;
+    width: calc(100% - 300px);
+    transition: .5s ease;
+    &[aria-expanded="false"]:hover{
+      transform: translateX(-5px);
+    }
+    &[aria-expanded="true"]:hover{
+      transform: translateY(2px);
+    }
+    @media screen and (max-width: 768px){
+      width: calc(100% - 70px);
+      top: 5px;
+    }
+  }
 }
 
 .wrapTitle {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .title {
-  margin-left: 16px;
+  margin-left: 40px;
   font: $h4-medium;
   color: $grey-600;
+  margin-bottom: 0;
 }
 
 .sort {
