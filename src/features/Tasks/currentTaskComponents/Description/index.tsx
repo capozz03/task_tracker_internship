@@ -45,6 +45,7 @@ const Description = ({ description, taskId }: descriptionProps) => {
       <div>
         <div
           className={classnames([style.desc, isHiddenText && style.expanded])}
+          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: checkDescriptionIsEmpty() }}
           ref={ref}
         />
