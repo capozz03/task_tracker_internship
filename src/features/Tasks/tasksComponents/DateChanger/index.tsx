@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { DatePicker, Tooltip } from 'antd';
+import { DatePicker } from 'antd';
 import styles from './index.module.scss';
 import { ClockCircleOutlined } from '@ant-design/icons';
 import locale from 'antd/es/date-picker/locale/ru_RU';
@@ -9,6 +9,7 @@ import moment, { Moment } from 'moment';
 import { useDispatch } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
 import { alert } from 'shared';
+import Tooltip from 'features/Tasks/tasksComponents/Tooltip';
 
 type TProps = {
   dateStartISO: string | null | undefined;
