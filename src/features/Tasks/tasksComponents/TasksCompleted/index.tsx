@@ -6,8 +6,9 @@ import { SortByMobileScreen, SortByPCScreen } from '../SortBy';
 import TaskCompleted from './TaskCompleted';
 import style from './index.module.scss';
 import Pagination from '../Pagination';
-import { Spin } from 'antd';
+import { Collapse, Spin } from 'antd';
 import { getSortTasksCompleted, setSortTasksCompleted } from 'store/slice/task/taskCompleted';
+import CollapsePanel from 'antd/es/collapse/CollapsePanel';
 
 const TasksCompleted: FC = (props) => {
   const isMobile = useBreakPoint(768);
@@ -60,23 +61,27 @@ const TasksCompleted: FC = (props) => {
           )}
         </div>
       </div>
-      <Spin size="large" tip="Загрузка" spinning={isLoading}>
-        {tasks && tasks.length !== 0 ? (
-          tasks.map((task) => <TaskCompleted key={task.task_id} task={task} />)
-        ) : (
-          <p className={style.noTasks}>Нет задач</p>
-        )}
-      </Spin>
-      <div className={style.pagination}>
-        {pagination && (
-          <Pagination
-            current={pagination.page_current}
-            onChange={paginationHandler}
-            total={pagination.items_total}
-            pageSize={pagination!.per_page}
-          />
-        )}
-      </div>
+      <Collapse ghost defaultActiveKey={1}>
+        <CollapsePanel key={1} header="">
+          <Spin size="large" tip="Загрузка" spinning={isLoading}>
+            {tasks && tasks.length !== 0 ? (
+              tasks.map((task) => <TaskCompleted key={task.task_id} task={task} />)
+            ) : (
+              <p className={style.noTasks}>Нет задач</p>
+            )}
+          </Spin>
+          <div className={style.pagination}>
+            {pagination && (
+            <Pagination
+              current={pagination.page_current}
+              onChange={paginationHandler}
+              total={pagination.items_total}
+              pageSize={pagination!.per_page}
+            />
+            )}
+          </div>
+        </CollapsePanel>
+      </Collapse>
     </div>
   );
 };
