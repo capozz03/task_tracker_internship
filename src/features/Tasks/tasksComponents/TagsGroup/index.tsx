@@ -5,8 +5,8 @@ import styles from './index.module.scss';
 import { useDispatch } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
 import TagsChanger from '../TagsChanger';
-import { Tooltip } from 'antd';
 import { usePermissions } from 'shared/helpers';
+import Tooltip from 'features/Tasks/tasksComponents/Tooltip';
 
 type TagsGroupProps = {
   tags: TTagsTask[],

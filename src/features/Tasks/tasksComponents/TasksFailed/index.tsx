@@ -5,9 +5,10 @@ import { TaskFilters, TaskFailedSlice } from 'store/slice';
 import { SortByMobileScreen, SortByPCScreen } from '../SortBy';
 import style from './index.module.scss';
 import Pagination from '../Pagination';
-import { Spin } from 'antd';
+import { Collapse, Spin } from 'antd';
 import TaskFailed from './TaskFailed';
 import { getSortTasksFailed, setSortTasksFailed } from 'store/slice/task/taskFailed';
+import CollapsePanel from 'antd/es/collapse/CollapsePanel';
 
 const TasksFailed: FC = (props) => {
   const isMobile = useBreakPoint(768);
@@ -60,23 +61,27 @@ const TasksFailed: FC = (props) => {
           )}
         </div>
       </div>
-      <Spin size="large" tip="Загрузка" spinning={isLoading}>
-        {tasks && tasks.length !== 0 ? (
-          tasks.map((task) => <TaskFailed key={task.task_id} task={task} />)
-        ) : (
-          <p className={style.noTasks}>Нет задач</p>
-        )}
-      </Spin>
-      <div className={style.pagination}>
-        {pagination && (
-          <Pagination
-            current={pagination.page_current}
-            onChange={paginationHandler}
-            total={pagination.items_total}
-            pageSize={pagination!.per_page}
-          />
-        )}
-      </div>
+      <Collapse ghost defaultActiveKey={1}>
+        <CollapsePanel key={1} header="">
+          <Spin size="large" tip="Загрузка" spinning={isLoading}>
+            {tasks && tasks.length !== 0 ? (
+              tasks.map((task) => <TaskFailed key={task.task_id} task={task} />)
+            ) : (
+              <p className={style.noTasks}>Нет задач</p>
+            )}
+          </Spin>
+          <div className={style.pagination}>
+            {pagination && (
+            <Pagination
+              current={pagination.page_current}
+              onChange={paginationHandler}
+              total={pagination.items_total}
+              pageSize={pagination!.per_page}
+            />
+            )}
+          </div>
+        </CollapsePanel>
+      </Collapse>
     </div>
   );
 };
