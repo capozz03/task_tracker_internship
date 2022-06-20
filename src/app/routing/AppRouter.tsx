@@ -39,11 +39,7 @@ export const AppRouter = () => (
       }
       if (el.private) {
         return (
-          <Route
-            key={i}
-            path={el.path}
-            element={<PrivatePageHOC>{el.element()}</PrivatePageHOC>}
-          />
+          <Route key={i} path={el.path} element={<PrivatePageHOC>{el.element()}</PrivatePageHOC>} />
         );
       }
       return <Route key={i} path={el.path} element={el.element()} />;
