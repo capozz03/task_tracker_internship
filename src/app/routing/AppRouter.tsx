@@ -5,7 +5,7 @@ import { PrivatePageHOC } from './PrivatePageHOC';
 import { RoutingConfig } from './RoutingConfig';
 
 export const AppRouter = () => {
-  console.log('hi');
+  console.log('hi2');
   return (
     <Routes>
       {RoutingConfig.map((el, i) => {
