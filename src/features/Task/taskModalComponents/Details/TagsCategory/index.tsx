@@ -25,6 +25,7 @@ const { SearchInputIcon } = searchIcons;
 const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory, isDisabled = false }: TProps) => {
   const dispatch = useDispatch();
   const isLoading = useSelector(TagsSlice.isLoadingTags);
+  const isLoadingTagChange = useSelector(TaskFormSlice.isLoadingTagsStatus);
   const allTags = useSelector(TagsSlice.getTagsSelector);
   const [visible, setVisible] = useState<boolean>(false);
   const [tags, setTags] = useState<TTagUnit[]>([]);
@@ -108,6 +109,7 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory, isDisabled = fa
                 <Checkbox
                   checked={tag.checked}
                   onChange={onTagChangeStateHandler(tag.task_tag_id)}
+                  disabled={isLoadingTagChange}
                 >
                   <Tag tag={tag} />
                 </Checkbox>
