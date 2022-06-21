@@ -29,6 +29,9 @@ const taskInWorkSlice = createSlice({
     setSortTasksInWork(state, { payload }: PayloadAction<TSortType | undefined>) {
       state.sort = payload;
     },
+    resetPagination(state) {
+      state.pagination = initialState.pagination;
+    },
   },
   extraReducers: {
     [getTasksAsync.pending.type]: (state) => ({
@@ -51,5 +54,5 @@ const taskInWorkSlice = createSlice({
   },
 });
 
-export const { taskUpdate, setSortTasksInWork } = taskInWorkSlice.actions;
+export const { taskUpdate, setSortTasksInWork, resetPagination } = taskInWorkSlice.actions;
 export const taskInWorkReducer = taskInWorkSlice.reducer;

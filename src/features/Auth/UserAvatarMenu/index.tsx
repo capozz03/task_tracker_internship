@@ -6,7 +6,8 @@ import { Dropdown, Menu } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
 import UserAvatar from 'features/Tasks/tasksComponents/UserAvatar';
 import styles from './index.module.scss';
-import { TaskFilters } from 'store/slice';
+// eslint-disable-next-line no-unused-vars
+import { TaskFilters, TaskInboxSlice, TaskInWorkSlice, TaskCompletedSlice, TaskFailedSlice } from 'store/slice';
 
 const UserAvatarMenu = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,10 @@ const UserAvatarMenu = () => {
 
   const logoutAction = () => {
     dispatch(TaskFilters.fullResetFilters());
+    dispatch(TaskInboxSlice.resetPagination());
+    dispatch(TaskInWorkSlice.resetPagination());
+    dispatch(TaskCompletedSlice.resetPagination());
+    dispatch(TaskFailedSlice.resetPagination());
     dispatch(logoutUser());
     navigate('/auth');
   };
@@ -38,7 +43,13 @@ const UserAvatarMenu = () => {
   );
 
   return (
-    <Dropdown placement="bottomRight" overlay={menu} trigger={['click']} overlayClassName={styles.dropdown} getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}>
+    <Dropdown
+      placement="bottomRight"
+      overlay={menu}
+      trigger={['click']}
+      overlayClassName={styles.dropdown}
+      getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}
+    >
       <div className={styles.wrapper}>
         <UserAvatar positionTooltip="left" user={info || { user_id: '0', name: 'Unknown User' }} color="#FFC542" />
         <CaretDownOutlined className={styles.icon} />
