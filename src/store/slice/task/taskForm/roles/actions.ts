@@ -9,7 +9,6 @@ export const rolesActions = {
     { payload: roles }: PayloadAction<TRoles[]>,
   ) => {
     state.data = convertRolesToObject(roles);
-    // здесь можно отловить лишних исполнителей
     return state;
   },
 };

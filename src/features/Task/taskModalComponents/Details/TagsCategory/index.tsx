@@ -81,13 +81,14 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory, isDisabled = fa
   }, [allTags, taskTags]);
 
   useEffect(() => {
-    dispatch(TagsSlice.getTagsAsync({
-      search: debouncedValue,
-      page: 1,
-      perPage: 50,
-    }));
-  },
-  [debouncedValue]);
+    if (visible) {
+      dispatch(TagsSlice.getTagsAsync({
+        search: debouncedValue,
+        page: 1,
+        perPage: 50,
+      }));
+    }
+  }, [debouncedValue, visible]);
 
   const menu = (
     <div
