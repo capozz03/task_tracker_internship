@@ -72,13 +72,14 @@ const TagsChanger = ({ currentTaskId, taskTags }: TProps) => {
   }, [allTags, taskTags]);
 
   useEffect(() => {
-    dispatch(TagsSlice.getTagsAsync({
-      search: debouncedValue,
-      page: 1,
-      perPage: 50,
-    }));
-  },
-  [debouncedValue]);
+    if (visible) {
+      dispatch(TagsSlice.getTagsAsync({
+        search: debouncedValue,
+        page: 1,
+        perPage: 50,
+      }));
+    }
+  }, [debouncedValue, visible]);
 
   const menu = (
     <div

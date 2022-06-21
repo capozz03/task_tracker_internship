@@ -50,13 +50,17 @@ const MembersChanger = ({ buttonType }: TProps) => {
   }, [users, roles]);
 
   useEffect(() => {
-    dispatch(resetUserList());
-    dispatch(getUsersListPage({
-      page: 1,
-      limit: pagination?.per_page || 20,
-      search: debouncedValue,
-    }));
-  }, [debouncedValue]);
+    if (visible) {
+      dispatch(resetUserList());
+      dispatch(getUsersListPage({
+        page: 1,
+        limit: pagination?.per_page || 20,
+        search: debouncedValue,
+      }));
+    } else {
+      dispatch(resetUserList());
+    }
+  }, [debouncedValue, visible]);
 
   const stopPropagation = (e: any) => e.stopPropagation();
   const inputCallback = (e: any) => setValue(e.target.value);
