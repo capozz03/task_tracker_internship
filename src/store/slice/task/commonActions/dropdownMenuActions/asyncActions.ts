@@ -1,6 +1,6 @@
 import { createAsyncThunk, miniSerializeError } from '@reduxjs/toolkit';
 import { TTasksReducer } from '../../entities';
-import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice, TaskFailedSlice, TaskFormSlice } from 'store/slice';
+import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice, TaskFailedSlice } from 'store/slice';
 import { taskService } from '../../taskInWork/taskInWorkService';
 import { TFiltersSlice } from '../../taskFilters/slice';
 import { clearState } from './slice';
@@ -108,7 +108,6 @@ export const duplicateTaskAsync = createAsyncThunk(
         );
       }
       resolvedHandle();
-      dispatch(TaskFormSlice.resetTaskHistory());
       if (openTask) {
         dispatch(getTaskByIdAsync(data.clone.task_id));
       }
