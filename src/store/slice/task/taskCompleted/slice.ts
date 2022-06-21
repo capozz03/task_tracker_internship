@@ -29,6 +29,9 @@ const taskCompletedSlice = createSlice({
         (task.task_id === payload.task_id ? payload : task));
       return state;
     },
+    resetPagination(state) {
+      state.pagination = initialState.pagination;
+    },
   },
   extraReducers: {
     [getTasksAsync.pending.type]: (state) => ({
@@ -51,5 +54,5 @@ const taskCompletedSlice = createSlice({
   },
 });
 
-export const { setSortTasksCompleted, taskUpdate } = taskCompletedSlice.actions;
+export const { setSortTasksCompleted, taskUpdate, resetPagination } = taskCompletedSlice.actions;
 export const taskCompletedReducer = taskCompletedSlice.reducer;
