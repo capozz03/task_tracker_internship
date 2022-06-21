@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { isAuthor, isResponsible } from 'shared/helpers';
-import { TaskFormSlice, UserSlice } from 'store/slice';
+import { TaskFormSlice } from 'store/slice';
 import PerformerCategory from './PerformerCategory';
 import StatusCategory from './StatusCategory';
 import PriorityCategory from './PriorityCategory';
@@ -11,6 +10,7 @@ import { detailsIcons } from 'shared/ui/icons';
 import styles from './index.module.scss';
 import DetailsResume from './DetailsResume';
 import Tooltip from 'features/Tasks/tasksComponents/TooltipForModal';
+import { usePermissions } from 'shared/helpers';
 
 type TDetailsProps = { taskId: string };
 
@@ -27,12 +27,11 @@ const Details = ({ taskId }: TDetailsProps) => {
   const tags = useSelector(TaskFormSlice.getTags);
   const status = useSelector(TaskFormSlice.getTaskFormStatusTask);
   const formResultRequired = useSelector(TaskFormSlice.getTaskFormStatusTaskFormRequired);
-
+  const rolesArray = useSelector(TaskFormSlice.getTaskFormRoles);
   const priority = useSelector(TaskFormSlice.getPriority);
   const dateStart = useSelector(TaskFormSlice.getDateStart);
   const dateStop = useSelector(TaskFormSlice.getDateStop);
   const currentTaskId = useSelector(TaskFormSlice.getTaskFormId);
-  const currentUserId = useSelector(UserSlice.userId);
 
   const [categoryView, setCategoryView] = useState({
     dateStart: !!dateStart,
@@ -40,6 +39,11 @@ const Details = ({ taskId }: TDetailsProps) => {
     tags: tags ? tags.length !== 0 : false,
     priority: !!priority,
   });
+
+  const can = usePermissions(
+    ['change.dateStart', 'change.dateStop', 'change.priority', 'change.tag', 'add/remove.resume'],
+    rolesArray,
+  );
 
   useEffect(() => {
     setCategoryView({
@@ -57,18 +61,20 @@ const Details = ({ taskId }: TDetailsProps) => {
     setCategoryView({ ...categoryView, [argName]: flag });
   };
 
-  const isAuthorOrResponsible = isAuthor(currentUserId, roles)
-    || isResponsible(currentUserId, roles);
   return (
     <>
       {
         status?.name
         && <StatusCategory status={status} currentTaskId={currentTaskId} />
       }
-      {(status?.name === 'Выполнена' || status?.name === 'Не выполнена') && (
-        <DetailsResume taskId={taskId} formResultRequired={formResultRequired} />
+      { (status?.name === 'Выполнена' || status?.name === 'Не выполнена') && (
+        <DetailsResume
+          taskId={taskId}
+          formResultRequired={formResultRequired}
+          canChange={can['add/remove.resume']}
+        />
       )}
-      <PerformerCategory roles={roles} isAuthorOrResponsible={isAuthorOrResponsible} />
+      <PerformerCategory roles={roles} />
       {
         categoryView.priority
         && (
@@ -76,6 +82,7 @@ const Details = ({ taskId }: TDetailsProps) => {
             priority={priority}
             currentTaskId={currentTaskId}
             hiddenCategory={setStateButton('priority', false)}
+            isDisabled={!can['change.priority']}
           />
         )
       }
@@ -87,6 +94,7 @@ const Details = ({ taskId }: TDetailsProps) => {
             stopDateISO={dateStop}
             currentTaskId={currentTaskId}
             hiddenCategory={setStateButton('dateStart', false)}
+            isDisabled={!can['change.dateStart']}
           />
         )
       }
@@ -98,6 +106,7 @@ const Details = ({ taskId }: TDetailsProps) => {
             stopDateISO={dateStop}
             currentTaskId={currentTaskId}
             hiddenCategory={setStateButton('dateStop', false)}
+            isDisabled={!can['change.dateStop']}
             status={status}
           />
         )
@@ -109,12 +118,13 @@ const Details = ({ taskId }: TDetailsProps) => {
             currentTaskId={currentTaskId}
             taskTags={tags}
             hiddenCategory={setStateButton('tags', false)}
+            isDisabled={!can['change.tag']}
           />
         )
       }
       <div className={styles.buttonsWrapper}>
         {
-          !categoryView.dateStop
+          can['change.dateStop'] && !categoryView.dateStop
           && (
             <Tooltip title="Срок">
               <button type="button" onClick={setStateButton('dateStop', true)} className={styles.button}>
@@ -124,7 +134,7 @@ const Details = ({ taskId }: TDetailsProps) => {
           )
         }
         {
-          !categoryView.dateStart
+          can['change.dateStart'] && !categoryView.dateStart
           && (
             <Tooltip title="Начало">
               <button type="button" onClick={setStateButton('dateStart', true)} className={styles.button}>
@@ -134,7 +144,7 @@ const Details = ({ taskId }: TDetailsProps) => {
           )
         }
         {
-          !categoryView.priority
+          can['change.priority'] && !categoryView.priority
           && (
             <Tooltip title="Приоритет">
               <button type="button" onClick={setStateButton('priority', true)} className={styles.button}>
@@ -144,7 +154,7 @@ const Details = ({ taskId }: TDetailsProps) => {
           )
         }
         {
-          !categoryView.tags
+          can['change.tag'] && !categoryView.tags
           && (
             <Tooltip title="Метки">
               <button type="button" onClick={setStateButton('tags', true)} className={styles.button}>

@@ -20,13 +20,14 @@ import Details from 'features/Task/taskModalComponents/Details';
 import { CollapseHeader, CollapseMembersHeader } from './MembersPanel/MemberPanelHeaders';
 import TaskHistory from 'features/Task/taskModalComponents/History';
 import { alert } from 'shared/ui';
-import { isLoadingStatusCheck } from 'shared/helpers';
+import { checkPermission, isLoadingStatusCheck } from 'shared/helpers';
 
 const TaskModal = (props: ModalProps) => {
   const { visible } = props;
   const dispatch = useDispatch();
   const task = useSelector(TaskFormSlice.getTask);
   const roles = useSelector(TaskFormSlice.getRoles);
+  const rolesArray = useSelector(TaskFormSlice.getTaskFormRoles);
   const status = useSelector(TaskFormSlice.getTaskFormStatusTask);
   const isLoading = useSelector(TaskFormSlice.isLoadingStatus);
   const paginationInbox = useSelector(TaskInboxSlice.getPagination);
@@ -97,8 +98,9 @@ const TaskModal = (props: ModalProps) => {
   };
 
   useEffect(() => {
-    if (visible && formResultRequired && !(formResult?.length)) {
-      alert('Важная информация для ответственных: нужно резюме', 'info');
+    if (checkPermission('get.alertNeedResume', rolesArray)
+        && visible && formResultRequired && !(formResult?.length)) {
+      alert('Требуется резюме', 'info');
     }
   }, [formResult]);
 

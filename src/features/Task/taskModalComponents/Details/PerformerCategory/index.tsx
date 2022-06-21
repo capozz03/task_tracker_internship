@@ -1,21 +1,30 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import MembersChanger from 'features/Task/taskModalComponents/MembersChanger';
 import DetailCategory from 'features/Task/taskModalComponents/Details/DetailCategory';
 import UserLabel from 'features/Task/taskModalComponents/UserLabel';
 import { TStateData } from 'store/slice/task/taskForm/roles/entities';
 import { RolesIds } from 'shared';
+import { TaskFormSlice } from 'store/slice';
+import { usePermissions } from 'shared/helpers';
 import styles from './index.module.scss';
 
 type TProps = {
   roles: TStateData | null;
-  isAuthorOrResponsible: boolean;
 };
 
-const PerformerCategory = ({ roles, isAuthorOrResponsible }: TProps) => {
-  const performerContent = () => {
-    if (isAuthorOrResponsible) return <MembersChanger buttonType="gray" />;
-    return <p className={styles.notPerformer}>Без исполнителя</p>;
-  };
+const PerformerCategory = ({ roles }: TProps) => {
+  const rolesArray = useSelector(TaskFormSlice.getTaskFormRoles);
+  const can = usePermissions(
+    ['change.responsible', 'change.observer', 'change.performer'],
+    rolesArray,
+  );
+
+  const performerContent = () => (
+    (can['change.observer'] || can['change.performer'] || can['change.responsible'])
+      ? <MembersChanger buttonType="gray" />
+      : <p className={styles.notPerformer}>Без исполнителя</p>
+  );
 
   return (
     <DetailCategory name="Назначена" type="details">
@@ -28,7 +37,7 @@ const PerformerCategory = ({ roles, isAuthorOrResponsible }: TProps) => {
                 user={member}
                 roleId={RolesIds.PERFORMER}
                 roleName="Исполнитель"
-                canRemove={isAuthorOrResponsible}
+                canRemove={can['change.performer']}
               />
             ))
           )

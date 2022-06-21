@@ -12,11 +12,17 @@ type TProps = {
   priority: TPriorityStateData | null;
   currentTaskId: string | undefined;
   hiddenCategory: ()=>void;
+  isDisabled?: boolean;
 };
 
 const { Option } = Select;
 
-const PriorityCategory = ({ priority, currentTaskId, hiddenCategory }: TProps) => {
+const PriorityCategory = ({
+  priority,
+  currentTaskId,
+  hiddenCategory,
+  isDisabled = false,
+}: TProps) => {
   const dispatch = useDispatch();
 
   const priorityChanger = (taskId: string, value: string | null) => {
@@ -56,6 +62,7 @@ const PriorityCategory = ({ priority, currentTaskId, hiddenCategory }: TProps) =
         showArrow={false}
         value={priority?.name || null}
         onChange={priorityChangeHandler}
+        disabled={isDisabled}
       >
         <Option className={styles.selectItem} value={null}>
           <PriorityStatus type={null} />

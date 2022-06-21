@@ -8,7 +8,7 @@ import { TaskFormSlice } from 'store/slice';
 import { TStateData } from 'store/slice/task/taskForm/roles/entities';
 import { alert, RoleMaxAmounts, RolesIds } from 'shared';
 import { addUserRole, removeUserRole } from 'store/slice/task/taskForm';
-import { isAuthor } from 'shared/helpers';
+import { hasRole, usePermissions } from 'shared/helpers';
 
 type TProps = {
   member: TUser,
@@ -35,10 +35,21 @@ const MemberChangerPopover = ({ member, afterAddRole, children }: TProps) => {
   const dispatch = useDispatch();
   const currentTaskId = useSelector(TaskFormSlice.getTaskFormId);
   const rolesInTask = useSelector(TaskFormSlice.getRoles);
+  const rolesArray = useSelector(TaskFormSlice.getTaskFormRoles);
 
   const [isDisabled, setIsDisabled] = useState(false);
   const [roles, setRoles] = useState<TMemberRoles>({
     observer: false, performer: false, responsible: false });
+
+  const [isAuthor, setIsAuthor] = useState(hasRole('author', rolesArray, member.user_id));
+  const can = usePermissions(
+    ['change.responsible', 'change.observer', 'change.performer'],
+    rolesArray,
+  );
+
+  useEffect(() => {
+    setIsAuthor(hasRole('author', rolesArray, member.user_id));
+  }, [rolesArray]);
 
   useEffect(() => {
     if (rolesInTask !== null) setRoles(getMemberRoles(member, rolesInTask));
@@ -60,7 +71,7 @@ const MemberChangerPopover = ({ member, afterAddRole, children }: TProps) => {
         roleName,
       }));
     } else {
-      if (rolesInTask && isAuthor(member.user_id, rolesInTask) && roleId === RolesIds.PERFORMER) {
+      if (rolesInTask && isAuthor && roleId === RolesIds.PERFORMER) {
         alert('Автор задачи не может быть назначен на роль исполнителя!', 'error');
         return;
       }
@@ -100,45 +111,60 @@ const MemberChangerPopover = ({ member, afterAddRole, children }: TProps) => {
 
   const content = () => (
     <div className={styles.popupCheckboxes}>
-      <Checkbox
-        onChange={() => onChangeUserRole(
-          RolesIds.OBSERVER,
-          'Наблюдатель',
-          'observer',
-          'observers',
-          RoleMaxAmounts.OBSERVER,
-        )}
-        checked={roles.observer}
-        disabled={isDisabled}
-      >
-        Наблюдатель
-      </Checkbox>
-      <Checkbox
-        onChange={() => onChangeUserRole(
-          RolesIds.PERFORMER,
-          'Исполнитель',
-          'performer',
-          'performers',
-          RoleMaxAmounts.PERFORMER,
-        )}
-        checked={roles.performer}
-        disabled={isDisabled}
-      >
-        Исполнитель
-      </Checkbox>
-      <Checkbox
-        onChange={() => onChangeUserRole(
-          RolesIds.RESPONSIBLE,
-          'Ответственный',
-          'responsible',
-          'responsible',
-          RoleMaxAmounts.RESPONSIBLE,
-        )}
-        checked={roles.responsible}
-        disabled={isDisabled}
-      >
-        Ответственный
-      </Checkbox>
+      {
+        can['change.observer']
+        && (
+          <Checkbox
+            onChange={() => onChangeUserRole(
+              RolesIds.OBSERVER,
+              'Наблюдатель',
+              'observer',
+              'observers',
+              RoleMaxAmounts.OBSERVER,
+            )}
+            checked={roles.observer}
+            disabled={isDisabled}
+          >
+            Наблюдатель
+          </Checkbox>
+        )
+      }
+      {
+        can['change.performer']
+        && (
+          <Checkbox
+            onChange={() => onChangeUserRole(
+              RolesIds.PERFORMER,
+              'Исполнитель',
+              'performer',
+              'performers',
+              RoleMaxAmounts.PERFORMER,
+            )}
+            checked={roles.performer}
+            disabled={isDisabled}
+          >
+            Исполнитель
+          </Checkbox>
+        )
+      }
+      {
+        can['change.responsible']
+        && (
+          <Checkbox
+            onChange={() => onChangeUserRole(
+              RolesIds.RESPONSIBLE,
+              'Ответственный',
+              'responsible',
+              'responsible',
+              RoleMaxAmounts.RESPONSIBLE,
+            )}
+            checked={roles.responsible}
+            disabled={isDisabled}
+          >
+            Ответственный
+          </Checkbox>
+        )
+      }
     </div>
   );
 

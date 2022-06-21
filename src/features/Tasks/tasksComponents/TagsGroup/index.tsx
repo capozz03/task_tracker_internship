@@ -1,20 +1,26 @@
 import React, { useState } from 'react';
 import Tag from 'features/Tasks/tasksComponents/Tag';
-import { TTagsTask } from 'store/slice/task/entities';
+import { TRoles, TTagsTask } from 'store/slice/task/entities';
 import styles from './index.module.scss';
 import { useDispatch } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
 import TagsChanger from '../TagsChanger';
+import { usePermissions } from 'shared/helpers';
 import Tooltip from 'features/Tasks/tasksComponents/Tooltip';
 
 type TagsGroupProps = {
   tags: TTagsTask[],
   taskId: string,
+  roles: TRoles[],
 }
 
-const TagsGroup = ({ tags, taskId }: TagsGroupProps) => {
+const TagsGroup = ({ tags, taskId, roles }: TagsGroupProps) => {
   const dispatch = useDispatch();
   const [showAll, setShowAll] = useState(false);
+  const can = usePermissions(
+    ['change.tag'],
+    roles,
+  );
 
   const removeTag = (tagId: string) => () => {
     dispatch(TaskFormSlice.removeTagToTask({ taskId, tagId }));
@@ -33,7 +39,11 @@ const TagsGroup = ({ tags, taskId }: TagsGroupProps) => {
             <Tag
               tag={tag.task_tag}
               key={tag.task_tag.task_tag_id}
-              deleteHandle={removeTag(tag.task_tag.task_tag_id)}
+              deleteHandle={
+                can['change.tag']
+                  ? removeTag(tag.task_tag.task_tag_id)
+                  : undefined
+              }
             />
           ))
         }
@@ -44,7 +54,11 @@ const TagsGroup = ({ tags, taskId }: TagsGroupProps) => {
                 { tags.length > 2
                 && (<Tag
                   tag={tags[2].task_tag}
-                  deleteHandle={removeTag(tags[2].task_tag.task_tag_id)}
+                  deleteHandle={
+                    can['change.tag']
+                      ? removeTag(tags[2].task_tag.task_tag_id)
+                      : undefined
+                  }
                 />)}
                 {
                 tags.length > 3
@@ -55,9 +69,14 @@ const TagsGroup = ({ tags, taskId }: TagsGroupProps) => {
                   </button>
                 </Tooltip>)
               }
-                <span className={styles.addButtonWrapper}>
-                  <TagsChanger taskTags={tags} currentTaskId={taskId} />
-                </span>
+                {
+                  can['change.tag']
+                  && (
+                    <span className={styles.addButtonWrapper}>
+                      <TagsChanger taskTags={tags} currentTaskId={taskId} />
+                    </span>
+                  )
+                }
               </div>
             )
             : (
@@ -67,13 +86,22 @@ const TagsGroup = ({ tags, taskId }: TagsGroupProps) => {
                     <Tag
                       tag={tag.task_tag}
                       key={tag.task_tag.task_tag_id}
-                      deleteHandle={removeTag(tag.task_tag.task_tag_id)}
+                      deleteHandle={
+                        can['change.tag']
+                          ? removeTag(tag.task_tag.task_tag_id)
+                          : undefined
+                      }
                     />
                   ))
                 }
-                <span className={styles.addButtonWrapper}>
-                  <TagsChanger taskTags={tags} currentTaskId={taskId} />
-                </span>
+                {
+                  can['change.tag']
+                  && (
+                    <span className={styles.addButtonWrapper}>
+                      <TagsChanger taskTags={tags} currentTaskId={taskId} />
+                    </span>
+                  )
+                }
               </>
             )
         }

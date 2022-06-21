@@ -3,7 +3,7 @@ import { Select, SelectProps, Tooltip } from 'antd';
 import style from './index.module.scss';
 import { taskStatuses } from './constants';
 
-type TProps = SelectProps & { tooltip?: string, modal?:true };
+type TProps = SelectProps & { tooltip?: string, isDisabled?: boolean, modal?: true };
 
 const TaskStatus = ({ ...props }: TProps) => {
   const [color, setColor] = useState<string>('#50B5FF');
@@ -67,6 +67,7 @@ const TaskStatus = ({ ...props }: TProps) => {
         onClick={onClick}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
+        disabled={props.isDisabled}
         getPopupContainer={definingArea}
       >
         {taskStatuses.map(({ status, taskStatusId }) => (

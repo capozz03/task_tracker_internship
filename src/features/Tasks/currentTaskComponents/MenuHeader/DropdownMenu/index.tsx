@@ -6,6 +6,7 @@ import { TTask } from 'store/slice/task/taskForm';
 import { DropdownMoreButton } from 'shared/ui/icons';
 import { alert } from 'shared';
 import styles from './index.module.scss';
+import { usePermissions } from 'shared/helpers';
 import Tooltip from 'features/Tasks/tasksComponents/TooltipForModal';
 
 type DropdownMenuProps = {
@@ -16,6 +17,10 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
   const { Item } = Menu;
   const dispatch = useDispatch();
   const startDelete = useSelector(CommonSlice.isLoadingCommonActionTask);
+  const can = usePermissions(
+    ['duplicate.task', 'duplicate/edit.task', 'delete.task'],
+    task.roles,
+  );
 
   useEffect(() => {
     if (startDelete) dispatch(TaskFormSlice.hiddenTaskForm());
@@ -66,15 +71,30 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
 
   const menu = (
     <Menu className={styles.dropdownMenu}>
-      <Item key="1" onClick={duplicateHandle}>
-        Дублировать задачу
-      </Item>
-      <Item key="2" onClick={duplicateAndEditHandle}>
-        Дублировать и редактировать задачу
-      </Item>
-      <Item key="3" onClick={deleteTaskHandle} className={styles.delete}>
-        Удалить задачу
-      </Item>
+      {
+        can['duplicate.task']
+        && (
+        <Item key="1" onClick={duplicateHandle}>
+          Дублировать задачу
+        </Item>
+        )
+      }
+      {
+        can['duplicate/edit.task']
+        && (
+        <Item key="2" onClick={duplicateAndEditHandle}>
+          Дублировать и редактировать задачу
+        </Item>
+        )
+      }
+      {
+        can['delete.task']
+        && (
+        <Item key="3" onClick={deleteTaskHandle} className={styles.delete}>
+          Удалить задачу
+        </Item>
+        )
+      }
     </Menu>
   );
 

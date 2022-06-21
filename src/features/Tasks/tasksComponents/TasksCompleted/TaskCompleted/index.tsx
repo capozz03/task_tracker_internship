@@ -11,6 +11,7 @@ import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 import CardNameText from '../../CardNameText';
 import CardAttachmentsCount from '../../CardAttachmentsCount';
 import CardChecklistCount from '../../CardChecklistCount';
+import { usePermissions } from 'shared/helpers';
 
 type TaskCompletedProps = {
   task: TaskCompletedSlice.TTask;
@@ -18,6 +19,11 @@ type TaskCompletedProps = {
 
 const TaskCompleted = ({ task }: TaskCompletedProps) => {
   const dispatch = useDispatch();
+  const can = usePermissions(
+    ['change.status'],
+    task.roles,
+  );
+
   const statusHandler = (value: string) => {
     dispatch(
       TaskCompletedSlice.changeStatusTaskAsync({
@@ -47,10 +53,15 @@ const TaskCompleted = ({ task }: TaskCompletedProps) => {
       </div>
 
       <div className={style.cardStatus}>
-        <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
+        <TaskStatus
+          defaultValue={task.status.name}
+          onChange={statusHandler}
+          tooltip={can['change.status'] ? 'Изменить статус' : ''}
+          isDisabled={!can['change.status']}
+        />
       </div>
       <div className={style.cardTagsGroup}>
-        <TagsGroup tags={task.tags} taskId={task.task_id} />
+        <TagsGroup tags={task.tags} taskId={task.task_id} roles={task.roles} />
       </div>
       <div className={style.cardProgress}>
         {task.progress && (

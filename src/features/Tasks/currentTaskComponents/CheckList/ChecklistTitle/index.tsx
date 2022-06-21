@@ -7,9 +7,10 @@ import { TTaskCheckList } from 'store/slice/task/entities';
 
 type ChecklistTitleProps = {
   checkList: TTaskCheckList,
+  canChange?: boolean,
 }
 
-const ChecklistTitle = ({ checkList }: ChecklistTitleProps) => {
+const ChecklistTitle = ({ checkList, canChange = false }: ChecklistTitleProps) => {
   const [isEditTitle, setIsEditTitle] = useState(false);
   const editItem = () => {
     setIsEditTitle(true);
@@ -28,13 +29,16 @@ const ChecklistTitle = ({ checkList }: ChecklistTitleProps) => {
           isEditing={isEditTitle}
         />
       </span>
-
-      <ChecklistTitleMenu
-        checkList={checkList}
-        editItem={editItem}
-        className={styles.checklistTitleMenu}
-      />
-
+      {
+        canChange
+        && (
+          <ChecklistTitleMenu
+            checkList={checkList}
+            editItem={editItem}
+            className={styles.checklistTitleMenu}
+          />
+        )
+      }
     </div>
   );
 };
