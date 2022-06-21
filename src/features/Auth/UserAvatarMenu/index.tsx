@@ -22,7 +22,7 @@ const UserAvatarMenu = () => {
   }, []);
 
   const logoutAction = () => {
-    dispatch(TaskFilters.resetFilters());
+    dispatch(TaskFilters.fullResetFilters());
     dispatch(logoutUser());
     navigate('/auth');
   };

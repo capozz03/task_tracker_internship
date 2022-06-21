@@ -71,6 +71,12 @@ const filtersSlice = createSlice({
         role_id_for_me: state.filters.role_id_for_me,
       };
     },
+    fullResetFilters(state) {
+      state.assignedToFilterIndex = initialState.assignedToFilterIndex;
+      state.filters = {
+        ...initialState.filters,
+      };
+    },
   },
   extraReducers: {},
 });
@@ -85,5 +91,6 @@ export const {
   setFilterProgressGTE,
   setFilterPriorityIDArray,
   resetFilters,
+  fullResetFilters,
 } = filtersSlice.actions;
 export const filtersReducer = filtersSlice.reducer;
