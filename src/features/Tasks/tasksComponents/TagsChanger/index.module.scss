@@ -109,3 +109,19 @@
         background: rgba($main-blue, 0.05) !important;
     }
 }
+
+.spinWrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+}
+
+.notTags {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    font: $p-medium;
+    text-align: center;
+    color: $grey-600;
+}

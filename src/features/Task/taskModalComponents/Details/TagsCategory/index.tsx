@@ -102,7 +102,7 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory, isDisabled = fa
       <Menu className={styles.itemsWrapper}>
         {
           isLoading
-            ? <Spin />
+            ? <div className={styles.spinWrap}><Spin /></div>
             : tags.map((tag) => (
               <Menu.Item
                 key={tag.task_tag_id}
@@ -116,6 +116,10 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory, isDisabled = fa
                 </Checkbox>
               </Menu.Item>
             ))
+        }
+        {
+          !tags.length && !isLoading
+          && (<span className={styles.notTags}>Нет меток</span>)
         }
       </Menu>
     </div>
