@@ -13,7 +13,6 @@ import CardAttachmentsCount from '../../CardAttachmentsCount';
 import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 import classNames from 'classnames';
 import moment, { now } from 'moment';
-import { SubscribesSlice } from 'store/slice';
 import PriorityChanger from '../../PriorityChanger';
 import DateChanger from '../../DateChanger';
 import { usePermissions } from 'shared/helpers';
@@ -40,12 +39,6 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
 
   const openTask: MouseEventHandler<HTMLElement> = () => {
     dispatch(getTaskByIdAsync(task.task_id));
-    dispatch(
-      SubscribesSlice.getSubscribeAsync({
-        relation_id: task.task_id,
-        relation_type: 'task',
-      }),
-    );
   };
 
   return (

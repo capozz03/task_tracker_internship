@@ -9,6 +9,7 @@ import { usePermissions } from 'shared/helpers';
 
 const MenuHeader = () => {
   const task = useSelector(TaskFormSlice.getTask);
+  const taskId = useSelector(TaskFormSlice.getTaskFormId);
   const can = usePermissions(
     ['duplicate.task', 'duplicate/edit.task', 'delete.task', 'add/change/remove.checklist', 'add/remove.file'],
     task?.roles,
@@ -20,7 +21,9 @@ const MenuHeader = () => {
         task && (can['add/change/remove.checklist'] || can['add/remove.file'])
         && <AttachMenu taskId={task.task_id} />
       }
-      <Subscribes />
+      {
+        taskId && <Subscribes taskId={taskId} />
+      }
       {
         task && (can['duplicate.task'] || can['duplicate/edit.task'] || can['delete.task'])
         && (

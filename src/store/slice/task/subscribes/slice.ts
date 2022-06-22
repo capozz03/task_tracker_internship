@@ -31,7 +31,12 @@ const initialState = {
 const subscribeSlice = createSlice({
   name: 'subscribeSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    clear(state) {
+      state = initialState;
+      return state;
+    },
+  },
   extraReducers: {
     [getSubscribeAsync.pending.type]: (state) => {
       state.status = RequestStatuses.LOADING;
@@ -74,3 +79,4 @@ const subscribeSlice = createSlice({
 });
 
 export const subscribeReducer = subscribeSlice.reducer;
+export const { clear } = subscribeSlice.actions;
