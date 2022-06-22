@@ -158,7 +158,7 @@ export const DateStopCategory = ({
         {
           overdue
           && (
-            <Tooltip title="Просрочена">
+            <Tooltip title="Просрочена" getPopupContainer={() => document.querySelector('.ant-modal-content') as HTMLElement}>
               <span>
                 <AlertWarningIcon />
               </span>

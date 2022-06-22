@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { usersList, getUsersListPage, usersListPagination, resetUserList, isLoadingStatus } from 'store/slice/users';
 import { searchIcons } from 'shared/ui/icons';
-import { UserAvatar } from 'features/Tasks/tasksComponents';
 import { Menu, Dropdown, Input, Spin } from 'antd';
 import styles from './index.module.scss';
 import { InView } from 'react-intersection-observer';
@@ -10,6 +9,7 @@ import { useDebounce } from 'shared';
 import MemberChangerPopover from './Popover';
 import { TUser } from 'store/slice/user/entities';
 import { TaskFormSlice } from 'store/slice';
+import UserAvatarForModal from 'features/Tasks/tasksComponents/UserAvatarForModal';
 
 type TProps = {
   buttonType: 'blue' | 'gray';
@@ -105,7 +105,7 @@ const MembersChanger = ({ buttonType }: TProps) => {
           <Menu.Item key={`${index * index}-${m.user_id}`}>
             <MemberChangerPopover member={m} afterAddRole={clearSearchValue}>
               <div>
-                <UserAvatar user={{ user_id: m.user_id, name: m.name, logo: m.logo }} color="#FF974A" />
+                <UserAvatarForModal user={{ user_id: m.user_id, name: m.name, logo: m.logo }} color="#FF974A" />
                 <span>
                   {m.name}
                 </span>

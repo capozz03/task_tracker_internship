@@ -52,7 +52,7 @@ const TaskStatus = ({ ...props }: TProps) => {
   };
 
   return (
-    <Tooltip title={props.tooltip || ''}>
+    <Tooltip title={props.tooltip || ''} getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}>
       <Select
         className={style.taskStatus}
         defaultValue={currentStatus}

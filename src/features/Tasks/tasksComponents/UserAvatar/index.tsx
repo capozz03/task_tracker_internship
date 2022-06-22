@@ -16,7 +16,10 @@ const UserAvatar = ({ user, color, tooltip, positionTooltip = 'bottom' }: UserAv
   const [loaded, setLoaded] = useState(false);
   const firstLetterFirstAndLastName = user.name.split(' ').map((word) => word.charAt(0).toUpperCase()).slice(0, 2).join('');
   return (
-    <Tooltip title={tooltip || user.name} placement={positionTooltip}>
+    <Tooltip
+      title={tooltip || user.name}
+      placement={positionTooltip}
+    >
       <div
         className={loaded ? classes.avatar : classes.no_avatar}
         data-attr={firstLetterFirstAndLastName}
