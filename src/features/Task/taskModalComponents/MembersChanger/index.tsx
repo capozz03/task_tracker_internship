@@ -115,6 +115,10 @@ const MembersChanger = ({ buttonType }: TProps) => {
           </Menu.Item>)
         }
         { observerElement() }
+        {
+          !members.length && !isLoading
+          && (<span className={styles.notMembers}>Нет участников</span>)
+        }
       </Menu>
     </div>
   );

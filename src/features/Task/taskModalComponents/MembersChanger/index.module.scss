@@ -223,3 +223,11 @@ ul.menu li.lastElement {
     color: $grey-900;
     border-bottom-color: $grey-900;
 }
+
+.notMembers {
+    display: block;
+    width: 100%;
+    font: $p-medium;
+    text-align: center;
+    color: $grey-600;
+}

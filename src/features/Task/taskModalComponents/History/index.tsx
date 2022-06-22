@@ -32,12 +32,13 @@ const TaskHistory = () => {
     }
   };
 
-  const onViewChanged = (inView: boolean, entry: IntersectionObserverEntry) => {
-    if (inView && entry.isIntersecting) loadHistory();
-  };
+  const onViewChanged = (isLoading: boolean) =>
+    (inView: boolean, entry: IntersectionObserverEntry) => {
+      if (inView && entry.isIntersecting && !isLoading) loadHistory();
+    };
 
-  const observerElement = () => (
-    <InView threshold={0} onChange={onViewChanged}>
+  const observerElement = (isLoading: boolean) => (
+    <InView threshold={0} onChange={onViewChanged(isLoading)}>
       {({ ref }) => (
         <>
           <li className={styles.lastElement} ref={ref} key="_observer_point" />
@@ -52,8 +53,8 @@ const TaskHistory = () => {
   }, [currentTaskId]);
 
   useEffect(() => {
-    if (history.length === 0) loadHistory();
-  }, [history]);
+    if (history.length === 0 && !isLoading) loadHistory();
+  }, [history, isLoading]);
 
   return (
     <div className={styles.historyWrapper}>
@@ -76,7 +77,7 @@ const TaskHistory = () => {
           ))
         }
         {
-          !!currentTaskId && observerElement()
+          !!currentTaskId && observerElement(isLoading)
         }
       </ul>
     </div>

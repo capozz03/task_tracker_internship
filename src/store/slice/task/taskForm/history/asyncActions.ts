@@ -16,18 +16,3 @@ export const getTaskHistoryAsync = createAsyncThunk(
     }
   },
 );
-
-export const updateFirstTaskHistoryUnitAsync = createAsyncThunk(
-  'history/getTaskHistoryAsync',
-  async (taskId: string, { rejectWithValue }) => {
-    try {
-      const { data } = await historyService.getHistoryOnTask({
-        page: 1, limit: 1, taskId });
-      return data;
-    } catch (rejectedValueOrSerializedError) {
-      const error = miniSerializeError(rejectedValueOrSerializedError);
-      alert(`Не удалось обновить историю действий. Ошибка: "${error.message}"`, 'error');
-      return rejectWithValue(error);
-    }
-  },
-);

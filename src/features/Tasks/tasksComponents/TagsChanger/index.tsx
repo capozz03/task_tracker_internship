@@ -96,7 +96,7 @@ const TagsChanger = ({ currentTaskId, taskTags }: TProps) => {
       <Menu className={styles.itemsWrapper} onClick={stopPropagation}>
         {
           isLoading
-            ? <Spin className={styles.spin} />
+            ? <div className={styles.spinWrap}><Spin /></div>
             : tags.map((tag) => (
               <Menu.Item
                 key={tag.task_tag_id}
@@ -111,6 +111,10 @@ const TagsChanger = ({ currentTaskId, taskTags }: TProps) => {
                 </Checkbox>
               </Menu.Item>
             ))
+        }
+        {
+          !tags.length && !isLoading
+          && (<span className={styles.notTags}>Нет меток</span>)
         }
       </Menu>
     </div>
