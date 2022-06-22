@@ -54,7 +54,7 @@ const PriorityChanger = ({ priority, currentTaskId, tooltip, roles }: TProps) =>
   const stopPropagation = (e: React.MouseEvent<HTMLElement>) => e.stopPropagation();
 
   return (
-    <Tooltip title={can['change.priority'] ? (tooltip || '') : ''}>
+    <Tooltip title={can['change.priority'] ? (tooltip || '') : ''} getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}>
       <Select
         className={styles.select}
         bordered={false}

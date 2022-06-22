@@ -66,7 +66,7 @@ const NewTask = ({ taskStatusId }: { taskStatusId: string }) => {
         </button>
       </div>
       <div className={styles.formNewTaskWrap} style={!isActive ? { display: 'none' } : { display: 'flex' }}>
-        <Tooltip title="Название обязательно" visible={isVisibleTooltip} placement="bottom" />
+        <Tooltip title="Название обязательно" visible={isVisibleTooltip} placement="bottom" getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement} />
         <InputNameTask
           type="text"
           name="inputNewTask"

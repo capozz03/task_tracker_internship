@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { UserAvatar } from 'features/Tasks/tasksComponents';
 import { formatDateOnTaskHistoryView } from 'shared/helpers/convert';
 import { THistoryUnit } from 'store/slice/task/taskForm/history/entities';
 import { roleParams } from './Params/RolesParams';
@@ -11,6 +10,7 @@ import { fileParams } from './Params/FilesParams';
 import HistoryUnitTitle from './HistoryUnitTitle';
 import HistoryUnitDetails from './HistoryUnitDetails';
 import styles from './index.module.scss';
+import UserAvatarForModal from 'features/Tasks/tasksComponents/UserAvatarForModal';
 
 type TProps = {
   unit: THistoryUnit;
@@ -94,7 +94,7 @@ const HistoryUnit = ({ unit }: TProps) => {
   return (
     <li className={styles.historyItem}>
       <div className={styles.action}>
-        <UserAvatar user={unit.user} color="#FFC28A" />
+        <UserAvatarForModal user={unit.user} color="#FFC28A" />
         <p className={styles.actionTitle}>
           <span className={styles.actionUserName}>{unit.user.name}</span>
           <span className={styles.actionDescription}>
