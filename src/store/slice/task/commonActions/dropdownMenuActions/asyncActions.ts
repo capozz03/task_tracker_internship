@@ -111,7 +111,9 @@ export const duplicateTaskAsync = createAsyncThunk(
       if (openTask) {
         dispatch(getTaskByIdAsync(data.clone.task_id));
       }
-      if (!openTask) dispatch(TaskFormSlice.resetTaskHistory());
+      if (!openTask) {
+        dispatch(TaskFormSlice.resetTaskHistory());
+      }
     } catch (rejectedValueOrSerializedError) {
       rejectedHandle();
       const error = miniSerializeError(rejectedValueOrSerializedError);
