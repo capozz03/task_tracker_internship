@@ -77,7 +77,7 @@ const TagsChanger = ({ currentTaskId, taskTags }: TProps) => {
       dispatch(TagsSlice.getTagsAsync({
         search: debouncedValue,
         page: 1,
-        perPage: 50,
+        perPage: 500,
       }));
     }
   }, [debouncedValue, visible]);
