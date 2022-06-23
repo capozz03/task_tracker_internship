@@ -2,7 +2,8 @@ import React from 'react';
 import { TNotification } from 'store/slice/task/notifications/entities';
 import styles from 'shared/ui/Notifications/NotificationItem/index.module.scss';
 import stylesCustom from './index.module.scss';
-import { UserAvatar } from 'features/Tasks/tasksComponents';
+import UserAvatarForModal from 'features/Tasks/tasksComponents/UserAvatarForModal';
+import { CheckIcon } from 'shared/ui/icons/TaskHistory';
 
 type NotificationProps = {
   notification: TNotification;
@@ -14,7 +15,7 @@ const NotificationRoleAssign = ({ notification }: NotificationProps) => {
     <div>
       <div className={styles.userAssigned}>
         <div className={styles.avatar}>
-          <UserAvatar user={event.user} color="#A461D8" />
+          <UserAvatarForModal user={event.user} color="#A461D8" />
         </div>
         <div className={styles.nameAndEvent}>
           <div className={styles.name}>
@@ -27,7 +28,19 @@ const NotificationRoleAssign = ({ notification }: NotificationProps) => {
             </strong>
           </div>
           <div className={stylesCustom.content}>
-            { event.params.assign_user && <UserAvatar user={event.params.assign_user} color="#C3AEFF" /> }
+            { event.params.assign_user
+              && (
+                <>
+                  <UserAvatarForModal user={event.params.assign_user} color="#C3AEFF" />
+                  <div>
+                    <strong>{ event.params.assign_user?.name }</strong>
+                    <span className={styles.rolesDesc}>
+                      <CheckIcon />
+                      { event.params.task_role?.name || 'Неизвестная роль' }
+                    </span>
+                  </div>
+                </>
+              )}
           </div>
         </div>
       </div>
