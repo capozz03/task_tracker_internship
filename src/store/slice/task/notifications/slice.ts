@@ -1,21 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatuses } from 'shared';
 import { getNotificationsAsync, pushNotificationsAsync, readAllNotificationAsync } from './asyncThunk';
-import {
-  TNotification,
-  TNotificationsResponse, TToggleReadStatusProps,
-} from './entities';
-import { TPagination } from 'store/slice/task/entities';
+import { TNotificationReducer, TNotificationsResponse } from './entities';
+import reducers from './actions';
 
-export type TNotificationReducer = {
-  notifications: TNotification[];
-  pagination: TPagination;
-  isVisible: boolean,
-  status: RequestStatuses;
-  error: null | Error;
-}
-
-const initialState = {
+export const initialState = {
   notifications: [],
   pagination: {
     items_count: 0,
@@ -32,40 +21,7 @@ const initialState = {
 const notificationSlice = createSlice({
   name: 'notificationSlice',
   initialState,
-  reducers: {
-    nextPage(state) {
-      if (state.pagination.page_total > state.pagination.page_current) {
-        state.pagination.page_current += 1;
-      }
-    },
-    showNotification(state) {
-      state.isVisible = true;
-    },
-    hiddenNotification(state) {
-      state.isVisible = false;
-      state.pagination.page_current = 1;
-    },
-    clearNotifications(state) {
-      state = initialState;
-      return state;
-    },
-    toggleReadStatus(state, { payload }: PayloadAction<TToggleReadStatusProps>) {
-      state.notifications = state.notifications.map((notification) => {
-        if (payload.listNotificationId.includes(notification.subscribe_notify_id)) {
-          notification.viewed = payload.status === undefined
-            ? !notification.viewed
-            : payload.status;
-          if (notification.viewed) {
-            state.pagination.items_total -= 1;
-          } else {
-            state.pagination.items_total += 1;
-          }
-        }
-        return notification;
-      });
-      return state;
-    },
-  },
+  reducers,
   extraReducers: {
     [getNotificationsAsync.pending.type]: (state) => {
       state.status = RequestStatuses.LOADING;

@@ -1,6 +1,7 @@
 import { TCommandCode } from 'store/slice/task/history/entities';
 import { TPagination, TStorageFiles, TTag } from 'store/slice/task/entities';
 import { TUser } from 'store/slice/user/entities';
+import { RequestStatuses } from 'shared';
 
 export type TNotifiesRequest = {
   viewed?: boolean | null;
@@ -79,6 +80,14 @@ export type TNotification = {
       }
     ]
   }
+}
+
+export type TNotificationReducer = {
+  notifications: TNotification[];
+  pagination: TPagination;
+  isVisible: boolean,
+  status: RequestStatuses;
+  error: null | Error;
 }
 
 export type TNotificationsResponse = {

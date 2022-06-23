@@ -1,5 +1,6 @@
 import { TPagination } from 'store/slice/task/entities';
 import { TCommandCode } from 'store/slice/task/history/entities';
+import { RequestStatuses } from 'shared';
 
 type TRelationType = 'task' | 'storage' | 'check-list'
 
@@ -9,6 +10,13 @@ export type TSubscribe = {
   relation_type: TRelationType;
   relation_id: string;
   created: string;
+}
+
+export type TSubscribeReducer = {
+  subscribes: TSubscribe[];
+  pagination: TPagination;
+  status: RequestStatuses;
+  error: null | Error;
 }
 
 export type TSubscribeListResponse = {
