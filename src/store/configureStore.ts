@@ -14,6 +14,7 @@ import {
   HistorySlice,
   NotificationsSlice,
   SubscribesSlice,
+  SettingsSlice,
 } from './slice';
 import {
   persistStore,
@@ -42,12 +43,13 @@ const rootReducer = combineReducers({
   history: HistorySlice.historyReducer,
   notifications: NotificationsSlice.notificationReducer,
   subscribes: SubscribesSlice.subscribeReducer,
+  settings: SettingsSlice.settingsReducer,
 });
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['taskFilters'],
+  whitelist: ['taskFilters', 'settings'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
