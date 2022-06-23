@@ -16,6 +16,7 @@ import moment, { now } from 'moment';
 import PriorityChanger from '../../PriorityChanger';
 import DateChanger from '../../DateChanger';
 import { usePermissions } from 'shared/helpers';
+import { useNavigate } from 'react-router-dom';
 
 type TaskInboxProps = {
   task: TTask;
@@ -23,6 +24,7 @@ type TaskInboxProps = {
 
 const TaskInbox = ({ task }: TaskInboxProps) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const can = usePermissions(
     ['change.status'],
     task.roles,
@@ -38,6 +40,7 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
   };
 
   const openTask: MouseEventHandler<HTMLElement> = () => {
+    navigate(`/${task.task_id}`);
     dispatch(getTaskByIdAsync(task.task_id));
   };
 

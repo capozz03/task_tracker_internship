@@ -17,6 +17,7 @@ import moment, { now } from 'moment';
 import PriorityChanger from '../../PriorityChanger';
 import DateChanger from '../../DateChanger';
 import { usePermissions } from 'shared/helpers';
+import { useNavigate } from 'react-router-dom';
 
 type TaskInWorkProps = {
   task: TTask;
@@ -24,6 +25,7 @@ type TaskInWorkProps = {
 
 const TaskInWork = ({ task }: TaskInWorkProps) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const can = usePermissions(
     ['change.status'],
     task.roles,
@@ -38,6 +40,7 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
     );
   };
   const openTask: MouseEventHandler<HTMLElement> = () => {
+    navigate(`/${task.task_id}`);
     dispatch(TaskFormSlice.getTaskByIdAsync(task.task_id));
     dispatch(
       SubscribesSlice.getSubscribeAsync({

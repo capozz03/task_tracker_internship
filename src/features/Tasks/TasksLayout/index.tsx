@@ -16,6 +16,7 @@ import FiltersPanel from '../tasksComponents/FiltersPanel';
 import ModalDeleteTask from 'shared/ui/ModalDeleteTask';
 import Notifications from '../../../shared/ui/Notifications';
 import NotificationBell from '../tasksComponents/NotificationsBell';
+// import { useParams } from 'react-router-dom';
 
 const { Sider, Header, Content } = Layout;
 const { getIsFiltersMenuShow, setIsFiltersMenuShow } = TaskFilters;
@@ -28,6 +29,8 @@ const TasksLayout = () => {
   const isVisibleForm = useSelector(TaskFormSlice.getTaskFormIsVisibleForm);
   const filtersCount = useSelector(TaskFilters.getFiltersCount);
   const isVisibleNotifications = useSelector(NotificationsSlice.isVisible);
+
+  // const { taskId } = useParams();
 
   return (
     <>

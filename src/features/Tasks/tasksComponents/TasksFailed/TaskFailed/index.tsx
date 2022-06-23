@@ -12,6 +12,7 @@ import CardNameText from '../../CardNameText';
 import CardAttachmentsCount from '../../CardAttachmentsCount';
 import CardChecklistCount from '../../CardChecklistCount';
 import { usePermissions } from 'shared/helpers';
+import { useNavigate } from 'react-router-dom';
 
 type TaskFailedProps = {
   task: TaskFailedSlice.TTask;
@@ -19,6 +20,7 @@ type TaskFailedProps = {
 
 const TaskFailed = ({ task }: TaskFailedProps) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const can = usePermissions(
     ['change.status'],
     task.roles,
@@ -32,9 +34,12 @@ const TaskFailed = ({ task }: TaskFailedProps) => {
       }),
     );
   };
+
   const openTask: MouseEventHandler<HTMLElement> = () => {
+    navigate(`/${task.task_id}`);
     dispatch(getTaskByIdAsync(task.task_id));
   };
+
   return (
     <div className={style.wrap} role="button" onClick={openTask} onKeyDown={() => {}} tabIndex={-1}>
       <div className={style.cardName}>

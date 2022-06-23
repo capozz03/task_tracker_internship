@@ -12,6 +12,7 @@ import CardNameText from '../../CardNameText';
 import CardAttachmentsCount from '../../CardAttachmentsCount';
 import CardChecklistCount from '../../CardChecklistCount';
 import { usePermissions } from 'shared/helpers';
+import { useNavigate } from 'react-router-dom';
 
 type TaskCompletedProps = {
   task: TaskCompletedSlice.TTask;
@@ -19,6 +20,7 @@ type TaskCompletedProps = {
 
 const TaskCompleted = ({ task }: TaskCompletedProps) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const can = usePermissions(
     ['change.status'],
     task.roles,
@@ -32,9 +34,12 @@ const TaskCompleted = ({ task }: TaskCompletedProps) => {
       }),
     );
   };
+
   const openTask: MouseEventHandler<HTMLElement> = () => {
+    navigate(`/${task.task_id}`);
     dispatch(getTaskByIdAsync(task.task_id));
   };
+
   return (
     <div className={style.wrap} role="button" onClick={openTask} onKeyDown={() => {}} tabIndex={-1}>
       <div className={style.cardName}>
