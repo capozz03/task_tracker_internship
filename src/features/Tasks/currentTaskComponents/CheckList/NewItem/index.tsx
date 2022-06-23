@@ -55,15 +55,19 @@ const createItemForChecklist = ({ checklist }: createItemForChecklistProps) => {
         <button type="button" className={styles.newTaskLabel} onClick={toggleVisibleForm}>+ Добавить новый пункт</button>
       </div>
       <div className={styles.formNewTaskWrap} style={!isActive ? { display: 'none' } : { display: 'flex' }}>
-        <Tooltip title="Название обязательно" visible={isVisibleTooltip} placement="bottom">
-          <InputNameTask
-            type="text"
-            name="inputNewTask"
-            value={title}
-            onChange={onChange}
-            placeholder="Создание пункта списка"
-          />
-        </Tooltip>
+        <Tooltip
+          title="Название обязательно"
+          visible={isVisibleTooltip}
+          placement="bottom"
+          getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
+        />
+        <InputNameTask
+          type="text"
+          name="inputNewTask"
+          value={title}
+          onChange={onChange}
+          placeholder="Создание пункта списка"
+        />
         <div className={styles.btnGroup}>
           <Button type="primary" htmlType="submit">Сохранить</Button>
           <Button type="default" onClick={toggleVisibleForm}>Отменить</Button>
