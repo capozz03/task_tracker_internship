@@ -15,6 +15,8 @@ type TValue = {
 const ContributorsFilter = () => {
   const dispatch = useDispatch();
 
+  const [searchValue, setSearchValue] = useState('');
+
   const storeSelectedUserIDs = useSelector(TaskFilters.getFilterAssignUserIDArray);
   const [selectedUserIDs, setSelectedUserIDs] = useState<TValue[]>([]);
 
@@ -30,6 +32,10 @@ const ContributorsFilter = () => {
         .filter((user) => !selectedUserIDs.map((o) => o.value).includes(user.value)),
     [findedUsers, selectedUserIDs],
   );
+  const notFoundContent = (
+    <span className={styles.notFoundPlaceholder}>{isLoading ? <Spin /> : 'Нет участников'}</span>
+  );
+  const placeholderMessage = 'Выберите ...';
 
   const fetchUsers = (searchValue: string) => {
     dispatch(UsersSlice.resetUserList());
@@ -47,18 +53,23 @@ const ContributorsFilter = () => {
       const idsArray = values.map((obj) => obj.value);
       setSelectedUserIDs(values);
       dispatch(TaskFilters.setFilterAssignUserIDArray(idsArray));
+      setSearchValue('');
     } else {
       alert('Нельзя выбрать больше участников', 'warning');
     }
   };
 
-  const onSearch = debounce((searchValue: string) => {
+  const debouncedFetch = debounce(() => {
     fetchUsers(searchValue);
   }, 500);
 
-  const fetchAllUsers = debounce(() => {
-    fetchUsers('');
-  }, 500);
+  const onSearch = (newSearchValue: string) => {
+    setSearchValue(newSearchValue);
+  };
+
+  const onBlur = () => {
+    setSearchValue('');
+  };
 
   const onDeselectFactory = (id: string) => () => {
     const filteredUsers = selectedUserIDs.filter((user) => user.value !== id);
@@ -66,15 +77,13 @@ const ContributorsFilter = () => {
     dispatch(TaskFilters.setFilterAssignUserIDArray(filteredUsers.map((user) => user.value)));
   };
 
-  const notFoundContent = (
-    <span className={styles.notFoundPlaceholder}>{isLoading ? <Spin /> : 'Нет участников'}</span>
-  );
-
   useEffect(() => {
     if (!storeSelectedUserIDs || storeSelectedUserIDs.length === 0) {
       setSelectedUserIDs([]);
     }
   }, [storeSelectedUserIDs]);
+
+  useEffect(debouncedFetch, [searchValue]);
 
   return (
     <div className={styles.contributorsSelectWrap}>
@@ -83,17 +92,23 @@ const ContributorsFilter = () => {
         dropdownClassName={styles.contributorsSelectDropdown}
         labelInValue
         mode="multiple"
-        placeholder="Выберите ..."
+        placeholder={placeholderMessage}
         getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}
         showArrow
         filterOption={false}
         maxTagCount={0}
-        maxTagPlaceholder={<span className={styles.placeholder}>Выберите еще ...</span>}
+        maxTagPlaceholder={
+          <span className={searchValue.length ? styles.hide : styles.placeholder}>
+            {placeholderMessage}
+          </span>
+        }
         notFoundContent={notFoundContent}
         value={selectedUserIDs}
+        searchValue={searchValue}
         options={options}
         onChange={onChange}
-        onFocus={fetchAllUsers}
+        onFocus={debouncedFetch}
+        onBlur={onBlur}
         onSearch={onSearch}
       />
       <div className={styles.selectedList}>
