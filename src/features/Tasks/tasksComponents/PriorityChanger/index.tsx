@@ -1,5 +1,6 @@
 import React from 'react';
-import { Select, Tooltip } from 'antd';
+import { Select } from 'antd';
+import Tooltip from 'features/Tasks/tasksComponents/Tooltip';
 import { useDispatch } from 'react-redux';
 import { TaskPriorities } from 'shared';
 import { TaskFormSlice } from 'store/slice';

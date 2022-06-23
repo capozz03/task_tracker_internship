@@ -19,6 +19,7 @@ const UserAvatar = ({ user, color, tooltip, positionTooltip = 'bottom' }: UserAv
     <Tooltip
       title={tooltip || user.name}
       placement={positionTooltip}
+      ignoreTouchDevice
     >
       <div
         className={loaded ? classes.avatar : classes.no_avatar}
