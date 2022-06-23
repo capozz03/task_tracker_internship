@@ -42,7 +42,12 @@ const CheckListFormCreate = () => {
   return (
     <form className={styles.wrap} onSubmit={newTaskHandler}>
       <div className={styles.formNewTaskWrap}>
-        <Tooltip title="Требуется название чек-листа" visible={isVisibleTooltip} placement="bottom" />
+        <Tooltip
+          title="Требуется название чек-листа"
+          visible={isVisibleTooltip}
+          placement="bottom"
+          getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
+        />
         <InputNameTask
           type="text"
           name="inputNewTask"
