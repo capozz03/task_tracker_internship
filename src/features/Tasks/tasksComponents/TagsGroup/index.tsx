@@ -7,6 +7,7 @@ import { TaskFormSlice } from 'store/slice';
 import TagsChanger from '../TagsChanger';
 import { usePermissions } from 'shared/helpers';
 import Tooltip from 'features/Tasks/tasksComponents/Tooltip';
+import TagsEditor from 'features/Tasks/tasksComponents/TagsEditor';
 
 type TagsGroupProps = {
   tags: TTagsTask[],
@@ -74,6 +75,7 @@ const TagsGroup = ({ tags, taskId, roles }: TagsGroupProps) => {
                   && (
                     <span className={styles.addButtonWrapper}>
                       <TagsChanger taskTags={tags} currentTaskId={taskId} />
+                      <TagsEditor />
                     </span>
                   )
                 }
@@ -99,6 +101,7 @@ const TagsGroup = ({ tags, taskId, roles }: TagsGroupProps) => {
                   && (
                     <span className={styles.addButtonWrapper}>
                       <TagsChanger taskTags={tags} currentTaskId={taskId} />
+                      <TagsEditor />
                     </span>
                   )
                 }

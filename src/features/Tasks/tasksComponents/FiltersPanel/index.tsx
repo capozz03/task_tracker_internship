@@ -7,6 +7,8 @@ import PriorityFilter from './PriorityFilter';
 import AttachmentsFilter from './AttachmentsFilter';
 import ProgressFilter from './ProgressFilter';
 import ContributorsFilter from './ContributorsFilter';
+import TagsEditor from 'features/Tasks/tasksComponents/TagsEditor';
+import classNames from 'classnames';
 
 const FiltersPanel = () => (
   <div className={styles.container}>
@@ -16,7 +18,10 @@ const FiltersPanel = () => (
       <ContributorsFilter />
     </div>
     <div>
-      <div className={styles.labelText}>Метки</div>
+      <div className={classNames([styles.labelText, styles.tags])}>
+        Метки
+        <span className={styles.tagsEditor}><TagsEditor /></span>
+      </div>
       <TagsFilter />
     </div>
     <div>

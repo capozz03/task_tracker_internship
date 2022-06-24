@@ -1,0 +1,28 @@
+@import "src/shared/assets/styles";
+
+.btn{
+  height: 100%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font: $h6-regular;
+  color: $grey-500;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-size: inherit;
+  &:hover{
+    color: $main-blue;
+  }
+  svg{
+    width: 1em;
+    height: 1em;
+
+  }
+}
+
+:global(.ant-popover-inner-content){
+  padding: 0 !important;
+}

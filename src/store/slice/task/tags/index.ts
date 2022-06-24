@@ -1,3 +1,3 @@
 export { getTagsAsync, createTagAsync, deleteTagAsync, updateTagAsync } from './asyncAction';
-export { tagsReducer } from './slice';
-export { isLoadingTags, getTagsSelector } from './selector';
+export { tagsReducer, setCurrentTag, clearCurrentTag } from './slice';
+export { isLoadingTags, getTagsSelector, getCurrentTagSelector } from './selector';

@@ -11,15 +11,19 @@ import { TagsSlice } from 'store/slice';
 
 type TagItemProps = {
   tag: TTag;
+  showModalForDelete: () => void;
+  showModalForEdit: () => void;
 }
 
-const TagItem = ({ tag }: TagItemProps) => {
+const TagItem = ({ tag, showModalForDelete, showModalForEdit }: TagItemProps) => {
   const dispatch = useDispatch();
-  const editHandle = () => {
-    // console.log('Изменил');
-  };
   const deleteHandle = () => {
-    dispatch(TagsSlice.deleteTagAsync({ taskTagId: tag.task_tag_id }));
+    dispatch(TagsSlice.setCurrentTag(tag));
+    showModalForDelete();
+  };
+  const editHandle = () => {
+    dispatch(TagsSlice.setCurrentTag(tag));
+    showModalForEdit();
   };
   return (
     <List.Item key={tag.task_tag_id}>

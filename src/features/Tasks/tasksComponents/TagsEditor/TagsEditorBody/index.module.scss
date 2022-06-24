@@ -4,7 +4,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 0 10px 10px;
+  padding: 16px;
   .title{
     font: $p-regular;
     color: $grey-700;
@@ -12,6 +12,7 @@
 }
 
 .wrap{
+  padding: 5px 20px;
   scrollbar-width: thin;
   scrollbar-color: rgba($main-blue, 0.5) $grey-0;
 

@@ -7,3 +7,5 @@ const getTagsSliceStore = (state: TState) => state.tags;
 export const getTagsSelector = createSelector(getTagsSliceStore, ({ tags }) => tags);
 export const isLoadingTags = createSelector(getTagsSliceStore,
   ({ status }) => isLoadingStatusCheck(status));
+export const getCurrentTagSelector = createSelector(getTagsSliceStore,
+  ({ currentTag }) => currentTag);

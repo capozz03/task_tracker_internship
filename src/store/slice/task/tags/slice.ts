@@ -1,17 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TPagination, TTag } from 'store/slice/task/entities';
 import { getTagsAsync } from './asyncAction';
 import { RequestStatuses } from 'shared';
-import { TTagsResponse } from 'store/slice/task/tags/entities';
-
-type TTagFilterSlice = {
-  tags: TTag[],
-  pagination: TPagination,
-  status: RequestStatuses,
-  error: Error | null,
-}
+import { TTagsResponse, TTagFilterSlice } from './entities';
+import reducers from './action';
 
 const initialState = {
+  currentTag: null,
   tags: [],
   pagination: {
     items_count: 4,
@@ -27,7 +21,7 @@ const initialState = {
 const tagsFilterSlice = createSlice({
   name: 'tagsFilterSlice',
   initialState,
-  reducers: {},
+  reducers,
   extraReducers: {
     [getTagsAsync.pending?.type]: (state: TTagFilterSlice) => ({
       ...state,
@@ -52,4 +46,4 @@ const tagsFilterSlice = createSlice({
 });
 
 export const tagsReducer = tagsFilterSlice.reducer;
-// export const {} = tagsFilterSlice.actions;
+export const { setCurrentTag, clearCurrentTag } = tagsFilterSlice.actions;

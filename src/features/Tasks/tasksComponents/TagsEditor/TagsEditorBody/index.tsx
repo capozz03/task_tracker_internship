@@ -1,18 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { TagsSlice } from 'store/slice';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { List, Skeleton } from 'antd';
 import styles from './index.module.scss';
 import TagItem from 'features/Tasks/tasksComponents/TagsEditor/TagsEditorBody/TagItem';
+import ModalTagDelete from 'features/Tasks/tasksComponents/TagsEditor/ModalTagDelete';
+import ModalTagEdit from 'features/Tasks/tasksComponents/TagsEditor/ModalTagEdit';
 
 const TagsEditorBody = () => {
   const tags = useSelector(TagsSlice.getTagsSelector);
+  const [isVisibleModalDelete, setIsVisibleModalDelete] = useState(false);
+  const [isVisibleModalEdit, setIsVisibleModalEdit] = useState(false);
   const loadMoreData = () => {
     // console.log(1);
   };
+
+  const visibleModalForDelete = () => {
+    setIsVisibleModalDelete(true);
+  };
+
+  const visibleModalForEdit = () => {
+    setIsVisibleModalEdit(true);
+  };
+
   return (
-    <>
+    <div role="button" tabIndex={-1} onKeyDown={(e) => e.stopPropagation()} onClick={(e) => e.stopPropagation()}>
       <header className={styles.header}>
         <div className={styles.title}>
           Настроить метки
@@ -36,12 +49,24 @@ const TagsEditorBody = () => {
             className={styles.listWrap}
             dataSource={tags}
             renderItem={(tag) => (
-              <TagItem tag={tag} />
+              <TagItem
+                showModalForDelete={visibleModalForDelete}
+                showModalForEdit={visibleModalForEdit}
+                tag={tag}
+              />
             )}
           />
         </InfiniteScroll>
       </div>
-    </>
+      <ModalTagDelete
+        isVisibleModal={isVisibleModalDelete}
+        setIsVisibleModal={setIsVisibleModalDelete}
+      />
+      <ModalTagEdit
+        isVisibleModal={isVisibleModalEdit}
+        setIsVisibleModal={setIsVisibleModalEdit}
+      />
+    </div>
   );
 };
 

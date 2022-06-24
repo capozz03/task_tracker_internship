@@ -7,7 +7,6 @@ import { Tag } from 'features/Tasks/tasksComponents/index';
 import styles from './index.module.scss';
 import { TTag } from 'store/slice/task/entities';
 import PlusSquaredIcon from 'shared/ui/icons/PlusSquaredIcon';
-import TagsEditor from 'features/Tasks/tasksComponents/TagsEditor';
 
 const TagsFilter = () => {
   const [search, setSearch] = useState('');
@@ -107,7 +106,6 @@ const TagsFilter = () => {
           ))
         }
       </div>
-      <TagsEditor />
     </>
   );
 };

@@ -8,6 +8,7 @@ import styles from './index.module.scss';
 import { Dropdown, Input, Menu, Spin } from 'antd';
 import { alert, useDebounce } from 'shared';
 import { searchIcons } from 'shared/ui/icons';
+import TagsEditor from 'features/Tasks/tasksComponents/TagsEditor';
 
 type TProps = {
   currentTaskId: string | undefined;
@@ -164,6 +165,7 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory, isDisabled = fa
             </Dropdown>
           )
         }
+        <TagsEditor isVisibleText />
       </div>
     </DetailCategory>
   );

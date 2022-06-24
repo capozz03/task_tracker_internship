@@ -19,9 +19,14 @@ export const getTagsAsync = createAsyncThunk(
 
 export const createTagAsync = createAsyncThunk(
   'tagsFilterSlice/createTagAsync',
-  async (props: TTagsCreateRequest, { rejectWithValue }) => {
+  async (props: TTagsCreateRequest, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await tagsFilterService.createTag(props);
+      dispatch(TagsSlice.getTagsAsync({
+        search: '',
+        page: 1,
+        perPage: 500,
+      }));
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
@@ -33,9 +38,14 @@ export const createTagAsync = createAsyncThunk(
 
 export const updateTagAsync = createAsyncThunk(
   'tagsFilterSlice/updateTagAsync',
-  async (props: TTagsUpdateRequest, { rejectWithValue }) => {
+  async (props: TTagsUpdateRequest, { rejectWithValue, dispatch }) => {
     try {
       const { data } = await tagsFilterService.updateTag(props);
+      dispatch(TagsSlice.getTagsAsync({
+        search: '',
+        page: 1,
+        perPage: 500,
+      }));
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);

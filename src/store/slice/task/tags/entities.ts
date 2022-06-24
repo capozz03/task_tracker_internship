@@ -1,4 +1,5 @@
 import { TPagination, TTag } from 'store/slice/task/entities';
+import { RequestStatuses } from 'shared';
 
 export type TTagsFilterSearchProps = {
   search: string;
@@ -34,4 +35,12 @@ export type TTagsUpdateRequest = {
 
 export type TTagsDeleteRequest = {
   taskTagId: string;
+}
+
+export type TTagFilterSlice = {
+  currentTag: TTag | null,
+  tags: TTag[],
+  pagination: TPagination,
+  status: RequestStatuses,
+  error: Error | null,
 }
