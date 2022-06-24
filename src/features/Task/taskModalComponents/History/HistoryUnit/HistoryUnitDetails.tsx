@@ -11,6 +11,7 @@ import moment from 'moment';
 import ImagesAttachments from 'features/Tasks/currentTaskComponents/Attachments/ImagesAttachments';
 import { taskStatuses } from 'features/Tasks/tasksComponents/TaskStatus/constants';
 import UserAvatarForModal from 'features/Tasks/tasksComponents/UserAvatarForModal';
+import FilesAttachments from 'features/Tasks/currentTaskComponents/Attachments/FilesAttachments';
 
 type TProps = TDetailsProps & { unit: THistoryUnit };
 
@@ -103,14 +104,28 @@ const HistoryUnitDetails = ({ type, unit, roleType = 'add', tagType = 'add' }: T
           {
             !!unit.params.storage_file
             && (
-              <ImagesAttachments
-                name={unit.params.storage_file.name_original}
-                storageFileId={unit.params.storage_file.storage_file_id}
-                taskId="0"
-                uploaded={unit.params.storage_file.uploaded}
-                isVisibleCarousel={false}
-                isVisibleDropdownMenu={false}
-              />
+              unit.params.storage_file.type === 'image'
+                ? (
+                  <ImagesAttachments
+                    name={unit.params.storage_file.name_original}
+                    storageFileId={unit.params.storage_file.storage_file_id}
+                    taskId="0"
+                    uploaded={unit.params.storage_file.uploaded}
+                    isVisibleCarousel={false}
+                    isVisibleDropdownMenu={false}
+                  />
+                )
+                : (
+                  <FilesAttachments
+                    name={unit.params.storage_file.name_original}
+                    size={unit.params.storage_file.size}
+                    storageFileId={unit.params.storage_file.storage_file_id}
+                    taskId="0"
+                    uploaded={unit.params.storage_file.uploaded}
+                    isVisibleDropdownMenu={false}
+                    canChange={false}
+                  />
+                )
             )
           }
         </div>
