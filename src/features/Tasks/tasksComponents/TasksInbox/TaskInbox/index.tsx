@@ -10,7 +10,6 @@ import DropdownMenu from 'features/Tasks/tasksComponents/DropdownMenu';
 import CardNameText from '../../CardNameText';
 import CardChecklistCount from '../../CardChecklistCount';
 import CardAttachmentsCount from '../../CardAttachmentsCount';
-import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 import classNames from 'classnames';
 import moment, { now } from 'moment';
 import PriorityChanger from '../../PriorityChanger';
@@ -41,7 +40,6 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
 
   const openTask: MouseEventHandler<HTMLElement> = () => {
     navigate(`/${task.task_id}`);
-    dispatch(getTaskByIdAsync(task.task_id));
   };
 
   return (

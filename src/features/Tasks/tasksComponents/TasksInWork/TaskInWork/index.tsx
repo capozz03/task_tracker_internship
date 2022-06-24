@@ -2,7 +2,7 @@ import React, { MouseEventHandler } from 'react';
 import { TTask } from 'store/slice/task/entities';
 import styles from './index.module.scss';
 import { useDispatch } from 'react-redux';
-import { TaskInWorkSlice, TaskFormSlice, SubscribesSlice } from 'store/slice';
+import { TaskInWorkSlice } from 'store/slice';
 import {
   CardAttachmentsCount,
   CardChecklistCount,
@@ -41,13 +41,6 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
   };
   const openTask: MouseEventHandler<HTMLElement> = () => {
     navigate(`/${task.task_id}`);
-    dispatch(TaskFormSlice.getTaskByIdAsync(task.task_id));
-    dispatch(
-      SubscribesSlice.getSubscribeAsync({
-        relation_id: task.task_id,
-        relation_type: 'task',
-      }),
-    );
   };
   return (
     <div

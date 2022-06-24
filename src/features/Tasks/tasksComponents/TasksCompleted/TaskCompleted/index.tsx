@@ -7,7 +7,6 @@ import TagsGroup from '../../TagsGroup';
 import TaskStatus from '../../TaskStatus';
 import UserAssignedToTask from '../../UserAssignedToTask';
 import style from './index.module.scss';
-import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 import CardNameText from '../../CardNameText';
 import CardAttachmentsCount from '../../CardAttachmentsCount';
 import CardChecklistCount from '../../CardChecklistCount';
@@ -37,7 +36,6 @@ const TaskCompleted = ({ task }: TaskCompletedProps) => {
 
   const openTask: MouseEventHandler<HTMLElement> = () => {
     navigate(`/${task.task_id}`);
-    dispatch(getTaskByIdAsync(task.task_id));
   };
 
   return (
