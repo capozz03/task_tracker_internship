@@ -42,7 +42,7 @@ export const removeSubscribe = createAsyncThunk(
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
-      alert('Ошибка при удаление подписки', 'error');
+      alert('Ошибка при удалении подписки', 'error');
       return rejectWithValue(error);
     }
   },
@@ -58,7 +58,7 @@ export const removeSubscribeThroughTaskId = createAsyncThunk(
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
-      alert('Ошибка при удаление подписки', 'error');
+      alert('Ошибка при удалении подписки', 'error');
       return rejectWithValue(error);
     }
   },

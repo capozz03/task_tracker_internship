@@ -3,6 +3,7 @@ import { alert } from 'shared';
 import { notificationServices } from './services';
 import { TChangeViewerRequest, TNotifiesRequest, TNotificationReducer } from './entities';
 import { toggleReadStatus } from 'store/slice/task/notifications/slice';
+import { NotificationsSlice } from 'store/slice';
 
 export type getNotificationsProps = {
   viewed?: boolean,
@@ -37,7 +38,30 @@ export const getNotificationsAsync = createAsyncThunk(
   },
 );
 
-// Добавление уведомлений
+// Догрузка уведомлений в начало списка
+export const appendNotificationsAsync = createAsyncThunk(
+  'notificationSlice/appendNotificationsAsync',
+  async ({ viewed, include, per_page: perPage, page }: getNotificationsProps,
+    { rejectWithValue }) => {
+    try {
+      const params: TNotifiesRequest = {
+        viewed,
+        per_page: perPage || 10,
+        page: page || 1,
+        include,
+      };
+      alert('Появились новые уведомления', 'info');
+      const { data } = await notificationServices.getNotifications(params);
+      return data;
+    } catch (rejectedValueOrSerializedError) {
+      const error = miniSerializeError(rejectedValueOrSerializedError);
+      alert('Ошибка при получении списка уведомлений', 'error');
+      return rejectWithValue(error);
+    }
+  },
+);
+
+// Добавление уведомлений в конец списка
 export const pushNotificationsAsync = createAsyncThunk(
   'notificationSlice/pushNotificationsAsync',
   async ({ viewed, include }: getNotificationsProps, { rejectWithValue, getState }) => {
@@ -52,6 +76,39 @@ export const pushNotificationsAsync = createAsyncThunk(
         include,
       };
       const { data } = await notificationServices.getNotifications(params);
+      return data;
+    } catch (rejectedValueOrSerializedError) {
+      const error = miniSerializeError(rejectedValueOrSerializedError);
+      alert('Ошибка при получении списка уведомлений', 'error');
+      return rejectWithValue(error);
+    }
+  },
+);
+
+export const checkNotifications = createAsyncThunk(
+  'notificationSlice/checkNotifications',
+  async (_,
+    { rejectWithValue, getState, dispatch }) => {
+    try {
+      const { notifications } = getState() as {
+        notifications: TNotificationReducer,
+      };
+      const params: TNotifiesRequest = {
+        viewed: false,
+        per_page: notifications.pagination.per_page,
+        page: notifications.pagination.page_current,
+      };
+      const { data } = await notificationServices.getNotifications(params);
+      const countNotificationNotRead = notifications.notifications
+        .filter((notification) => notification.viewed).length;
+      const diff = notifications.pagination.items_total - countNotificationNotRead;
+      if (data.pagination.items_total !== diff) {
+        dispatch(NotificationsSlice.appendNotificationsAsync({
+          viewed: false,
+          page: 1,
+          per_page: data.pagination.items_total - diff,
+        }));
+      }
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);

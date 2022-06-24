@@ -4,6 +4,8 @@ import { NotificationsSlice, TaskFilters } from 'store/slice';
 import styles from './index.module.scss';
 import NotificationItem from './NotificationItem';
 import { Spin } from 'antd';
+import HeaderNotifications from './Header';
+import FooterNotifications from './Footer';
 
 const { getIsFiltersMenuShow } = TaskFilters;
 
@@ -41,6 +43,9 @@ const Notifications = () => {
     dispatch(NotificationsSlice.getNotificationsAsync({
       viewed: false,
     }));
+    setInterval(() => {
+      dispatch(NotificationsSlice.checkNotifications());
+    }, 2 * 60 * 1000);
   }, []);
   return (
     <div
@@ -60,19 +65,7 @@ const Notifications = () => {
           event.stopPropagation();
         }}
       >
-        <header className={styles.header}>
-          <div className={styles.title}>
-            Уведомления
-            { pagination.items_total !== 0 && <span className={styles.countNotifications}>{ pagination.items_total > 100 ? '99+' : pagination.items_total }</span>}
-          </div>
-          <div>
-            {
-              pagination.items_total !== 0
-                ? <button className={styles.readAllBtn} onClick={readAllHandle} type="button">Прочитать все</button>
-                : <span className={styles.readAllText}>Прочитать все</span>
-            }
-          </div>
-        </header>
+        <HeaderNotifications pagination={pagination} readAllHandle={readAllHandle} />
         <Spin spinning={isLoading || isReadAll} tip={isReadAll && 'Прочитать все…'}>
           {
             pagination.items_total !== 0 || notifications.length !== 0
@@ -91,14 +84,7 @@ const Notifications = () => {
               )
           }
         </Spin>
-        <footer>
-          {
-            (pagination.items_total !== 0
-              && pagination.items_total > 10
-              && pagination.page_current !== pagination.page_total)
-              && <button type="button" onClick={showMoreHandle} className={styles.btnShowMore}>Показать больше</button>
-          }
-        </footer>
+        <FooterNotifications pagination={pagination} showMoreHandle={showMoreHandle} />
       </div>
     </div>
   );
