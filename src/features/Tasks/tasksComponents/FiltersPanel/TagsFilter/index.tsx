@@ -6,7 +6,7 @@ import { TagsSlice, TaskFilters } from 'store/slice';
 import { Tag } from 'features/Tasks/tasksComponents/index';
 import styles from './index.module.scss';
 import { TTag } from 'store/slice/task/entities';
-import PlusSquaredIcon from 'shared/ui/icons/PlusSquaredIcon';
+import PlusSquaredIcon from '../../../../../shared/ui/icons/PlusSquaredIcon/PlusSquaredIcon';
 
 const TagsFilter = () => {
   const [search, setSearch] = useState('');
@@ -31,21 +31,16 @@ const TagsFilter = () => {
     setOpen(true);
   };
   const filtersTags = tags.filter((tag) => tagsSelected.findIndex((tagSelected) =>
-    tag.task_tag_id === tagSelected.task_tag_id) === -1).sort(
-    (tag1, tag2) => {
-      if (tag1.name.toLowerCase() > tag2.name.toLowerCase()) return 1;
-      if (tag1.name.toLowerCase() < tag2.name.toLowerCase()) return -1;
-      return 0;
-    });
+    tag.task_tag_id === tagSelected.task_tag_id) === -1);
   const removeTag = (tagId: string) => {
-    setTagsSelected((prev) => prev.filter((el) => el.task_tag_id !== tagId).sort(
-      (tag1, tag2) => {
-        if (tag1.name.toLowerCase() > tag2.name.toLowerCase()) return 1;
-        if (tag1.name.toLowerCase() < tag2.name.toLowerCase()) return -1;
-        return 0;
-      }));
+    setTagsSelected((prev) => prev.filter((el) => el.task_tag_id !== tagId));
   };
   const focusHandle = () => {
+    dispatch(TagsSlice.getTagsAsync({
+      search: debouncedSearch,
+      page: 1,
+      perPage: 500,
+    }));
     setOpen(true);
   };
   const closeHandle = () => {
@@ -56,7 +51,7 @@ const TagsFilter = () => {
     dispatch(TagsSlice.getTagsAsync({
       search: debouncedSearch,
       page: 1,
-      perPage: 50,
+      perPage: 500,
     }));
   },
   [debouncedSearch]);
@@ -81,6 +76,7 @@ const TagsFilter = () => {
           onBlur={closeHandle}
           onFocus={focusHandle}
           onSearch={handleSearch}
+          suffixIcon={<PlusSquaredIcon />}
           placeholder="Поиск ..."
           getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}
         >
@@ -101,7 +97,6 @@ const TagsFilter = () => {
             filtersTags.length === 0 && <AutoComplete.Option>Нет меток</AutoComplete.Option>
           }
         </AutoComplete>
-        <PlusSquaredIcon />
       </div>
       <div className={styles.selectedTags}>
         {
