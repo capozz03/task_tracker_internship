@@ -1,4 +1,4 @@
-import { Progress } from 'antd';
+import { Progress, Tooltip } from 'antd';
 import React, { MouseEventHandler } from 'react';
 import { useDispatch } from 'react-redux';
 import { TaskFailedSlice } from 'store/slice';
@@ -11,6 +11,7 @@ import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 import CardNameText from '../../CardNameText';
 import CardAttachmentsCount from '../../CardAttachmentsCount';
 import CardChecklistCount from '../../CardChecklistCount';
+import { SolutionOutlined } from '@ant-design/icons';
 
 type TaskFailedProps = {
   task: TaskFailedSlice.TTask;
@@ -18,6 +19,7 @@ type TaskFailedProps = {
 
 const TaskFailed = ({ task }: TaskFailedProps) => {
   const dispatch = useDispatch();
+  const formAvailable = task.form_available;
   const statusHandler = (value: string) => {
     dispatch(
       TaskFailedSlice.changeStatusTaskAsync({
@@ -32,6 +34,9 @@ const TaskFailed = ({ task }: TaskFailedProps) => {
   return (
     <div className={style.wrap} role="button" onClick={openTask} onKeyDown={() => {}} tabIndex={-1}>
       <div className={style.cardName}>
+        <Tooltip title="Резюме">
+          {formAvailable && <SolutionOutlined className={style.resumeIcon} />}
+        </Tooltip>
         <CardNameText text={task.title} />
       </div>
       <div className={style.cardFilesAndCheckbox}>

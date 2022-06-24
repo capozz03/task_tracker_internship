@@ -22,15 +22,18 @@ export const taskService = {
   createNewTask: async ({
     task_status_id: taskStatusId,
     title,
+    form,
   }: {
     task_status_id: string;
     title: string;
+    form?: object;
   }) =>
     $apiTask.post<TTask[]>(
       '/api/v1.0/task/tasks',
       {
         task_status_id: taskStatusId,
         title,
+        form,
       },
       {
         headers: {

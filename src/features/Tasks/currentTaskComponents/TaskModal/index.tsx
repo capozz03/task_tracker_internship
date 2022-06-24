@@ -34,8 +34,12 @@ const TaskModal = (props: ModalProps) => {
   const paginationInCompleted = useSelector(TaskCompletedSlice.getPagination);
   const paginationInFailed = useSelector(TaskFailedSlice.getPagination);
   const filters = useSelector(TaskFilters.getFilters);
+
+  const formAvailable = useSelector(TaskFormSlice.getTaskFormAvailable);
   const formResultRequired = useSelector(TaskFormSlice.getTaskFormStatusTaskFormRequired);
-  const formResult = useSelector(TaskFormSlice.getTaskFormResultForm);
+  const formResultResume = useSelector(TaskFormSlice.getFormResultResume)?.value;
+
+  const isResumeNeed = formResultResume === 'Требуется резюме';
 
   const sortTypeInbox = useSelector(TaskInboxSlice.getSortTasksInbox);
   const sortTypeInWork = useSelector(TaskInWorkSlice.getSortTasksInWork);
@@ -97,10 +101,10 @@ const TaskModal = (props: ModalProps) => {
   };
 
   useEffect(() => {
-    if (visible && formResultRequired && !(formResult?.length)) {
+    if (visible && formAvailable && formResultRequired && isResumeNeed) {
       alert('Важная информация для ответственных: нужно резюме', 'info');
     }
-  }, [formResult]);
+  }, [formResultRequired, isResumeNeed]);
 
   return (
     <Modal

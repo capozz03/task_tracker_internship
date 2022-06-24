@@ -30,7 +30,6 @@ const createItemForChecklist = ({ checklist }: createItemForChecklistProps) => {
   const newTaskHandler:FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const titleText = title.replaceAll(' ', '');
-    // setTitle(titleText);
     if (checklist.items && checklist.items?.length >= 20) {
       alert('Нельзя добавить более 20 пунктов чеклиста', 'error');
     } else if (titleText.length !== 0) {
@@ -47,6 +46,7 @@ const createItemForChecklist = ({ checklist }: createItemForChecklistProps) => {
   const toggleVisibleForm = () => {
     setIsActive((prev) => !prev);
     setIsVisibleTooltip(false);
+    setTitle('');
   };
 
   return (

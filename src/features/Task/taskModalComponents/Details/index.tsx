@@ -26,6 +26,8 @@ const Details = ({ taskId }: TDetailsProps) => {
   const roles = useSelector(TaskFormSlice.getRoles);
   const tags = useSelector(TaskFormSlice.getTags);
   const status = useSelector(TaskFormSlice.getTaskFormStatusTask);
+
+  const formAvailable = useSelector(TaskFormSlice.getTaskFormAvailable);
   const formResultRequired = useSelector(TaskFormSlice.getTaskFormStatusTaskFormRequired);
 
   const priority = useSelector(TaskFormSlice.getPriority);
@@ -65,7 +67,7 @@ const Details = ({ taskId }: TDetailsProps) => {
         status?.name
         && <StatusCategory status={status} currentTaskId={currentTaskId} />
       }
-      {(status?.name === 'Выполнена' || status?.name === 'Не выполнена') && (
+      {(status?.name === 'Выполнена' || status?.name === 'Не выполнена') && formAvailable && (
         <DetailsResume taskId={taskId} formResultRequired={formResultRequired} />
       )}
       <PerformerCategory roles={roles} isAuthorOrResponsible={isAuthorOrResponsible} />
