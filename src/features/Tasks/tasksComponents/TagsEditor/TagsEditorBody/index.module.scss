@@ -1,0 +1,70 @@
+@import "src/shared/assets/styles/vars";
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0 10px 10px;
+  .title{
+    font: $p-regular;
+    color: $grey-700;
+  }
+}
+
+.wrap{
+  scrollbar-width: thin;
+  scrollbar-color: rgba($main-blue, 0.5) $grey-0;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background: inherit;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba($main-blue, 0.5);
+    border-radius: 8px;
+    height: 20px;
+  }
+}
+.listWrap{
+  width: 300px;
+  :global(.ant-list-item){
+    gap: 8px;
+    padding-right: 8px;
+    &:hover{
+      background-color: rgba($main-blue, 0.05);
+    }
+  }
+  .tagName{
+    text-align: left;
+    flex-grow: 1;
+  }
+  .btn{
+    width: 24px;
+    height: 24px;
+    background-color: #FAFAFB;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: $grey-500;
+    padding: 0;
+    svg{
+      width: 14px;
+    }
+    &Edit{
+      &:hover{
+        color: $main-blue;
+      }
+    }
+    &Delete{
+      &:hover{
+        color: $error-default;
+      }
+    }
+  }
+}

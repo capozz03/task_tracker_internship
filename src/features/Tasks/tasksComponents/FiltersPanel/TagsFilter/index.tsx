@@ -7,6 +7,7 @@ import { Tag } from 'features/Tasks/tasksComponents/index';
 import styles from './index.module.scss';
 import { TTag } from 'store/slice/task/entities';
 import PlusSquaredIcon from 'shared/ui/icons/PlusSquaredIcon';
+import TagsEditor from 'features/Tasks/tasksComponents/TagsEditor';
 
 const TagsFilter = () => {
   const [search, setSearch] = useState('');
@@ -31,19 +32,9 @@ const TagsFilter = () => {
     setOpen(true);
   };
   const filtersTags = tags.filter((tag) => tagsSelected.findIndex((tagSelected) =>
-    tag.task_tag_id === tagSelected.task_tag_id) === -1).sort(
-    (tag1, tag2) => {
-      if (tag1.name.toLowerCase() > tag2.name.toLowerCase()) return 1;
-      if (tag1.name.toLowerCase() < tag2.name.toLowerCase()) return -1;
-      return 0;
-    });
+    tag.task_tag_id === tagSelected.task_tag_id) === -1);
   const removeTag = (tagId: string) => {
-    setTagsSelected((prev) => prev.filter((el) => el.task_tag_id !== tagId).sort(
-      (tag1, tag2) => {
-        if (tag1.name.toLowerCase() > tag2.name.toLowerCase()) return 1;
-        if (tag1.name.toLowerCase() < tag2.name.toLowerCase()) return -1;
-        return 0;
-      }));
+    setTagsSelected((prev) => prev.filter((el) => el.task_tag_id !== tagId));
   };
   const focusHandle = () => {
     setOpen(true);
@@ -116,6 +107,7 @@ const TagsFilter = () => {
           ))
         }
       </div>
+      <TagsEditor />
     </>
   );
 };

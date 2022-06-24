@@ -16,7 +16,7 @@ const initialState = {
   pagination: {
     items_count: 4,
     items_total: 4,
-    per_page: 50,
+    per_page: 500,
     page_current: 1,
     page_total: 1,
   },
