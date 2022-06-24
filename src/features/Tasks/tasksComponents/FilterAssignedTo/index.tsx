@@ -11,6 +11,7 @@ import {
   TaskFailedSlice,
 } from 'store/slice';
 import Tooltip from '../Tooltip';
+import { useSettings } from 'shared';
 
 const FilterAssigned = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,14 @@ const FilterAssigned = () => {
   const taskInWork = useSelector(TaskInWorkSlice.getTasks);
   const taskCompleted = useSelector(TaskCompletedSlice.getTasks);
   const taskFailed = useSelector(TaskFailedSlice.getTasks);
+
+  useSettings({
+    filterAssignTo: {
+      value,
+      setter: TaskFilters.setFilterAssignedTo,
+    },
+  });
+
   let countTasks = 0;
   if (
     taskInbox?.length !== undefined
@@ -28,6 +37,7 @@ const FilterAssigned = () => {
   ) {
     countTasks = taskInbox.length + taskInWork.length + taskCompleted.length + taskFailed.length;
   }
+
   const onChange = (e: RadioChangeEvent) => {
     dispatch(TaskFilters.setFilterAssignedTo(e.target.value));
   };

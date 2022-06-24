@@ -22,12 +22,15 @@ const TasksCompleted: FC = (props) => {
   const setSortTasks = setSortTasksCompleted;
 
   const isSettigsApplied = useSettings({
-    listName: 'completed',
-    sort: sortType,
-    pagination,
-    setters: {
-      setPagination: TaskCompletedSlice.setPaginationTasksCompleted,
-      setSort: TaskCompletedSlice.setSortTasksCompleted,
+    sort: {
+      listName: 'completed',
+      value: sortType,
+      setter: TaskCompletedSlice.setSortTasksCompleted,
+    },
+    pagination: {
+      listName: 'completed',
+      value: pagination,
+      setter: TaskCompletedSlice.setPaginationTasksCompleted,
     },
   });
 

@@ -49,7 +49,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['taskFilters', 'settings'],
+  whitelist: ['settings'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

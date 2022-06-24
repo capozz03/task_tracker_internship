@@ -5,6 +5,7 @@ import { settingsActions } from './actions';
 const initialState: TSettingsState = {
   pagination: {},
   sort: {},
+  filters: {},
 };
 
 const settingsSlice = createSlice({
@@ -14,4 +15,4 @@ const settingsSlice = createSlice({
 });
 
 export const settingsReducer = settingsSlice.reducer;
-export const { setPagination, setSort } = settingsSlice.actions;
+export const { setPagination, setSort, setFilterAssignTo } = settingsSlice.actions;

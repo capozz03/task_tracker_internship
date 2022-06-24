@@ -5,41 +5,73 @@ import { TSortType, TPagination } from 'store/slice/task/entities';
 import { TListName } from 'store/slice/task/settings';
 
 type TSettingsHookParams = {
-  listName: TListName,
-  sort: TSortType | undefined,
-  pagination: TPagination | null | undefined,
-  setters: {
-    setPagination: any,
-    setSort: any,
+  sort?: {
+    listName: TListName,
+    value: TSortType | undefined,
+    setter: any,
+  },
+  pagination?: {
+    listName: TListName,
+    value: TPagination | null | undefined,
+    setter: any,
+  },
+  filterAssignTo?: {
+    value: number,
+    setter: any,
   }
 };
 
 export const useSettings = ({
-  listName, sort, pagination, setters,
+  sort, pagination, filterAssignTo,
 }: TSettingsHookParams) => {
   const dispatch = useDispatch();
-  const { setPagination, setSort } = setters;
   const savedPagination = useSelector(SettingsSlice.getPagination);
   const savedSort = useSelector(SettingsSlice.getSort);
+  const savedFilterAssingTo = useSelector(SettingsSlice.getFiltersAssignTo);
+
   const [isSettigsApplied, setIsSettigsApplied] = useState(false);
 
   useEffect(() => {
-    if (savedPagination[listName]) {
-      dispatch(setPagination(savedPagination[listName]));
+    if (pagination && savedPagination[pagination.listName]) {
+      dispatch(pagination.setter(savedPagination[pagination.listName]));
     }
-    if (savedSort[listName]) {
-      dispatch(setSort(savedSort[listName]));
+
+    if (sort && savedSort[sort.listName]) {
+      dispatch(sort.setter(savedSort[sort.listName]));
     }
+
+    if (filterAssignTo && savedFilterAssingTo) {
+      dispatch(filterAssignTo.setter(savedFilterAssingTo));
+    }
+
     setIsSettigsApplied(true);
   }, []);
 
   useEffect(() => {
-    dispatch(SettingsSlice.setSort({ listName, sort }));
+    if (sort) {
+      dispatch(SettingsSlice.setSort({
+        listName: sort.listName,
+        sort: sort.value,
+      }));
+    }
   }, [sort]);
 
   useEffect(() => {
-    dispatch(SettingsSlice.setPagination({ listName, pagination }));
+    if (pagination) {
+      dispatch(SettingsSlice.setPagination({
+        listName: pagination.listName,
+        pagination: pagination.value,
+      }));
+    }
   }, [pagination]);
+
+  useEffect(() => {
+    if (filterAssignTo) {
+      dispatch(SettingsSlice.setFilterAssignTo({
+        filterIndex: filterAssignTo.value,
+      }));
+    }
+  }, [filterAssignTo]);
 
   return isSettigsApplied;
 };

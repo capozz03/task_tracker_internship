@@ -21,12 +21,15 @@ const TasksInbox: FC = (props) => {
   const pagination = useSelector(TaskInboxSlice.getPagination);
 
   const isSettigsApplied = useSettings({
-    listName: 'inbox',
-    sort: sortType,
-    pagination,
-    setters: {
-      setPagination: setPaginationTasksInbox,
-      setSort: setSortTasksInbox,
+    sort: {
+      listName: 'inbox',
+      value: sortType,
+      setter: setSortTasksInbox,
+    },
+    pagination: {
+      listName: 'inbox',
+      value: pagination,
+      setter: setPaginationTasksInbox,
     },
   });
 

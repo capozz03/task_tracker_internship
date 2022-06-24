@@ -1,5 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { TActionSetPagination, TActionSetSort, TSettingsState } from './entities';
+import { TActionSetFiltersAssignTo, TActionSetPagination, TActionSetSort, TSettingsState } from './entities';
 
 export const settingsActions = {
 
@@ -17,6 +17,14 @@ export const settingsActions = {
   ) => {
     const { listName, sort } = payload;
     state.sort[listName] = sort || undefined;
+  },
+
+  setFilterAssignTo: (
+    state: TSettingsState,
+    { payload }: PayloadAction<TActionSetFiltersAssignTo>,
+  ) => {
+    const { filterIndex } = payload;
+    state.filters.assignToFilterIndex = filterIndex;
   },
 
 };

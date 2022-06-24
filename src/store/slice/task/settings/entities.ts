@@ -10,6 +10,9 @@ export type TSettingsState = {
   sort: {
     [Property in TListName]?: TSortType;
   },
+  filters: {
+    assignToFilterIndex?: number;
+  }
 };
 
 export type TActionSetPagination = {
@@ -20,4 +23,8 @@ export type TActionSetPagination = {
 export type TActionSetSort = {
   listName: TListName,
   sort: TSortType | null | undefined;
+};
+
+export type TActionSetFiltersAssignTo = {
+  filterIndex: number;
 };

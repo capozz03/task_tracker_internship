@@ -22,12 +22,15 @@ const TasksFailed: FC = (props) => {
   const setSortTasks = setSortTasksFailed;
 
   const isSettigsApplied = useSettings({
-    listName: 'failed',
-    sort: sortType,
-    pagination,
-    setters: {
-      setPagination: TaskFailedSlice.setPaginationTasksFailed,
-      setSort: TaskFailedSlice.setSortTasksFailed,
+    sort: {
+      listName: 'failed',
+      value: sortType,
+      setter: TaskFailedSlice.setSortTasksFailed,
+    },
+    pagination: {
+      listName: 'failed',
+      value: pagination,
+      setter: TaskFailedSlice.setPaginationTasksFailed,
     },
   });
 

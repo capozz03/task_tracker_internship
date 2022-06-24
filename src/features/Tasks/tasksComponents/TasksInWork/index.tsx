@@ -21,12 +21,15 @@ const TasksInWork: FC = (props) => {
   const setSortTasks = TaskInWorkSlice.setSortTasksInWork;
 
   const isSettigsApplied = useSettings({
-    listName: 'inWork',
-    sort: sortType,
-    pagination,
-    setters: {
-      setPagination: TaskInWorkSlice.setPaginationTasksInWork,
-      setSort: TaskInWorkSlice.setSortTasksInWork,
+    sort: {
+      listName: 'inWork',
+      value: sortType,
+      setter: TaskInWorkSlice.setSortTasksInWork,
+    },
+    pagination: {
+      listName: 'inWork',
+      value: pagination,
+      setter: TaskInWorkSlice.setPaginationTasksInWork,
     },
   });
 
