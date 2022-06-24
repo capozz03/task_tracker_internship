@@ -9,9 +9,10 @@ import style from './index.module.scss';
 type TDetailsResumeProps = {
   taskId: string;
   formResultRequired?: boolean;
+  canChange?: boolean;
 }
 
-const DetailsResume = ({ taskId, formResultRequired }: TDetailsResumeProps) => {
+const DetailsResume = ({ taskId, formResultRequired, canChange = false }: TDetailsResumeProps) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [colorOfLabel, setColorOfLabel] = useState('#696974');
 
@@ -47,7 +48,7 @@ const DetailsResume = ({ taskId, formResultRequired }: TDetailsResumeProps) => {
       <div className={style.category}>
         <div className={style.titleDetails}>
           <p className={style.title}>Резюме</p>
-          {formResultRequired && (
+          { canChange && formResultRequired && (
             <Button
               className={style.dropdownButton}
               icon={<EditFilled className={style.icon} />}

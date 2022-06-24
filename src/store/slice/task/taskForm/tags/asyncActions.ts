@@ -10,7 +10,6 @@ export const addTagToTask = createAsyncThunk(
   async (props: TRequestParams, { rejectWithValue, dispatch, getState }) => {
     try {
       const { data } = await tagsService.addTagToTask(props);
-      alert('Метка добавлена', 'success');
       dispatch(TaskFormSlice.updateTask(data.data));
       dispatch(TaskFormSlice.resetTaskHistory());
 
@@ -41,7 +40,6 @@ export const removeTagToTask = createAsyncThunk(
   async (props: TRequestParams, { rejectWithValue, dispatch, getState }) => {
     try {
       const { data } = await tagsService.removeTagToTask(props);
-      alert('Метка удалена', 'success');
       dispatch(TaskFormSlice.updateTask(data.data));
       dispatch(TaskFormSlice.resetTaskHistory());
 

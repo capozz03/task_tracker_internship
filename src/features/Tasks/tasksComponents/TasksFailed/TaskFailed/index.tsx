@@ -7,11 +7,12 @@ import TagsGroup from '../../TagsGroup';
 import TaskStatus from '../../TaskStatus';
 import UserAssignedToTask from '../../UserAssignedToTask';
 import style from './index.module.scss';
-import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 import CardNameText from '../../CardNameText';
 import CardAttachmentsCount from '../../CardAttachmentsCount';
 import CardChecklistCount from '../../CardChecklistCount';
 import { SolutionOutlined } from '@ant-design/icons';
+import { usePermissions } from 'shared/helpers';
+import { useNavigate } from 'react-router-dom';
 
 type TaskFailedProps = {
   task: TaskFailedSlice.TTask;
@@ -20,6 +21,12 @@ type TaskFailedProps = {
 const TaskFailed = ({ task }: TaskFailedProps) => {
   const dispatch = useDispatch();
   const formAvailable = task.form_available;
+  const navigate = useNavigate();
+  const can = usePermissions(
+    ['change.status'],
+    task.roles,
+  );
+
   const statusHandler = (value: string) => {
     dispatch(
       TaskFailedSlice.changeStatusTaskAsync({
@@ -28,9 +35,11 @@ const TaskFailed = ({ task }: TaskFailedProps) => {
       }),
     );
   };
+
   const openTask: MouseEventHandler<HTMLElement> = () => {
-    dispatch(getTaskByIdAsync(task.task_id));
+    navigate(`/${task.task_id}`);
   };
+
   return (
     <div className={style.wrap} role="button" onClick={openTask} onKeyDown={() => {}} tabIndex={-1}>
       <div className={style.cardName}>
@@ -52,10 +61,15 @@ const TaskFailed = ({ task }: TaskFailedProps) => {
       </div>
 
       <div className={style.cardStatus}>
-        <TaskStatus defaultValue={task.status.name} onChange={statusHandler} />
+        <TaskStatus
+          defaultValue={task.status.name}
+          onChange={statusHandler}
+          tooltip={can['change.status'] ? 'Изменить статус' : ''}
+          isDisabled={!can['change.status']}
+        />
       </div>
       <div className={style.cardTagsGroup}>
-        <TagsGroup tags={task.tags} taskId={task.task_id} />
+        <TagsGroup tags={task.tags} taskId={task.task_id} roles={task.roles} />
       </div>
       <div className={style.cardProgress}>
         {task.progress && <Progress percent={task.progress.percent} size="small" strokeColor="#3DD598" />}

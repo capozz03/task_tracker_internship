@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import DetailCategory from 'features/Task/taskModalComponents/Details/DetailCategory';
-import { DatePicker, Tooltip } from 'antd';
+import { DatePicker } from 'antd';
+import Tooltip from 'features/Tasks/tasksComponents/Tooltip';
 import locale from 'antd/es/date-picker/locale/ru_RU';
 import moment, { Moment } from 'moment';
 import { useDispatch } from 'react-redux';
@@ -18,6 +19,7 @@ type TPropsDateStart = {
   startDateISO: string | null | undefined;
   stopDateISO: string | null | undefined;
   hiddenCategory: ()=>void;
+  isDisabled?: boolean;
 };
 
 type TPropsDateStop = TPropsDateStart & { status?: TStatus };
@@ -28,7 +30,8 @@ export const DateStartCategory = ({
   startDateISO,
   stopDateISO,
   currentTaskId,
-  hiddenCategory }: TPropsDateStart,
+  hiddenCategory,
+  isDisabled = false }: TPropsDateStart,
 ) => {
   const dispatch = useDispatch();
   const [pickerValue, setPickerValue] = useState<Moment | undefined>(
@@ -59,7 +62,12 @@ export const DateStartCategory = ({
   };
 
   return (
-    <DetailCategory name="Начало" type="details" removeHandler={removeCategory} tooltip="Удалить дату начала">
+    <DetailCategory
+      name="Начало"
+      type="details"
+      removeHandler={isDisabled ? undefined : removeCategory}
+      tooltip="Удалить дату начала"
+    >
       <div className={styles.wrapper}>
         <DatePicker
           getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
@@ -71,6 +79,7 @@ export const DateStartCategory = ({
           onChange={onChangeDateHandler}
           format={formatDate}
           disabledDate={disabledDate}
+          disabled={isDisabled}
         />
       </div>
     </DetailCategory>
@@ -82,6 +91,7 @@ export const DateStopCategory = ({
   stopDateISO,
   currentTaskId,
   hiddenCategory,
+  isDisabled = false,
   status }: TPropsDateStop,
 ) => {
   const dispatch = useDispatch();
@@ -127,7 +137,12 @@ export const DateStopCategory = ({
   };
 
   return (
-    <DetailCategory name="Срок" type="details" removeHandler={removeCategory} tooltip={tooltip}>
+    <DetailCategory
+      name="Срок"
+      type="details"
+      removeHandler={isDisabled ? undefined : removeCategory}
+      tooltip={tooltip}
+    >
       <div className={styles.wrapper}>
         <DatePicker
           getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
@@ -139,11 +154,12 @@ export const DateStopCategory = ({
           onChange={onChangeDateHandler}
           format={formatDate}
           disabledDate={disabledDate}
+          disabled={isDisabled}
         />
         {
           overdue
           && (
-            <Tooltip title="Просрочена">
+            <Tooltip title="Просрочена" getPopupContainer={() => document.querySelector('.ant-modal-content') as HTMLElement}>
               <span>
                 <AlertWarningIcon />
               </span>

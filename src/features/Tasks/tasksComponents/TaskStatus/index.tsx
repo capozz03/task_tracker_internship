@@ -1,9 +1,10 @@
 import React, { MouseEventHandler, useEffect, useState } from 'react';
-import { Select, SelectProps, Tooltip } from 'antd';
+import { Select, SelectProps } from 'antd';
+import Tooltip from 'features/Tasks/tasksComponents/Tooltip';
 import style from './index.module.scss';
 import { taskStatuses } from './constants';
 
-type TProps = SelectProps & { tooltip?: string, modal?:true };
+type TProps = SelectProps & { tooltip?: string, isDisabled?: boolean, modal?: true };
 
 const TaskStatus = ({ ...props }: TProps) => {
   const [color, setColor] = useState<string>('#50B5FF');
@@ -52,7 +53,7 @@ const TaskStatus = ({ ...props }: TProps) => {
   };
 
   return (
-    <Tooltip title={props.tooltip || ''}>
+    <Tooltip title={props.tooltip || ''} getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}>
       <Select
         className={style.taskStatus}
         defaultValue={currentStatus}
@@ -67,6 +68,7 @@ const TaskStatus = ({ ...props }: TProps) => {
         onClick={onClick}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
+        disabled={props.isDisabled}
         getPopupContainer={definingArea}
       >
         {taskStatuses.map(({ status, taskStatusId }) => (

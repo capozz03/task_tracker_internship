@@ -45,7 +45,6 @@ const UserAssignedToTask = ({ users }: UserAssignedToTaskProps) => {
   useEffect(() => {
     const trackingWidthWrapper = () => setWidth(() => wrap.current!.clientWidth);
     window.addEventListener('resize', trackingWidthWrapper);
-    calculationCountElement();
     return () => {
       window.removeEventListener('resize', trackingWidthWrapper);
     };
@@ -53,7 +52,7 @@ const UserAssignedToTask = ({ users }: UserAssignedToTaskProps) => {
 
   useEffect(() => {
     setCountElement(() => calculationCountElement());
-  }, [wrap.current, width]);
+  }, [wrap.current, width, users]);
 
   const userlist = () => (
     <div

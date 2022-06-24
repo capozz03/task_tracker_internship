@@ -13,6 +13,7 @@ type TProps = {
   currentTaskId: string | undefined;
   taskTags: TTagsTask[] | null;
   hiddenCategory: ()=>void;
+  isDisabled?: boolean;
 };
 
 type TTagUnit = TTag & {
@@ -21,9 +22,10 @@ type TTagUnit = TTag & {
 
 const { SearchInputIcon } = searchIcons;
 
-const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory }: TProps) => {
+const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory, isDisabled = false }: TProps) => {
   const dispatch = useDispatch();
   const isLoading = useSelector(TagsSlice.isLoadingTags);
+  const isLoadingTagChange = useSelector(TaskFormSlice.isLoadingTagsStatus);
   const allTags = useSelector(TagsSlice.getTagsSelector);
   const [visible, setVisible] = useState<boolean>(false);
   const [tags, setTags] = useState<TTagUnit[]>([]);
@@ -80,13 +82,14 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory }: TProps) => {
   }, [allTags, taskTags]);
 
   useEffect(() => {
-    dispatch(TagsSlice.getTagsAsync({
-      search: debouncedValue,
-      page: 1,
-      perPage: 50,
-    }));
-  },
-  [debouncedValue]);
+    if (visible) {
+      dispatch(TagsSlice.getTagsAsync({
+        search: debouncedValue,
+        page: 1,
+        perPage: 500,
+      }));
+    }
+  }, [debouncedValue, visible]);
 
   const menu = (
     <div
@@ -99,7 +102,7 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory }: TProps) => {
       <Menu className={styles.itemsWrapper}>
         {
           isLoading
-            ? <Spin />
+            ? <div className={styles.spinWrap}><Spin /></div>
             : tags.map((tag) => (
               <Menu.Item
                 key={tag.task_tag_id}
@@ -107,18 +110,28 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory }: TProps) => {
                 <Checkbox
                   checked={tag.checked}
                   onChange={onTagChangeStateHandler(tag.task_tag_id)}
+                  disabled={isLoadingTagChange}
                 >
                   <Tag tag={tag} />
                 </Checkbox>
               </Menu.Item>
             ))
         }
+        {
+          !tags.length && !isLoading
+          && (<span className={styles.notTags}>Нет меток</span>)
+        }
       </Menu>
     </div>
   );
 
   return (
-    <DetailCategory name="Метки" type="details" removeHandler={removeCategory} tooltip="Убрать все метки">
+    <DetailCategory
+      name="Метки"
+      type="details"
+      removeHandler={isDisabled ? undefined : removeCategory}
+      tooltip="Убрать все метки"
+    >
       <div className={styles.wrapper}>
         <div className={styles.tags}>
           {
@@ -126,22 +139,31 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory }: TProps) => {
               <Tag
                 tag={tag.task_tag}
                 key={tag.task_to_tag_id}
-                deleteHandle={onTagChangeStateHandler(tag.task_tag.task_tag_id)}
+                deleteHandle={
+                  isDisabled
+                    ? undefined
+                    : onTagChangeStateHandler(tag.task_tag.task_tag_id)
+                }
               />
             ))
           }
         </div>
-        <Dropdown
-          getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
-          overlay={menu}
-          trigger={['click']}
-          visible={visible}
-          onVisibleChange={setDropdownVisible}
-        >
-          <button type="button" className={styles.addButton}>
-            + Добавить метку
-          </button>
-        </Dropdown>
+        {
+          !isDisabled
+          && (
+            <Dropdown
+              getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
+              overlay={menu}
+              trigger={['click']}
+              visible={visible}
+              onVisibleChange={setDropdownVisible}
+            >
+              <button type="button" className={styles.addButton}>
+                + Добавить метку
+              </button>
+            </Dropdown>
+          )
+        }
       </div>
     </DetailCategory>
   );

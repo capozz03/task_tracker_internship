@@ -1,5 +1,4 @@
 import React from 'react';
-import { UserAvatar } from 'features/Tasks/tasksComponents';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeUserRole } from 'store/slice/task/taskForm';
 import { RolesIds } from 'shared';
@@ -7,6 +6,7 @@ import { TaskFormSlice } from 'store/slice';
 import { CrossIcon } from 'shared/ui/icons';
 import { TRolesUnit } from 'store/slice/task/taskForm/roles/entities';
 import styles from './index.module.scss';
+import UserAvatarForModal from 'features/Tasks/tasksComponents/UserAvatarForModal';
 
 type TProps = {
   user: TRolesUnit,
@@ -33,7 +33,7 @@ const UserLabel = ({ user, roleId, roleName, canRemove = false }: TProps) => {
 
   return (
     <div className={styles.label}>
-      <UserAvatar user={{ user_id: `${user.userId}`, name: user.userName, logo: user.logo }} color="#FF974A" />
+      <UserAvatarForModal user={{ user_id: `${user.userId}`, name: user.userName, logo: user.logo }} color="#FF974A" />
       <p>{user.userName}</p>
       {
         canRemove

@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import styles from './index.module.scss';
 import { useDispatch } from 'react-redux';
-import { Tooltip } from 'antd';
+import Tooltip from 'features/Tasks/tasksComponents/TooltipForModal';
 import { icons, alert } from 'shared';
 import { TaskFormSlice } from 'store/slice';
 

@@ -9,6 +9,7 @@ import { Collapse, Spin } from 'antd';
 import TaskFailed from './TaskFailed';
 import { getSortTasksFailed, setSortTasksFailed } from 'store/slice/task/taskFailed';
 import CollapsePanel from 'antd/es/collapse/CollapsePanel';
+import { useSettings } from 'shared';
 
 const TasksFailed: FC = (props) => {
   const isMobile = useBreakPoint(768);
@@ -19,6 +20,19 @@ const TasksFailed: FC = (props) => {
   const filters = useSelector(TaskFilters.getFilters);
   const sortType = useSelector(getSortTasksFailed);
   const setSortTasks = setSortTasksFailed;
+
+  const isSettigsApplied = useSettings({
+    sort: {
+      listName: 'failed',
+      value: sortType,
+      setter: TaskFailedSlice.setSortTasksFailed,
+    },
+    pagination: {
+      listName: 'failed',
+      value: pagination,
+      setter: TaskFailedSlice.setPaginationTasksFailed,
+    },
+  });
 
   const paginationHandler = (page: number, pageSize: number) => {
     dispatch(
@@ -32,15 +46,17 @@ const TasksFailed: FC = (props) => {
   };
 
   useEffect(() => {
-    dispatch(
-      TaskFailedSlice.getTasksAsync({
-        sort: sortType,
-        per_page: pagination!.per_page,
-        page: 1,
-        ...filters,
-      }),
-    );
-  }, [sortType, filters]);
+    if (isSettigsApplied) {
+      dispatch(
+        TaskFailedSlice.getTasksAsync({
+          sort: sortType,
+          per_page: pagination!.per_page,
+          page: 1,
+          ...filters,
+        }),
+      );
+    }
+  }, [sortType, filters, isSettigsApplied]);
 
   return (
     <div className={style.tasks_group} {...props}>
@@ -49,17 +65,22 @@ const TasksFailed: FC = (props) => {
           Не выполнено
           <span className={style.totalCount}>{pagination && pagination.items_total}</span>
         </h4>
-        <div className={style.sort}>
-          {isMobile ? (
-            <SortByMobileScreen disabled={tasks?.length === 0} setSortTasks={setSortTasks} />
-          ) : (
-            <SortByPCScreen
-              disabled={tasks?.length === 0}
-              sortType={sortType}
-              setSortTasks={setSortTasks}
-            />
-          )}
-        </div>
+        {
+          isSettigsApplied
+          && (
+            <div className={style.sort}>
+              {isMobile ? (
+                <SortByMobileScreen disabled={tasks?.length === 0} setSortTasks={setSortTasks} />
+              ) : (
+                <SortByPCScreen
+                  disabled={tasks?.length === 0}
+                  sortType={sortType}
+                  setSortTasks={setSortTasks}
+                />
+              )}
+            </div>
+          )
+        }
       </div>
       <Collapse ghost defaultActiveKey={1}>
         <CollapsePanel key={1} header="">
@@ -71,7 +92,7 @@ const TasksFailed: FC = (props) => {
             )}
           </Spin>
           <div className={style.pagination}>
-            {pagination && (
+            { isSettigsApplied && pagination && (
             <Pagination
               current={pagination.page_current}
               onChange={paginationHandler}

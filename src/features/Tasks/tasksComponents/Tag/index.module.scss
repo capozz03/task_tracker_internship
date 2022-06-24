@@ -21,4 +21,20 @@
   height: 14px;
   padding: 0;
   cursor: pointer;
+
+  div {
+    padding-top: 3px !important;
+    line-height: 0 !important;
+  }
+
+  span {
+    margin: 0 !important; 
+    margin-top: -5px !important;
+    font-size: 11px !important;
+
+    i {
+      width: 5px !important;
+      height: 5px !important;
+    }
+  }
 }

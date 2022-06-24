@@ -20,13 +20,16 @@ import Details from 'features/Task/taskModalComponents/Details';
 import { CollapseHeader, CollapseMembersHeader } from './MembersPanel/MemberPanelHeaders';
 import TaskHistory from 'features/Task/taskModalComponents/History';
 import { alert } from 'shared/ui';
-import { isLoadingStatusCheck } from 'shared/helpers';
+import { checkPermission, isLoadingStatusCheck } from 'shared/helpers';
+import { useNavigate } from 'react-router-dom';
 
 const TaskModal = (props: ModalProps) => {
   const { visible } = props;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const task = useSelector(TaskFormSlice.getTask);
   const roles = useSelector(TaskFormSlice.getRoles);
+  const rolesArray = useSelector(TaskFormSlice.getTaskFormRoles);
   const status = useSelector(TaskFormSlice.getTaskFormStatusTask);
   const isLoading = useSelector(TaskFormSlice.isLoadingStatus);
   const paginationInbox = useSelector(TaskInboxSlice.getPagination);
@@ -98,11 +101,14 @@ const TaskModal = (props: ModalProps) => {
       }
       dispatch(TaskFormSlice.hiddenTaskForm());
     }
+
+    navigate('/');
   };
 
   useEffect(() => {
-    if (visible && formAvailable && formResultRequired && isResumeNeed) {
-      alert('Важная информация для ответственных: нужно резюме', 'info');
+    if (checkPermission('get.alertNeedResume', rolesArray)
+        && visible && formAvailable && formResultRequired && isResumeNeed) {
+      alert('Требуется резюме', 'info');
     }
   }, [formResultRequired, isResumeNeed]);
 

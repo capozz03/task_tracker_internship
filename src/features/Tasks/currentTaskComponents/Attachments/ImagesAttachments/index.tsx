@@ -16,6 +16,7 @@ type ImagesAttachmentsProps = {
   uploaded: boolean;
   isVisibleDropdownMenu: boolean;
   isVisibleCarousel: boolean;
+  canChange?: boolean;
 };
 
 const ImagesAttachments = ({
@@ -26,6 +27,7 @@ const ImagesAttachments = ({
   uploaded,
   isVisibleDropdownMenu,
   isVisibleCarousel,
+  canChange = false,
 }: ImagesAttachmentsProps) => {
   const [isShowCarousel, setIsShowCarousel] = useState(false);
   const [nameFile, setNameFile] = useState(name);
@@ -74,8 +76,13 @@ const ImagesAttachments = ({
                   e.stopPropagation();
                 }}
               >
-                {isVisibleDropdownMenu && (
-                  <DropdownMenu taskId={taskId} storageFileId={storageFileId} name={name} />
+                { isVisibleDropdownMenu && (
+                  <DropdownMenu
+                    taskId={taskId}
+                    storageFileId={storageFileId}
+                    name={name}
+                    canChange={canChange}
+                  />
                 )}
               </div>
             </div>

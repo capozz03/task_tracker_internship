@@ -10,12 +10,12 @@ import DropdownMenu from 'features/Tasks/tasksComponents/DropdownMenu';
 import CardNameText from '../../CardNameText';
 import CardChecklistCount from '../../CardChecklistCount';
 import CardAttachmentsCount from '../../CardAttachmentsCount';
-import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 import classNames from 'classnames';
 import moment, { now } from 'moment';
-import { SubscribesSlice } from 'store/slice';
 import PriorityChanger from '../../PriorityChanger';
 import DateChanger from '../../DateChanger';
+import { usePermissions } from 'shared/helpers';
+import { useNavigate } from 'react-router-dom';
 
 type TaskInboxProps = {
   task: TTask;
@@ -23,6 +23,12 @@ type TaskInboxProps = {
 
 const TaskInbox = ({ task }: TaskInboxProps) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const can = usePermissions(
+    ['change.status'],
+    task.roles,
+  );
+
   const statusHandler = (value: string) => {
     dispatch(
       changeStatusTaskAsync({
@@ -31,15 +37,11 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
       }),
     );
   };
+
   const openTask: MouseEventHandler<HTMLElement> = () => {
-    dispatch(getTaskByIdAsync(task.task_id));
-    dispatch(
-      SubscribesSlice.getSubscribeAsync({
-        relation_id: task.task_id,
-        relation_type: 'task',
-      }),
-    );
+    navigate(`/${task.task_id}`);
   };
+
   return (
     <div
       className={classNames([
@@ -67,20 +69,31 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
       </div>
 
       <div className={styles.cardStatus}>
-        <TaskStatus defaultValue={task.status.name} onChange={statusHandler} tooltip="Изменить статус" />
+        <TaskStatus
+          defaultValue={task.status.name}
+          onChange={statusHandler}
+          tooltip={can['change.status'] ? 'Изменить статус' : ''}
+          isDisabled={!can['change.status']}
+        />
       </div>
       <div className={styles.cardDate}>
         <DateChanger
           dateStartISO={task.exec_start}
           dateStopISO={task.exec_stop}
           taskId={task.task_id}
+          roles={task.roles}
         />
       </div>
       <div className={styles.cardPriority}>
-        <PriorityChanger priority={task.priority} currentTaskId={task.task_id} tooltip="Изменить приоритет" />
+        <PriorityChanger
+          priority={task.priority}
+          currentTaskId={task.task_id}
+          tooltip="Изменить приоритет"
+          roles={task.roles}
+        />
       </div>
       <div className={styles.cardTagsGroup}>
-        <TagsGroup tags={task.tags} taskId={task.task_id} />
+        <TagsGroup tags={task.tags} taskId={task.task_id} roles={task.roles} />
       </div>
       <div className={styles.cardUsers}>
         <UserAssignedToTask users={task.roles} />

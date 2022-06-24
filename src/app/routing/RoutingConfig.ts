@@ -17,14 +17,26 @@ type RoutingConfigType = {
 
 export const RoutingConfig: RoutingConfigType = [
   {
+    path: routes.auth,
+    element: AuthPage,
+    children: [],
+  },
+  {
     path: routes.main,
     element: TasksPage,
     private: true,
     children: [],
   },
   {
-    path: routes.auth,
-    element: AuthPage,
+    path: routes.task,
+    element: TasksPage,
+    private: true,
+    children: [],
+  },
+  {
+    path: routes.other,
+    element: TasksPage,
+    private: true,
     children: [],
   },
 ];

@@ -21,12 +21,14 @@ import {
 } from '@dnd-kit/sortable';
 import { useDispatch, useSelector } from 'react-redux';
 import { Spin } from 'antd';
+import { TCan } from 'shared/helpers/permissions';
 
 type ChecklistProps = {
   checklist: TTaskCheckList;
+  can: TCan
 }
 
-const Checklist = ({ checklist }: ChecklistProps) => {
+const Checklist = ({ checklist, can }: ChecklistProps) => {
   const dispatch = useDispatch();
   const completed = checklist.items?.filter((item) => item.complete).length;
   const countElement: number = checklist.items ? checklist.items?.length : 0;
@@ -68,7 +70,7 @@ const Checklist = ({ checklist }: ChecklistProps) => {
   );
   return (
     <div className={styles.checklist}>
-      <ChecklistTitle checkList={checklist} />
+      <ChecklistTitle checkList={checklist} canChange={can['add/change/remove.checklist']} />
       <ChecklistProgress percent={percent} />
       <Spin spinning={checklistIsLoadingStatus}>
         {
@@ -89,6 +91,7 @@ const Checklist = ({ checklist }: ChecklistProps) => {
                       checklistId={checklist.check_list_id}
                       key={item.check_list_item_id}
                       item={item}
+                      canChange={can['add/change/remove.checkbox']}
                     />))
                 }
               </SortableContext>
@@ -98,7 +101,10 @@ const Checklist = ({ checklist }: ChecklistProps) => {
         )
       }
       </Spin>
-      <NewItem checklist={checklist} />
+      {
+        can['add/change/remove.checkbox']
+        && <NewItem checklist={checklist} />
+      }
     </div>
   );
 };

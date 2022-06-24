@@ -3,13 +3,15 @@ import { THistoryUnit } from 'store/slice/task/taskForm/history/entities';
 import { TDetailsProps } from '.';
 import { CheckboxIcon } from 'shared/ui/icons';
 import { BlockIcon, CheckIcon, CrossIcon } from 'shared/ui/icons/TaskHistory';
-import { Checkbox, Tag, UserAvatar } from 'features/Tasks/tasksComponents';
+import { Checkbox, Tag } from 'features/Tasks/tasksComponents';
 import styles from './index.module.scss';
 import { DatePickerIcon } from 'shared/ui/icons/DetailsIcons';
 import { formatDate } from 'shared/helpers';
 import moment from 'moment';
 import ImagesAttachments from 'features/Tasks/currentTaskComponents/Attachments/ImagesAttachments';
 import { taskStatuses } from 'features/Tasks/tasksComponents/TaskStatus/constants';
+import UserAvatarForModal from 'features/Tasks/tasksComponents/UserAvatarForModal';
+import FilesAttachments from 'features/Tasks/currentTaskComponents/Attachments/FilesAttachments';
 
 type TProps = TDetailsProps & { unit: THistoryUnit };
 
@@ -102,14 +104,28 @@ const HistoryUnitDetails = ({ type, unit, roleType = 'add', tagType = 'add' }: T
           {
             !!unit.params.storage_file
             && (
-              <ImagesAttachments
-                name={unit.params.storage_file.name_original}
-                storageFileId={unit.params.storage_file.storage_file_id}
-                taskId="0"
-                uploaded={unit.params.storage_file.uploaded}
-                isVisibleCarousel={false}
-                isVisibleDropdownMenu={false}
-              />
+              unit.params.storage_file.type === 'image'
+                ? (
+                  <ImagesAttachments
+                    name={unit.params.storage_file.name_original}
+                    storageFileId={unit.params.storage_file.storage_file_id}
+                    taskId="0"
+                    uploaded={unit.params.storage_file.uploaded}
+                    isVisibleCarousel={false}
+                    isVisibleDropdownMenu={false}
+                  />
+                )
+                : (
+                  <FilesAttachments
+                    name={unit.params.storage_file.name_original}
+                    size={unit.params.storage_file.size}
+                    storageFileId={unit.params.storage_file.storage_file_id}
+                    taskId="0"
+                    uploaded={unit.params.storage_file.uploaded}
+                    isVisibleDropdownMenu={false}
+                    canChange={false}
+                  />
+                )
             )
           }
         </div>
@@ -118,7 +134,7 @@ const HistoryUnitDetails = ({ type, unit, roleType = 'add', tagType = 'add' }: T
     case 'role':
       return (
         <div className={styles.RolesContainer}>
-          <UserAvatar
+          <UserAvatarForModal
             user={unit.params.assign_user || { user_id: '-1', name: 'Неизвестный пользователь' }}
             color="#C3AEFF"
           />

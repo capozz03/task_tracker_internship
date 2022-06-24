@@ -4,7 +4,8 @@ import { Checkbox, Tag } from 'features/Tasks/tasksComponents';
 import { useDispatch, useSelector } from 'react-redux';
 import { TagsSlice, TaskFormSlice } from 'store/slice';
 import styles from './index.module.scss';
-import { Dropdown, Input, Menu, Spin, Tooltip } from 'antd';
+import { Dropdown, Input, Menu, Spin } from 'antd';
+import Tooltip from 'features/Tasks/tasksComponents/Tooltip';
 import { alert, useDebounce } from 'shared';
 import { PencilIcon, searchIcons } from 'shared/ui/icons';
 
@@ -22,6 +23,7 @@ const { SearchInputIcon } = searchIcons;
 const TagsChanger = ({ currentTaskId, taskTags }: TProps) => {
   const dispatch = useDispatch();
   const isLoading = useSelector(TagsSlice.isLoadingTags);
+  const isLoadingTagChange = useSelector(TaskFormSlice.isLoadingTagsStatus);
   const allTags = useSelector(TagsSlice.getTagsSelector);
   const [visible, setVisible] = useState<boolean>(false);
   const [tags, setTags] = useState<TTagUnit[]>([]);
@@ -72,13 +74,14 @@ const TagsChanger = ({ currentTaskId, taskTags }: TProps) => {
   }, [allTags, taskTags]);
 
   useEffect(() => {
-    dispatch(TagsSlice.getTagsAsync({
-      search: debouncedValue,
-      page: 1,
-      perPage: 50,
-    }));
-  },
-  [debouncedValue]);
+    if (visible) {
+      dispatch(TagsSlice.getTagsAsync({
+        search: debouncedValue,
+        page: 1,
+        perPage: 500,
+      }));
+    }
+  }, [debouncedValue, visible]);
 
   const menu = (
     <div
@@ -94,7 +97,7 @@ const TagsChanger = ({ currentTaskId, taskTags }: TProps) => {
       <Menu className={styles.itemsWrapper} onClick={stopPropagation}>
         {
           isLoading
-            ? <Spin className={styles.spin} />
+            ? <div className={styles.spinWrap}><Spin /></div>
             : tags.map((tag) => (
               <Menu.Item
                 key={tag.task_tag_id}
@@ -103,11 +106,16 @@ const TagsChanger = ({ currentTaskId, taskTags }: TProps) => {
                   checked={tag.checked}
                   onChange={onTagChangeStateHandler(tag.task_tag_id)}
                   onClick={stopPropagation}
+                  disabled={isLoadingTagChange}
                 >
                   <Tag tag={tag} />
                 </Checkbox>
               </Menu.Item>
             ))
+        }
+        {
+          !tags.length && !isLoading
+          && (<span className={styles.notTags}>Нет меток</span>)
         }
       </Menu>
     </div>
@@ -121,7 +129,7 @@ const TagsChanger = ({ currentTaskId, taskTags }: TProps) => {
       onVisibleChange={setDropdownVisible}
       getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}
     >
-      <Tooltip title="Добавить метку">
+      <Tooltip title="Добавить метку" getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}>
         <button type="button" className={styles.addButton} onClick={stopPropagation}>
           <PencilIcon />
           { !taskTags.length && 'Без метки' }

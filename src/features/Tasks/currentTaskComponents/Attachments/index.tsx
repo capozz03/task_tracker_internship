@@ -8,20 +8,27 @@ import FilesAttachments from './FilesAttachments';
 import ImagesAttachments from './ImagesAttachments';
 import { setCarouselImages, useBreakPoint } from 'shared';
 import DraggerAttachments from './DraggerAttachments';
+import { usePermissions } from 'shared/helpers';
 
 type attachmentsProps = {
   taskId: string;
 };
 
 const Attachments = ({ taskId }: attachmentsProps) => {
-  const [isVisibleAttachments, setIsVisibleAttachments] = useState<boolean>(true);
-  const [isVisibleDropdownMenu] = useState<boolean>(true);
-  const [isVisibleCarousel] = useState<boolean>(true);
   const dispatch = useDispatch();
+  const roles = useSelector(TaskFormSlice.getTaskFormRoles);
   const storageFiles = useSelector(TaskFormSlice.getStorageFiles);
   const storageImages = useSelector(TaskFormSlice.getStorageImages);
   const storageCount = useSelector(TaskFormSlice.getStorageCount);
   const carouselImages = setCarouselImages(storageImages);
+
+  const [isVisibleAttachments, setIsVisibleAttachments] = useState<boolean>(true);
+  const [isVisibleDropdownMenu] = useState<boolean>(true);
+  const [isVisibleCarousel] = useState<boolean>(true);
+  const can = usePermissions(
+    ['add/remove.file'],
+    roles,
+  );
 
   const isShowAttachments = (): boolean => {
     const isVisibleStorageFiles = useSelector(TaskFormSlice.isVisibleStorageFiles);
@@ -72,10 +79,11 @@ const Attachments = ({ taskId }: attachmentsProps) => {
                       taskId={taskId}
                       uploaded={uploaded}
                       isVisibleDropdownMenu={isVisibleDropdownMenu}
+                      canChange={can['add/remove.file']}
                     />
                   ),
                 )}
-                {isShowDraggerAttachments && (
+                { can['add/remove.file'] && isShowDraggerAttachments && (
                   <DraggerAttachments taskId={taskId} storageCount={storageCount} />
                 )}
               </div>
@@ -91,6 +99,7 @@ const Attachments = ({ taskId }: attachmentsProps) => {
                       uploaded={uploaded}
                       isVisibleDropdownMenu={isVisibleDropdownMenu}
                       isVisibleCarousel={isVisibleCarousel}
+                      canChange={can['add/remove.file']}
                     />
                   ),
                 )}
