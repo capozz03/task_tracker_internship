@@ -4,7 +4,7 @@ import Button from 'features/Tasks/tasksComponents/Button';
 import InputNameTask from './InputNameTask';
 import { useDispatch } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
-import { Tooltip } from 'antd';
+import Tooltip from 'features/Tasks/tasksComponents/TooltipForModal';
 import { TTaskCheckList } from 'store/slice/task/entities';
 import { alert } from 'shared';
 

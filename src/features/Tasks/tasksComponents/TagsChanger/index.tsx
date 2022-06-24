@@ -4,7 +4,8 @@ import { Checkbox, Tag } from 'features/Tasks/tasksComponents';
 import { useDispatch, useSelector } from 'react-redux';
 import { TagsSlice, TaskFormSlice } from 'store/slice';
 import styles from './index.module.scss';
-import { Dropdown, Input, Menu, Spin, Tooltip } from 'antd';
+import { Dropdown, Input, Menu, Spin } from 'antd';
+import Tooltip from 'features/Tasks/tasksComponents/Tooltip';
 import { alert, useDebounce } from 'shared';
 import { PencilIcon, searchIcons } from 'shared/ui/icons';
 

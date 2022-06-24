@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import DetailCategory from 'features/Task/taskModalComponents/Details/DetailCategory';
-import { DatePicker, Tooltip } from 'antd';
+import { DatePicker } from 'antd';
+import Tooltip from 'features/Tasks/tasksComponents/Tooltip';
 import locale from 'antd/es/date-picker/locale/ru_RU';
 import moment, { Moment } from 'moment';
 import { useDispatch } from 'react-redux';

@@ -5,10 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TaskFilters } from 'store/slice';
 import { useDebounce } from 'shared';
 
-function formatter(value: any) {
-  return `${value}%`;
-}
-
 const ProgressFilter = () => {
   const dispatch = useDispatch();
   const storeMinProgress = useSelector(TaskFilters.getFilterProgressGTE);
@@ -36,7 +32,7 @@ const ProgressFilter = () => {
         step={10}
         value={minProgress}
         onChange={onChange}
-        tipFormatter={formatter}
+        tooltipVisible={false}
       />
       <span className={styles.title}>
         {minProgress}
