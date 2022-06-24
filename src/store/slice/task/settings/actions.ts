@@ -7,8 +7,8 @@ export const settingsActions = {
     state: TSettingsState,
     { payload }: PayloadAction<TActionSetPagination>,
   ) => {
-    const { listName, pagination } = payload;
-    state.pagination[listName] = pagination || undefined;
+    const { listName, pagination = null } = payload;
+    state.pagination[listName] = pagination;
   },
 
   setSort: (
@@ -16,7 +16,7 @@ export const settingsActions = {
     { payload }: PayloadAction<TActionSetSort>,
   ) => {
     const { listName, sort } = payload;
-    state.sort[listName] = sort || undefined;
+    state.sort[listName] = sort;
   },
 
   setFilterAssignTo: (

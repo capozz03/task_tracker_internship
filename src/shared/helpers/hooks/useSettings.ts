@@ -1,3 +1,4 @@
+import { ActionCreatorWithOptionalPayload, ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SettingsSlice } from 'store/slice';
@@ -8,16 +9,16 @@ type TSettingsHookParams = {
   sort?: {
     listName: TListName,
     value: TSortType | undefined,
-    setter: any,
+    setter: ActionCreatorWithOptionalPayload<TSortType | undefined, string>,
   },
   pagination?: {
     listName: TListName,
     value: TPagination | null | undefined,
-    setter: any,
+    setter: ActionCreatorWithPayload<TPagination | null, string>,
   },
   filterAssignTo?: {
     value: number,
-    setter: any,
+    setter: ActionCreatorWithPayload<number, string>,
   }
 };
 
@@ -33,7 +34,7 @@ export const useSettings = ({
 
   useEffect(() => {
     if (pagination && savedPagination[pagination.listName]) {
-      dispatch(pagination.setter(savedPagination[pagination.listName]));
+      dispatch(pagination.setter(savedPagination[pagination.listName] || null));
     }
 
     if (sort && savedSort[sort.listName]) {

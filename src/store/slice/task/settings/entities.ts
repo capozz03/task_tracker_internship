@@ -5,7 +5,7 @@ export type TListName = 'inbox' | 'inWork' | 'completed' | 'failed';
 
 export type TSettingsState = {
   pagination: {
-    [Property in TListName]?: TPagination;
+    [Property in TListName]?: TPagination | null;
   },
   sort: {
     [Property in TListName]?: TSortType;
@@ -22,7 +22,7 @@ export type TActionSetPagination = {
 
 export type TActionSetSort = {
   listName: TListName,
-  sort: TSortType | null | undefined;
+  sort: TSortType | undefined;
 };
 
 export type TActionSetFiltersAssignTo = {
