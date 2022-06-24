@@ -1,8 +1,9 @@
-import { Button, Modal } from 'antd';
+import { Button, Input, Modal } from 'antd';
 import React, { ChangeEventHandler } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TagsSlice } from 'store/slice';
-import style from './index.module.scss';
+import styles from './index.module.scss';
+import ColorButton from './ColorButton';
 
 type ModalTagProps = {
   isVisibleModal: boolean;
@@ -11,6 +12,7 @@ type ModalTagProps = {
 
 const ModalTagEdit = ({ isVisibleModal, setIsVisibleModal }: ModalTagProps) => {
   const dispatch = useDispatch();
+  const colorArray = ['#FF974A', '#FC5A5A', '#82C43C', '#A461D8', '#FF9AD5', '#50B5FF', '#FFC542'];
   const tag = useSelector(TagsSlice.getCurrentTagSelector);
   const handleOk = () => {
     if (tag) {
@@ -36,26 +38,49 @@ const ModalTagEdit = ({ isVisibleModal, setIsVisibleModal }: ModalTagProps) => {
       }));
     }
   };
-
-  const message = 'Название метки';
   return (
     <Modal
-      className={style.modalDelete}
+      className={styles.modalDelete}
       title=""
       centered
       visible={isVisibleModal}
       footer={null}
       onCancel={handleCancel}
       onOk={handleOk}
-      width={325}
+      width={272}
     >
-      <h4 className={style.title}>Изменить метку</h4>
-      <p className={style.text}>{message}</p>
+      <h4 className={styles.title}>
+        {
+          tag && tag.created
+            ? 'Изменить метку'
+            : 'Создать метку'
+        }
+      </h4>
       {
-        tag && <input type="text" value={tag.name} onChange={inputChangeHandler} />
+        tag && (
+          <div className={styles.inputWrap}>
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+            <label htmlFor="tagName">Название метки</label>
+            <Input
+              type="text"
+              id="tagName"
+              value={tag.name}
+              onChange={inputChangeHandler}
+              className={styles.input}
+              maxLength={20}
+            />
+            <div className={styles.wrapColors}>
+              {
+                colorArray.map((color) => (
+                  <ColorButton color={color} key={color} tag={tag} />
+                ))
+              }
+            </div>
+          </div>
+        )
       }
-      <div className={style.wrapperButtons}>
-        <Button className={style.saveBtn} onClick={handleOk}>
+      <div className={styles.wrapperButtons}>
+        <Button className={styles.saveBtn} onClick={handleOk}>
           Сохранить
         </Button>
       </div>

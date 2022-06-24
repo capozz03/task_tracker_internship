@@ -1,6 +1,6 @@
 import React, { MouseEventHandler, useState } from 'react';
 import { Popover } from 'antd';
-import TagsEditorBody from 'features/Tasks/tasksComponents/TagsEditor/TagsEditorBody';
+import TagsEditorBody from './TagsEditorBody';
 import { TagsSlice } from 'store/slice';
 import { useDispatch } from 'react-redux';
 import styles from './index.module.scss';
@@ -31,6 +31,7 @@ const TagsEditor = ({ isVisibleText = false }: TagsEditorProps) => {
       trigger="click"
       visible={visible}
       onVisibleChange={handleVisibleChange}
+      zIndex={999}
     >
       <button type="button" className={styles.btn} onClick={popoverHandle}>
         <SettingIcon />
