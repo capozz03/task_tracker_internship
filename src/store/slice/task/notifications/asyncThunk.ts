@@ -1,8 +1,8 @@
 import { createAsyncThunk, miniSerializeError } from '@reduxjs/toolkit';
 import { alert } from 'shared';
 import { notificationServices } from './services';
-import { TChangeViewerRequest, TNotifiesRequest } from './entities';
-import { TNotificationReducer, toggleReadStatus } from 'store/slice/task/notifications/slice';
+import { TChangeViewerRequest, TNotifiesRequest, TNotificationReducer } from './entities';
+import { toggleReadStatus } from 'store/slice/task/notifications/slice';
 
 export type getNotificationsProps = {
   viewed?: boolean,
