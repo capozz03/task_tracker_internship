@@ -10,12 +10,12 @@ import DropdownMenu from 'features/Tasks/tasksComponents/DropdownMenu';
 import CardNameText from '../../CardNameText';
 import CardChecklistCount from '../../CardChecklistCount';
 import CardAttachmentsCount from '../../CardAttachmentsCount';
-import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 import classNames from 'classnames';
 import moment, { now } from 'moment';
 import PriorityChanger from '../../PriorityChanger';
 import DateChanger from '../../DateChanger';
 import { usePermissions } from 'shared/helpers';
+import { useNavigate } from 'react-router-dom';
 
 type TaskInboxProps = {
   task: TTask;
@@ -23,6 +23,7 @@ type TaskInboxProps = {
 
 const TaskInbox = ({ task }: TaskInboxProps) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const can = usePermissions(
     ['change.status'],
     task.roles,
@@ -38,7 +39,7 @@ const TaskInbox = ({ task }: TaskInboxProps) => {
   };
 
   const openTask: MouseEventHandler<HTMLElement> = () => {
-    dispatch(getTaskByIdAsync(task.task_id));
+    navigate(`/${task.task_id}`);
   };
 
   return (
