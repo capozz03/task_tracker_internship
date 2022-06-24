@@ -20,6 +20,7 @@ export {
   beforeUploadWrapper,
   uploadFilesWrapper,
   acceptedFiles,
+  useSettings,
 } from './helpers';
 export { $api, $apiTask } from './api';
 export * as icons from './ui/icons';

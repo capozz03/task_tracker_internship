@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatuses } from 'shared';
 import { getTasksAsync } from './asyncActions';
-import { TSortType, TTask, TTasksReducer, TTasksResponse } from '../entities';
+import { TPagination, TSortType, TTask, TTasksReducer, TTasksResponse } from '../entities';
 
 const initialState = {
   sort: 'date~DESC',
@@ -24,10 +24,12 @@ const taskInWorkSlice = createSlice({
     taskUpdate(state, { payload }: PayloadAction<TTask>) {
       state.tasks = state.tasks!.map((task) =>
         (task.task_id === payload.task_id ? payload : task));
-      return state;
     },
     setSortTasksInWork(state, { payload }: PayloadAction<TSortType | undefined>) {
       state.sort = payload;
+    },
+    setPaginationTasksInWork(state, { payload: pagination }: PayloadAction<TPagination | null>) {
+      state.pagination = pagination;
     },
     resetPagination(state) {
       state.pagination = initialState.pagination;
@@ -54,5 +56,10 @@ const taskInWorkSlice = createSlice({
   },
 });
 
-export const { taskUpdate, setSortTasksInWork, resetPagination } = taskInWorkSlice.actions;
+export const {
+  taskUpdate,
+  setSortTasksInWork,
+  resetPagination,
+  setPaginationTasksInWork,
+} = taskInWorkSlice.actions;
 export const taskInWorkReducer = taskInWorkSlice.reducer;

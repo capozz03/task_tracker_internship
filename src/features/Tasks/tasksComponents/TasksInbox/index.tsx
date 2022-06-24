@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
+import { useBreakPoint, useSettings } from 'shared/helpers';
 import { TaskFilters, TaskInboxSlice } from 'store/slice';
 import { NewTask, SortByMobileScreen, SortByPCScreen } from '..';
 import TaskInbox from './TaskInbox';
@@ -8,18 +8,30 @@ import { TaskStatuses } from 'shared/helpers/enums';
 import styles from './index.module.scss';
 import Pagination from '../Pagination';
 import { Collapse, Spin } from 'antd';
-import { getSortTasksInbox, setSortTasksInbox } from 'store/slice/task/taskInbox';
+import { getSortTasksInbox, setSortTasksInbox, setPaginationTasksInbox } from 'store/slice/task/taskInbox';
 import CollapsePanel from 'antd/es/collapse/CollapsePanel';
 
 const TasksInbox: FC = (props) => {
   const isMobile = useBreakPoint(768);
   const dispatch = useDispatch();
   const tasks = useSelector(TaskInboxSlice.getTasks);
-  const pagination = useSelector(TaskInboxSlice.getPagination);
   const isLoading = useSelector(TaskInboxSlice.isLoadingStatus);
   const filters = useSelector(TaskFilters.getFilters);
   const sortType = useSelector(getSortTasksInbox);
-  const setSortTasks = setSortTasksInbox;
+  const pagination = useSelector(TaskInboxSlice.getPagination);
+
+  const isSettigsApplied = useSettings({
+    sort: {
+      listName: 'inbox',
+      value: sortType,
+      setter: setSortTasksInbox,
+    },
+    pagination: {
+      listName: 'inbox',
+      value: pagination,
+      setter: setPaginationTasksInbox,
+    },
+  });
 
   const paginationHandler = (page: number, pageSize: number) => {
     dispatch(
@@ -33,15 +45,17 @@ const TasksInbox: FC = (props) => {
   };
 
   useEffect(() => {
-    dispatch(
-      TaskInboxSlice.getTasksAsync({
-        sort: sortType,
-        per_page: pagination!.per_page,
-        page: 1,
-        ...filters,
-      }),
-    );
-  }, [sortType, filters]);
+    if (isSettigsApplied) {
+      dispatch(
+        TaskInboxSlice.getTasksAsync({
+          sort: sortType,
+          per_page: pagination!.per_page,
+          page: 1,
+          ...filters,
+        }),
+      );
+    }
+  }, [sortType, filters, isSettigsApplied]);
 
   return (
     <div className={styles.tasks_group} {...props}>
@@ -50,17 +64,25 @@ const TasksInbox: FC = (props) => {
           Входящие
           <span className={styles.totalCount}>{ pagination && pagination.items_total }</span>
         </h4>
-        <div className={styles.sort}>
-          { isMobile ? (
-            <SortByMobileScreen disabled={tasks?.length === 0} setSortTasks={setSortTasks} />
-          ) : (
-            <SortByPCScreen
-              disabled={tasks?.length === 0}
-              sortType={sortType}
-              setSortTasks={setSortTasks}
-            />
-          ) }
-        </div>
+        {
+          isSettigsApplied
+          && (
+            <div className={styles.sort}>
+              { isMobile ? (
+                <SortByMobileScreen
+                  disabled={tasks?.length === 0}
+                  setSortTasks={setSortTasksInbox}
+                />
+              ) : (
+                <SortByPCScreen
+                  disabled={tasks?.length === 0}
+                  sortType={sortType}
+                  setSortTasks={setSortTasksInbox}
+                />
+              ) }
+            </div>
+          )
+        }
       </div>
       <Collapse ghost defaultActiveKey={1}>
         <CollapsePanel key={1} header="">
@@ -76,7 +98,7 @@ const TasksInbox: FC = (props) => {
               <NewTask taskStatusId={TaskStatuses.CREATED} />
             </div>
             <div className={styles.pagination}>
-              { pagination && (
+              { isSettigsApplied && pagination && (
                 <Pagination
                   current={pagination.page_current}
                   onChange={paginationHandler}

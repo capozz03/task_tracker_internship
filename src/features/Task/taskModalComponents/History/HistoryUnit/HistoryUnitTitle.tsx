@@ -47,7 +47,7 @@ const HistoryUnitTitle = ({ type, text, alt = '', unit }: TProps) => {
     case 'clone':
       return (
         <>
-          { `${text} ${unit.history_command_id.slice(-5)}`}
+          { text }
           <span className={styles.GeneralSpan}>
             { unit.params.task_to?.title || alt }
           </span>
