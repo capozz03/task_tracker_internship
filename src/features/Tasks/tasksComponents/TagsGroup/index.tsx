@@ -8,6 +8,7 @@ import TagsChanger from '../TagsChanger';
 import { usePermissions } from 'shared/helpers';
 import Tooltip from 'features/Tasks/tasksComponents/Tooltip';
 import TagsEditor from 'features/Tasks/tasksComponents/TagsEditor';
+import classNames from 'classnames';
 
 type TagsGroupProps = {
   tags: TTagsTask[],
@@ -73,9 +74,9 @@ const TagsGroup = ({ tags, taskId, roles }: TagsGroupProps) => {
                 {
                   can['change.tag']
                   && (
-                    <span className={styles.addButtonWrapper}>
+                    <span className={classNames([styles.addButtonWrapper, 'TagsGroup_tagsIcons'])}>
                       <TagsChanger taskTags={tags} currentTaskId={taskId} />
-                      <TagsEditor />
+                      <TagsEditor container=".ant-layout" />
                     </span>
                   )
                 }
@@ -99,9 +100,9 @@ const TagsGroup = ({ tags, taskId, roles }: TagsGroupProps) => {
                 {
                   can['change.tag']
                   && (
-                    <span className={styles.addButtonWrapper}>
+                    <span className={classNames([styles.addButtonWrapper, 'TagsGroup_tagsIcons'])}>
                       <TagsChanger taskTags={tags} currentTaskId={taskId} />
-                      <TagsEditor />
+                      <TagsEditor container=".ant-layout" />
                     </span>
                   )
                 }

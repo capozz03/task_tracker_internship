@@ -1,7 +1,10 @@
 import { createAsyncThunk, miniSerializeError } from '@reduxjs/toolkit';
-import { TTagsCreateRequest, TTagsDeleteRequest, TTagsFilterSearchProps, TTagsUpdateRequest } from './entities';
+import {
+  TTagsCreateProps,
+  TTagsDeleteRequest,
+  TTagsFilterSearchProps, TTagsUpdateProps,
+} from './entities';
 import { tagsFilterService } from './service';
-import { alert } from 'shared';
 import { TagsSlice } from 'store/slice';
 
 export const getTagsAsync = createAsyncThunk(
@@ -19,18 +22,20 @@ export const getTagsAsync = createAsyncThunk(
 
 export const createTagAsync = createAsyncThunk(
   'tagsFilterSlice/createTagAsync',
-  async (props: TTagsCreateRequest, { rejectWithValue, dispatch }) => {
+  async ({ tag, resolveHandle, rejectedHandle }: TTagsCreateProps,
+    { rejectWithValue, dispatch }) => {
     try {
-      const { data } = await tagsFilterService.createTag(props);
+      const { data } = await tagsFilterService.createTag(tag);
       dispatch(TagsSlice.getTagsAsync({
         search: '',
         page: 1,
         perPage: 500,
       }));
+      resolveHandle();
       return data;
-    } catch (rejectedValueOrSerializedError) {
+    } catch (rejectedValueOrSerializedError: any) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
-      alert('Ошибка при создании тега', 'error');
+      rejectedHandle(rejectedValueOrSerializedError.response.data.message);
       return rejectWithValue(error);
     }
   },
@@ -38,17 +43,20 @@ export const createTagAsync = createAsyncThunk(
 
 export const updateTagAsync = createAsyncThunk(
   'tagsFilterSlice/updateTagAsync',
-  async (props: TTagsUpdateRequest, { rejectWithValue, dispatch }) => {
+  async ({ tag, resolveHandle, rejectedHandle }: TTagsUpdateProps,
+    { rejectWithValue, dispatch }) => {
     try {
-      const { data } = await tagsFilterService.updateTag(props);
+      const { data } = await tagsFilterService.updateTag(tag);
       dispatch(TagsSlice.getTagsAsync({
         search: '',
         page: 1,
         perPage: 500,
       }));
+      resolveHandle();
       return data;
-    } catch (rejectedValueOrSerializedError) {
+    } catch (rejectedValueOrSerializedError: any) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
+      rejectedHandle(rejectedValueOrSerializedError.response.data.message);
       return rejectWithValue(error);
     }
   },

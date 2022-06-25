@@ -9,10 +9,23 @@
     font: $p-regular;
     color: $grey-700;
   }
+  .btnCreateTag{
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: $grey-600;
+    cursor: pointer;
+    svg{
+      width: 1em;
+    }
+    &:hover{
+      color: $main-blue;
+    }
+  }
 }
 
 .wrap{
-  padding: 5px 20px;
+  padding: 5px 0;
   scrollbar-width: thin;
   scrollbar-color: rgba($main-blue, 0.5) $grey-0;
 
@@ -33,6 +46,7 @@
   :global(.ant-list-item){
     gap: 8px;
     padding-right: 8px;
+    padding-left: 8px;
     &:hover{
       background-color: rgba($main-blue, 0.05);
     }
@@ -67,5 +81,39 @@
         color: $error-default;
       }
     }
+  }
+  @keyframes enterItem {
+    0% {
+
+    }
+    50%{
+      background-color: rgba($main-blue, 0.10);
+    }
+    100%{
+      background-color: transparent;
+    }
+  }
+  :global(.item-enter-done){
+    animation-name: enterItem;
+    animation-duration: 2s;
+    animation-iteration-count: 3;
+  }
+  :global(.item-enter) {
+    opacity: 0;
+    transform: translateX(500px);
+  }
+  :global(.item-enter-active) {
+    opacity: 1;
+    transform: translateX(0);
+    transition: all 500ms ease-in;
+  }
+  :global(.item-exit) {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  :global(.item-exit-active) {
+    opacity: 0;
+    transform: translateX(-500px);
+    transition: all 500ms ease-in;
   }
 }

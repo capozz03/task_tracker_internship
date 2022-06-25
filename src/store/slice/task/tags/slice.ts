@@ -29,12 +29,14 @@ const tagsFilterSlice = createSlice({
     }),
     [getTagsAsync.fulfilled?.type]: (state: TTagFilterSlice,
       { payload: tags }: PayloadAction<TTagsResponse>) => {
-      const newState: TTagFilterSlice = { ...state };
-      // newState.tags = [...newState.tags, ...tags.data];
-      newState.tags = [...tags.data];
-      newState.status = RequestStatuses.SUCCESS;
-      newState.error = null;
-      return newState;
+      state.tags = tags.data;
+      state.status = RequestStatuses.SUCCESS;
+      state.error = null;
+      // const newState: TTagFilterSlice = { ...state };
+      // newState.tags = [...tags.data];
+      // newState.status = RequestStatuses.SUCCESS;
+      // newState.error = null;
+      // return newState;
     },
     [getTagsAsync.rejected?.type]: (state: TTagFilterSlice,
       { payload: error }: PayloadAction<Error>) => ({

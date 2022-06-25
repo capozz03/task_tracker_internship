@@ -22,6 +22,9 @@
     .cardMenu {
       opacity: 1;
     }
+    :global(.TagsGroup_tagsIcons){
+      visibility: visible;
+    }
   }
 
   @media (max-width: 1350px) {

@@ -26,7 +26,7 @@ const TagItem = ({ tag, showModalForDelete, showModalForEdit }: TagItemProps) =>
     showModalForEdit();
   };
   return (
-    <List.Item key={tag.task_tag_id}>
+    <List.Item key={tag.task_tag_id} className="item">
       <SquareColor color={tag.color} />
       <div className={styles.tagName}>{tag.name}</div>
       <button

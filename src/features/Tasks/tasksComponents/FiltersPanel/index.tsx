@@ -20,7 +20,7 @@ const FiltersPanel = () => (
     <div>
       <div className={classNames([styles.labelText, styles.tags])}>
         Метки
-        <span className={styles.tagsEditor}><TagsEditor /></span>
+        <span className={styles.tagsEditor}><TagsEditor container=".ant-layout-sider-children" /></span>
       </div>
       <TagsFilter />
     </div>

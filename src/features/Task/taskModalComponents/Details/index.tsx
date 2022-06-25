@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { TaskFormSlice } from 'store/slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { TaskFormSlice, TagsSlice } from 'store/slice';
 import PerformerCategory from './PerformerCategory';
 import StatusCategory from './StatusCategory';
 import PriorityCategory from './PriorityCategory';
@@ -11,6 +11,7 @@ import styles from './index.module.scss';
 import DetailsResume from './DetailsResume';
 import Tooltip from 'features/Tasks/tasksComponents/TooltipForModal';
 import { usePermissions } from 'shared/helpers';
+import _ from 'lodash';
 
 type TDetailsProps = { taskId: string };
 
@@ -25,6 +26,7 @@ const Details = ({ taskId }: TDetailsProps) => {
   const isSuccessLoadingTask = useSelector(TaskFormSlice.isLoadingStatusSuccess);
   const roles = useSelector(TaskFormSlice.getRoles);
   const tags = useSelector(TaskFormSlice.getTags);
+  const allTags = useSelector(TagsSlice.getTagsSelector);
   const status = useSelector(TaskFormSlice.getTaskFormStatusTask);
   const formResultRequired = useSelector(TaskFormSlice.getTaskFormStatusTaskFormRequired);
   const rolesArray = useSelector(TaskFormSlice.getTaskFormRoles);
@@ -32,6 +34,7 @@ const Details = ({ taskId }: TDetailsProps) => {
   const dateStart = useSelector(TaskFormSlice.getDateStart);
   const dateStop = useSelector(TaskFormSlice.getDateStop);
   const currentTaskId = useSelector(TaskFormSlice.getTaskFormId);
+  const dispatch = useDispatch();
 
   const [categoryView, setCategoryView] = useState({
     dateStart: !!dateStart,
@@ -60,6 +63,14 @@ const Details = ({ taskId }: TDetailsProps) => {
   ) => () => {
     setCategoryView({ ...categoryView, [argName]: flag });
   };
+
+  useEffect(() => {
+    const newListTags = _.intersectionWith(tags, allTags, (taskTag, tag) =>
+      taskTag.task_tag.task_tag_id === tag.task_tag_id);
+    if (newListTags.length !== tags?.length) {
+      dispatch(TaskFormSlice.setTags(newListTags));
+    }
+  }, [allTags]);
 
   return (
     <>

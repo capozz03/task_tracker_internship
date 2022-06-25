@@ -8,9 +8,10 @@ import SettingIcon from 'shared/ui/icons/SettingIcon/SettingIcon';
 
 type TagsEditorProps = {
   isVisibleText?: boolean;
+  container: string; // Селектор
 }
 
-const TagsEditor = ({ isVisibleText = false }: TagsEditorProps) => {
+const TagsEditor = ({ isVisibleText = false, container }: TagsEditorProps) => {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const popoverHandle: MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -31,7 +32,8 @@ const TagsEditor = ({ isVisibleText = false }: TagsEditorProps) => {
       trigger="click"
       visible={visible}
       onVisibleChange={handleVisibleChange}
-      zIndex={999}
+      zIndex={1000}
+      getPopupContainer={() => document.querySelector(container) as HTMLElement}
     >
       <button type="button" className={styles.btn} onClick={popoverHandle}>
         <SettingIcon />

@@ -3,10 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TagsSlice } from 'store/slice';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { List, Skeleton } from 'antd';
+import Tooltip from 'features/Tasks/tasksComponents/Tooltip';
 import styles from './index.module.scss';
 import TagItem from './TagItem';
-import ModalTagDelete from 'features/Tasks/tasksComponents/TagsEditor/ModalTagDelete';
-import ModalTagEdit from 'features/Tasks/tasksComponents/TagsEditor/ModalTagEdit';
+import ModalTagDelete from '../ModalTagDelete';
+import ModalTagEdit from '../ModalTagEdit';
+import PlusIcon from 'shared/ui/icons/PlusIcon/PlusIcon';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 const TagsEditorBody = () => {
   const dispatch = useDispatch();
@@ -35,6 +38,7 @@ const TagsEditorBody = () => {
     }));
     setIsVisibleModalEdit(true);
   };
+
   return (
     <div
       role="button"
@@ -47,7 +51,11 @@ const TagsEditorBody = () => {
           Настроить метки
         </div>
         <div>
-          <button type="button" onClick={newTagHandle}> + </button>
+          <Tooltip title="Создать новую метку">
+            <button type="button" onClick={newTagHandle} className={styles.btnCreateTag}>
+              <PlusIcon />
+            </button>
+          </Tooltip>
         </div>
       </header>
       <div
@@ -64,17 +72,25 @@ const TagsEditorBody = () => {
           loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
           scrollableTarget="scrollableDiv"
         >
-          <List
-            className={styles.listWrap}
-            dataSource={tags}
-            renderItem={(tag) => (
-              <TagItem
-                showModalForDelete={visibleModalForDelete}
-                showModalForEdit={visibleModalForEdit}
-                tag={tag}
-              />
-            )}
-          />
+          <List className={styles.listWrap}>
+            <TransitionGroup>
+              {
+                tags.map((tag) => (
+                  <CSSTransition
+                    key={tag.task_tag_id}
+                    timeout={500}
+                    classNames="item"
+                  >
+                    <TagItem
+                      showModalForDelete={visibleModalForDelete}
+                      showModalForEdit={visibleModalForEdit}
+                      tag={tag}
+                    />
+                  </CSSTransition>
+                ))
+              }
+            </TransitionGroup>
+          </List>
         </InfiniteScroll>
       </div>
       <ModalTagDelete

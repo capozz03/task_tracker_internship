@@ -27,10 +27,24 @@ export type TTagsCreateRequest = {
   color: string;
 }
 
+export type TTagsCreateProps = {
+  tag: TTagsCreateRequest,
+  resolveHandle: () => void;
+  // eslint-disable-next-line no-unused-vars
+  rejectedHandle: (message: string) => void;
+}
+
 export type TTagsUpdateRequest = {
   taskTagId: string;
   titleTag: string;
   color: string;
+}
+
+export type TTagsUpdateProps = {
+  tag: TTagsUpdateRequest,
+  resolveHandle: () => void;
+  // eslint-disable-next-line no-unused-vars
+  rejectedHandle: (message: string) => void;
 }
 
 export type TTagsDeleteRequest = {

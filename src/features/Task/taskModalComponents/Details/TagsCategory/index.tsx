@@ -165,7 +165,7 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory, isDisabled = fa
             </Dropdown>
           )
         }
-        <TagsEditor isVisibleText />
+        <TagsEditor container=".ant-modal-wrap" isVisibleText />
       </div>
     </DetailCategory>
   );

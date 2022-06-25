@@ -30,10 +30,19 @@
       &:hover {
         opacity: 0.9;
       }
+      &:disabled{
+        background-color: $grey-400;
+      }
     }
     .cancelBtn {
       border-radius: 8px;
     }
+  }
+  .errorMessage{
+    color: $error-default;
+    font: $h6-regular;
+    padding-top: 5px;
+    padding-left: 3px;
   }
   .inputWrap{
     display: flex;

@@ -6,7 +6,8 @@ import { TagsSlice, TaskFilters } from 'store/slice';
 import { Tag } from 'features/Tasks/tasksComponents/index';
 import styles from './index.module.scss';
 import { TTag } from 'store/slice/task/entities';
-import PlusSquaredIcon from '../../../../../shared/ui/icons/PlusSquaredIcon/PlusSquaredIcon';
+import PlusSquaredIcon from 'shared/ui/icons/PlusSquaredIcon/PlusSquaredIcon';
+import _ from 'lodash';
 
 const TagsFilter = () => {
   const [search, setSearch] = useState('');
@@ -55,6 +56,13 @@ const TagsFilter = () => {
     }));
   },
   [debouncedSearch]);
+
+  useEffect(() => {
+    const newListTags = _.intersectionBy(tagsSelected, tags, 'task_tag_id');
+    if (newListTags.length !== tagsSelected.length) {
+      setTagsSelected(newListTags);
+    }
+  }, [tags]);
 
   useEffect(() => {
     dispatch(TaskFilters.setTags(tagsSelected));
