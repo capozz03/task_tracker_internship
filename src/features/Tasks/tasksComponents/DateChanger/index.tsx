@@ -112,7 +112,7 @@ const DateChanger = ({ dateStartISO, dateStopISO, taskId, roles }: TProps) => {
           }
         </div>
         <div className={styles.pickerWrapper}>
-          <Tooltip title={can['change.dateStop'] ? 'Изменить срок выполнения' : ''}>
+          <Tooltip ignoreTouchDevice title={can['change.dateStop'] ? 'Изменить срок выполнения' : ''}>
             <DatePicker
               className={styles.picker}
               bordered={false}
@@ -131,7 +131,7 @@ const DateChanger = ({ dateStartISO, dateStopISO, taskId, roles }: TProps) => {
           {
             stop && can['change.dateStop']
             && (
-              <Tooltip title={start ? 'Сперва удалите дату начала' : 'Удалить срок выполнения'}>
+              <Tooltip ignoreTouchDevice title={start ? 'Сперва удалите дату начала' : 'Удалить срок выполнения'}>
                 <button type="button" className={styles.removeButton} onClick={removeDate('stop')}>
                   <CancelIcons />
                 </button>

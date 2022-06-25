@@ -6,7 +6,7 @@ import { TagsSlice, TaskFilters } from 'store/slice';
 import { Tag } from 'features/Tasks/tasksComponents/index';
 import styles from './index.module.scss';
 import { TTag } from 'store/slice/task/entities';
-import PlusSquaredIcon from 'shared/ui/icons/PlusSquaredIcon';
+import PlusSquaredIcon from '../../../../../shared/ui/icons/PlusSquaredIcon/PlusSquaredIcon';
 
 const TagsFilter = () => {
   const [search, setSearch] = useState('');
@@ -36,6 +36,11 @@ const TagsFilter = () => {
     setTagsSelected((prev) => prev.filter((el) => el.task_tag_id !== tagId));
   };
   const focusHandle = () => {
+    dispatch(TagsSlice.getTagsAsync({
+      search: debouncedSearch,
+      page: 1,
+      perPage: 500,
+    }));
     setOpen(true);
   };
   const closeHandle = () => {
@@ -46,7 +51,7 @@ const TagsFilter = () => {
     dispatch(TagsSlice.getTagsAsync({
       search: debouncedSearch,
       page: 1,
-      perPage: 50,
+      perPage: 500,
     }));
   },
   [debouncedSearch]);
@@ -71,6 +76,7 @@ const TagsFilter = () => {
           onBlur={closeHandle}
           onFocus={focusHandle}
           onSearch={handleSearch}
+          suffixIcon={<PlusSquaredIcon />}
           placeholder="Поиск ..."
           getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}
         >
@@ -91,7 +97,6 @@ const TagsFilter = () => {
             filtersTags.length === 0 && <AutoComplete.Option>Нет меток</AutoComplete.Option>
           }
         </AutoComplete>
-        <PlusSquaredIcon />
       </div>
       <div className={styles.selectedTags}>
         {

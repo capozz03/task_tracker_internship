@@ -3,7 +3,7 @@ import styles from './index.module.scss';
 import Button from '../Button';
 import InputNameTask from './InputNameTask';
 import { useDispatch } from 'react-redux';
-import { Tooltip } from 'antd';
+import Tooltip from 'features/Tasks/tasksComponents/Tooltip';
 import { createNewTaskAsync as createNewTaskInWorkAsync } from 'store/slice/task/taskInWork';
 import { createNewTaskAsync as createNewTaskInboxAsync } from 'store/slice/task/taskInbox';
 import { TaskStatuses } from 'shared/helpers/enums';

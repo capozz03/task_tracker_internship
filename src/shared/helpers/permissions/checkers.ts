@@ -5,7 +5,7 @@ import { TRoles } from 'store/slice/task/entities';
 import { TPermission, TRoleName } from './types';
 
 export const hasRole = (
-  roleName: TRoleName,
+  roleName: TRoleName | 'anything',
   rolesList: TRoles[] | undefined | null,
   memberId: string = '',
 ): boolean => {
@@ -14,6 +14,10 @@ export const hasRole = (
   const userId = memberId || clientCookies.getUserId();
   const currentUserRoles = rolesList.filter(
     (unit) => unit.assign_user.user_id === userId);
+
+  if (roleName === 'anything') {
+    return !!currentUserRoles.length;
+  }
 
   if (currentUserRoles.find(
     (unit) => rolesIds[roleName] === unit.task_role.task_role_id,

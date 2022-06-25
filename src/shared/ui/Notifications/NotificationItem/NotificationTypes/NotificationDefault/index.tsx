@@ -2,13 +2,14 @@ import React from 'react';
 import { TNotification } from 'store/slice/task/notifications/entities';
 import styles from 'shared/ui/Notifications/NotificationItem/index.module.scss';
 import stylesDefault from './index.module.scss';
-import { PriorityStatus, UserAvatar } from 'features/Tasks/tasksComponents';
+import { PriorityStatus } from 'features/Tasks/tasksComponents';
 import moment from 'moment';
 import Tag from 'features/Tasks/tasksComponents/Tag';
 import CheckItemWithoutFunction from '../CheckItemWithoutFunction';
 import BlockIcon from '../../../../icons/BlockIcon';
 import FilesAttachments from 'features/Tasks/currentTaskComponents/Attachments/FilesAttachments';
 import ImagesAttachments from 'features/Tasks/currentTaskComponents/Attachments/ImagesAttachments';
+import UserAvatarForModal from 'features/Tasks/tasksComponents/UserAvatarForModal';
 
 type NotificationProps = {
   notification: TNotification;
@@ -20,7 +21,7 @@ const NotificationRoleAssign = ({ notification }: NotificationProps) => {
     <div>
       <div className={styles.userAssigned}>
         <div className={styles.avatar}>
-          <UserAvatar user={event.user} color="#A461D8" />
+          <UserAvatarForModal user={event.user} color="#A461D8" />
         </div>
         <div className={styles.nameAndEvent}>
           <div className={styles.name}>

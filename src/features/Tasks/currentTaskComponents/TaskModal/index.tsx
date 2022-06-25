@@ -21,10 +21,12 @@ import { CollapseHeader, CollapseMembersHeader } from './MembersPanel/MemberPane
 import TaskHistory from 'features/Task/taskModalComponents/History';
 import { alert } from 'shared/ui';
 import { checkPermission, isLoadingStatusCheck } from 'shared/helpers';
+import { useNavigate } from 'react-router-dom';
 
 const TaskModal = (props: ModalProps) => {
   const { visible } = props;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const task = useSelector(TaskFormSlice.getTask);
   const roles = useSelector(TaskFormSlice.getRoles);
   const rolesArray = useSelector(TaskFormSlice.getTaskFormRoles);
@@ -95,6 +97,8 @@ const TaskModal = (props: ModalProps) => {
       }
       dispatch(TaskFormSlice.hiddenTaskForm());
     }
+
+    navigate('/');
   };
 
   useEffect(() => {

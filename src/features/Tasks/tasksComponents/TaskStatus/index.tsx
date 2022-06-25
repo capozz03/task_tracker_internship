@@ -1,5 +1,6 @@
 import React, { MouseEventHandler, useEffect, useState } from 'react';
-import { Select, SelectProps, Tooltip } from 'antd';
+import { Select, SelectProps } from 'antd';
+import Tooltip from 'features/Tasks/tasksComponents/Tooltip';
 import style from './index.module.scss';
 import { taskStatuses } from './constants';
 

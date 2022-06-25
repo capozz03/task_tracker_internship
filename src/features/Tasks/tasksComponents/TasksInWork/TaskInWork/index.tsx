@@ -2,7 +2,7 @@ import React, { MouseEventHandler } from 'react';
 import { TTask } from 'store/slice/task/entities';
 import styles from './index.module.scss';
 import { useDispatch } from 'react-redux';
-import { TaskInWorkSlice, TaskFormSlice, SubscribesSlice } from 'store/slice';
+import { TaskInWorkSlice } from 'store/slice';
 import {
   CardAttachmentsCount,
   CardChecklistCount,
@@ -17,6 +17,7 @@ import moment, { now } from 'moment';
 import PriorityChanger from '../../PriorityChanger';
 import DateChanger from '../../DateChanger';
 import { usePermissions } from 'shared/helpers';
+import { useNavigate } from 'react-router-dom';
 
 type TaskInWorkProps = {
   task: TTask;
@@ -24,6 +25,7 @@ type TaskInWorkProps = {
 
 const TaskInWork = ({ task }: TaskInWorkProps) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const can = usePermissions(
     ['change.status'],
     task.roles,
@@ -38,13 +40,7 @@ const TaskInWork = ({ task }: TaskInWorkProps) => {
     );
   };
   const openTask: MouseEventHandler<HTMLElement> = () => {
-    dispatch(TaskFormSlice.getTaskByIdAsync(task.task_id));
-    dispatch(
-      SubscribesSlice.getSubscribeAsync({
-        relation_id: task.task_id,
-        relation_type: 'task',
-      }),
-    );
+    navigate(`/${task.task_id}`);
   };
   return (
     <div

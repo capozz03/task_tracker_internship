@@ -3,24 +3,27 @@ import ReactDOM from 'react-dom';
 import AppErrorBoundary from 'app/errorBoundary';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { store } from 'store';
+import { store, persistor } from 'store';
 import App from './app/App';
 import reportWebVitals from './reportWebVitals';
 import { ToastContainer } from 'react-toastify';
 import { ConfigProvider } from 'antd';
+import { PersistGate } from 'redux-persist/integration/react';
 import ruRU from 'antd/lib/locale/ru_RU';
 
 ReactDOM.render(
   <React.StrictMode>
     <AppErrorBoundary>
       <Provider store={store}>
-        <BrowserRouter>
-          <ConfigProvider
-            locale={ruRU}
-          >
-            <App />
-          </ConfigProvider>
-        </BrowserRouter>
+        <PersistGate loading={null} persistor={persistor}>
+          <BrowserRouter>
+            <ConfigProvider
+              locale={ruRU}
+            >
+              <App />
+            </ConfigProvider>
+          </BrowserRouter>
+        </PersistGate>
       </Provider>
       <ToastContainer />
     </AppErrorBoundary>
@@ -28,7 +31,4 @@ ReactDOM.render(
   document.getElementById('root'),
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

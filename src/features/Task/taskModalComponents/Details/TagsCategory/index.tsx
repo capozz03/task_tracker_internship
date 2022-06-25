@@ -87,7 +87,7 @@ const TagsCategory = ({ currentTaskId, taskTags, hiddenCategory, isDisabled = fa
       dispatch(TagsSlice.getTagsAsync({
         search: debouncedValue,
         page: 1,
-        perPage: 50,
+        perPage: 500,
       }));
     }
   }, [debouncedValue, visible]);
