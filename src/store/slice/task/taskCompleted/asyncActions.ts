@@ -1,9 +1,16 @@
 import { createAsyncThunk, miniSerializeError } from '@reduxjs/toolkit';
 import { taskService } from './taskCompletedService';
 import { TTaskSearch, TTasksReducer, TTaskStatusChange } from '../entities';
-import { TaskInWorkSlice, TaskInboxSlice, TaskFailedSlice, TaskCompletedSlice, TaskFormSlice } from 'store/slice';
+import {
+  TaskInWorkSlice,
+  TaskInboxSlice,
+  TaskFailedSlice,
+  TaskCompletedSlice,
+  TaskFormSlice,
+} from 'store/slice';
 import { TFiltersSlice } from '../taskFilters/slice';
 import { TaskStatuses, alert } from 'shared';
+import { setFormResult } from '../taskForm';
 
 const statusId = TaskStatuses.COMPLETED;
 
@@ -84,6 +91,20 @@ export const changeStatusTaskAsync = createAsyncThunk(
             ...taskFilters.filters,
           }),
         );
+        const formResult = data.data.form_result;
+        if (formResult && formResult[0].value === 'Задача принята') {
+          dispatch(
+            setFormResult({
+              form_result: {
+                taskId: params.task_id,
+                formResult: [
+                  { field_name: 'resume', value: 'Требуется резюме' },
+                  { field_name: 'comment', value: '' },
+                ],
+              },
+            }),
+          );
+        }
       }
       alert('Статус задачи изменен', 'success');
       dispatch(TaskFormSlice.resetTaskHistory());

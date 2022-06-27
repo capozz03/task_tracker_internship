@@ -84,7 +84,10 @@ export const changeStatusTaskAsync = createAsyncThunk(
           setFormResult({
             form_result: {
               taskId: params.task_id,
-              formResult: [],
+              formResult: [
+                { field_name: 'resume', value: 'Требуется резюме' },
+                { field_name: 'comment', value: '' },
+              ],
             },
           }),
         );
@@ -103,7 +106,10 @@ export const changeStatusTaskAsync = createAsyncThunk(
           setFormResult({
             form_result: {
               taskId: params.task_id,
-              formResult: [],
+              formResult: [
+                { field_name: 'resume', value: 'Требуется резюме' },
+                { field_name: 'comment', value: '' },
+              ],
             },
           }),
         );
@@ -122,7 +128,7 @@ export const changeStatusTaskAsync = createAsyncThunk(
 export const createNewTaskAsync = createAsyncThunk(
   'taskInWork/createNewTaskTask',
   async (
-    params: { title: string; task_status_id: string },
+    params: { title: string; task_status_id: string, isResumeNeed?: boolean, },
     { rejectWithValue, dispatch, getState },
   ) => {
     try {
@@ -131,7 +137,12 @@ export const createNewTaskAsync = createAsyncThunk(
         taskInWork: TTasksReducer;
         taskFilters: TFiltersSlice;
       };
-      await taskService.createNewTask({ task_status_id: taskStatusID, title });
+      const form = {};
+      if (params.isResumeNeed) {
+        await taskService.createNewTask({ task_status_id: taskStatusID, title, form });
+      } else {
+        await taskService.createNewTask({ task_status_id: taskStatusID, title });
+      }
       dispatch(
         getTasksAsync({
           sort: taskInWork.sort,

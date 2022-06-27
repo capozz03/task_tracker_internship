@@ -37,8 +37,12 @@ const TaskModal = (props: ModalProps) => {
   const paginationInCompleted = useSelector(TaskCompletedSlice.getPagination);
   const paginationInFailed = useSelector(TaskFailedSlice.getPagination);
   const filters = useSelector(TaskFilters.getFilters);
+
+  const formAvailable = useSelector(TaskFormSlice.getTaskFormAvailable);
   const formResultRequired = useSelector(TaskFormSlice.getTaskFormStatusTaskFormRequired);
-  const formResult = useSelector(TaskFormSlice.getTaskFormResultForm);
+  const formResultResume = useSelector(TaskFormSlice.getFormResultResume)?.value;
+
+  const isResumeNeed = formResultResume === 'Требуется резюме';
 
   const sortTypeInbox = useSelector(TaskInboxSlice.getSortTasksInbox);
   const sortTypeInWork = useSelector(TaskInWorkSlice.getSortTasksInWork);
@@ -103,10 +107,10 @@ const TaskModal = (props: ModalProps) => {
 
   useEffect(() => {
     if (checkPermission('get.alertNeedResume', rolesArray)
-        && visible && formResultRequired && !(formResult?.length)) {
+        && visible && formAvailable && formResultRequired && isResumeNeed) {
       alert('Требуется резюме', 'info');
     }
-  }, [formResult]);
+  }, [formResultRequired, isResumeNeed]);
 
   return (
     <Modal

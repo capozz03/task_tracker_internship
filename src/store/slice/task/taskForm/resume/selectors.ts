@@ -5,6 +5,11 @@ import { TFormResult } from '../../entities';
 const getTaskForm = (state: TState) => state.taskForm;
 const getTaskInformation = createSelector(getTaskForm, ({ task }) => task);
 
+export const getTaskFormAvailable = createSelector(
+  getTaskInformation,
+  ({ task }) => task?.form_available,
+);
+
 export const getTaskFormStatusTaskFormRequired = createSelector(
   getTaskInformation,
   ({ task }) => task?.status.form_result_required,

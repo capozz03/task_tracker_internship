@@ -54,6 +54,7 @@ export {
 } from './checkList/selector';
 
 export {
+  getTaskFormAvailable,
   getTaskFormStatusTaskFormRequired,
   getTaskFormResultForm,
   getFormResultComment,

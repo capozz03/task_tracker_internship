@@ -62,6 +62,14 @@
 
 .cardName {
   grid-area: title;
+  display: flex;
+  flex-direction: row;
+  .resumeIcon {
+    margin-right: 5px;
+    margin-top: 3px;
+    font-size: 16px;
+    color: $colors-orange;
+  }
 }
 
 .cardFilesAndCheckbox {

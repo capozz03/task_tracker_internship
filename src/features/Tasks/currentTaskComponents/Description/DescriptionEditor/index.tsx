@@ -37,7 +37,7 @@ const DescriptionEditor = ({
     removeButtons,
     askBeforePasteFromWord: false,
     askBeforePasteHTML: false,
-    enableDragAndDropFileToEditor: true,
+    enableDragAndDropFileToEditor: false,
     uploader: { insertImageAsBase64URI: true },
     toolbarAdaptive: true,
     toolbarSticky: true,

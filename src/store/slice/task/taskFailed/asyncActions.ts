@@ -78,7 +78,10 @@ export const changeStatusTaskAsync = createAsyncThunk(
           setFormResult({
             form_result: {
               taskId: params.task_id,
-              formResult: [],
+              formResult: [
+                { field_name: 'resume', value: 'Требуется резюме' },
+                { field_name: 'comment', value: '' },
+              ],
             },
           }),
         );
