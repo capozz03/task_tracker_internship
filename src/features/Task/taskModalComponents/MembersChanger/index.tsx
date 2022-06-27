@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { usersList, getUsersListPage, usersListPagination, resetUserList, isLoadingStatus } from 'store/slice/users';
 import { searchIcons } from 'shared/ui/icons';
-import { UserAvatar } from 'features/Tasks/tasksComponents';
 import { Menu, Dropdown, Input, Spin } from 'antd';
 import styles from './index.module.scss';
 import { InView } from 'react-intersection-observer';
@@ -10,6 +9,7 @@ import { useDebounce } from 'shared';
 import MemberChangerPopover from './Popover';
 import { TUser } from 'store/slice/user/entities';
 import { TaskFormSlice } from 'store/slice';
+import UserAvatarForModal from 'features/Tasks/tasksComponents/UserAvatarForModal';
 
 type TProps = {
   buttonType: 'blue' | 'gray';
@@ -50,13 +50,17 @@ const MembersChanger = ({ buttonType }: TProps) => {
   }, [users, roles]);
 
   useEffect(() => {
-    dispatch(resetUserList());
-    dispatch(getUsersListPage({
-      page: 1,
-      limit: pagination?.per_page || 20,
-      search: debouncedValue,
-    }));
-  }, [debouncedValue]);
+    if (visible) {
+      dispatch(resetUserList());
+      dispatch(getUsersListPage({
+        page: 1,
+        limit: pagination?.per_page || 20,
+        search: debouncedValue,
+      }));
+    } else {
+      dispatch(resetUserList());
+    }
+  }, [debouncedValue, visible]);
 
   const stopPropagation = (e: any) => e.stopPropagation();
   const inputCallback = (e: any) => setValue(e.target.value);
@@ -101,7 +105,7 @@ const MembersChanger = ({ buttonType }: TProps) => {
           <Menu.Item key={`${index * index}-${m.user_id}`}>
             <MemberChangerPopover member={m} afterAddRole={clearSearchValue}>
               <div>
-                <UserAvatar user={{ user_id: m.user_id, name: m.name, logo: m.logo }} color="#FF974A" />
+                <UserAvatarForModal user={{ user_id: m.user_id, name: m.name, logo: m.logo }} color="#FF974A" />
                 <span>
                   {m.name}
                 </span>
@@ -111,12 +115,17 @@ const MembersChanger = ({ buttonType }: TProps) => {
           </Menu.Item>)
         }
         { observerElement() }
+        {
+          !members.length && !isLoading
+          && (<span className={styles.notMembers}>Нет участников</span>)
+        }
       </Menu>
     </div>
   );
 
   return (
     <Dropdown
+      getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
       overlay={menu}
       trigger={['click']}
       visible={visible}

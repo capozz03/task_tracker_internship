@@ -40,7 +40,7 @@ const HeaderNotificationsArea = ({ notification }: HeaderNotificationsAreaProps)
           </button>
         </Tooltip>
         <span className={styles.time}>
-          { moment(notification.history_command.created).format('HH:mm') }
+          { moment(notification.history_command.created).format('DD.MM.YYYY HH:mm') }
         </span>
       </div>
     </header>

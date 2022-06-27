@@ -1,10 +1,18 @@
 import { createAsyncThunk, miniSerializeError } from '@reduxjs/toolkit';
 import { TTasksReducer } from '../../entities';
-import { TaskInWorkSlice, TaskInboxSlice, TaskCompletedSlice, TaskFailedSlice } from 'store/slice';
+import {
+  TaskInWorkSlice,
+  TaskInboxSlice,
+  TaskCompletedSlice,
+  TaskFailedSlice,
+  TaskFormSlice,
+  SubscribesSlice,
+} from 'store/slice';
 import { taskService } from '../../taskInWork/taskInWorkService';
 import { TFiltersSlice } from '../../taskFilters/slice';
 import { clearState } from './slice';
 import { TaskStatuses } from 'shared';
+import { getTaskByIdAsync } from 'store/slice/task/taskForm';
 
 export const created = TaskStatuses.CREATED;
 export const inWork = TaskStatuses.IN_WORK;
@@ -46,12 +54,16 @@ type commonActionProps = {
   };
   resolvedHandle: () => void;
   rejectedHandle: () => void;
+  openTask?: boolean | undefined;
 };
 
 export const duplicateTaskAsync = createAsyncThunk(
   'tasks/duplicateTask',
   async (
-    { data: { taskId, taskStatusId }, resolvedHandle, rejectedHandle }: commonActionProps,
+    { data: { taskId, taskStatusId },
+      resolvedHandle,
+      rejectedHandle,
+      openTask = false }: commonActionProps,
     { rejectWithValue, dispatch, getState },
   ) => {
     try {
@@ -62,7 +74,7 @@ export const duplicateTaskAsync = createAsyncThunk(
         taskFailed: TTasksReducer;
         taskFilters: TFiltersSlice;
       };
-      await taskService.duplicateTask(taskId);
+      const { data } = await taskService.duplicateTask(taskId);
       const dataCheckStatus = { taskStatusId, taskInWork, taskInbox, taskCompleted, taskFailed };
       const stateOfDispatch = checkForStatusId(dataCheckStatus);
       if (taskStatusId === created) {
@@ -103,6 +115,13 @@ export const duplicateTaskAsync = createAsyncThunk(
         );
       }
       resolvedHandle();
+      if (openTask) {
+        dispatch(getTaskByIdAsync(data.clone.task_id));
+        dispatch(SubscribesSlice.clear());
+      }
+      if (!openTask) {
+        dispatch(TaskFormSlice.resetTaskHistory());
+      }
     } catch (rejectedValueOrSerializedError) {
       rejectedHandle();
       const error = miniSerializeError(rejectedValueOrSerializedError);

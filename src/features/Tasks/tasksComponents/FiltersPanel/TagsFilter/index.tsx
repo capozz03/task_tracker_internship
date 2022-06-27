@@ -6,7 +6,7 @@ import { TagsSlice, TaskFilters } from 'store/slice';
 import { Tag } from 'features/Tasks/tasksComponents/index';
 import styles from './index.module.scss';
 import { TTag } from 'store/slice/task/entities';
-import PlusSquaredIcon from 'shared/ui/icons/PlusSquaredIcon';
+import PlusSquaredIcon from '../../../../../shared/ui/icons/PlusSquaredIcon/PlusSquaredIcon';
 
 const TagsFilter = () => {
   const [search, setSearch] = useState('');
@@ -24,28 +24,27 @@ const TagsFilter = () => {
     setSearch('');
     const tag = tags.find((el) => el.task_tag_id === value);
     if (tag && tagsSelected.length < 10) {
-      setTagsSelected((prev) => ([...prev, tag]));
+      setTagsSelected((prev) => [...prev, tag]);
     } else if (tagsSelected.length === 10) {
       alert('Нельзя добавить больше 10 меток', 'warning');
     }
     setOpen(true);
   };
-  const filtersTags = tags.filter((tag) => tagsSelected.findIndex((tagSelected) =>
-    tag.task_tag_id === tagSelected.task_tag_id) === -1).sort(
-    (tag1, tag2) => {
-      if (tag1.name.toLowerCase() > tag2.name.toLowerCase()) return 1;
-      if (tag1.name.toLowerCase() < tag2.name.toLowerCase()) return -1;
-      return 0;
-    });
+  const filtersTags = tags.filter(
+    (tag) =>
+      tagsSelected.findIndex((tagSelected) => tag.task_tag_id === tagSelected.task_tag_id) === -1,
+  );
   const removeTag = (tagId: string) => {
-    setTagsSelected((prev) => prev.filter((el) => el.task_tag_id !== tagId).sort(
-      (tag1, tag2) => {
-        if (tag1.name.toLowerCase() > tag2.name.toLowerCase()) return 1;
-        if (tag1.name.toLowerCase() < tag2.name.toLowerCase()) return -1;
-        return 0;
-      }));
+    setTagsSelected((prev) => prev.filter((el) => el.task_tag_id !== tagId));
   };
   const focusHandle = () => {
+    dispatch(
+      TagsSlice.getTagsAsync({
+        search: debouncedSearch,
+        page: 1,
+        perPage: 500,
+      }),
+    );
     setOpen(true);
   };
   const closeHandle = () => {
@@ -53,13 +52,16 @@ const TagsFilter = () => {
     setSearch('');
   };
   useEffect(() => {
-    dispatch(TagsSlice.getTagsAsync({
-      search: debouncedSearch,
-      page: 1,
-      perPage: 50,
-    }));
-  },
-  [debouncedSearch]);
+    if (open) {
+      dispatch(
+        TagsSlice.getTagsAsync({
+          search: debouncedSearch,
+          page: 1,
+          perPage: 500,
+        }),
+      );
+    }
+  }, [debouncedSearch, open]);
 
   useEffect(() => {
     dispatch(TaskFilters.setTags(tagsSelected));
@@ -81,39 +83,35 @@ const TagsFilter = () => {
           onBlur={closeHandle}
           onFocus={focusHandle}
           onSearch={handleSearch}
+          suffixIcon={<PlusSquaredIcon />}
           placeholder="Поиск ..."
+          getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}
         >
-          {
-            isLoading
-              ? (
-                <AutoComplete.Option key="unuque_key" value={null}>
-                  <Spin />
-                </AutoComplete.Option>
-              )
-              : filtersTags && filtersTags.map((tag) => (
-                <AutoComplete.Option key={tag.task_tag_id} value={tag.task_tag_id}>
-                  <Tag tag={tag} key={tag.task_tag_id} />
-                </AutoComplete.Option>
-              ))
-          }
-          {
-            filtersTags.length === 0 && <AutoComplete.Option>Нет меток</AutoComplete.Option>
-          }
+          {isLoading ? (
+            <AutoComplete.Option key="unique_key" value={null}>
+              <Spin />
+            </AutoComplete.Option>
+          ) : (
+            filtersTags
+            && filtersTags.map((tag) => (
+              <AutoComplete.Option key={tag.task_tag_id} value={tag.task_tag_id}>
+                <Tag tag={tag} key={tag.task_tag_id} />
+              </AutoComplete.Option>
+            ))
+          )}
+          {filtersTags.length === 0 && <AutoComplete.Option>Нет меток</AutoComplete.Option>}
         </AutoComplete>
-        <PlusSquaredIcon />
       </div>
       <div className={styles.selectedTags}>
-        {
-          tagsSelected.map((tag) => (
-            <Tag
-              tag={tag}
-              key={tag.task_tag_id}
-              deleteHandle={() => {
-                removeTag(tag.task_tag_id);
-              }}
-            />
-          ))
-        }
+        {tagsSelected.map((tag) => (
+          <Tag
+            tag={tag}
+            key={tag.task_tag_id}
+            deleteHandle={() => {
+              removeTag(tag.task_tag_id);
+            }}
+          />
+        ))}
       </div>
     </>
   );

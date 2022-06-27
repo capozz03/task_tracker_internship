@@ -32,6 +32,7 @@ export const uploadStorageFile = createAsyncThunk(
         }" успешно загружен`,
         'success',
       );
+      dispatch(TaskFormSlice.resetTaskHistory());
       return data;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);
@@ -155,6 +156,7 @@ export const deleteStorageFile = createAsyncThunk(
       ]);
       dispatch(TaskFormSlice.updateTask(task.data));
       dispatch(TaskFormSlice.hiddenFormStorageFiles());
+      dispatch(TaskFormSlice.resetTaskHistory());
       return task;
     } catch (rejectedValueOrSerializedError) {
       const error = miniSerializeError(rejectedValueOrSerializedError);

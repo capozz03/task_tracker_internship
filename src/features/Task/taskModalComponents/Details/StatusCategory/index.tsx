@@ -3,8 +3,9 @@ import DetailCategory from 'features/Task/taskModalComponents/Details/DetailCate
 import { TaskStatus } from 'features/Tasks/tasksComponents';
 import { TStatus } from 'store/slice/task/entities';
 import { TaskStatuses } from 'shared';
-import { useDispatch } from 'react-redux';
-import { TaskCompletedSlice, TaskFailedSlice, TaskInWorkSlice, TaskInboxSlice } from 'store/slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { TaskCompletedSlice, TaskFailedSlice, TaskInWorkSlice, TaskInboxSlice, TaskFormSlice } from 'store/slice';
+import { usePermissions } from 'shared/helpers';
 
 type TProps = {
   status: TStatus;
@@ -13,6 +14,11 @@ type TProps = {
 
 const StatusCategory = ({ status, currentTaskId }: TProps) => {
   const dispatch = useDispatch();
+  const roles = useSelector(TaskFormSlice.getTaskFormRoles);
+  const can = usePermissions(
+    ['change.status'],
+    roles,
+  );
 
   const statusChanger = (prevStatusId: string, taskId: string, newStatusId: string) => {
     const requestParams = { task_id: taskId, task_status_id: newStatusId };
@@ -42,8 +48,10 @@ const StatusCategory = ({ status, currentTaskId }: TProps) => {
   return (
     <DetailCategory name="Статус" type="details">
       <TaskStatus
+        modal
         defaultValue={status.name}
         onChange={statusChangeHandler}
+        isDisabled={!can['change.status']}
       />
     </DetailCategory>
   );

@@ -44,6 +44,7 @@ export const { setTitleFromTaskForm,
   setDescriptionFromTaskForm,
   updateCheckList,
   swapItemInChecklist,
+  setStatusTaskForm,
 } = taskFormSlice.actions;
 export const taskFormDataReducer = taskFormSlice.reducer;
 export const taskFormReducer = taskFormSlice.reducer;

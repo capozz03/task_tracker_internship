@@ -3,10 +3,25 @@
 .category {
     margin-bottom: 10px;
     display: flex;
-    flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
+    padding-left: 22px;
+
+    @include media-breakpoint-down(xxl) {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    @include media-breakpoint-down(lg) {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    @include media-breakpoint-down(sm) {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
 }
 
 .category:hover .removeButton {
@@ -19,7 +34,7 @@
     align-items: flex-start;
     min-width: 120px;
     margin: 0;
-    padding: 0 0 0 30px;
+    padding: 0;
 }
 
 .title {
@@ -29,7 +44,7 @@
 }
 
 .titleDetails {
-    color: $grey-800;
+    color: $grey-900;
 }
 
 .titleMembers {

@@ -2,9 +2,11 @@ import React, { useRef } from 'react';
 import JoditEditor from 'jodit-react';
 import Button from 'features/Tasks/tasksComponents/Button';
 import style from './index.module.scss';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setDescriptionAsync } from 'store/slice/task/taskForm/setDescriptionFromTask/asyncAction';
 import { alert } from 'shared/ui';
+import { buttons, buttonsMD, buttonsSM, buttonsXS, removeButtons } from './configConstants';
+import { TaskFormSlice } from 'store/slice';
 
 type DescriptionEditorProps = {
   setIsVisibleEditor: React.Dispatch<React.SetStateAction<boolean>>;
@@ -21,28 +23,21 @@ const DescriptionEditor = ({
 }: DescriptionEditorProps) => {
   const editor = useRef(null);
   const dispatch = useDispatch();
+  const description = useSelector(TaskFormSlice.getTaskFormDescription);
 
   const config = {
     readonly: false,
+    language: 'ru',
     placeholder: 'Начните писать...',
     tabIndex: 1,
-    buttons: ['bold', 'italic', 'underline', 'fontsize', 'link', 'image', 'brush', 'left', 'center', 'right'],
-    removeButtons: [
-      'ul',
-      'ol',
-      'eraser',
-      'paragraph',
-      'fullsize',
-      'copyformat',
-      'hr',
-      'table',
-      'font',
-      'video',
-      'file',
-    ],
+    buttons,
+    buttonsMD,
+    buttonsSM,
+    buttonsXS,
+    removeButtons,
     askBeforePasteFromWord: false,
     askBeforePasteHTML: false,
-    enableDragAndDropFileToEditor: true,
+    enableDragAndDropFileToEditor: false,
     uploader: { insertImageAsBase64URI: true },
     toolbarAdaptive: true,
     toolbarSticky: true,
@@ -57,7 +52,11 @@ const DescriptionEditor = ({
 
   const handleVisibleEditor = (): void => {
     setIsVisibleEditor(false);
-    setContent('');
+    if (!description) {
+      setContent('');
+    } else {
+      setContent(description);
+    }
   };
 
   const saveSuccess = () => {

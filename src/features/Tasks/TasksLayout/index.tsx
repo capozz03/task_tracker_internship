@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './index.module.scss';
 import { Layout } from 'antd';
 import FilterAssignedTo from '../tasksComponents/FilterAssignedTo';
@@ -16,18 +16,35 @@ import FiltersPanel from '../tasksComponents/FiltersPanel';
 import ModalDeleteTask from 'shared/ui/ModalDeleteTask';
 import Notifications from '../../../shared/ui/Notifications';
 import NotificationBell from '../tasksComponents/NotificationsBell';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const { Sider, Header, Content } = Layout;
 const { getIsFiltersMenuShow, setIsFiltersMenuShow } = TaskFilters;
 
 const TasksLayout = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isSidebarShow = useSelector(getIsFiltersMenuShow);
   const changeSidebarVisibility = () => dispatch(setIsFiltersMenuShow(!isSidebarShow));
   const hideSidebar = () => dispatch(setIsFiltersMenuShow(false));
   const isVisibleForm = useSelector(TaskFormSlice.getTaskFormIsVisibleForm);
   const filtersCount = useSelector(TaskFilters.getFiltersCount);
   const isVisibleNotifications = useSelector(NotificationsSlice.isVisible);
+  const taskFormError = useSelector(TaskFormSlice.getTaskFormError);
+
+  const { taskId: urlTaskId } = useParams();
+
+  useEffect(() => {
+    if (urlTaskId) {
+      dispatch(TaskFormSlice.getTaskByIdAsync(urlTaskId));
+    }
+  }, [urlTaskId]);
+
+  useEffect(() => {
+    if (taskFormError) {
+      navigate('/');
+    }
+  }, [taskFormError]);
 
   return (
     <>
@@ -43,36 +60,28 @@ const TasksLayout = () => {
         </Sider>
         <Layout className={styles.main}>
           <Header className={styles.header}>
-            <div className={styles.text}>Задачи</div>
-            <div className={styles.profile}>
-              <div className={styles.notification}>
-                <NotificationBell />
-              </div>
-              <UserAvatarMenu />
+            <div className={styles.filterToggle}>
+              <FilterToggleButton filtersCount={filtersCount} onClick={changeSidebarVisibility} />
             </div>
-            <div className={styles.tools}>
-              <FilterToggleButton
-                filtersCount={filtersCount}
-                onClick={changeSidebarVisibility}
-              />
+            <div className={styles.notification}>
               <NotificationBell />
             </div>
-            <span className={styles.filterAssignedTo}>
-              <FilterAssignedTo />
-            </span>
+            <div className={styles.profile}>
+              <UserAvatarMenu />
+            </div>
           </Header>
           <Content className={styles.content}>
-            <span className={styles.headerText}>Задачи</span>
+            <FilterAssignedTo />
             <TasksInbox />
             <TasksInWork />
             <TasksCompleted />
             <TasksFailed />
+            {isVisibleNotifications && <Notifications />}
           </Content>
         </Layout>
       </Layout>
       <TaskModal visible={isVisibleForm} />
       <ModalDeleteTask />
-      { isVisibleNotifications && <Notifications /> }
     </>
   );
 };

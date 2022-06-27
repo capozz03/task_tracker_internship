@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-import { Dropdown, Menu, Tooltip } from 'antd';
+import { Dropdown, Menu } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { CommonSlice, TaskFormSlice } from 'store/slice';
 import { TTask } from 'store/slice/task/taskForm';
 import { DropdownMoreButton } from 'shared/ui/icons';
 import { alert } from 'shared';
 import styles from './index.module.scss';
+import { usePermissions } from 'shared/helpers';
+import Tooltip from 'features/Tasks/tasksComponents/TooltipForModal';
 
 type DropdownMenuProps = {
   task: TTask;
@@ -15,6 +17,10 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
   const { Item } = Menu;
   const dispatch = useDispatch();
   const startDelete = useSelector(CommonSlice.isLoadingCommonActionTask);
+  const can = usePermissions(
+    ['duplicate.task', 'duplicate/edit.task', 'delete.task'],
+    task.roles,
+  );
 
   useEffect(() => {
     if (startDelete) dispatch(TaskFormSlice.hiddenTaskForm());
@@ -26,7 +32,7 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
   };
 
   const duplicateRejectedHandle = () => {
-    alert(`Ошибка создания дубля задачи "${task.title.slice(0, 25)}${task.title.length > 25 ? '...' : ''}"`, 'error');
+    alert(`Ошибка копирования задачи "${task.title.slice(0, 25)}${task.title.length > 25 ? '...' : ''}"`, 'error');
   };
 
   const duplicateHandle = () => {
@@ -47,14 +53,48 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
     dispatch(CommonSlice.showModalForDeleteTask(task));
   };
 
+  const duplicateAndEditHandle = async () => {
+    if (task.task_id) {
+      dispatch(
+        CommonSlice.duplicateTaskAsync({
+          data: {
+            taskId: task.task_id,
+            taskStatusId: task.status.task_status_id,
+          },
+          resolvedHandle: duplicateResolvedHandle,
+          rejectedHandle: duplicateRejectedHandle,
+          openTask: true,
+        }),
+      );
+    }
+  };
+
   const menu = (
     <Menu className={styles.dropdownMenu}>
-      <Item key="1" onClick={duplicateHandle}>
-        Дублировать задачу
-      </Item>
-      <Item key="2" onClick={deleteTaskHandle} className={styles.delete}>
-        Удалить задачу
-      </Item>
+      {
+        can['duplicate.task']
+        && (
+        <Item key="1" onClick={duplicateHandle}>
+          Дублировать задачу
+        </Item>
+        )
+      }
+      {
+        can['duplicate/edit.task']
+        && (
+        <Item key="2" onClick={duplicateAndEditHandle}>
+          Дублировать и редактировать задачу
+        </Item>
+        )
+      }
+      {
+        can['delete.task']
+        && (
+        <Item key="3" onClick={deleteTaskHandle} className={styles.delete}>
+          Удалить задачу
+        </Item>
+        )
+      }
     </Menu>
   );
 
@@ -62,6 +102,7 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
     <Dropdown
       overlay={menu}
       trigger={['click']}
+      getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
     >
       <Tooltip title="Действия с задачей">
         <button type="button" className={styles.button}>

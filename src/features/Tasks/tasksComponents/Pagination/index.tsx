@@ -14,7 +14,7 @@ const Pagination = ({ ...props }:PaginationProps) => {
       className={styles.myPagination}
       current={props.current}
       defaultCurrent={1}
-      defaultPageSize={3}
+      defaultPageSize={props.pageSize}
       responsive
       showSizeChanger
       onChange={props.onChange}

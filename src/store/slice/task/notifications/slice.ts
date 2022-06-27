@@ -1,21 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatuses } from 'shared';
 import { getNotificationsAsync, pushNotificationsAsync, readAllNotificationAsync } from './asyncThunk';
-import {
-  TNotification,
-  TNotificationsResponse, TToggleReadStatusProps,
-} from './entities';
-import { TPagination } from 'store/slice/task/entities';
+import { TNotificationReducer, TNotificationsResponse } from './entities';
+import reducers from './actions';
 
-export type TNotificationReducer = {
-  notifications: TNotification[];
-  pagination: TPagination;
-  isVisible: boolean,
-  status: RequestStatuses;
-  error: null | Error;
-}
-
-const initialState = {
+export const initialState = {
   notifications: [],
   pagination: {
     items_count: 0,
@@ -32,36 +21,7 @@ const initialState = {
 const notificationSlice = createSlice({
   name: 'notificationSlice',
   initialState,
-  reducers: {
-    nextPage(state) {
-      state.pagination.page_current += 1;
-      return state;
-    },
-    toggleVisible(state) {
-      state.isVisible = !state.isVisible;
-      return state;
-    },
-    clearNotifications(state) {
-      state = initialState;
-      return state;
-    },
-    toggleReadStatus(state, { payload }: PayloadAction<TToggleReadStatusProps>) {
-      state.notifications = state.notifications.map((notification) => {
-        if (payload.listNotificationId.includes(notification.subscribe_notify_id)) {
-          notification.viewed = payload.status === undefined
-            ? !notification.viewed
-            : payload.status;
-          if (notification.viewed) {
-            state.pagination.items_total -= 1;
-          } else {
-            state.pagination.items_total += 1;
-          }
-        }
-        return notification;
-      });
-      return state;
-    },
-  },
+  reducers,
   extraReducers: {
     [getNotificationsAsync.pending.type]: (state) => {
       state.status = RequestStatuses.LOADING;
@@ -106,6 +66,7 @@ const notificationSlice = createSlice({
 export const {
   toggleReadStatus,
   clearNotifications,
-  toggleVisible,
+  showNotification,
+  hiddenNotification,
   nextPage } = notificationSlice.actions;
 export const notificationReducer = notificationSlice.reducer;

@@ -6,6 +6,11 @@
   font: $p-medium;
   align-items: center;
   margin-bottom: 20px;
+  width: 100%;
+  word-break: break-all;
+  svg{
+    flex-shrink: 0;
+  }
   .titleText{
     margin-left: 18px;
     flex-grow: 1;

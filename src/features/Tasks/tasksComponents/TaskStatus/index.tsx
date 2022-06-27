@@ -1,9 +1,12 @@
 import React, { MouseEventHandler, useEffect, useState } from 'react';
 import { Select, SelectProps } from 'antd';
+import Tooltip from 'features/Tasks/tasksComponents/Tooltip';
 import style from './index.module.scss';
 import { taskStatuses } from './constants';
 
-const TaskStatus = ({ ...props }: SelectProps) => {
+type TProps = SelectProps & { tooltip?: string, isDisabled?: boolean, modal?: true };
+
+const TaskStatus = ({ ...props }: TProps) => {
   const [color, setColor] = useState<string>('#50B5FF');
   const [statusId, setStatusId] = useState(props.defaultValue);
   const { Option } = Select;
@@ -17,9 +20,10 @@ const TaskStatus = ({ ...props }: SelectProps) => {
     });
   };
   const currentStatus = taskStatuses.find((el) => el.status === props.defaultValue)!.taskStatusId;
+
   useEffect(() => {
     changeTaskStatus(currentStatus);
-  }, []);
+  }, [props.defaultValue]);
 
   const onClick: MouseEventHandler<HTMLElement> = (e) => {
     e.stopPropagation();
@@ -41,27 +45,39 @@ const TaskStatus = ({ ...props }: SelectProps) => {
     });
   };
 
+  const definingArea = () => {
+    if (props.modal) {
+      return document.querySelector('.ant-modal-wrap') as HTMLElement;
+    }
+    return document.querySelector('.ant-layout') as HTMLElement;
+  };
+
   return (
-    <Select
-      className={style.taskStatus}
-      defaultValue={currentStatus}
-      bordered={false}
-      showArrow={false}
-      dropdownMatchSelectWidth={false}
-      dropdownStyle={{ borderRadius: '8px' }}
-      onSelect={changeTaskStatus}
-      style={{ backgroundColor: `${color}` }}
-      onChange={props.onChange}
-      onClick={onClick}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-    >
-      {taskStatuses.map(({ status, taskStatusId }) => (
-        <Option key={taskStatusId} value={taskStatusId} className={style.taskStatusItem}>
-          {status}
-        </Option>
-      ))}
-    </Select>
+    <Tooltip title={props.tooltip || ''} getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}>
+      <Select
+        className={style.taskStatus}
+        defaultValue={currentStatus}
+        value={currentStatus}
+        bordered={false}
+        showArrow={false}
+        dropdownMatchSelectWidth={false}
+        dropdownStyle={{ borderRadius: '8px' }}
+        onSelect={changeTaskStatus}
+        style={{ backgroundColor: `${color}` }}
+        onChange={props.onChange}
+        onClick={onClick}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        disabled={props.isDisabled}
+        getPopupContainer={definingArea}
+      >
+        {taskStatuses.map(({ status, taskStatusId }) => (
+          <Option key={taskStatusId} value={taskStatusId} className={style.taskStatusItem}>
+            {status}
+          </Option>
+        ))}
+      </Select>
+    </Tooltip>
   );
 };
 

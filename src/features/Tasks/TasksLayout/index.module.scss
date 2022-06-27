@@ -8,7 +8,7 @@ html, body {
   overflow-x: hidden;
 }
 
-:global(.ant-layout){
+:global(.ant-layout) {
   background: $grey-100 !important;
 }
 
@@ -82,54 +82,50 @@ html, body {
     background: inherit;
 
     .header {
+      display: flex;
       background: inherit;
       margin: 28px 0 6px;
+      gap: 20px;
       height: auto;
+      align-items: center;
 
-
-      .tools {
-        display: none;
-
-        @include media-breakpoint-down($middle-screen-size) {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          position: absolute;
-          left: 200px;
-          top: 30px;
-          & > button {
-            margin-right: 24px;
-          }
-          * {
-            flex-shrink: 0;
-          }
-        }
+      .notification {
+        margin-left: auto;
       }
 
       .profile {
-        position: absolute;
-        top: 23px;
-        right: 27px;
         display: flex;
         align-items: center;
-        gap: 20px;
-        @include media-breakpoint-down($middle-screen-size) {
-          .notification{
-            display: none;
-          }
+      }
+
+      @include media-breakpoint-down($middle-screen-size) {
+
+        .notification {
+          margin-left: 0;
+          margin-right: auto;
         }
       }
 
-      .filterAssignedTo {
-        flex-wrap: nowrap;
+      @include media-breakpoint-down($small-screen-size) {
+        flex-direction: row;
+        height: 54px;
+        padding: 0 16px;
+        background: $grey-0;
+        margin: 0;
+
+        .filterToggle {
+          position: unset;
+        }
+
+        .notification {
+          margin-left: auto;
+          margin-right: 0;
+        }
+
+        .profile {
+          order: 9;
+        }
       }
-
-      .text {
-        font: $h1;
-        color: $grey-800;
-      }
-
-
     }
 
     .content {
@@ -137,6 +133,10 @@ html, body {
       flex-direction: column;
       align-items: stretch;
       padding: 0 38px;
+      @include media-breakpoint-down(lg) {
+        padding: 0 10px;
+      }
+      margin-top: 12px;
 
       & > * {
         margin-bottom: 24px;
@@ -144,40 +144,13 @@ html, body {
 
       .headerText {
         display: none;
+        font: $h1;
+        color: $grey-800;
         @include media-breakpoint-down($small-screen-size) {
           display: unset;
           font: $h2;
           color: $grey-800;
           margin: 10px auto 16px 24px;
-        }
-      }
-    }
-
-    @include media-breakpoint-down($small-screen-size) {
-      .header {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        height: 54px;
-        padding: 0 16px;
-        background: $grey-0;
-        margin: 0;
-
-        .text, .filterAssignedTo {
-          display: none;
-        }
-
-        .tools {
-          position: unset;
-          display: flex;
-          flex-grow: 1;
-          justify-content: space-between;
-        }
-
-        .profile {
-          display: unset;
-          position: unset;
-          order: 9;
         }
       }
     }

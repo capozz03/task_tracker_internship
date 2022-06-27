@@ -1,5 +1,6 @@
 import { EditFilled } from '@ant-design/icons';
 import { Button } from 'antd';
+import { useForm } from 'antd/lib/form/Form';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { TaskFormSlice } from 'store/slice';
@@ -9,18 +10,25 @@ import style from './index.module.scss';
 type TDetailsResumeProps = {
   taskId: string;
   formResultRequired?: boolean;
-}
+  canChange?: boolean;
+};
 
-const DetailsResume = ({ taskId, formResultRequired }: TDetailsResumeProps) => {
+export type TResumeForm = {
+  resume: string;
+  comment: string;
+};
+
+const DetailsResume = ({ taskId, formResultRequired, canChange = false }: TDetailsResumeProps) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [colorOfLabel, setColorOfLabel] = useState('#696974');
+  const [form] = useForm<TResumeForm>();
 
   const formResult = useSelector(TaskFormSlice.getTaskFormResultForm);
   const resume = useSelector(TaskFormSlice.getFormResultResume);
   const comment = useSelector(TaskFormSlice.getFormResultComment);
 
-  const resumeValue = formResult ? resume?.value : 'Требуется резюме';
-  const commentValue = formResult ? comment?.value : 'нет комментария';
+  const resumeValue = formResult && formResult.length ? resume?.value : 'Требуется резюме';
+  const commentValue = formResult && formResult.length && comment?.value ? comment?.value : 'нет комментария';
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -28,7 +36,7 @@ const DetailsResume = ({ taskId, formResultRequired }: TDetailsResumeProps) => {
 
   useEffect(() => {
     switch (resume?.value) {
-      case 'Переделать срочно' || 'Задача отклонена':
+      case 'Переделать срочно':
         setColorOfLabel('#FF0B37');
         break;
       case 'Задача отклонена':
@@ -40,6 +48,7 @@ const DetailsResume = ({ taskId, formResultRequired }: TDetailsResumeProps) => {
       default:
         setColorOfLabel('#696974');
     }
+    form.setFieldsValue({ resume: resume?.value, comment: comment?.value });
   }, [resume?.value]);
 
   return (
@@ -47,7 +56,7 @@ const DetailsResume = ({ taskId, formResultRequired }: TDetailsResumeProps) => {
       <div className={style.category}>
         <div className={style.titleDetails}>
           <p className={style.title}>Резюме</p>
-          {formResultRequired && (
+          {canChange && formResultRequired && (
             <Button
               className={style.dropdownButton}
               icon={<EditFilled className={style.icon} />}
@@ -69,6 +78,9 @@ const DetailsResume = ({ taskId, formResultRequired }: TDetailsResumeProps) => {
         taskId={taskId}
         isModalVisible={isModalVisible}
         setIsModalVisible={setIsModalVisible}
+        resumeValue={resumeValue}
+        commentValue={comment?.value}
+        form={form}
       />
     </div>
   );

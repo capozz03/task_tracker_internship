@@ -1,0 +1,127 @@
+@import "src/shared/assets/styles";
+
+.spin {
+    width: 100%;
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addButton {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 20px;
+    min-width: none;
+    margin: 0;
+    padding: 0;
+    font: $p-regular;
+    color: $grey-600;
+    white-space: nowrap;
+    background-color: inherit;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+        color: $main-blue;
+
+        svg > path {
+            fill: $main-blue;
+        }
+    }
+
+    svg {
+        width: 16px;
+        height: 16px;
+        margin-right: 5px;
+
+        path {
+            fill: $grey-500;
+        }
+    }
+}
+
+.menu {
+    width: 280px;
+    padding: 0 !important;
+    border-radius: 16px !important;
+    box-shadow: 0px 8px 40px rgba(23, 31, 70, 0.08);
+}
+
+.inputWrapper {
+    height: 42px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 16px;
+    padding: 0 24px;
+    background: $grey-100;
+    border-radius: 16px 16px 0 0;
+    border-bottom: 1px solid $grey-300;
+
+    input {
+        margin: 0;
+        padding: 0;
+        font: $p-regular;
+        color: $grey-600;
+        border: none !important;
+        background: inherit !important;
+    }
+
+    input:focus {
+        outline: 0;
+        outline-offset: 0;
+        box-shadow: none;
+    }
+}
+
+.itemsWrapper {
+    max-height: 280px;
+    overflow: auto;
+    border-radius: 0 0 16px 16px;
+
+    scrollbar-width: thin;
+    scrollbar-color: rgba($main-blue, 0.5) $grey-0;
+
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+    &::-webkit-scrollbar-track {
+        background: inherit;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba($main-blue, 0.5);
+    }
+
+    & > li label {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+
+        & > span:first-child {
+            margin-top: -5px !important;
+        }
+    }
+
+    & > li:hover {
+        background: rgba($main-blue, 0.05) !important;
+    }
+}
+
+.spinWrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+}
+
+.notTags {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    font: $p-medium;
+    text-align: center;
+    color: $grey-600;
+}

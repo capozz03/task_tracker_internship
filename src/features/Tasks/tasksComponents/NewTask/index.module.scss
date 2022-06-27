@@ -1,6 +1,6 @@
-@import "src/shared/assets/styles/vars";
+@import 'src/shared/assets/styles/vars';
 
-.newTaskLabel{
+.newTaskLabel {
   font: $h6-medium;
   text-transform: uppercase;
   letter-spacing: 0.01em;
@@ -11,11 +11,11 @@
   cursor: pointer;
 }
 
-.hidden{
+.hidden {
   display: none;
 }
 
-.wrap{
+.wrap {
   padding-left: 24px;
   display: flex;
   align-items: center;
@@ -23,33 +23,49 @@
   margin-bottom: 5px;
 }
 
-.formNewTaskWrap{
+.formNewTaskWrap {
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
-  :global(.ant-btn-primary){
+  :global(.ant-btn-primary) {
     height: 32px !important;
     line-height: 32px !important;
     margin-top: 0 !important;
     padding: 0 !important;
     width: 98px;
-    :global(span){
+    :global(span) {
       line-height: 32px !important;
     }
   }
-  :global(.ant-btn-default){
+  :global(.ant-btn-default) {
     border-radius: 8px !important;
   }
 }
 
-.btnBlock{
+.formNewTaskInner {
+  display: flex;
+  flex-direction: column;
+  .checkbox {
+    margin-top: 10px;
+    font: $p-regular;
+    color: $grey-800;
+    :global(.ant-checkbox-inner) {
+      border-radius: 4px;
+    }
+    :global(.ant-checkbox + span) {
+      padding-left: 15px;
+    }
+  }
+}
+
+.btnBlock {
   display: flex;
   gap: 8px;
   flex-grow: 1;
   justify-content: flex-end;
 }
 
-.input{
+.input {
   border: none;
   outline: none;
   background-color: transparent !important;
@@ -57,17 +73,15 @@
   color: $grey-800;
   padding: 15px 29px 15px 30px;
   max-width: 294px;
-  background-image: url("/shared/assets/images/icons/check.svg");
+  background-image: url('/shared/assets/images/icons/check.svg');
   background-repeat: no-repeat;
   background-position: left center;
   position: relative;
   border-bottom: 1px solid $grey-500;
-  &::placeholder{
+  &::placeholder {
     color: $grey-500;
   }
-  &:focus{
+  &:focus {
     box-shadow: none !important;
   }
-
-
 }

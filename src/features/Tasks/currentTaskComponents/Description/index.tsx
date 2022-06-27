@@ -2,7 +2,10 @@ import { Typography } from 'antd';
 import classnames from 'classnames';
 import Button from 'features/Tasks/tasksComponents/Button';
 import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { usePermissions } from 'shared/helpers';
 import { IconDescription } from 'shared/ui/icons/TasksIcons';
+import { TaskFormSlice } from 'store/slice';
 import DescriptionEditor from './DescriptionEditor';
 import style from './index.module.scss';
 
@@ -18,6 +21,11 @@ const Description = ({ description, taskId }: descriptionProps) => {
   const [content, setContent] = useState<string>(description);
   const [stringLength, setStringLength] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
+  const roles = useSelector(TaskFormSlice.getTaskFormRoles);
+  const can = usePermissions(
+    ['change.description'],
+    roles,
+  );
 
   const [isExpandDesc, setIsExpandDesc] = useState(true);
   const checkDescriptionIsEmpty = (): string => {
@@ -45,6 +53,7 @@ const Description = ({ description, taskId }: descriptionProps) => {
       <div>
         <div
           className={classnames([style.desc, isHiddenText && style.expanded])}
+          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: checkDescriptionIsEmpty() }}
           ref={ref}
         />
@@ -72,9 +81,14 @@ const Description = ({ description, taskId }: descriptionProps) => {
           <IconDescription />
         </div>
         <h5 className={style.description}>Описание</h5>
-        <Button className={style.changeButton} onClick={descriptionEditor} type="default">
-          Изменить
-        </Button>
+        {
+          can['change.description']
+          && (
+            <Button className={style.changeButton} onClick={descriptionEditor} type="default">
+              Изменить
+            </Button>
+          )
+        }
       </div>
       <div className={style.placeholderDecription}>
         {isVisibleEditor ? (

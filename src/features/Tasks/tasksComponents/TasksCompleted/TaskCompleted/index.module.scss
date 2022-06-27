@@ -28,23 +28,48 @@
     grid-template-columns: 20% min-content 140px auto 80px 40px;
   }
 
-  @media (max-width: 1180px) {
+  @media (max-width: 1260px) {
+    grid-template-columns: 110px 170px auto 40px;
+    grid-template-areas:  "title title title menu"
+                          "status progress progress menu"
+                          "tags tags tags menu"
+                          "users users filesAndCheckbox filesAndCheckbox";
+    column-gap: 20px;
+    row-gap: 10px;
+    .cardStatus {
+      margin: 10px 0;
+    }
+  }
+
+  @media (max-width: 780px) {
     grid-template-columns: 80% auto 40px;
     grid-template-areas:  "title . menu"
                           "status status menu"
+                          "date date menu"
                           "progress progress menu"
                           "tags tags menu"
                           "users users menu"
-                          "filesAndCheckbox filesAndCheckbox menu";
+                          "filesAndCheckbox filesAndCheckbox filesAndCheckbox";
     column-gap: 10px;
     .cardFilesAndCheckbox {
       justify-self: flex-end;
+    }
+    .cardStatus {
+      margin: 0;
     }
   }
 }
 
 .cardName {
   grid-area: title;
+  display: flex;
+  flex-direction: row;
+  .resumeIcon {
+    margin-right: 5px;
+    margin-top: 3px;
+    font-size: 16px;
+    color: $colors-orange;
+  }
 }
 
 .cardFilesAndCheckbox {

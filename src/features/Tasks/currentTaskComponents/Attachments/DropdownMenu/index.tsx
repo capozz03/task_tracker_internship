@@ -12,9 +12,10 @@ type DropdownMenuProps = {
   taskId?: string;
   storageFileId: string;
   name: string;
+  canChange?: boolean,
 };
 
-const DropdownMenu = ({ taskId, storageFileId, name }: DropdownMenuProps) => {
+const DropdownMenu = ({ taskId, storageFileId, name, canChange = false }: DropdownMenuProps) => {
   const { Item } = Menu;
   const dispatch = useDispatch();
   const [isVisibleModal, setIsVisibleModal] = useState<boolean>(false);
@@ -33,15 +34,21 @@ const DropdownMenu = ({ taskId, storageFileId, name }: DropdownMenuProps) => {
       <Item key="1" onClick={downloadAttachment}>
         Скачать вложение
       </Item>
-      <Item key="2" onClick={deleteAttachment} className={style.delete}>
-        Удалить вложение
-      </Item>
+      {
+        canChange
+        && (
+          <Item key="2" onClick={deleteAttachment} className={style.delete}>
+            Удалить вложение
+          </Item>
+        )
+      }
     </Menu>
   );
 
   return (
     <>
       <Dropdown.Button
+        getPopupContainer={() => document.querySelector('.ant-modal-wrap') as HTMLElement}
         className={style.dropdownButton}
         overlay={menu}
         icon={<Icon className={style.dropdownIcon} component={MoreVerticalIcon} />}

@@ -1,3 +1,4 @@
+import { taskFormHistoryReducer } from './history/slice';
 import { combineReducers } from '@reduxjs/toolkit';
 import { ChecklistReducer } from 'store/slice/task/taskForm/checkList';
 import { taskFormDataReducer } from 'store/slice/task/taskForm/fullTaskInfo/slice';
@@ -7,10 +8,13 @@ import { taskFormRolesReducer } from './roles/slice';
 import { taskFormTagsReducer } from './tags/slice';
 import { StorageFilesReducer } from './storageFiles';
 import { resumeSliceReducer } from './resume';
+import { descriptionReducer } from './setDescriptionFromTask';
+import { titleReducer } from './setTitleFromTask/slice';
 
 export { getTaskByIdAsync } from './getTaskById';
 export type { TTasksReducer, TTask } from 'store/slice/task/entities';
 export { setTitleAsync } from './setTitleFromTask';
+
 export {
   changeCheckListTitle,
   changeItemForChecklist,
@@ -29,11 +33,15 @@ export {
   getTaskFormStatus,
   getTaskFormRoles,
   getTaskFormTitle,
+  getTaskFormDescription,
   isLoadingStatus,
   isLoadingStatusSuccess,
   getTaskFormStatusTask,
   getTaskFormId,
   getTaskFormPriority,
+  getDescriptionStatusCheck,
+  getTitleStatusCheck,
+  getStorageStatusCheck,
 } from './fullTaskInfo/selector';
 
 export {
@@ -46,6 +54,7 @@ export {
 } from './checkList/selector';
 
 export {
+  getTaskFormAvailable,
   getTaskFormStatusTaskFormRequired,
   getTaskFormResultForm,
   getFormResultComment,
@@ -69,6 +78,7 @@ export {
   setDescriptionFromTaskForm,
   updateCheckList,
   swapItemInChecklist,
+  setStatusTaskForm,
 } from './fullTaskInfo/slice';
 
 export { taskFormRolesReducer, taskFormRolesSelector, setRoles } from './roles/slice';
@@ -110,13 +120,20 @@ export { taskFormPriorityReducer, taskFormPrioritySelector, setPriority } from '
 export { changeTaskPriority } from './priority/asyncActions';
 export { getPriority, isLoadingPriorityStatus } from './priority/selector';
 
+export { taskFormHistoryReducer, taskFormHistorySelector, resetTaskHistory } from './history/slice';
+export { getTaskHistoryAsync } from './history/asyncActions';
+export { getHistory, getHistoryPagination, isLoadingHistory } from './history/selector';
+
 export const taskFormReducer = combineReducers({
   storageFile: StorageFilesReducer,
   checkList: ChecklistReducer,
+  description: descriptionReducer,
+  title: titleReducer,
   task: taskFormDataReducer,
   roles: taskFormRolesReducer,
   resume: resumeSliceReducer,
   priority: taskFormPriorityReducer,
   dates: taskFormDatesReducer,
   tags: taskFormTagsReducer,
+  history: taskFormHistoryReducer,
 });

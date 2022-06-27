@@ -11,12 +11,13 @@ import styles from 'features/Tasks/currentTaskComponents/Title/index.module.scss
 import PencilIcon from 'shared/ui/icons/PencilIcon';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTitleAsync } from 'store/slice/task/taskForm';
-import { Tooltip } from 'antd';
+import Tooltip from 'features/Tasks/tasksComponents/TooltipForModal';
 import PlusIcons from 'shared/ui/icons/PlusIcons';
 import CancelIcons from 'shared/ui/icons/CancelIcons';
 import { useBreakPoint } from 'shared/helpers/hooks/useBreakPoint';
 import { alert } from 'shared/ui';
 import { TaskFormSlice } from 'store/slice';
+import { usePermissions } from 'shared/helpers';
 
 type titleProps = {
   title: string,
@@ -25,6 +26,7 @@ type titleProps = {
 
 const Title = ({ title, taskId }: titleProps) => {
   const dispatch = useDispatch();
+  const roles = useSelector(TaskFormSlice.getTaskFormRoles);
   const titleTask = useSelector(TaskFormSlice.getTaskFormTitle) || '';
   const [oldTitle, setOldTitle] = useState(title);
   const [isEdit, setIsEdit] = useState(false);
@@ -32,6 +34,10 @@ const Title = ({ title, taskId }: titleProps) => {
   const [isVisibleFullText, setIsVisibleFullText] = useState(true);
   const textArea = useRef<HTMLTextAreaElement>(null);
   const titleTaskRef = useRef<HTMLDivElement>(null);
+  const can = usePermissions(
+    ['change.title'],
+    roles,
+  );
 
   const calculationHeight = () => {
     if (textArea.current!.scrollHeight > textArea.current!.offsetHeight) {
@@ -99,6 +105,7 @@ const Title = ({ title, taskId }: titleProps) => {
       saveTask();
     }
   };
+
   const handleClickEllipsis = () => { setIsVisibleFullText(false); };
   useEffect(() => { calculationHeight(); }, [titleTask]);
 
@@ -115,9 +122,14 @@ const Title = ({ title, taskId }: titleProps) => {
                 </button>)
               : titleTask
           }
-          <button type="button" id="changeBtn" className={styles.btnEdit} onClick={handleEditor}>
-            <PencilIcon color="#B5B5BE" />
-          </button>
+          {
+            can['change.title']
+            && (
+              <button type="button" id="changeBtn" className={styles.btnEdit} onClick={handleEditor}>
+                <PencilIcon color="#B5B5BE" />
+              </button>
+            )
+          }
         </div>
       </div>
       <div className={isEdit ? styles.visible : styles.hidden}>

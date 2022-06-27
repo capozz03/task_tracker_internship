@@ -18,12 +18,18 @@ import Description from 'features/Tasks/currentTaskComponents/Description';
 import MembersPanel from './MembersPanel';
 import Details from 'features/Task/taskModalComponents/Details';
 import { CollapseHeader, CollapseMembersHeader } from './MembersPanel/MemberPanelHeaders';
+import TaskHistory from 'features/Task/taskModalComponents/History';
 import { alert } from 'shared/ui';
+import { checkPermission, isLoadingStatusCheck } from 'shared/helpers';
+import { useNavigate } from 'react-router-dom';
 
 const TaskModal = (props: ModalProps) => {
+  const { visible } = props;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const task = useSelector(TaskFormSlice.getTask);
   const roles = useSelector(TaskFormSlice.getRoles);
+  const rolesArray = useSelector(TaskFormSlice.getTaskFormRoles);
   const status = useSelector(TaskFormSlice.getTaskFormStatusTask);
   const isLoading = useSelector(TaskFormSlice.isLoadingStatus);
   const paginationInbox = useSelector(TaskInboxSlice.getPagination);
@@ -31,63 +37,80 @@ const TaskModal = (props: ModalProps) => {
   const paginationInCompleted = useSelector(TaskCompletedSlice.getPagination);
   const paginationInFailed = useSelector(TaskFailedSlice.getPagination);
   const filters = useSelector(TaskFilters.getFilters);
+
+  const formAvailable = useSelector(TaskFormSlice.getTaskFormAvailable);
   const formResultRequired = useSelector(TaskFormSlice.getTaskFormStatusTaskFormRequired);
-  const formResult = useSelector(TaskFormSlice.getTaskFormResultForm);
+  const formResultResume = useSelector(TaskFormSlice.getFormResultResume)?.value;
+
+  const isResumeNeed = formResultResume === 'Требуется резюме';
 
   const sortTypeInbox = useSelector(TaskInboxSlice.getSortTasksInbox);
   const sortTypeInWork = useSelector(TaskInWorkSlice.getSortTasksInWork);
   const sortTypeCompleted = useSelector(TaskCompletedSlice.getSortTasksCompleted);
   const sortTypeFailed = useSelector(TaskFailedSlice.getSortTasksFailed);
 
+  const descriptionStatus = useSelector(TaskFormSlice.getDescriptionStatusCheck);
+  const titleStatus = useSelector(TaskFormSlice.getTitleStatusCheck);
+  const storageFilesStatus = useSelector(TaskFormSlice.getStorageStatusCheck);
+
+  const loadingStatus = isLoadingStatusCheck(descriptionStatus)
+  || isLoadingStatusCheck(titleStatus)
+  || isLoadingStatusCheck(storageFilesStatus);
+
   const cancelHandle = () => {
-    if (status?.name === 'Создана') {
-      dispatch(
-        TaskInboxSlice.getTasksAsync({
-          sort: sortTypeInbox,
-          per_page: paginationInbox!.per_page,
-          page: paginationInbox!.page_current,
-          ...filters,
-        }),
-      );
+    if (!loadingStatus) {
+      if (status?.name === 'Создана') {
+        dispatch(
+          TaskInboxSlice.getTasksAsync({
+            sort: sortTypeInbox,
+            per_page: paginationInbox!.per_page,
+            page: paginationInbox!.page_current,
+            ...filters,
+          }),
+        );
+      }
+      if (status?.name === 'В работе') {
+        dispatch(
+          TaskInWorkSlice.getTasksAsync({
+            sort: sortTypeInWork,
+            per_page: paginationInWork!.per_page,
+            page: paginationInWork!.page_current,
+            ...filters,
+          }),
+        );
+      }
+      if (status?.name === 'Выполнена') {
+        dispatch(
+          TaskCompletedSlice.getTasksAsync({
+            sort: sortTypeCompleted,
+            per_page: paginationInCompleted!.per_page,
+            page: paginationInCompleted!.page_current,
+            ...filters,
+          }),
+        );
+      }
+      if (status?.name === 'Не выполнена') {
+        dispatch(
+          TaskFailedSlice.getTasksAsync({
+            sort: sortTypeFailed,
+            per_page: paginationInFailed!.per_page,
+            page: paginationInFailed!.page_current,
+            ...filters,
+          }),
+        );
+      }
+      dispatch(TaskFormSlice.hiddenTaskForm());
     }
-    if (status?.name === 'В работе') {
-      dispatch(
-        TaskInWorkSlice.getTasksAsync({
-          sort: sortTypeInWork,
-          per_page: paginationInWork!.per_page,
-          page: paginationInWork!.page_current,
-          ...filters,
-        }),
-      );
-    }
-    if (status?.name === 'Выполнена') {
-      dispatch(
-        TaskCompletedSlice.getTasksAsync({
-          sort: sortTypeCompleted,
-          per_page: paginationInCompleted!.per_page,
-          page: paginationInCompleted!.page_current,
-          ...filters,
-        }),
-      );
-    }
-    if (status?.name === 'Не выполнена') {
-      dispatch(
-        TaskFailedSlice.getTasksAsync({
-          sort: sortTypeFailed,
-          per_page: paginationInFailed!.per_page,
-          page: paginationInFailed!.page_current,
-          ...filters,
-        }),
-      );
-    }
-    dispatch(TaskFormSlice.hiddenTaskForm());
+
+    navigate('/');
   };
 
   useEffect(() => {
-    if (formResultRequired && !formResult) {
-      alert('Важная информация для ответственных: нужно резюме', 'info');
+    if (checkPermission('get.alertNeedResume', rolesArray)
+        && visible && formAvailable && formResultRequired && isResumeNeed) {
+      alert('Требуется резюме', 'info');
     }
-  }, [formResultRequired]);
+  }, [formResultRequired, isResumeNeed]);
 
   return (
     <Modal
@@ -117,7 +140,7 @@ const TaskModal = (props: ModalProps) => {
             <div className={styles.attachments}>
               {task && <Attachments taskId={task.task_id} />}
             </div>
-            <div className={styles.actions}>actions</div>
+            <TaskHistory />
           </div>
           <div className={styles.rightColumn}>
             <Collapse

@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { CommonSlice } from 'store/slice';
 import { getTaskByIdAsync, TTask } from 'store/slice/task/taskForm';
 import { alert } from 'shared';
+import { usePermissions } from 'shared/helpers';
 
 type DropdownMenuProps = {
   task: TTask;
@@ -14,6 +15,10 @@ type DropdownMenuProps = {
 const DropdownMenu = ({ task }: DropdownMenuProps) => {
   const { Item } = Menu;
   const dispatch = useDispatch();
+  const can = usePermissions(
+    ['duplicate.task', 'duplicate/edit.task', 'delete.task'],
+    task.roles,
+  );
 
   const openTask = () => {
     if (task.task_id) {
@@ -27,7 +32,7 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
   };
 
   const duplicateRejectedHandle = () => {
-    alert(`Ошибка создания дубля задачи "${task.title.slice(0, 25)}${task.title.length > 25 ? '...' : ''}"`, 'error');
+    alert(`Ошибка копирования задачи "${task.title.slice(0, 25)}${task.title.length > 25 ? '...' : ''}"`, 'error');
   };
 
   const duplicateHandle = () => {
@@ -44,6 +49,23 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
       );
     }
   };
+
+  const duplicateAndEditHandle = async () => {
+    if (task.task_id) {
+      dispatch(
+        CommonSlice.duplicateTaskAsync({
+          data: {
+            taskId: task.task_id,
+            taskStatusId: task.status.task_status_id,
+          },
+          resolvedHandle: duplicateResolvedHandle,
+          rejectedHandle: duplicateRejectedHandle,
+          openTask: true,
+        }),
+      );
+    }
+  };
+
   const deleteTaskHandle = () => {
     dispatch(CommonSlice.showModalForDeleteTask(task));
   };
@@ -53,12 +75,30 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
       <Item key="1" onClick={openTask}>
         Открыть задачу
       </Item>
-      <Item key="2" onClick={duplicateHandle}>
-        Дублировать задачу
-      </Item>
-      <Item key="3" onClick={deleteTaskHandle} className={style.delete}>
-        Удалить задачу
-      </Item>
+      {
+        can['duplicate.task']
+        && (
+          <Item key="2" onClick={duplicateHandle}>
+            Дублировать задачу
+          </Item>
+        )
+      }
+      {
+        can['duplicate/edit.task']
+        && (
+          <Item key="3" onClick={duplicateAndEditHandle}>
+            Дублировать и редактировать задачу
+          </Item>
+        )
+      }
+      {
+        can['delete.task']
+        && (
+        <Item key="4" onClick={deleteTaskHandle} className={style.delete}>
+          Удалить задачу
+        </Item>
+        )
+      }
     </Menu>
   );
 
@@ -74,6 +114,7 @@ const DropdownMenu = ({ task }: DropdownMenuProps) => {
     >
       <Dropdown.Button
         className={style.dropdownButton}
+        getPopupContainer={() => document.querySelector('.ant-layout') as HTMLElement}
         overlay={menu}
         icon={<EllipsisOutlined className={style.dropdownIcon} />}
         destroyPopupOnHide

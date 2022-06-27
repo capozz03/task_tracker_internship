@@ -9,6 +9,7 @@ export {
   setFilterProgressGTE,
   setFilterPriorityIDArray,
   resetFilters,
+  fullResetFilters,
 } from './slice';
 
 export {
@@ -17,6 +18,7 @@ export {
   getIsFiltersResetButtonShow,
   getFiltersCount,
   getFilterAssignedTo,
+  getFilterAssignedToIndex,
   getFilterKeyword,
   getFilterAssignUserIDArray,
   getFilterAttachmentsGTE,

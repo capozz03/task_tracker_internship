@@ -1,7 +1,7 @@
-import { TTaskFormReducer } from 'store/slice/task/taskForm/fullTaskInfo/initialState';
+import { initialStateTask, TTaskFormReducer } from 'store/slice/task/taskForm/fullTaskInfo/initialState';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { changeStatusItemForChecklistProps } from '../checkList/entities';
-import { TSwapItemInChecklist, TTask, TTaskCheckList, TTaskCheckListItem } from 'store/slice/task/entities';
+import { TStatus, TSwapItemInChecklist, TTask, TTaskCheckList, TTaskCheckListItem } from 'store/slice/task/entities';
 import { arrayMove } from '@dnd-kit/sortable';
 
 type pushItemForChecklistProps = {
@@ -16,7 +16,7 @@ export const taskFormActions = {
   },
   hiddenTaskForm: (state: TTaskFormReducer) => {
     state.isVisibleForm = false;
-    state.task = null;
+    state.task = initialStateTask;
     return state;
   },
   setTitleFromTaskForm: (state: TTaskFormReducer, { payload: title }: PayloadAction<string>) => {
@@ -84,6 +84,13 @@ export const taskFormActions = {
     { payload: description }: PayloadAction<string>,
   ) => {
     state.task!.description = description;
+    return state;
+  },
+  setStatusTaskForm: (
+    state: TTaskFormReducer,
+    { payload: status }: PayloadAction<TStatus>,
+  ) => {
+    state.task!.status = status;
     return state;
   },
 };

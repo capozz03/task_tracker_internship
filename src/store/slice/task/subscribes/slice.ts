@@ -1,21 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatuses } from 'shared';
 import { addSubscribe, getSubscribeAsync, removeSubscribe } from './asyncAction';
-import {
-  TAddOrRemoveSubscribeResponse,
-  TSubscribe,
-  TSubscribeListResponse,
-} from './entities';
-import { TPagination } from 'store/slice/task/entities';
+import { TAddOrRemoveSubscribeResponse, TSubscribeListResponse, TSubscribeReducer } from './entities';
+import reducers from './actions';
 
-type TNotificationReducer = {
-  subscribes: TSubscribe[];
-  pagination: TPagination;
-  status: RequestStatuses;
-  error: null | Error;
-}
-
-const initialState = {
+export const initialState = {
   subscribes: [],
   pagination: {
     items_count: 0,
@@ -26,12 +15,12 @@ const initialState = {
   },
   status: RequestStatuses.IDLE,
   error: null,
-} as TNotificationReducer;
+} as TSubscribeReducer;
 
 const subscribeSlice = createSlice({
   name: 'subscribeSlice',
   initialState,
-  reducers: {},
+  reducers,
   extraReducers: {
     [getSubscribeAsync.pending.type]: (state) => {
       state.status = RequestStatuses.LOADING;
@@ -74,3 +63,4 @@ const subscribeSlice = createSlice({
 });
 
 export const subscribeReducer = subscribeSlice.reducer;
+export const { clear } = subscribeSlice.actions;

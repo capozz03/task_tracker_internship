@@ -1,11 +1,23 @@
 @import "src/shared/assets/styles/vars";
 
+.wrap {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  &:hover .addButtonWrapper {
+    visibility: visible;
+  }
+}
+
 .markGroup{
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   position: relative;
+  cursor: pointer;
   span{
     margin-right: 4px;
     margin-bottom: 4px;
@@ -13,7 +25,33 @@
   }
 }
 
-.others{
-  font: $h6-medium;
-  color: $grey-900;
+.lastTag {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 5px;
+}
+
+.addButtonWrapper {
+  margin-left: 7px;
+  visibility: hidden;
+
+  @media (max-width: 1260px) {
+    visibility: visible;
+  }
+}
+
+.othersButton {
+  margin: 0;
+  padding: 0;
+  font: $p-regular;
+  color: $grey-600;
+  border: none;
+  background: inherit;
+  cursor: pointer;
+
+  &:hover {
+    color: $main-blue;
+  }
 }

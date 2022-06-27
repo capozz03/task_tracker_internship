@@ -5,9 +5,10 @@ import Pagination from '../Pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import { TaskFilters, TaskInWorkSlice } from 'store/slice';
 import NewTask from '../NewTask';
-import { Spin } from 'antd';
+import { Collapse, Spin } from 'antd';
 import { SortByMobileScreen, SortByPCScreen } from '../SortBy';
-import { useBreakPoint } from 'shared';
+import { TaskStatuses, useBreakPoint, useSettings } from 'shared';
+import CollapsePanel from 'antd/es/collapse/CollapsePanel';
 
 const TasksInWork: FC = (props) => {
   const dispatch = useDispatch();
@@ -18,6 +19,19 @@ const TasksInWork: FC = (props) => {
   const filters = useSelector(TaskFilters.getFilters);
   const sortType = useSelector(TaskInWorkSlice.getSortTasksInWork);
   const setSortTasks = TaskInWorkSlice.setSortTasksInWork;
+
+  const isSettigsApplied = useSettings({
+    sort: {
+      listName: 'inWork',
+      value: sortType,
+      setter: TaskInWorkSlice.setSortTasksInWork,
+    },
+    pagination: {
+      listName: 'inWork',
+      value: pagination,
+      setter: TaskInWorkSlice.setPaginationTasksInWork,
+    },
+  });
 
   const paginationHandler = (page: number, pageSize: number) => {
     dispatch(
@@ -31,15 +45,17 @@ const TasksInWork: FC = (props) => {
   };
 
   useEffect(() => {
-    dispatch(
-      TaskInWorkSlice.getTasksAsync({
-        sort: sortType,
-        per_page: pagination!.per_page,
-        page: 1,
-        ...filters,
-      }),
-    );
-  }, [sortType, filters]);
+    if (isSettigsApplied) {
+      dispatch(
+        TaskInWorkSlice.getTasksAsync({
+          sort: sortType,
+          per_page: pagination!.per_page,
+          page: 1,
+          ...filters,
+        }),
+      );
+    }
+  }, [sortType, filters, isSettigsApplied]);
 
   return (
     <div className={styles.tasks_group} {...props}>
@@ -48,39 +64,52 @@ const TasksInWork: FC = (props) => {
           В работе
           <span className={styles.totalCount}>{pagination && pagination.items_total}</span>
         </h4>
-        <div className={styles.sort}>
-          {isMobile ? (
-            <SortByMobileScreen disabled={tasks?.length === 0} setSortTasks={setSortTasks} />
-          ) : (
-            <SortByPCScreen
-              disabled={tasks?.length === 0}
-              sortType={sortType}
-              setSortTasks={setSortTasks}
-            />
-          )}
-        </div>
+        {
+          isSettigsApplied
+          && (
+            <div className={styles.sort}>
+              {isMobile ? (
+                <SortByMobileScreen disabled={tasks?.length === 0} setSortTasks={setSortTasks} />
+              ) : (
+                <SortByPCScreen
+                  disabled={tasks?.length === 0}
+                  sortType={sortType}
+                  setSortTasks={setSortTasks}
+                />
+              )}
+            </div>
+          )
+        }
       </div>
-      <div>
-        <Spin size="large" tip="Загрузка" spinning={isLoading}>
-          {tasks && tasks.length !== 0 ? (
-            tasks.map((task) => <TaskInWork key={task.task_id} task={task} />)
-          ) : (
-            <p className={styles.noTasks}>Нет задач</p>
-          )}
-        </Spin>
-        <div>
-          <NewTask taskStatusId="372d63ff-3ae3-4be2-a606-38940d7f8c8f" />
-        </div>
-        <div className={styles.pagination}>
-          {pagination && (
-            <Pagination
-              current={pagination.page_current}
-              onChange={paginationHandler}
-              total={pagination.items_total}
-            />
-          )}
-        </div>
-      </div>
+      <Collapse ghost defaultActiveKey={1}>
+        <CollapsePanel key={1} header="">
+          <div>
+            <Spin size="large" tip="Загрузка" spinning={isLoading}>
+              {tasks && tasks.length !== 0 ? (
+                tasks.map((task) => <TaskInWork key={task.task_id} task={task} />)
+              ) : (
+                <p className={styles.noTasks}>Нет задач</p>
+              )}
+            </Spin>
+            <div className={styles.footer}>
+              <div className={styles.createTask}>
+                <NewTask taskStatusId={TaskStatuses.IN_WORK} />
+              </div>
+              <div className={styles.pagination}>
+                { isSettigsApplied && pagination && (
+                  <Pagination
+                    current={pagination.page_current}
+                    onChange={paginationHandler}
+                    total={pagination.items_total}
+                    pageSize={pagination!.per_page}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+        </CollapsePanel>
+      </Collapse>
+
     </div>
   );
 };

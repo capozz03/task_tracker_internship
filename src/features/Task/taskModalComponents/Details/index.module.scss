@@ -2,12 +2,25 @@
 
 .buttonsWrapper {
     height: 20px;
+    margin-top: 10px;
     padding: 5px;
-    padding-left: 30px;
+    padding-left: 23px;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
-    gap: 20px;
+    gap: 18px;
+
+    @include media-breakpoint-down(xxl) {
+        margin-top: 30px;
+    }
+
+    @include media-breakpoint-down(lg) {
+        margin-top: 10px;
+    }
+
+    @include media-breakpoint-down(sm) {
+        margin-top: 30px;
+    }
 }
 
 .button {
@@ -26,5 +39,9 @@
 
     &:hover > svg > path {
         fill: $grey-700;
+    }
+
+    &:last-child {
+        margin-left: -3px;
     }
 }
